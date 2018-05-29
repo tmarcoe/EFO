@@ -1,0 +1,59 @@
+@CHARSET "ISO-8859-1";
+
+/*---------------------------------------------------------------------
+ | This is for modal pop-up windows
+ ----------------------------------------------------------------------*/
+
+div.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+}
+.modal-content {
+	text-align: center;
+	background: -webkit-linear-gradient(var(--first-fade), var(--second-fade));
+	/* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(var(--first-fade), var(--second-fade));
+	/* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(var(--first-fade), var(--second-fade));
+	/* For Firefox 3.6 to 15 */
+	background: linear-gradient(var(--first-fade), var(--second-fade));
+	/* Standard syntax (must be last) */
+    margin: 15% auto; /* 15% from the top and centered */
+	box-shadow: 0px 8px 16px 0px var(--light-shadow);
+    padding: 20px;
+    border: 1px solid #888;
+
+}
+.small-modal {
+	width: 30%; /* Could be more or less, depending on screen size */
+	text-align: center;
+}
+.medium-modal {
+	width: 45%;
+	text-align: center;
+}
+.large-modal {
+	width: 70%
+	text-align: center;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+	background: none;
+	
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;   
+
+}

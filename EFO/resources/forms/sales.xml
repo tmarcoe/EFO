@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<pdfDoc>
+	<pageSize>A4</pageSize>
+	<direction>0</direction>
+	<header>
+		<image>
+			<xPos>10</xPos>
+			<yPos>50</yPos>
+			<width>100.00</width>
+			<height>100.00</height>
+			<filePath>resources/image/Logo.png</filePath>
+		</image>
+		<text>
+			<xPos>210</xPos>
+			<yPos>10</yPos>
+			<fontSize>18</fontSize>
+			<align>C</align>
+			<text>Electronic Financial Officer</text>
+		</text>
+		<text>
+			<xPos>250</xPos>
+			<yPos>50</yPos>
+			<fontSize>12</fontSize>
+			<align>C</align>
+			<text>Sales Receipt</text>
+		</text>
+	</header>
+	<content>
+		<table>
+			<topMargin>100.0</topMargin>
+			<headerColor>ffeecc</headerColor>
+			<oddRowColor>E6FFFF</oddRowColor>
+			<evenRowColor>eeeeee</evenRowColor>
+			<totalsColor>ffeb99</totalsColor>
+			<title>Test Table</title>
+			<labels>Line,Description,Price,Tax</labels>
+			<widths>70,200,50,50</widths>
+			<column name="line">
+				<align>L</align>
+				<type>integer</type>
+				<format>%02d</format>
+			</column>
+			<column name="description">
+				<align>L</align>
+				<type>string</type>
+				<format>%s</format>
+			</column>
+			<column name="price" totalTo="totalPrice">
+				<align>R</align>
+				<type>double</type>
+				<format>$%.2f</format>
+			</column>
+			<column name="tax" totalTo="totalTax">
+				<align>R</align>
+				<type>double</type>
+				<format>$%.2f</format>
+			</column>
+			<column name="totalPrice"  totalTo="grandTotal">
+				<description column="2">Total Sales</description>
+				<format column="3">$%.2f</format>
+				<align>R</align>
+			</column>
+			<column name="totalTax" totalTo="grandTotal">
+				<description column="2">Total Tax</description>
+				<format column="4">$%.2f</format>
+				<align>R</align>
+			</column>
+			<total name="grandTotal">
+				<description column="2">Grand Total</description>
+				<format column="4">$%.2f</format>
+				<align>R</align>
+			</total>
+		</table>
+	</content>
+	<footer>
+	</footer>
+</pdfDoc>
