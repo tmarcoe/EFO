@@ -8,20 +8,29 @@
 		<tr>
 			<td><b>Date</b></td>
 			<td><b>Recipient</b></td>
+			<td><b>Type Of Disbursement</b></td>
 			<td><b>Amount</b></td>
 		</tr>
 		<tr>
 			<td><sf:input type="date" path="timeStamp"/></td>
 			<td><sf:input path="recipient"/></td>
+			<td><sf:select path="fromAccount">
+				<sf:option value="Petty Cash (Office Supplies)">Office Supplies</sf:option>
+				<sf:option value="Petty Cash (Delivery Expense)">Delivery Expense</sf:option>
+				<sf:option value="Petty Cash (Postage Expense)">Postage Expense</sf:option>
+				<sf:option value="Petty Cash (Cash Short and Over)">Cash Short and Over</sf:option>
+			</sf:select>
+			</td>
 			<td><sf:input type="number" step=".01" path="amount" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors class="error" path="timeStamp" /></td>
 			<td><sf:errors class="error" path="recipient" /></td>
+			<td>&nbsp;</td>
 			<td><sf:errors class="error" path="amount" /></td>
 		</tr>
 		<tr>
-			<td colspan="3"><b>Reason:</b><br><sf:textarea path="reason" rows="10" cols="50"/></td>
+			<td colspan="3"><b>Notes:</b><br><sf:textarea path="reason" rows="10" cols="50"/></td>
 		</tr>
 		<tr>
 			<td><sf:button type="submit" >Save</sf:button></td>

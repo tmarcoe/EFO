@@ -51,7 +51,8 @@ public class ChartOfAccountsController {
 		if (cofaList.getSource().size() == 0) {
 			return "redirect:/accounting/newaccount";
 		}
-		
+		cofaList.setPageSize(20);
+		cofaList.setPage(0);
 		model.addAttribute("objectList", cofaList);
 		model.addAttribute("pagelink", pageLink);
 

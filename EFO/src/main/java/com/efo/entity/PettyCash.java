@@ -16,6 +16,7 @@ public class PettyCash implements Serializable {
 	private int id;
 	private Date timeStamp;
 	private String recipient;
+	private String fromAccount;
 	private String reason;
 	private double amount;
 	
@@ -45,6 +46,15 @@ public class PettyCash implements Serializable {
 	public void setRecipient(String recipient) {
 		this.recipient = recipient;
 	}
+	
+	public String getFromAccount() {
+		return fromAccount;
+	}
+
+	public void setFromAccount(String fromAccount) {
+		this.fromAccount = fromAccount;
+	}
+
 	public String getReason() {
 		return reason;
 	}

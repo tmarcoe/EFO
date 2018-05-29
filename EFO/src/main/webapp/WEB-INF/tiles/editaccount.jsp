@@ -10,7 +10,7 @@
 		</tr>
 		<tr>
 			<td><sf:input path="accountNum"/></td>
-			<td><sf:input path="accountName"/></td>
+			<td><sf:input path="accountName" size="35"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="accountNum" class="error"/></td>
