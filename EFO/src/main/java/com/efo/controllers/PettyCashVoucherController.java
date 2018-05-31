@@ -18,17 +18,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.PettyCash;
+import com.efo.entity.PettyCashVoucher;
 import com.efo.service.PettyCashService;
+import com.efo.service.PettyCashVoucherService;
 
 @Controller
 @RequestMapping("/accounting/")
-public class PettyCashController {
+public class PettyCashVoucherController {
 	private final String pageLink = "/accounting/pettycashpaging";
 
 	@Autowired
+	PettyCashVoucherService pettyCashVoucherService;
+	
+	@Autowired
 	PettyCashService pettyCashService;
 
-	PagedListHolder<PettyCash> pcList;
+
+	PagedListHolder<PettyCashVoucher> pcList;
 	
 	private SimpleDateFormat dateFormat;
 
@@ -42,30 +48,54 @@ public class PettyCashController {
 	@RequestMapping("listpettycash")
 	public String listPettyCash(Model model) {
 		
-		pcList = pettyCashService.retrieveList();
+		pcList = pettyCashVoucherService.retrieveList();
 		
+		model.addAttribute("pettyCash", pettyCashService.retrieve(1));
 		model.addAttribute("objectList", pcList);
 		model.addAttribute("pagelink", pageLink);
 		
 		return "listpettycash";
 	}
 	
+	@RequestMapping("changeamounts")
+	public String changeAmounts(Model model) {
+		PettyCash pettyCash =  null;
+		
+		if (pettyCashService.exists()) {
+			pettyCash = pettyCashService.retrieve(1);
+		}else{
+			pettyCash = new PettyCash();
+			pettyCash.setPc_id(1);
+		}
+		model.addAttribute("pettyCash", pettyCash);
+		
+		return "changeamounts";
+	}
+	
+	@RequestMapping("updchange")
+	public String updateChange(@ModelAttribute("pettyCash") PettyCash pettyCash, BindingResult result) {
+		
+		pettyCashService.saveOfUpdate(pettyCash);
+		
+		return "redirect:/accounting/listpettycash";
+	}
+	
 	@RequestMapping("newpettycash")
 	public String newPettyCash(Model model) {
 		
-		model.addAttribute("pettyCash", new PettyCash(new Date()));
+		model.addAttribute("pettyCashVoucher", new PettyCashVoucher(new Date()));
 		
 		return "newpettycash";
 	}
 	
 	@RequestMapping("addpettycash")
-	public String addPettyCash(@Valid @ModelAttribute("pettyCash") PettyCash pettyCash, BindingResult result) {
+	public String addPettyCash(@Valid @ModelAttribute("pettyCashVoucher") PettyCashVoucher pettyCashVoucher, BindingResult result) {
 		
 		if (result.hasErrors()) {
 			return "newpettycash";
 		}
 		
-		pettyCashService.create(pettyCash);
+		pettyCashVoucherService.create(pettyCashVoucher);
 		
 		return "redirect:/accounting/listpettycash";
 	}
@@ -73,17 +103,17 @@ public class PettyCashController {
 	@RequestMapping("editpettycash")
 	public String editPettyCash(@ModelAttribute("id") int id, Model model) {
 		
-		PettyCash pettyCash = pettyCashService.retrieve(id);
+		PettyCashVoucher pettyCashVoucher = pettyCashVoucherService.retrieve(id);
 		
-		model.addAttribute("pettyCash", pettyCash);
+		model.addAttribute("pettyCashVoucher", pettyCashVoucher);
 		
 		return "editpettycash";
 	}
 	
 	@RequestMapping("updatepettycash")
-	public String updatePettyCash(@Valid @ModelAttribute("pettyCash") PettyCash pettyCash, BindingResult result) {
+	public String updatePettyCash(@Valid @ModelAttribute("pettyCashVoucher") PettyCashVoucher pettyCashVoucher, BindingResult result) {
 		
-		pettyCashService.update(pettyCash);
+		pettyCashVoucherService.update(pettyCashVoucher);
 		
 		return "redirect:/accounting/listpettycash";
 	}

@@ -244,7 +244,7 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 
-	<!-- Petty Cash Controller -->
+	<!-- Petty Cash Voucher Controller -->
 	<definition name="listpettycash" extends="accounting.base">
 		<put-attribute name="title" value="Petty Cash"></put-attribute>
 		<put-attribute name="heading_title" value="Petty Cash"></put-attribute>
@@ -262,6 +262,12 @@
 		<put-attribute name="title" value="Edit Petty Cash"></put-attribute>
 		<put-attribute name="heading_title" value="Edit Petty Cash"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/editpettycash.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="changeamounts" extends="accounting.base">
+		<put-attribute name="title" value="Change Amounts"></put-attribute>
+		<put-attribute name="heading_title" value="Change Amounts"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/changeamounts.jsp"></put-attribute>
 	</definition>
 		
 </tiles-definitions>

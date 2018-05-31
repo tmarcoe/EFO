@@ -3,7 +3,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<sf:form method="post" action="/accounting/addpettycash" modelAttribute="pettyCash">
+<sf:form method="post" action="/accounting/addpettycash" modelAttribute="pettyCashVoucher">
 	<table class="table">
 		<tr>
 			<td><b>Date</b></td>

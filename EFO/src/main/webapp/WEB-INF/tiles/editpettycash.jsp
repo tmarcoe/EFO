@@ -2,8 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link type="text/css" href="/css/tables.css" rel="stylesheet" />
 
-<sf:form method="post" action="/accounting/updatepettycash" modelAttribute="pettyCash">
+<sf:form method="post" action="/accounting/updatepettycash" modelAttribute="pettyCashVoucher">
 	<table class="table">
 		<tr>
 			<td><b>Date</b></td>

@@ -5,6 +5,7 @@
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
 
 <table class="tableview tableshadow tableborder">
+	
 	<thead>
 		<tr>
 			<th>Transaction ID</th>
@@ -26,7 +27,8 @@
 	<tfoot class="tablefooter" >
 		<tr>
 			<td colspan="2"><button type="button" onclick="window.location.href='/accounting/replenish'">Replenish Petty Cash</button></td>
-			<td colspan="2"><button type="button" onclick="window.location.href='/accounting/newpettycash'">New Disbursement</button></td>
+			<td><button type="button" onclick="window.location.href='/accounting/newpettycash'">New Disbursement</button></td>
+			<td><button type="button" onclick="window.location.href='/accounting/changeamounts'">Setup</button></td>
 			<td ><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>
 		</tr>
 	</tfoot>

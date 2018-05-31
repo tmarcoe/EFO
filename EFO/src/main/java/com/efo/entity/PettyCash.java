@@ -2,69 +2,60 @@ package com.efo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class PettyCash implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	private Date timeStamp;
-	private String recipient;
-	private String fromAccount;
-	private String reason;
-	private double amount;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int pc_id;
 	
-	public PettyCash() {
-	}
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pettyCash")
+	private Set<PettyCashVoucher> pettyCashVoucher = new HashSet<PettyCashVoucher>(0);
 	
-	public PettyCash(Date timeStamp) {
-		super();
-		this.timeStamp = timeStamp;
-	}
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public Date getTimeStamp() {
-		return timeStamp;
-	}
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-	public String getRecipient() {
-		return recipient;
-	}
-	public void setRecipient(String recipient) {
-		this.recipient = recipient;
-	}
+	private double maxAmount;
+	private double minAmount;
+	private Date lastTransaction;
 	
-	public String getFromAccount() {
-		return fromAccount;
+	
+	public int getPc_id() {
+		return pc_id;
 	}
-
-	public void setFromAccount(String fromAccount) {
-		this.fromAccount = fromAccount;
+	public void setPc_id(int pc_id) {
+		this.pc_id = pc_id;
 	}
-
-	public String getReason() {
-		return reason;
+	public Set<PettyCashVoucher> getPettyCashVoucher() {
+		return pettyCashVoucher;
 	}
-	public void setReason(String reason) {
-		this.reason = reason;
+	public void setPettyCashVoucher(Set<PettyCashVoucher> pettyCashVoucher) {
+		this.pettyCashVoucher = pettyCashVoucher;
 	}
-	public double getAmount() {
-		return amount;
+	public double getMaxAmount() {
+		return maxAmount;
 	}
-	public void setAmount(double amount) {
-		this.amount = amount;
+	public void setMaxAmount(double maxAmount) {
+		this.maxAmount = maxAmount;
+	}
+	public double getMinAmount() {
+		return minAmount;
+	}
+	public void setMinAmount(double minAmount) {
+		this.minAmount = minAmount;
+	}
+	public Date getLastTransaction() {
+		return lastTransaction;
+	}
+	public void setLastTransaction(Date lastTransaction) {
+		this.lastTransaction = lastTransaction;
 	}
 }
