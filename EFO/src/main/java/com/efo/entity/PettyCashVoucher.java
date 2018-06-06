@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class PettyCashVoucher implements Serializable {
@@ -17,11 +14,7 @@ public class PettyCashVoucher implements Serializable {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private int pc_id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PC_ID", nullable = false, insertable = false, updatable = false)
-	private PettyCash pettyCash;
+
 	private Date timeStamp;
 	private String recipient;
 	private String fromAccount;
@@ -42,23 +35,6 @@ public class PettyCashVoucher implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	public int getPc_id() {
-		return pc_id;
-	}
-
-	public void setPc_id(int pc_id) {
-		this.pc_id = pc_id;
-	}
-
-	public PettyCash getPettyCash() {
-		return pettyCash;
-	}
-
-	public void setPettyCash(PettyCash pettyCash) {
-		this.pettyCash = pettyCash;
-	}
-
 	public Date getTimeStamp() {
 		return timeStamp;
 	}

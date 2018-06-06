@@ -50,8 +50,11 @@
 					<td><a href="/accounting/ar"><img class="tile" alt="Accounts Receivable" src="<c:url value='/images/receivable.png'/>"></a></td>
 					<td><a href="/accounting/ap"><img class="tile" alt="Accounts Payable" src="<c:url value='/images/payable.png'/>"></a></td>
 					<td><a href="#" onclick="inputDate()"><img class="tile" alt="General Ledger" src="<c:url value='/images/general.png'/>"></a></td>
+				</tr>
+				<tr>
 					<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts" src="<c:url value='/images/accounts.png'/>"></a></td>
 					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash" src="<c:url value='/images/petty-cash.png'/>"></a></td>
+					<td><a href="#tabs-4"><img class="tile" alt="Budget" src="<c:url value='/images/budget.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
@@ -97,6 +100,7 @@
 				</tr>
 				<tr>
 					<td><button type="button" onclick="setDate()">View Period</button></td>
+					<td><button type="button" onclick="cancelLedger()">Cancel</button></td>
 				</tr>
 			</table>
 		</div>
@@ -109,6 +113,10 @@
 	function inputDate() {
 		var modal = document.getElementById('getPeriod');
 		modal.style.display = "block";
+	}
+	function cancelLedger() {
+		var modal = document.getElementById('getPeriod');
+		modal.style.display = "none";		
 	}
 	function setDate() {
 		var from = document.getElementById('stDate').value;

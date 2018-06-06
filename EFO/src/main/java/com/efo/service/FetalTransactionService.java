@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.efo.entity.PaymentsReceived;
+import com.efo.entity.PettyCashVoucher;
 import com.efo.entity.Receivables;
 import com.efo.dao.FetalTransactionDao;
 import com.efo.entity.Payables;
@@ -37,8 +38,29 @@ public class FetalTransactionService extends FetalTransaction {
 	@Value("${fetal.properiesFile}")
 	private String filePath;
 
-	
+	public void addPettyCash(PettyCashVoucher pettyCashVoucher) throws IOException {
+		try {
+			initTransaction(filePath);
+			publish("pettyCashVoucher", VariableType.DAO, pettyCashVoucher);
+			loadRule("pcdisbursement.trans");
+		}
+		finally {
+			closeFetal();
+		}
+		
+	}
 
+	public void pettyCashAdjustment(PettyCashVoucher pettyCashVoucher, double adjustAmount) throws IOException{
+		try {
+			initTransaction(filePath);
+			publish("pettyCashVoucher", VariableType.DAO, pettyCashVoucher);
+			publish("adjustAmount", VariableType.DECIMAL, adjustAmount);
+			loadRule("pcadjustment.trans");
+		}
+		finally {
+			closeFetal();
+		}
+	}
 	public void addAp(Payables payables) throws IOException {
 		try {
 			initTransaction(filePath);

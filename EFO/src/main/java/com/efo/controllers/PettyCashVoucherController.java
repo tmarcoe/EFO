@@ -1,10 +1,12 @@
 package com.efo.controllers;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.validation.Valid;
 
+import org.antlr.v4.runtime.RecognitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.PettyCash;
 import com.efo.entity.PettyCashVoucher;
+import com.efo.service.FetalTransactionService;
 import com.efo.service.PettyCashService;
 import com.efo.service.PettyCashVoucherService;
 
@@ -28,10 +31,13 @@ public class PettyCashVoucherController {
 	private final String pageLink = "/accounting/pettycashpaging";
 
 	@Autowired
-	PettyCashVoucherService pettyCashVoucherService;
+	private PettyCashVoucherService pettyCashVoucherService;
 	
 	@Autowired
-	PettyCashService pettyCashService;
+	private PettyCashService pettyCashService;
+	
+	@Autowired
+	FetalTransactionService fetalTransactionService;
 
 
 	PagedListHolder<PettyCashVoucher> pcList;
@@ -89,13 +95,13 @@ public class PettyCashVoucherController {
 	}
 	
 	@RequestMapping("addpettycash")
-	public String addPettyCash(@Valid @ModelAttribute("pettyCashVoucher") PettyCashVoucher pettyCashVoucher, BindingResult result) {
+	public String addPettyCash(@Valid @ModelAttribute("pettyCashVoucher") PettyCashVoucher pettyCashVoucher, BindingResult result) throws RecognitionException, IOException, RuntimeException {
 		
 		if (result.hasErrors()) {
 			return "newpettycash";
 		}
 		
-		pettyCashVoucherService.create(pettyCashVoucher);
+		fetalTransactionService.loadRule("pcdisbursement.trans");
 		
 		return "redirect:/accounting/listpettycash";
 	}
@@ -111,7 +117,14 @@ public class PettyCashVoucherController {
 	}
 	
 	@RequestMapping("updatepettycash")
-	public String updatePettyCash(@Valid @ModelAttribute("pettyCashVoucher") PettyCashVoucher pettyCashVoucher, BindingResult result) {
+	public String updatePettyCash(@Valid @ModelAttribute("pettyCashVoucher") PettyCashVoucher pettyCashVoucher, BindingResult result) throws IOException {
+		double adjustmentAmount = 0.00;
+		
+		PettyCashVoucher oldPc = pettyCashVoucherService.retrieve(pettyCashVoucher.getId());
+		if (oldPc.getAmount() != pettyCashVoucher.getAmount()) {
+			adjustmentAmount = pettyCashVoucher.getAmount() - oldPc.getAmount();
+			fetalTransactionService.pettyCashAdjustment(pettyCashVoucher, adjustmentAmount);
+		}
 		
 		pettyCashVoucherService.update(pettyCashVoucher);
 		

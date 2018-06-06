@@ -8,6 +8,14 @@
 	
 	<thead>
 		<tr>
+			<th colspan="3">Minimum Limit: <fmt:formatNumber type="currency" currencySymbol="" value="${pettyCash.minAmount}"/></th>
+			
+			<th colspan="2">Maximum Limit: <fmt:formatNumber type="currency" currencySymbol="" value="${pettyCash.maxAmount}"/></th>
+		</tr>
+		<tr>
+			<th colspan="5"><button type="button" onclick="window.location.href='/accounting/changeamounts'">Setup</button></th>
+		</tr>
+		<tr>
 			<th>Transaction ID</th>
 			<th>Timestamp</th>
 			<th>Recipient</th>
@@ -27,8 +35,7 @@
 	<tfoot class="tablefooter" >
 		<tr>
 			<td colspan="2"><button type="button" onclick="window.location.href='/accounting/replenish'">Replenish Petty Cash</button></td>
-			<td><button type="button" onclick="window.location.href='/accounting/newpettycash'">New Disbursement</button></td>
-			<td><button type="button" onclick="window.location.href='/accounting/changeamounts'">Setup</button></td>
+			<td colspan="2"><button type="button" onclick="window.location.href='/accounting/newpettycash'">New Disbursement</button></td>
 			<td ><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>
 		</tr>
 	</tfoot>
