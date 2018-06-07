@@ -19,7 +19,7 @@
 				<sf:option value="Petty Cash (Office Supplies)">Office Supplies</sf:option>
 				<sf:option value="Petty Cash (Delivery Dxpense)">Delivery Expense</sf:option>
 				<sf:option value="Petty Cash (Postage Expense)">Postage Expense</sf:option>
-				<sf:option value="Petty Cash (Cash Short and Over)">Cash Short and Over</sf:option>
+				<sf:option value="Petty Cash (General Office Expense)">General Office Expense</sf:option>
 			</sf:select>
 			<td><sf:input type="number" step=".01" path="amount" /></td>
 		</tr>

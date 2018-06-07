@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.efo.entity.PaymentsReceived;
+import com.efo.entity.PettyCash;
 import com.efo.entity.PettyCashVoucher;
 import com.efo.entity.Receivables;
 import com.efo.dao.FetalTransactionDao;
@@ -37,10 +38,24 @@ public class FetalTransactionService extends FetalTransaction {
 
 	@Value("${fetal.properiesFile}")
 	private String filePath;
+	
+	public void replenishPettyCash(PettyCash pettyCash, double pcAmount) throws IOException {
+		try {
+			initTransaction(filePath);
+			setDescription("Replenising Petty cash to " + pcAmount);
+			publish("pettyCash", VariableType.DAO, pettyCash);
+			publish("pcAmount", VariableType.DECIMAL, pcAmount);
+			loadRule("replenishpc.trans");
+			}
+		finally {
+			closeFetal();
+		}
+	}
 
 	public void addPettyCash(PettyCashVoucher pettyCashVoucher) throws IOException {
 		try {
 			initTransaction(filePath);
+			setDescription("Petty Cash: " + pettyCashVoucher.getReason());
 			publish("pettyCashVoucher", VariableType.DAO, pettyCashVoucher);
 			loadRule("pcdisbursement.trans");
 		}
@@ -53,6 +68,7 @@ public class FetalTransactionService extends FetalTransaction {
 	public void pettyCashAdjustment(PettyCashVoucher pettyCashVoucher, double adjustAmount) throws IOException{
 		try {
 			initTransaction(filePath);
+			setDescription("Adjustment for error");
 			publish("pettyCashVoucher", VariableType.DAO, pettyCashVoucher);
 			publish("adjustAmount", VariableType.DECIMAL, adjustAmount);
 			loadRule("pcadjustment.trans");
@@ -61,6 +77,20 @@ public class FetalTransactionService extends FetalTransaction {
 			closeFetal();
 		}
 	}
+	
+	public void transferPC(PettyCashVoucher oldPc, String fromAccount) throws IOException{
+		try {
+			initTransaction(filePath);
+			setDescription("Changing Petty Cash Type");
+			publish("pettyCash", VariableType.DAO, oldPc);
+			publish("toAccount", VariableType.STRING, fromAccount);
+			loadRule("transferpc.trans");
+		}
+		finally{
+			closeFetal();
+		}
+	}
+
 	public void addAp(Payables payables) throws IOException {
 		try {
 			initTransaction(filePath);

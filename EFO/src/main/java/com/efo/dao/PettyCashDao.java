@@ -25,7 +25,7 @@ public class PettyCashDao implements IPettyCash {
 	}
 	
 	@Override
-	public void saveOfUpdate(PettyCash pettyCash) {
+	public void saveOrUpdate(PettyCash pettyCash) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(pettyCash);

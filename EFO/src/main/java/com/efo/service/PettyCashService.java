@@ -14,8 +14,8 @@ public class PettyCashService implements IPettyCash {
 	PettyCashDao pettyCashDao;
 
 	@Override
-	public void saveOfUpdate(PettyCash pettyCash) {
-		pettyCashDao.saveOfUpdate(pettyCash);
+	public void saveOrUpdate(PettyCash pettyCash) {
+		pettyCashDao.saveOrUpdate(pettyCash);
 	}
 
 	@Override

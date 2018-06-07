@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.efo.entity.ChartOfAccounts;
 import com.efo.entity.PettyCash;
 import com.efo.entity.PettyCashVoucher;
+import com.efo.service.ChartOfAccountsService;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PettyCashService;
 import com.efo.service.PettyCashVoucherService;
@@ -38,6 +40,9 @@ public class PettyCashVoucherController {
 	
 	@Autowired
 	FetalTransactionService fetalTransactionService;
+	
+	@Autowired
+	ChartOfAccountsService chartOfAccountsService;
 
 
 	PagedListHolder<PettyCashVoucher> pcList;
@@ -79,9 +84,14 @@ public class PettyCashVoucherController {
 	}
 	
 	@RequestMapping("updchange")
-	public String updateChange(@ModelAttribute("pettyCash") PettyCash pettyCash, BindingResult result) {
+	public String updateChange(@ModelAttribute("pettyCash") PettyCash pettyCash, BindingResult result) throws IOException {
 		
-		pettyCashService.saveOfUpdate(pettyCash);
+		pettyCashService.saveOrUpdate(pettyCash);
+		ChartOfAccounts cOfA = chartOfAccountsService.retrieve("3000");
+		double pcAmount = pettyCash.getMaxAmount() - cOfA.getAccountBalance();
+		if (pcAmount != 0) {
+			fetalTransactionService.replenishPettyCash(pettyCash, pcAmount);
+		}
 		
 		return "redirect:/accounting/listpettycash";
 	}
@@ -101,7 +111,7 @@ public class PettyCashVoucherController {
 			return "newpettycash";
 		}
 		
-		fetalTransactionService.loadRule("pcdisbursement.trans");
+		fetalTransactionService.addPettyCash(pettyCashVoucher);
 		
 		return "redirect:/accounting/listpettycash";
 	}
@@ -121,6 +131,10 @@ public class PettyCashVoucherController {
 		double adjustmentAmount = 0.00;
 		
 		PettyCashVoucher oldPc = pettyCashVoucherService.retrieve(pettyCashVoucher.getId());
+		if (oldPc.getFromAccount().compareTo(pettyCashVoucher.getFromAccount()) != 0) {
+			fetalTransactionService.transferPC(oldPc, pettyCashVoucher.getFromAccount());
+		}
+		
 		if (oldPc.getAmount() != pettyCashVoucher.getAmount()) {
 			adjustmentAmount = pettyCashVoucher.getAmount() - oldPc.getAmount();
 			fetalTransactionService.pettyCashAdjustment(pettyCashVoucher, adjustmentAmount);
