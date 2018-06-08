@@ -11,15 +11,13 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.PaymentsPaid;
-import com.efo.interfaces.IPaymentsPaid;
-
+import com.efo.entity.Inventory;
+import com.efo.interfaces.IInventory;
 
 @Transactional
 @Repository
-public class PaymentsPaidDao implements IPaymentsPaid {
-
-
+public class InventoryDao implements IInventory {
+	
 	@Autowired
 	SessionFactory sessionFactory;
 	
@@ -28,51 +26,51 @@ public class PaymentsPaidDao implements IPaymentsPaid {
 	}
 	
 	@Override
-	public void create(PaymentsPaid payments) {
+	public void create(Inventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.save(payments);
+		session.save(inventory);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public PaymentsPaid retreive(int id) {
+	public Inventory retrieve(int id) {
 		Session session = session();
-		PaymentsPaid p = (PaymentsPaid) session.createCriteria(PaymentsPaid.class).add(Restrictions.idEq(id)).uniqueResult();
+		
+		Inventory inventory = (Inventory) session.createCriteria(Inventory.class).add(Restrictions.idEq(id)).uniqueResult();
+		
 		session.disconnect();
-		return p;
-	}
-
-	@Override
-	public void update(PaymentsPaid payments) {
-		Session session = session();
-		Transaction tx = session.beginTransaction();
-		session.update(payments);
-		tx.commit();
-		session.disconnect();
-	}
-
-	@Override
-	public void delete(int id) {
-		Session session = session();
-		Transaction tx = session.beginTransaction();
-		PaymentsPaid p = retreive(id);
-		session.delete(p);
-		tx.commit();
-		session.disconnect();
+		
+		return inventory;
 	}
 	
-	public List<PaymentsPaid> retreiveList(String invoice_num) {
+	@SuppressWarnings("unchecked")
+	public List<Inventory> retrieveList() {
 		Session session = session();
 		
-		@SuppressWarnings("unchecked")
-		List<PaymentsPaid> pList = session.createCriteria(PaymentsPaid.class)
-										  .add(Restrictions.eq("invoice_num", invoice_num))
-										  .list();
-		
+		List<Inventory> invList = session.createCriteria(Inventory.class).list();
 		session.disconnect();
-		return pList;
+		
+		return invList;
+	}
+
+	@Override
+	public void update(Inventory inventory) {
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.update(inventory);
+		tx.commit();
+		session.disconnect();
+	}
+
+	@Override
+	public void delete(Inventory inventory) {
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.delete(inventory);
+		tx.commit();
+		session.disconnect();
 	}
 
 }

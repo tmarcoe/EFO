@@ -11,14 +11,13 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.PaymentsPaid;
-import com.efo.interfaces.IPaymentsPaid;
-
+import com.efo.entity.Product;
+import com.efo.interfaces.IProduct;
 
 @Transactional
 @Repository
-public class PaymentsPaidDao implements IPaymentsPaid {
-
+public class ProductDao implements IProduct {
+	
 
 	@Autowired
 	SessionFactory sessionFactory;
@@ -28,51 +27,48 @@ public class PaymentsPaidDao implements IPaymentsPaid {
 	}
 	
 	@Override
-	public void create(PaymentsPaid payments) {
+	public void create(Product product) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.save(payments);
+		session.save(product);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public PaymentsPaid retreive(int id) {
+	public Product retrieve(String sku) {
 		Session session = session();
-		PaymentsPaid p = (PaymentsPaid) session.createCriteria(PaymentsPaid.class).add(Restrictions.idEq(id)).uniqueResult();
+		Product product = (Product) session.createCriteria(Product.class).add(Restrictions.idEq(sku)).uniqueResult();
 		session.disconnect();
-		return p;
-	}
-
-	@Override
-	public void update(PaymentsPaid payments) {
-		Session session = session();
-		Transaction tx = session.beginTransaction();
-		session.update(payments);
-		tx.commit();
-		session.disconnect();
-	}
-
-	@Override
-	public void delete(int id) {
-		Session session = session();
-		Transaction tx = session.beginTransaction();
-		PaymentsPaid p = retreive(id);
-		session.delete(p);
-		tx.commit();
-		session.disconnect();
+		
+		return product;
 	}
 	
-	public List<PaymentsPaid> retreiveList(String invoice_num) {
+	@SuppressWarnings("unchecked")
+	public List<Product> retrieveList() {
 		Session session = session();
-		
-		@SuppressWarnings("unchecked")
-		List<PaymentsPaid> pList = session.createCriteria(PaymentsPaid.class)
-										  .add(Restrictions.eq("invoice_num", invoice_num))
-										  .list();
-		
+		List<Product> prodList = session.createCriteria(Product.class).list();
 		session.disconnect();
-		return pList;
+		
+		return prodList;
+	}
+
+	@Override
+	public void update(Product product) {
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.update(product);
+		tx.commit();
+		session.disconnect();
+	}
+
+	@Override
+	public void delete(Product product) {
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.delete(product);
+		tx.commit();
+		session.disconnect();
 	}
 
 }
