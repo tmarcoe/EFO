@@ -9,13 +9,14 @@
 	<table class="table">
 		<tr>
 			<td><b>Email: </b><sf:input path="username" readonly="true" /></td>
-			<td><b>Enabled: </b><sf:checkbox path="enabled"/></td>
+			<td><b>Enabled logins? </b><sf:checkbox path="enabled"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="username" class="error" />
 			<td><sf:errors path="enabled" class="error" />
 		</tr>
 		<tr>
+			<th>&nbsp;</th>
 			<th>First Name</th>
 			<th>Last Name</th>
 			<th>M/F</th>
@@ -24,6 +25,13 @@
 			<th>Ending Date</th>
 		</tr>
 		<tr>
+			<td><sf:select path="employee.salutation">
+				<sf:option value="Mr.">Mr.</sf:option>
+				<sf:option value="Mrs.">Mrs.</sf:option>
+				<sf:option value="Ms.">Ms.</sf:option>
+				<sf:option value="Miss.">Miss.</sf:option>
+				<sf:option value="Dr.">Dr.</sf:option>
+			</sf:select></td>
 			<td><sf:input path="employee.firstname" /></td>
 			<td><sf:input path="employee.lastname" /></td>
 			<td><sf:select path="employee.maleFemale">
@@ -35,6 +43,7 @@
 			<td><sf:input type="date" path="employee.end_date"/></td>
 		</tr>
 		<tr>
+			<td>&nbsp;</td>
 			<td><sf:errors path="employee.firstname" class="error" /></td>
 			<td><sf:errors path="employee.lastname" class="error" /></td>
 			<td><sf:errors path="employee.maleFemale" class="error" /></td>

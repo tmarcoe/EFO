@@ -11,14 +11,14 @@
 			<td><b>Email</b></td>
 			<td><b>Temporary Password</b></td>
 			<td><b>Confirm Password</b></td>
-			<td><b>Enabled</b></td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
 			<td><sf:input path="username" autocomplete="false" /></td>
 			<td><sf:password path="password" autocomplete="false" showPassword="true" /></td>
 			<td><input id="confirmpass" class="control" name="confirmpass"
 				type="password" /></td>
-			<td><sf:checkbox path="enabled"/></td>
+			<td><b>Enable logins? </b><sf:checkbox path="enabled"/></td>
 		</tr>
 		<tr>
 			<td>&nbsp;<sf:errors path="username" class="error" /></td>
@@ -30,6 +30,7 @@
 			<td>&nbsp;<sf:errors path="enabled" class="error" /></td>
 		</tr>
 		<tr>
+			<th>&nbsp;</th>
 			<th>First Name</th>
 			<th>Last Name</th>
 			<th>M/F</th>
@@ -38,6 +39,13 @@
 			<th>Ending Date</th>
 		</tr>
 		<tr>
+			<td><sf:select path="employee.salutation">
+				<sf:option value="Mr.">Mr.</sf:option>
+				<sf:option value="Mrs.">Mrs.</sf:option>
+				<sf:option value="Ms.">Ms.</sf:option>
+				<sf:option value="Miss.">Miss.</sf:option>
+				<sf:option value="Dr.">Dr.</sf:option>
+			</sf:select></td>
 			<td><sf:input path="employee.firstname" /></td>
 			<td><sf:input path="employee.lastname" /></td>
 			<td><sf:select path="employee.maleFemale">
@@ -49,6 +57,7 @@
 			<td><sf:input type="date" path="employee.end_date"/></td>
 		</tr>
 		<tr>
+			<td>&nbsp;</td>
 			<td><sf:errors path="employee.firstname" class="error" /></td>
 			<td><sf:errors path="employee.lastname" class="error" /></td>
 			<td><sf:errors path="employee.maleFemale" class="error" /></td>
@@ -121,7 +130,7 @@
 		</tr>
 		<tr>
 			<td><b>Do Not Rehire:</b> <sf:checkbox path="employee.dnr" /></td>
-			<td><b>Employment Type:</b>
+			<td colspan="2"><b>Employment Type:</b>
 				<sf:select path="employee.emp_type">
 					<sf:option value="F">Full Time</sf:option>
 					<sf:option value="S">Salary (non-exempt)</sf:option>

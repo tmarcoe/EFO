@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2018 at 10:03 AM
+-- Generation Time: Jun 10, 2018 at 06:44 AM
 -- Server version: 5.7.17-log
 -- PHP Version: 5.6.25
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `efo`
 --
-CREATE DATABASE IF NOT EXISTS `efo` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `efo`;
 
 -- --------------------------------------------------------
 
@@ -84,9 +82,6 @@ CREATE TABLE `common_fields` (
   `address2` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `country` varchar(255) DEFAULT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `male_female` varchar(255) DEFAULT NULL,
   `postal_code` varchar(255) DEFAULT NULL,
   `region` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -95,8 +90,8 @@ CREATE TABLE `common_fields` (
 -- Dumping data for table `common_fields`
 --
 
-INSERT INTO `common_fields` (`user_id`, `address1`, `address2`, `city`, `country`, `firstname`, `lastname`, `male_female`, `postal_code`, `region`) VALUES
-(31, '', '', '', 'USA', NULL, NULL, NULL, '', '');
+INSERT INTO `common_fields` (`user_id`, `address1`, `address2`, `city`, `country`, `postal_code`, `region`) VALUES
+(31, '', '', '', 'USA', '', '');
 
 -- --------------------------------------------------------
 
@@ -109,7 +104,8 @@ CREATE TABLE `customer` (
   `since` datetime DEFAULT NULL,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
-  `male_female` varchar(255) DEFAULT NULL
+  `male_female` varchar(255) DEFAULT NULL,
+  `salutation` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -136,15 +132,16 @@ CREATE TABLE `employee` (
   `supervisor` varchar(255) DEFAULT NULL,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
-  `male_female` varchar(255) DEFAULT NULL
+  `male_female` varchar(255) DEFAULT NULL,
+  `salutation` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`user_id`, `cell_phone`, `company`, `division`, `dnr`, `emer_contact`, `emer_ph`, `emp_type`, `end_date`, `extension`, `home_phone`, `office_loc`, `position`, `start_date`, `supervisor`, `firstname`, `lastname`, `male_female`) VALUES
-(31, '', '', '', b'0', '', '', 'F', '2100-12-31 00:00:00', '', '', '', '', '2018-06-09 00:00:00', '', 'New', 'Employee', 'M');
+INSERT INTO `employee` (`user_id`, `cell_phone`, `company`, `division`, `dnr`, `emer_contact`, `emer_ph`, `emp_type`, `end_date`, `extension`, `home_phone`, `office_loc`, `position`, `start_date`, `supervisor`, `firstname`, `lastname`, `male_female`, `salutation`) VALUES
+(31, '', '', '', b'0', '', '', 'F', '2100-12-31 00:00:00', '', '', '', '', '2018-06-09 00:00:00', '', 'New', 'Employee', 'M', 'Mr.');
 
 -- --------------------------------------------------------
 
@@ -179,22 +176,6 @@ CREATE TABLE `emp_financial` (
 
 INSERT INTO `emp_financial` (`user_id`, `account_num`, `f_tax_prcnt`, `f_un_prcnt`, `fd_exempt`, `garnishment`, `hourly_rate`, `med_prcnt`, `other`, `other_expl`, `pay_method`, `retire_prcnt`, `routing_num`, `s_tax_prcnt`, `s_un_prcnt`, `ssi_prcnt`, `st_exempt`, `tax_id`) VALUES
 (31, '', 0, 0, 0, 0, 0, 0, 0, '', 'Check', 0, '', 0, 0, 0, 0, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `fetal_scripts`
---
-
-CREATE TABLE `fetal_scripts` (
-  `id` int(11) NOT NULL,
-  `comments` varchar(255) DEFAULT NULL,
-  `file_name` varchar(255) DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `version` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -427,7 +408,6 @@ CREATE TABLE `vendor` (
   `category` varchar(255) DEFAULT NULL,
   `company_name` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  `contact_name` varchar(255) DEFAULT NULL,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   `salutation` varchar(255) DEFAULT NULL,
@@ -473,12 +453,6 @@ ALTER TABLE `employee`
 --
 ALTER TABLE `emp_financial`
   ADD PRIMARY KEY (`user_id`);
-
---
--- Indexes for table `fetal_scripts`
---
-ALTER TABLE `fetal_scripts`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `general_ledger`
@@ -574,11 +548,6 @@ ALTER TABLE `vendor`
 ALTER TABLE `billing_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `fetal_scripts`
---
-ALTER TABLE `fetal_scripts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `general_ledger`
 --
 ALTER TABLE `general_ledger`
@@ -612,7 +581,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- Constraints for dumped tables
 --

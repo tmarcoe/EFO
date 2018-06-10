@@ -19,7 +19,7 @@
 			<td><b>Email</b></td>
 			<td><b>Temporary Password</b></td>
 			<td><b>Comfirm Password</b></td>
-			<td><b>Enabled</b></td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
 			<td><sf:input path="username" autocomplete="false" /></td>
@@ -27,7 +27,7 @@
 					showPassword="true" /></td>
 			<td><input id="confirmpass" class="control" name="confirmpass"
 				type="password" /></td>
-			<td><sf:checkbox path="enabled" /></td>
+			<td><b>Enabled logins? </b><sf:checkbox path="enabled" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="username" class="error" /></td>
@@ -45,54 +45,64 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>M/F</th>
-			<th>Address 1</th>
-			<th>Address 2</th>
+			<td><b>&nbsp;</b></td>
+			<td><b>First Name</b></td>
+			<td><b>Last Name</b></td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
+			<td><sf:select path="customer.salutation">
+				<sf:option value="Mr.">Mr.</sf:option>
+				<sf:option value="Mrs.">Mrs.</sf:option>
+				<sf:option value="Ms.">Ms.</sf:option>
+				<sf:option value="Miss.">Miss.</sf:option>
+				<sf:option value="Dr.">Dr.</sf:option>
+			</sf:select></td>
 			<td><sf:input path="customer.firstname" /></td>
 			<td><sf:input path="customer.lastname" /></td>
 			<td><sf:select path="customer.maleFemale">
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
 				</sf:select></td>
-			<td><sf:input path="common.address1" />
-			<td><sf:input path="common.address2" />
 		</tr>
 		<tr>
+			<td>&nbsp;</td>
 			<td><sf:errors path="customer.firstname" class="error" /></td>
 			<td><sf:errors path="customer.lastname" class="error" /></td>
 			<td><sf:errors path="customer.maleFemale" class="error" /></td>
-			<td><sf:errors path="common.address1" class="error" /></td>
-			<td><sf:errors path="common.address2" class="error" /></td>
 		</tr>
 		<tr>
-			<th>City</th>
-			<th>Region</th>
-			<th>Postal Code</th>
-			<th>Country Code</th>
-			<th>Start Date</th>
+			<td><b>City</b></td>
+			<td><b>Region</b></td>
+			<td><b>Postal Code</b></td>
+			<td><b>Country Code</b></td>
+			<td><b>Address 1</b></td>
+			<td><b>Address 2</b></td>
 		</tr>
 		<tr>
 			<td><sf:input path="common.city" /></td>
 			<td><sf:input path="common.region" /></td>
 			<td><sf:input path="common.postalCode" /></td>
 			<td><sf:input path="common.country" /></td>
-			<td><sf:input path="customer.since" type="date" /></td>
+			<td><sf:input path="common.address1" />
+			<td><sf:input path="common.address2" />
 		</tr>
 		<tr>
 			<td><sf:errors path="common.city" class="error" /></td>
 			<td><sf:errors path="common.region" class="error" /></td>
 			<td><sf:errors path="common.postalCode" class="error" /></td>
 			<td><sf:errors path="common.country" class="error" /></td>
-			<td><sf:errors path="customer.since" class="error" />
+			<td><sf:errors path="common.address1" class="error" /></td>
+			<td><sf:errors path="common.address2" class="error" /></td>
 		</tr>
 		<tr>
+			<td><b>Start Date:</b><br><sf:input path="customer.since" type="date" /></td>
 			<td><b>Role(s):</b><br><sf:select path="roles" id="roles" multiselect="true">
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
+		</tr>
+		<tr>			
+			<td><sf:errors path="customer.since" class="error" /></td>
 		</tr>
 		<tr>
 			<td><sf:button type="button" onclick="formSubmit()">Save</sf:button></td>

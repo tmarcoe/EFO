@@ -23,6 +23,7 @@ public class Employee implements Serializable {
 	@GeneratedValue(generator = "generator")
 	private Integer user_id;
 	
+	private String salutation;
 	private String firstname;
 	private String lastname;
 	private String maleFemale;
@@ -65,6 +66,14 @@ public class Employee implements Serializable {
 
 	public void setUser_id(Integer user_id) {
 		this.user_id = user_id;
+	}
+
+	public String getSalutation() {
+		return salutation;
+	}
+
+	public void setSalutation(String salutation) {
+		this.salutation = salutation;
 	}
 
 	public String getFirstname() {
