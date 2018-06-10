@@ -1,15 +1,11 @@
 package com.efo.service;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.efo.dao.UserDao;
-import com.efo.entity.Role;
 import com.efo.entity.User;
 import com.efo.interfaces.IUser;
 
@@ -28,16 +24,9 @@ public class UserService implements IUser{
 	
 	@Override
 	public void create(User user) {
-		Set<Role> role = new HashSet<Role>();
-	
-		role.add(roleService.retrieve("USER"));
-		user.setRoles(role);
 		user.setPassword(encoder.encode(user.getPassword()));
-		user.getCommon().setUser_id(user.getUser_id());
-		
-		userDao.create(user); 
-		
-		
+
+		userDao.create(user); 		
 	}
 
 	@Override

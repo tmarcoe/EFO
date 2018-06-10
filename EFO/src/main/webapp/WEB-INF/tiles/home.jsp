@@ -7,7 +7,7 @@
 <%@ taglib prefix="sec" uri="/WEB-INF/tld/security.tld"%>
 
 <sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://localhost/accountmaster?useSSL=false"
+	url="jdbc:mysql://localhost/efo?useSSL=false"
 	user="donzalma_admin" password="In_heaven3" />
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 

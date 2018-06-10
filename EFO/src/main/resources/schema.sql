@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `accountmaster`
+-- Database: `efo`
 --
 CREATE DATABASE IF NOT EXISTS `efo` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `efo`;
@@ -55,17 +55,17 @@ CREATE TABLE `chart_of_accounts` (
 --
 
 INSERT INTO `chart_of_accounts` (`account_num`, `description`, `account_balance`, `account_name`, `account_type`) VALUES
-('1000', 'This is a cash account', -750, 'Cash', 'Asset'),
-('1001', 'This is Accounts Receivable', 150, 'Accounts Receivable', 'Asset'),
-('1002', 'This is Accounts Payable', 4500, 'Accounts Payable', 'Liability'),
+('1000', 'This is a cash account', 0, 'Cash', 'Asset'),
+('1001', 'This is Accounts Receivable', 0, 'Accounts Receivable', 'Asset'),
+('1002', 'This is Accounts Payable', 0, 'Accounts Payable', 'Liability'),
 ('1003', 'This is Inventory Expense', 0, 'Inventory Expense', 'Expense'),
 ('1004', 'Owner\'s Equity Account', 0, 'Equity Accounts', 'Equity'),
-('1005', 'Capital Equipment Account', 5000, 'Capital', 'Asset'),
-('1009', 'Income through Sales', 300, 'Sales', 'Revenue'),
+('1005', 'Capital Equipment Account', 0, 'Capital', 'Asset'),
+('1009', 'Income through Sales', 0, 'Sales', 'Revenue'),
 ('1010', 'Tax Expense', 0, 'Tax Account', 'Liability'),
 ('1015', 'Investment Account', 0, 'Investments', 'Asset'),
 ('2001', 'Labor Expense', 0, 'Labor Expense', 'Liability'),
-('3000', 'Petty Cash Account', 400, 'Petty Cash', 'Asset'),
+('3000', 'Petty Cash Account', 0, 'Petty Cash', 'Asset'),
 ('3001', 'This account is to keep track of Petty Cash expenditures ', 0, 'Petty Cash (Office Supplies)', 'Expense'),
 ('3002', 'This account is to keep track of Petty Cash expenditures.', 0, 'Petty Cash (Delivery Expense)', 'Expense'),
 ('3003', 'This is to keep track of Petty Cash expenditures.', 0, 'Petty Cash (Postage Expense)', 'Expense'),
