@@ -3,9 +3,6 @@ package com.efo.controllers;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -24,7 +21,6 @@ import org.xml.sax.SAXException;
 
 
 import com.efo.entity.Payables;
-import com.efo.entity.PaymentsPaid;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PayablesService;
 import com.efo.service.PaymentsPaidService;
@@ -87,26 +83,7 @@ public class AccountsPayableController {
 			return "newpayable";
 		}
 		
-		fetalService.addAp(payables);
-
-		if (payables.getDate_begin().compareTo(payables.getDate_due()) == 0 ) {
-			Set<PaymentsPaid> pay = new HashSet<PaymentsPaid>();
-			PaymentsPaid payments = new PaymentsPaid();
-			payments.setPayables(payables);
-			payments.setInvoice_num(payables.getInvoice_num());
-			payments.setPayment_date(payables.getDate_begin());
-			payments.setDate_due(payables.getDate_begin());
-			payments.setPayment_due(payables.getTotal_due());
-			payments.setPayment(payables.getTotal_due());
-			
-			payables.setStatus("C");
-			payables.setTotal_balance(0.0);
-			pay.add(payments);
-			payables.setPayments(pay);	
-			paymentService.create(payments);
-			payablesService.merge(payables);
-		}
-		
+		fetalService.addAp(payables);		
 		
 		return "redirect:/accounting/ap";
 	}

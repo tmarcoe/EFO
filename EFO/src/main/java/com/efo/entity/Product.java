@@ -22,6 +22,7 @@ public class Product implements Serializable {
 	private double price;
 	private String category;
 	private String subcategory;
+	private String keywords;
 	private boolean on_sale;
 	private boolean discontinue;
 	
@@ -75,6 +76,12 @@ public class Product implements Serializable {
 	}
 	public void setSubcategory(String subcategory) {
 		this.subcategory = subcategory;
+	}
+	public String getKeywords() {
+		return keywords;
+	}
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 	public boolean isOn_sale() {
 		return on_sale;

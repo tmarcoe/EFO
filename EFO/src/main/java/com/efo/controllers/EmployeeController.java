@@ -4,15 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,9 +41,6 @@ public class EmployeeController {
 	
 	@Autowired
 	RoleService roleService;
-	
-	@Autowired
-	BCryptPasswordEncoder encoder;
 	
 	@Autowired
 	RoleUtilities roleUtils;
@@ -82,7 +76,7 @@ public class EmployeeController {
 		Calendar cal = Calendar.getInstance();
 		cal.set(2100, 11, 31);
 		User user = new User();
-		List<Role> roles = roleService.retrieveList();
+
 		user.setRoles(new HashSet<Role>());
 		user.getRoles().add(roleService.retrieve("USER"));
 		
@@ -96,7 +90,7 @@ public class EmployeeController {
 		employee.setEnd_date(cal.getTime());
 		user.setEmployee(employee);
 		
-		model.addAttribute("roles", roles);
+		model.addAttribute("roles", roleService.retrieveList());
 		model.addAttribute("user", user);
 		
 		return "newemployee";
@@ -117,7 +111,8 @@ public class EmployeeController {
 
 			return "newemployee";
 		}
-		
+	
+		user.setTemp_pw(true);
 		user.setRoles(roleUtils.stringToRole(user.getRoleString()));
 		
 		user.getEmployee().setUser(user);
@@ -132,11 +127,10 @@ public class EmployeeController {
 	@RequestMapping("editemployee")
 	public String editEmployee(@ModelAttribute("user_id") int user_id, Model model) {
 		User user = userService.retrieve(user_id);
-		List<Role> roles = roleService.retrieveList();
 		
 		user.setRoleString(roleUtils.roleToString(user.getRoles()));
 		
-		model.addAttribute("roles", roles);
+		model.addAttribute("roles", roleService.retrieveList());
 		model.addAttribute("user", user);
 		
 		return "editemployee";

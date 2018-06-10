@@ -33,9 +33,10 @@ public class UserService implements IUser{
 		role.add(roleService.retrieve("USER"));
 		user.setRoles(role);
 		user.setPassword(encoder.encode(user.getPassword()));
-
-		userDao.create(user); 
 		user.getCommon().setUser_id(user.getUser_id());
+		
+		userDao.create(user); 
+		
 		
 	}
 

@@ -26,6 +26,7 @@ public class Vendor implements Serializable {
 	private String lastname;
 	private String type;
 	private String category;
+	private String keywords;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
@@ -73,6 +74,12 @@ public class Vendor implements Serializable {
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public String getKeywords() {
+		return keywords;
+	}
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 	public User getUser() {
 		return user;

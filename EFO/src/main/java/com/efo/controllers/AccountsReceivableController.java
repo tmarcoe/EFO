@@ -3,9 +3,6 @@ package com.efo.controllers;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.xml.sax.SAXException;
 
-import com.efo.entity.PaymentsReceived;
 import com.efo.entity.Receivables;
 import com.efo.entity.User;
 import com.efo.service.FetalTransactionService;
@@ -83,26 +79,6 @@ public class AccountsReceivableController {
 		}
 		
 		fetalService.addAr(receivables);
-		if (receivables.getTotal_payments() < 2) {
-			Set<PaymentsReceived> rec = new HashSet<PaymentsReceived>();
-			PaymentsReceived received = new PaymentsReceived();
-			received.setReceivables(receivables);
-			received.setInvoice_num(receivables.getInvoice_num());
-			received.setDate_due(new Date());
-			received.setPayment_date(new Date());
-			received.setPayment_due(receivables.getTotal_due());
-			received.setPayment(receivables.getTotal_due());
-			
-			receivables.setStatus("C");
-			receivables.setTotal_balance(0.0);
-			rec.add(received);
-			receivables.setPayments(rec);
-			
-			paymentsReceivedService.create(received);
-			
-			receivablesService.update(receivables);
-			
-		}
 		
 		return "redirect:/accounting/ar";
 	}

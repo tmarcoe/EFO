@@ -1,5 +1,6 @@
 package com.efo.controllers;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.PaymentsReceived;
+import com.efo.entity.Receivables;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PaymentsReceivedService;
 import com.efo.service.ReceivablesService;
@@ -91,9 +93,11 @@ public class ARPaymentsController {
 	
 	
 	@RequestMapping("addrpayment")
-	public String addReceivablePayment(@ModelAttribute("payment") PaymentsReceived payment) {
+	public String addReceivablePayment(@ModelAttribute("payment") PaymentsReceived payment) throws IOException {
 		
-		paymentsService.create(payment);
+		Receivables receivables = receivablesService.retreive(payment.getInvoice_num());
+		
+		fetalService.receivePayment(payment, receivables);
 		
 		return "redirect:/accounting/arpaymentlist?invoice_num=" + payment.getInvoice_num();
 	}
