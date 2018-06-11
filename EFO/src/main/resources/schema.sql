@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2018 at 06:44 AM
+-- Generation Time: Jun 10, 2018 at 10:51 PM
 -- Server version: 5.7.17-log
 -- PHP Version: 5.6.25
 
@@ -180,6 +180,22 @@ INSERT INTO `emp_financial` (`user_id`, `account_num`, `f_tax_prcnt`, `f_un_prcn
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fetal_scripts`
+--
+
+CREATE TABLE `fetal_scripts` (
+  `id` int(11) NOT NULL,
+  `comments` varchar(255) DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `version` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `general_ledger`
 --
 
@@ -302,16 +318,17 @@ CREATE TABLE `petty_cash_voucher` (
 
 CREATE TABLE `product` (
   `sku` varchar(255) NOT NULL,
-  `amount_in_stock` bigint(20) NOT NULL,
+  `amount_in_stock` double NOT NULL,
   `category` varchar(255) DEFAULT NULL,
   `discontinue` bit(1) NOT NULL,
-  `min_amount` bigint(20) NOT NULL,
+  `min_amount` double NOT NULL,
   `on_sale` bit(1) NOT NULL,
   `price` double NOT NULL,
   `product_name` varchar(255) DEFAULT NULL,
   `subcategory` varchar(255) DEFAULT NULL,
   `upc` varchar(255) DEFAULT NULL,
-  `keywords` varchar(255) DEFAULT NULL
+  `keywords` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -455,6 +472,12 @@ ALTER TABLE `emp_financial`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- Indexes for table `fetal_scripts`
+--
+ALTER TABLE `fetal_scripts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `general_ledger`
 --
 ALTER TABLE `general_ledger`
@@ -548,6 +571,11 @@ ALTER TABLE `vendor`
 ALTER TABLE `billing_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `fetal_scripts`
+--
+ALTER TABLE `fetal_scripts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `general_ledger`
 --
 ALTER TABLE `general_ledger`
@@ -581,7 +609,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- Constraints for dumped tables
 --

@@ -3,6 +3,7 @@ package com.efo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
 import com.efo.dao.RoleDao;
@@ -39,8 +40,12 @@ public class RoleService implements IRole{
 	public void delete(Role role) {
 		roleDao.delete(role);
 	}
-	public List<Role> retrieveList() {
+	public List<Role> retrieveRawList() {
 		return roleDao.retrieveList();
+	}
+	
+	public PagedListHolder<Role> retrieveList() {
+		return new PagedListHolder<Role>(roleDao.retrieveList());
 	}
 
 }

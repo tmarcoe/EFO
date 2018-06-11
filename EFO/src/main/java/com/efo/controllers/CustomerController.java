@@ -76,7 +76,7 @@ public class CustomerController {
 		User user = userService.retrieve(user_id);
 		user.setRoleString(roleUtils.roleToString(user.getRoles()));
 
-		model.addAttribute("roles", roleService.retrieveList());
+		model.addAttribute("roles", roleService.retrieveRawList());
 		model.addAttribute("user", user);
 		
 		return "editcustomer";
@@ -112,7 +112,7 @@ public class CustomerController {
 		user.setCommon(new CommonFields());
 		user.setCustomer(customer);
 		
-		model.addAttribute("roles", roleService.retrieveList());
+		model.addAttribute("roles", roleService.retrieveRawList());
 		model.addAttribute("user", user);
 		
 		return "newcustomer";
@@ -124,7 +124,7 @@ public class CustomerController {
 		if (userService.exists(user.getUsername())) {
 			result.rejectValue("username", "DuplicateKey.user.username");
 						
-			model.addAttribute("roles", roleService.retrieveList());
+			model.addAttribute("roles", roleService.retrieveRawList());
 			
 			return "newcustomer";
 		}

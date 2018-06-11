@@ -90,7 +90,7 @@ public class EmployeeController {
 		employee.setEnd_date(cal.getTime());
 		user.setEmployee(employee);
 		
-		model.addAttribute("roles", roleService.retrieveList());
+		model.addAttribute("roles", roleService.retrieveRawList());
 		model.addAttribute("user", user);
 		
 		return "newemployee";
@@ -102,7 +102,7 @@ public class EmployeeController {
 		if (userService.exists(user.getUsername())) {
 			result.rejectValue("username", "DuplicateKey.user.username");
 						
-			model.addAttribute("roles", roleService.retrieveList());
+			model.addAttribute("roles", roleService.retrieveRawList());
 			
 			return "newemployee";
 		}
@@ -130,7 +130,7 @@ public class EmployeeController {
 		
 		user.setRoleString(roleUtils.roleToString(user.getRoles()));
 		
-		model.addAttribute("roles", roleService.retrieveList());
+		model.addAttribute("roles", roleService.retrieveRawList());
 		model.addAttribute("user", user);
 		
 		return "editemployee";

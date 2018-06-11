@@ -1,6 +1,7 @@
 package com.efo.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -17,9 +18,10 @@ public class Product implements Serializable {
 	
 	private String upc;
 	private String product_name;
-	private long amount_in_stock;
-	private long min_amount;
+	private double amount_in_stock;
+	private double min_amount;
 	private double price;
+	private String unit;
 	private String category;
 	private String subcategory;
 	private String keywords;
@@ -27,7 +29,7 @@ public class Product implements Serializable {
 	private boolean discontinue;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product")
-	private Set<Inventory> inventory;
+	private Set<Inventory> inventory = new HashSet<Inventory>(0);
 	
 	public String getSku() {
 		return sku;
@@ -47,17 +49,23 @@ public class Product implements Serializable {
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
 	}
-	public long getAmount_in_stock() {
+	public double getAmount_in_stock() {
 		return amount_in_stock;
 	}
-	public void setAmount_in_stock(long amount_in_stock) {
+	public void setAmount_in_stock(double amount_in_stock) {
 		this.amount_in_stock = amount_in_stock;
 	}
-	public long getMin_amount() {
+	public double getMin_amount() {
 		return min_amount;
 	}
-	public void setMin_amount(long min_amount) {
+	public void setMin_amount(double min_amount) {
 		this.min_amount = min_amount;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 	public double getPrice() {
 		return price;

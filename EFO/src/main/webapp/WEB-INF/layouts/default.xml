@@ -269,5 +269,22 @@
 		<put-attribute name="heading_title" value="Change Amounts"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/changeamounts.jsp"></put-attribute>
 	</definition>
+	
+	<!-- Role Controller -->	
+	<definition name="listroles" extends="accounting.base">
+		<put-attribute name="title" value="Roles"></put-attribute>
+		<put-attribute name="heading_title" value="Roles"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listroles.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+
+	<!-- Product Controller -->
+	<definition name="listproduct" extends="accounting.base">
+		<put-attribute name="title" value="Products"></put-attribute>
+		<put-attribute name="heading_title" value="Products"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listproduct.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 		
+	</definition>
+	
 </tiles-definitions>

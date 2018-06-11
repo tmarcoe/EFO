@@ -1,77 +1,63 @@
 package com.efo.controllers;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.entity.Product;
-import com.efo.service.ProductService;
+import com.efo.entity.Role;
+import com.efo.service.RoleService;
 
 @Controller
 @RequestMapping("/admin/")
-public class ProductController {
+public class RoleController {
 	
 	@Autowired
-	private ProductService productService;
-	private final String pageLink = "/accounting/productpaging";
+	RoleService roleService;
 	
-	private SimpleDateFormat dateFormat;
-	private PagedListHolder<Product> prdList;
-
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-	}
+	private final String pageLink = "/admin/rolepaging";
+	PagedListHolder<Role> listRoles;
 	
-	@RequestMapping("listproduct")
-	public String listProduct(Model model) {
+	@RequestMapping("listroles")
+	public String listRoles(Model model) {
 		
-		prdList = productService.retrieveList();
+		listRoles = roleService.retrieveList();
 		
-		model.addAttribute("objectList", prdList);
+		model.addAttribute("objectList", listRoles);
 		model.addAttribute("pagelink", pageLink);
-
-		return "listproduct";
+		
+		return "listroles";
 	}
 	
-	@RequestMapping("newproduct")
-	public String newProduct(Model model) {
+	@RequestMapping("addrole") 
+	public String addRole(@ModelAttribute("role") String role) {
+		Role r = new Role(role);
 		
-		model.addAttribute("product", new Product());
+		roleService.create(r);
 		
-		return "newproduct";
+		return "redirect:/admin/listroles";
 	}
-
-
-	@RequestMapping(value = "productpaging", method = RequestMethod.GET)
-	public String handleProductRequest(@ModelAttribute("page") String page, Model model) throws Exception {
+	
+	@RequestMapping(value = "rolepaging", method = RequestMethod.GET)
+	public String handleRoleRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;
 
 		pgNum = isInteger(page);
 
 		if ("next".equals(page)) {
-			prdList.nextPage();
+			listRoles.nextPage();
 		} else if ("prev".equals(page)) {
-			prdList.previousPage();
+			listRoles.previousPage();
 		} else if (pgNum != -1) {
-			prdList.setPage(pgNum);
+			listRoles.setPage(pgNum);
 		}
-		model.addAttribute("objectList", prdList);
+		model.addAttribute("objectList", listRoles);
 		model.addAttribute("pagelink", pageLink);
 
-		return "listproduct";
+		return "listcustomers";
 	}
 
 	/**************************************************************************************************************************************

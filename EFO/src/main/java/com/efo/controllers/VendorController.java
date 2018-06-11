@@ -75,7 +75,7 @@ public class VendorController {
 		User user = userService.retrieve(user_id);
 		user.setRoleString(roleUtils.roleToString(user.getRoles()));
 
-		model.addAttribute("roles", roleService.retrieveList());
+		model.addAttribute("roles", roleService.retrieveRawList());
 		model.addAttribute("user", user);
 
 		return "editvendor";
@@ -108,7 +108,7 @@ public class VendorController {
 		
 		user.setVendor(new Vendor());
 		
-		model.addAttribute("roles", roleService.retrieveList());
+		model.addAttribute("roles", roleService.retrieveRawList());
 		model.addAttribute("user", user);
 
 		return "newvendor";
@@ -120,7 +120,7 @@ public class VendorController {
 		if (userService.exists(user.getUsername())) {
 			result.rejectValue("username", "DuplicateKey.user.username");
 						
-			model.addAttribute("roles", roleService.retrieveList());
+			model.addAttribute("roles", roleService.retrieveRawList());
 			
 			return "newvendor";
 		}

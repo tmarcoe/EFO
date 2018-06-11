@@ -9,7 +9,7 @@
 	<table class="table">
 		<tr>
 			<td><b>Email: </b><sf:input path="username" readonly="true" /></td>
-			<td><b>Enabled logins? </b><sf:checkbox path="enabled"/></td>
+			<td><b>Enable logins? </b><sf:checkbox path="enabled"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="username" class="error" />

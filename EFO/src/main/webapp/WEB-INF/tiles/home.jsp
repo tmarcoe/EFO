@@ -38,11 +38,16 @@
 					<td><a href="/admin/customerlist"><img class="tile" alt="Customer" src="<c:url value='/images/customer.png'/>"></a></td>
 					<td><a href="/admin/vendorlist"><img class="tile" alt="Vendor" src="<c:url value='/images/vendor.png'/>"></a></td>
 					<td><a href="/admin/employeelist"><img class="tile" alt="Employees" src="<c:url value='/images/employees.png'/>"></a></td>
+					<td><a href="/admin/listroles"><img class="tile" alt="Roles" src="<c:url value='/images/security-roles.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
 		<div id="tabs-3">
-			<p></p>
+			<table class="menuTable menuTableSpace">
+				<tr>
+					<td><a href="/admin/listproduct"><img class="tile" alt="Products" src="<c:url value='/images/products.png'/>"></a></td>
+				</tr>
+			</table>
 		</div>
 		<div id="tabs-4">
 			<table class="menuTable menuTableSpace">

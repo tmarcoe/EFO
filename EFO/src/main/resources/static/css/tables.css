@@ -59,6 +59,9 @@ tfoot.tablefooter td
 /******************************************************
  * Center justified
  ******************************************************/
+ .cjfirst td:nth-child(1) {
+ 	text-align: center;	
+}
  .cjsecond td:nth-child(2) {
  	text-align: center;
  }
