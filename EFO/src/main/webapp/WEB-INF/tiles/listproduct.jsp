@@ -13,6 +13,8 @@
 		<th>Price</th>
 		<th>Sold By</th>
 		<th>On Sale?</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
 	</tr>
 	<c:forEach var="item" items="${objectList.pageList}">
 		<tr>
@@ -24,6 +26,21 @@
 			<td>${item.price}</td>
 			<td>${item.unit}</td>
 			<td>${item.on_sale}</td>
+			<td><button type="button" onclick="window.location.href='/admin/editproduct?sku=${item.sku}'">Edit</button></td>
+			<td><button type="button" onclick="deleteProduct('${item.sku}', '${item.product_name}')">Delete</button>
 		</tr>
 	</c:forEach>
+	<tfoot class="tablefooter">
+	<tr>
+		<td colspan="9"><button type="button" onclick="window.location.href='/admin/newproduct'" >New Product</button></td>
+		<td><button type="button" onclick="window.location.href='/#tabs-3'" >Back</button></td>
+	</tr>
+	</tfoot>
 </table>
+<script type="text/javascript">
+	function deleteProduct(sku, name) {
+		if (confirm("Are you sure you want to delete " + name + "?")) {
+			window.location.href="/admin/deleteproduct?sku=" + sku;
+		}
+	}
+</script>

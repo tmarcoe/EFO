@@ -62,11 +62,28 @@ public class ProductDao implements IProduct {
 		session.disconnect();
 	}
 
+	public void merge(Product product) {
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.merge(product);
+		tx.commit();
+		session.disconnect();
+	}
+	
 	@Override
 	public void delete(Product product) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.delete(product);
+		tx.commit();
+		session.disconnect();
+	}
+	
+	public void delete(String sku) {
+		String hql = "DELETE FROM Product WHERE sku = :sku";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setString("sku", sku).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}

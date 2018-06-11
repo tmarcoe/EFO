@@ -46,6 +46,7 @@
 			<table class="menuTable menuTableSpace">
 				<tr>
 					<td><a href="/admin/listproduct"><img class="tile" alt="Products" src="<c:url value='/images/products.png'/>"></a></td>
+					<td><a href="#"><img class="tile" alt="Inventory" src="<c:url value='/images/inventory.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>

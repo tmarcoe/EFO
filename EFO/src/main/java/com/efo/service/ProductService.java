@@ -32,15 +32,17 @@ public class ProductService implements IProduct {
 		productDao.update(product);
 	}
 
+	public void merge(Product product) {
+		productDao.merge(product);
+	}
+	
 	@Override
 	public void delete(Product product) {
 		productDao.delete(product);
 	}
 	
 	public void delete(String sku) {
-		Product product = retrieve(sku);
-		
-		delete(product);
+		productDao.delete(sku);
 	}
 
 }

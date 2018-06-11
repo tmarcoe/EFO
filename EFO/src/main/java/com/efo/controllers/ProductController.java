@@ -3,11 +3,14 @@ package com.efo.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,7 +57,38 @@ public class ProductController {
 		return "newproduct";
 	}
 
+	@RequestMapping("addproduct")
+	public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
+		
+		
+		productService.create(product);
+		
+		return "redirect:/admin/listproduct";
+	}
+	@RequestMapping("editproduct")
+	public String editProduct(@ModelAttribute("sku") String sku, Model model) {
+		
+		model.addAttribute("product", productService.retrieve(sku));
+		
+		return "editproduct";
+	}
 
+	@RequestMapping("updateproduct")
+	public String updateProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
+		
+		productService.merge(product);
+		
+		return "redirect:/admin/listproduct";
+	}
+	
+	@RequestMapping("deleteproduct")
+	public String deleteProduct(@ModelAttribute("sku") String sku) {
+				
+		productService.delete(sku);
+		
+		return "redirect:/admin/listproduct";
+	}
+	
 	@RequestMapping(value = "productpaging", method = RequestMethod.GET)
 	public String handleProductRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;

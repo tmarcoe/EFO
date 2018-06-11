@@ -284,7 +284,18 @@
 		<put-attribute name="heading_title" value="Products"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/listproduct.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
-		
 	</definition>
 	
+	<definition name="newproduct" extends="accounting.base">
+		<put-attribute name="title" value="New Product"></put-attribute>
+		<put-attribute name="heading_title" value="New Product"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newproduct.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editproduct" extends="accounting.base">
+		<put-attribute name="title" value="Edit Product"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Product"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editproduct.jsp"></put-attribute>
+	</definition>
+		
 </tiles-definitions>
