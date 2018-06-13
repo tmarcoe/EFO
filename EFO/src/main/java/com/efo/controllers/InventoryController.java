@@ -44,8 +44,8 @@ public class InventoryController {
 		model.addAttribute("pageLink", pageLink);
 		
 		return "listinventory";
-	}
-
+	}	
+	
 	@RequestMapping(value = "inventorypaging", method = RequestMethod.GET)
 	public String handleUserRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;

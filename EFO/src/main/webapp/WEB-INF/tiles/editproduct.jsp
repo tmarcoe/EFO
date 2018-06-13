@@ -10,11 +10,13 @@
 			<td><b>SKU</b></td>
 			<td><b>UPC</b></td>
 			<td><b>Name</b></td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
 			<td><sf:input path="sku" readonly="true" /></td>
 			<td><sf:input path="upc"/></td>
 			<td><sf:input path="product_name"/></td>
+			<td><b>Amount In Stock: </b>${product.inventory.size()}</td>
 		</tr>
 		<tr>
 			<td><sf:errors path="sku" class="error" /></td>
@@ -22,13 +24,11 @@
 			<td><sf:errors path="product_name" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>In Stock</b></td>
 			<td><b>Reorder At</b></td>
 			<td><b>Price</b></td>
 			<td><b>Unit</b></td>
 		</tr>
 		<tr>
-			<td><sf:input type="number" step=".01" path="amount_in_stock" /></td>
 			<td><sf:input type="number" step=".01" path="min_amount"/></td>
 			<td><sf:input type="number" step=".01" path="price"/></td>
 			<td><sf:select path="unit">
@@ -48,7 +48,6 @@
 			</sf:select></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="amount_in_stock" class="error"/></td>
 			<td><sf:errors path="min_amount" class="error"/></td>
 			<td><sf:errors path="price" class="error"/></td>
 			<td><sf:errors path="unit" class="error"/></td>
@@ -77,4 +76,5 @@
 			<td><sf:button type="button" onclick="window.history.back()">Cancel</sf:button>
 		</tr>
 	</table>
+	<sf:hidden path="amount_in_stock"/>
 </sf:form>

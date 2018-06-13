@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,10 +15,11 @@ import javax.persistence.ManyToOne;
 public class Inventory implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	private String sku;
+	private String invoice_num;
 	private double wholesale;
 	private double sold_for;
 	private Date ordered;
@@ -39,6 +42,12 @@ public class Inventory implements Serializable {
 	}
 	public void setSku(String sku) {
 		this.sku = sku;
+	}
+	public String getInvoice_num() {
+		return invoice_num;
+	}
+	public void setInvoice_num(String invoice_num) {
+		this.invoice_num = invoice_num;
 	}
 	public double getWholesale() {
 		return wholesale;

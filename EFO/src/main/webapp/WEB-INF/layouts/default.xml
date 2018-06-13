@@ -298,4 +298,24 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editproduct.jsp"></put-attribute>
 	</definition>
 		
+	<!-- Product Orders Controller -->
+	<definition name="listproductorders" extends="accounting.base">
+		<put-attribute name="title" value="Product Orders"></put-attribute>
+		<put-attribute name="heading_title" value="Product Orders"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listproductorders.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="newproductorder" extends="accounting.base">
+		<put-attribute name="title" value="New Order"></put-attribute>
+		<put-attribute name="heading_title" value="New Order"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/neworder.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editproductorder" extends="accounting.base">
+		<put-attribute name="title" value="Edit Order"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Order"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editorder.jsp"></put-attribute>
+	</definition>
+		
 </tiles-definitions>

@@ -41,6 +41,10 @@ public class VendorService implements IVendor {
 		return new PagedListHolder<User>(vendorDao.retrieveEditList());
 	}
 	
+	public List<User> retrieveRawList(String type) {
+		return vendorDao.retrieveEditList(type);
+	}
+	
 	public List<Vendor> retrieveRawList() {
 		return vendorDao.retrieveList();
 	}

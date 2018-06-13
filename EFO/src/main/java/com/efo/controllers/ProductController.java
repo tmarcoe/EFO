@@ -26,7 +26,7 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
-	private final String pageLink = "/accounting/productpaging";
+	private final String pageLink = "/admin/productpaging";
 	
 	private SimpleDateFormat dateFormat;
 	private PagedListHolder<Product> prdList;
@@ -65,6 +65,7 @@ public class ProductController {
 		
 		return "redirect:/admin/listproduct";
 	}
+	
 	@RequestMapping("editproduct")
 	public String editProduct(@ModelAttribute("sku") String sku, Model model) {
 		

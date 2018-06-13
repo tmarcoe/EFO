@@ -11,13 +11,13 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.Inventory;
-import com.efo.interfaces.IInventory;
+import com.efo.entity.ProductOrders;
+import com.efo.interfaces.IProductOrders;
 
 @Transactional
 @Repository
-public class InventoryDao implements IInventory {
-	
+public class ProductOrdersDao implements IProductOrders {
+
 	@Autowired
 	SessionFactory sessionFactory;
 	
@@ -26,49 +26,47 @@ public class InventoryDao implements IInventory {
 	}
 	
 	@Override
-	public void create(Inventory inventory) {
+	public void create(ProductOrders orders) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.save(inventory);
+		session.save(orders);
 		tx.commit();
 		session.disconnect();
 	}
-	
+
 	@Override
-	public Inventory retrieve(int id) {
+	public ProductOrders retrieve(int id) {
 		Session session = session();
-		
-		Inventory inventory = (Inventory) session.createCriteria(Inventory.class).add(Restrictions.idEq(id)).uniqueResult();
-		
+		ProductOrders orders = (ProductOrders) session.createCriteria(ProductOrders.class).add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
 		
-		return inventory;
+		return orders;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Inventory> retrieveList() {
+	@Override
+	public List<ProductOrders> retrieveRawList() {
 		Session session = session();
-		
-		List<Inventory> invList = session.createCriteria(Inventory.class).list();
+		List<ProductOrders> orderList = session.createCriteria(ProductOrders.class).list();
 		session.disconnect();
 		
-		return invList;
+		return orderList;
 	}
 
 	@Override
-	public void update(Inventory inventory) {
+	public void update(ProductOrders orders) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.update(inventory);
+		session.update(orders);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public void delete(Inventory inventory) {
+	public void delete(ProductOrders orders) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.delete(inventory);
+		session.delete(orders);
 		tx.commit();
 		session.disconnect();
 	}

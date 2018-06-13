@@ -14,10 +14,10 @@
 <sf:form method="post" action="/user/savepassword" commandName="user">
 	<div id="tabs">
 		<ul>
-			<li><a href="#tabs-1">My Tab</a></li>
+			<li><a href="#tabs-1">Login and Security</a></li>
 			<li><a href="#tabs-2">Personel</a></li>
-			<li><a href="#tabs-3">Operations</a></li>
-			<li><a href="#tabs-4">Accounting</a></li>
+			<li><a href="#tabs-3">Reports</a></li>
+			<li><a href="#tabs-4">Accounting and Operations</a></li>
 		</ul>
 		<div id="tabs-1">
 			<table class="menuTable menuTableSpace">
@@ -29,6 +29,7 @@
 					<sec:isNotAuthenticated>
 						<td><a href="/login"><img class="tile" alt="Login" src="<c:url value='/images/login.png'/>"></a></td>
 					</sec:isNotAuthenticated>
+					<td><a href="/admin/listroles"><img class="tile" alt="Roles" src="<c:url value='/images/security-roles.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
@@ -38,15 +39,16 @@
 					<td><a href="/admin/customerlist"><img class="tile" alt="Customer" src="<c:url value='/images/customer.png'/>"></a></td>
 					<td><a href="/admin/vendorlist"><img class="tile" alt="Vendor" src="<c:url value='/images/vendor.png'/>"></a></td>
 					<td><a href="/admin/employeelist"><img class="tile" alt="Employees" src="<c:url value='/images/employees.png'/>"></a></td>
-					<td><a href="/admin/listroles"><img class="tile" alt="Roles" src="<c:url value='/images/security-roles.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
 		<div id="tabs-3">
 			<table class="menuTable menuTableSpace">
 				<tr>
-					<td><a href="/admin/listproduct"><img class="tile" alt="Products" src="<c:url value='/images/products.png'/>"></a></td>
-					<td><a href="#"><img class="tile" alt="Inventory" src="<c:url value='/images/inventory.png'/>"></a></td>
+					
+					<td><a href="#"><img class="tile" alt="Cogs" src="<c:url value='/images/cogs.png'/>"></a></td>
+					<td><a href="#"><img class="tile" alt="Profit and Loss" src="<c:url value='/images/profit-loss.png'/>"></a></td>
+					<td><a href="#"><img class="tile" alt="Shelf Time" src="<c:url value='/images/shelf-time.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
@@ -56,11 +58,13 @@
 					<td><a href="/accounting/ar"><img class="tile" alt="Accounts Receivable" src="<c:url value='/images/receivable.png'/>"></a></td>
 					<td><a href="/accounting/ap"><img class="tile" alt="Accounts Payable" src="<c:url value='/images/payable.png'/>"></a></td>
 					<td><a href="#" onclick="inputDate()"><img class="tile" alt="General Ledger" src="<c:url value='/images/general.png'/>"></a></td>
+					<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts" src="<c:url value='/images/accounts.png'/>"></a></td>
 				</tr>
 				<tr>
-					<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts" src="<c:url value='/images/accounts.png'/>"></a></td>
 					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash" src="<c:url value='/images/petty-cash.png'/>"></a></td>
 					<td><a href="#tabs-4"><img class="tile" alt="Budget" src="<c:url value='/images/budget.png'/>"></a></td>
+					<td><a href="/admin/listproduct"><img class="tile" alt="Products" src="<c:url value='/images/products.png'/>"></a></td>
+					<td><a href="#"><img class="tile" alt="Inventory" src="<c:url value='/images/inventory.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>

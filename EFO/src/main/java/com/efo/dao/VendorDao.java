@@ -77,6 +77,18 @@ public class VendorDao implements IVendor {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<User> retrieveEditList(String type) {
+		String sql = "FROM User AS u WHERE EXISTS (FROM Vendor AS v WHERE v.user_id = u.user_id AND v.type =:type)";
+	
+		Session session = session();
+		List<User> chooseList = session.createQuery(sql).setString("type", type).list();
+		session.disconnect();
+	
+	return chooseList;
+
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Vendor> retrieveList() {
 		Session session = session();
 		
