@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.entity.Product;
 import com.efo.entity.ProductOrders;
 import com.efo.entity.User;
 import com.efo.service.InventoryService;
 import com.efo.service.ProductOrdersService;
-import com.efo.service.ProductService;
 import com.efo.service.VendorService;
 
 @Controller
@@ -39,9 +37,6 @@ public class ProductOrdersController {
 	
 	@Autowired
 	private InventoryService inventoryService;
-	
-	@Autowired
-	private ProductService productService;
 	
 	@Autowired
 	private VendorService vendorService;
