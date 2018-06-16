@@ -32,6 +32,10 @@ public class HomeController {
 		User user = null;
 		if (principal != null) {
 			user = userService.retrieve(principal.getName());
+			if (user == null) {
+				user = new User();
+				user.setUser_id(0);
+			}
 		} else {
 			user = new User();
 			user.setUser_id(0);

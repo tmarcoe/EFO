@@ -2,11 +2,14 @@ package com.efo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
 
 
 @Entity
@@ -18,11 +21,18 @@ public class ProductOrders implements Serializable {
 	private String sku;
 	private String invoice_num;
 	private String vendor;
-	private double amount;
+	
+	@DecimalMin("0.01")
+	private double wholesale;
 	private double qty;
 	private String payment_type;
 	private Date order_date;
 	private Date delivery_date;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="SKU", nullable = false, insertable=false, updatable=false )
+	private Product product;
+	
 	
 	public ProductOrders() {
 	}
@@ -56,12 +66,14 @@ public class ProductOrders implements Serializable {
 	public void setVendor(String vendor) {
 		this.vendor = vendor;
 	}
-	public double getAmount() {
-		return amount;
+	public double getWholesale() {
+		return wholesale;
 	}
-	public void setAmount(double amount) {
-		this.amount = amount;
+
+	public void setWholesale(double wholesale) {
+		this.wholesale = wholesale;
 	}
+
 	public double getQty() {
 		return qty;
 	}
@@ -86,7 +98,12 @@ public class ProductOrders implements Serializable {
 	public void setDelivery_date(Date delivery_date) {
 		this.delivery_date = delivery_date;
 	}
-	
-	
 
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}	
 }

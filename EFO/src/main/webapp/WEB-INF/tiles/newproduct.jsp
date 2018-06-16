@@ -27,7 +27,7 @@
 			<td><b>Unit</b></td>
 		</tr>
 		<tr>
-			<td><sf:input type="number" step=".01" path="min_amount"/></td>
+			<td><sf:input type="number" step=".01" path="inventory.min_amount"/></td>
 			<td><sf:input type="number" step=".01" path="price"/></td>
 			<td><sf:select path="unit">
 				<sf:option value="Each">Each</sf:option>
@@ -46,7 +46,7 @@
 			</sf:select></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="min_amount" class="error"/></td>
+			<td><sf:errors path="inventory.min_amount" class="error"/></td>
 			<td><sf:errors path="price" class="error"/></td>
 			<td><sf:errors path="unit" class="error"/></td>
 		</tr>
@@ -74,5 +74,7 @@
 			<td><sf:button type="button" onclick="window.history.back()">Cancel</sf:button>
 		</tr>
 	</table>
-	<sf:hidden path="amount_in_stock"/>
+	<sf:hidden path="inventory.sku"/>
+	<sf:hidden path="inventory.amt_in_stock"/>
+	<sf:hidden path="inventory.min_amount"/>
 </sf:form>

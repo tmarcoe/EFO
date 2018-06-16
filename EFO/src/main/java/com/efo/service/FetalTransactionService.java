@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import com.efo.entity.PaymentsReceived;
 import com.efo.entity.PettyCash;
 import com.efo.entity.PettyCashVoucher;
+import com.efo.entity.ProductOrders;
 import com.efo.entity.Receivables;
 import com.efo.dao.FetalTransactionDao;
+import com.efo.entity.Inventory;
 import com.efo.entity.Payables;
 import com.efo.entity.PaymentsPaid;
 import com.ftl.helper.FetalTransaction;
@@ -38,6 +40,20 @@ public class FetalTransactionService extends FetalTransaction {
 
 	@Value("${fetal.properiesFile}")
 	private String filePath;
+	
+	public void purchaseInventory(ProductOrders order, Inventory inventory ) throws IOException {
+		try {
+			initTransaction(filePath);
+			setDescription("Purchase of Inventory (SKU: " + order.getSku() + ")");
+			publish("order", VariableType.DAO, order);
+			publish("payables", VariableType.DAO, new Payables());
+			publish("inventory", VariableType.DAO, inventory);
+			loadRule("retailpurchase.trans");
+			}
+		finally {
+			closeFetal();
+		}
+	}
 	
 	public void replenishPettyCash(PettyCash pettyCash, double pcAmount) throws IOException {
 		try {

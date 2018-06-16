@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Product implements Serializable {
@@ -18,8 +20,6 @@ public class Product implements Serializable {
 	
 	private String upc;
 	private String product_name;
-	private double amount_in_stock;
-	private double min_amount;
 	private double price;
 	private String unit;
 	private String category;
@@ -28,8 +28,16 @@ public class Product implements Serializable {
 	private boolean on_sale;
 	private boolean discontinue;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product")
-	private Set<Inventory> inventory = new HashSet<Inventory>(0);
+	@OneToOne(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+	private Inventory inventory = new Inventory();
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+	private Set<ProductOrders> orders = new HashSet<ProductOrders>(0);
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+	private Set<SalesItem> sales = new HashSet<SalesItem>(0);
+	
+	
 	
 	public String getSku() {
 		return sku;
@@ -48,18 +56,6 @@ public class Product implements Serializable {
 	}
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
-	}
-	public double getAmount_in_stock() {
-		return amount_in_stock;
-	}
-	public void setAmount_in_stock(double amount_in_stock) {
-		this.amount_in_stock = amount_in_stock;
-	}
-	public double getMin_amount() {
-		return min_amount;
-	}
-	public void setMin_amount(double min_amount) {
-		this.min_amount = min_amount;
 	}
 	public String getUnit() {
 		return unit;
@@ -103,11 +99,23 @@ public class Product implements Serializable {
 	public void setDiscontinue(boolean discontinue) {
 		this.discontinue = discontinue;
 	}
-	public Set<Inventory> getInventory() {
+	public Inventory getInventory() {
 		return inventory;
 	}
-	public void setInventory(Set<Inventory> inventory) {
+	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+	public Set<ProductOrders> getOrders() {
+		return orders;
+	}
+	public void setOrders(Set<ProductOrders> orders) {
+		this.orders = orders;
+	}
+	public Set<SalesItem> getSales() {
+		return sales;
+	}
+	public void setSales(Set<SalesItem> sales) {
+		this.sales = sales;
 	}
 
 }

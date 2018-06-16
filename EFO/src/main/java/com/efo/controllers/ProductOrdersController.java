@@ -1,5 +1,6 @@
 package com.efo.controllers;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -18,82 +19,97 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.efo.entity.Product;
 import com.efo.entity.ProductOrders;
 import com.efo.entity.User;
-import com.efo.service.InventoryService;
+import com.efo.service.FetalTransactionService;
 import com.efo.service.ProductOrdersService;
+import com.efo.service.ProductService;
 import com.efo.service.VendorService;
 
 @Controller
 @RequestMapping("/admin/")
 public class ProductOrdersController {
 	private final String pageLink = "/admin/prdorderpaging";
-	
+
 	private SimpleDateFormat dateFormat;
 	private PagedListHolder<ProductOrders> prdOrderList;
 
 	@Autowired
 	private ProductOrdersService ordersService;
-	
+
 	@Autowired
-	private InventoryService inventoryService;
-	
+	private ProductService productService;
+
 	@Autowired
 	private VendorService vendorService;
-	
+
+	@Autowired
+	FetalTransactionService fetalService;
+
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
-	
+
 	@RequestMapping("listproductorders")
 	public String listProductOrders(Model model) {
 		prdOrderList = ordersService.retrieveList();
-		
+
 		model.addAttribute("objectList", prdOrderList);
 		model.addAttribute("pagelink", pageLink);
-		
+
 		return "listproductorders";
 	}
-	
+
 	@RequestMapping("newproductorder")
 	public String newOrder(@ModelAttribute("sku") String sku, Model model) {
-		
+
 		List<User> suppliers = vendorService.retrieveRawList("R");
-		
+
 		model.addAttribute("productOrder", new ProductOrders(sku, new Date()));
 		model.addAttribute("suppliers", suppliers);
-		
+
 		return "newproductorder";
 	}
-	
+
 	@RequestMapping("addproductorder")
-	public String addProductOrder(@Valid @ModelAttribute("productOrder") ProductOrders order, BindingResult result) {
-		
-		ordersService.create(order);
-		inventoryService.batchCreate(order);
-		
+	public String addProductOrder(@Valid @ModelAttribute("productOrder") ProductOrders productOrders,
+			BindingResult result, Model model) throws IOException {
+
+		if (result.getErrorCount() > 1) {
+			List<User> suppliers = vendorService.retrieveRawList("R");
+			model.addAttribute("suppliers", suppliers);
+			
+			return "newproductorder";
+
+		}
+
+		Product product = productService.retrieve(productOrders.getSku());
+
+		fetalService.purchaseInventory(productOrders, product.getInventory());
+
 		return "redirect:/admin/listproduct";
 	}
 
 	@RequestMapping("editproductorder")
 	public String editProductOrder(@ModelAttribute("id") int id, Model model) {
-		
+
 		model.addAttribute("productOrder", ordersService.retrieve(id));
-		
+
 		return "editproductorder";
 	}
-	
+
 	@RequestMapping("updproductorder")
 	public String updProductOrder(@Valid @ModelAttribute("productOrder") ProductOrders order, BindingResult result) {
-		
+
 		ordersService.update(order);
-		
+
 		return "redirect:/admin/listproductorders";
 	}
-	
+
 	@RequestMapping(value = "prdorderpaging", method = RequestMethod.GET)
 	public String handlePrdOrdeersRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;

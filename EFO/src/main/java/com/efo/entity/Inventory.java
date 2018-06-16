@@ -1,95 +1,59 @@
 package com.efo.entity;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Inventory implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
+
+	@Id 
 	private String sku;
-	private String invoice_num;
-	private double wholesale;
-	private double sold_for;
-	private Date ordered;
-	private Date sold;
-	private Date processed;
-	private Date shipped;
+	private double amt_in_stock;
+	private double min_amount;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="sku", nullable = false, insertable=false, updatable=false )
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="SKU")
 	private Product product;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public String getSku() {
 		return sku;
 	}
+
 	public void setSku(String sku) {
 		this.sku = sku;
 	}
-	public String getInvoice_num() {
-		return invoice_num;
+
+	public double getAmt_in_stock() {
+		return amt_in_stock;
 	}
-	public void setInvoice_num(String invoice_num) {
-		this.invoice_num = invoice_num;
+
+	public void setAmt_in_stock(double amt_in_stock) {
+		this.amt_in_stock = amt_in_stock;
 	}
-	public double getWholesale() {
-		return wholesale;
+
+	public double getMin_amount() {
+		return min_amount;
 	}
-	public void setWholesale(double wholesale) {
-		this.wholesale = wholesale;
+
+	public void setMin_amount(double min_amount) {
+		this.min_amount = min_amount;
 	}
-	public double getSold_for() {
-		return sold_for;
-	}
-	public void setSold_for(double sold_for) {
-		this.sold_for = sold_for;
-	}
-	public Date getOrdered() {
-		return ordered;
-	}
-	public void setOrdered(Date ordered) {
-		this.ordered = ordered;
-	}
-	public Date getSold() {
-		return sold;
-	}
-	public void setSold(Date sold) {
-		this.sold = sold;
-	}
-	public Date getProcessed() {
-		return processed;
-	}
-	public void setProcessed(Date processed) {
-		this.processed = processed;
-	}
-	public Date getShipped() {
-		return shipped;
-	}
-	public void setShipped(Date shipped) {
-		this.shipped = shipped;
-	}
+
 	public Product getProduct() {
 		return product;
 	}
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+	
 	
 }

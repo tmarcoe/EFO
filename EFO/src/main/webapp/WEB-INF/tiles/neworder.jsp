@@ -16,13 +16,13 @@
 			<td><sf:input path="sku" readonly="true"/></td>
 			<td><sf:input path="invoice_num" /></td>
 			<td><sf:input onclick="chooseSupplier()" id="supplierInp" path="vendor" /></td>
-			<td><sf:input type="number" step=".01" path="amount" /></td>
+			<td><sf:input type="number" step=".01" path="wholesale" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="sku" class="error" /></td>
 			<td><sf:errors path="invoice_num" class="error" /></td>
 			<td><sf:errors onclick="chooseSupplier()" id="supplierInp" path="vendor" class="error" /></td>
-			<td><sf:errors path="amount" class="error" /></td>
+			<td><sf:errors path="wholesale" class="error" /></td>
 		</tr>
 		<tr>
 			<td><b>Order Qty</b></td>
