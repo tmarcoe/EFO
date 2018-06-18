@@ -8,34 +8,40 @@
 	<table class="table">
 		<tr>
 			<td><b>Invoice #</b></td>
+			<td><b>Product Name</b></td>
 			<td><b>Vendor</b></td>
 			<td><b>Order Price</b></td>
+		</tr>
+		<tr>
+			<td><sf:input path="invoice_num" readonly="true"/></td>
+			<td><sf:input path="product_name" readonly="true"/>
+			<td><sf:input onclick="chooseSupplier()" id="supplierInp" path="vendor" /></td>
+			<td><sf:input type="number" step=".01" path="wholesale" /></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="invoice_num" class="error" /></td>
+			<td><sf:errors path="product_name" class="error"/></td>
+			<td><sf:errors path="vendor" class="error" /></td>
+			<td><sf:errors path="wholesale" class="error" /></td>
+		</tr>
+		<tr>
 			<td><b>Order Qty</b></td>
 			<td><b>Payment Type</b></td>
 			<td><b>Date Ordered</b></td>
-			<td><b>Date Received</b></td>
 		</tr>
 		<tr>
-			<td><sf:input path="invoice_num" /></td>
-			<td><sf:input onclick="chooseSupplier()" id="supplierInp" path="vendor" /></td>
-			<td><sf:input type="number" step=".01" path="wholesale" /></td>
-			<td><sf:input type="number" step=".01" path="qty" /></td>
+			<td><sf:input type="number" step=".01" path="amt_ordered" /></td>
 			<td><sf:select path="payment_type">
 				<sf:option value="">---Select---</sf:option>
 				<sf:option value="Cash">Cash</sf:option>
 				<sf:option value="Credit">Credit</sf:option>
 			</sf:select></td>
-			<td><sf:input path="order_date" /></td>
-			<td><sf:input path="delivery_date" /></td>
+			<td><sf:input type="date" path="order_date" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="invoice_num" class="error" /></td>
-			<td><sf:errors path="vendor" class="error" /></td>
-			<td><sf:errors path="wholesale" class="error" /></td>
-			<td><sf:errors path="qty" class="error" /></td>
+			<td><sf:errors path="amt_ordered" class="error" /></td>
 			<td><sf:errors path="payment_type" class="error" /></td>
 			<td><sf:errors path="order_date" class="error" /></td>
-			<td><sf:errors path="delivery_date" class="error" /></td>
 		</tr>
 		<tr>
 			<td><sf:button type="submit">Save</sf:button></td>
@@ -60,6 +66,11 @@
 			</table>
 		</div>
 	</div>
+	<sf:hidden path="delivery_date" />
+	<sf:hidden path="amt_received" />
+	<sf:hidden path="id"/>
+	<sf:hidden path="sku"/>
+	<sf:hidden path="status" />
 </sf:form>
 <script type="text/javascript">
 	function cancel() {

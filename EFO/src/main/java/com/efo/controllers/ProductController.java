@@ -55,6 +55,8 @@ public class ProductController {
 	public String listProduct(Model model) {
 		
 		prdList = productService.retrieveList();
+		prdList.setPageSize(20);
+		prdList.setPage(0);
 		
 		model.addAttribute("objectList", prdList);
 		model.addAttribute("pagelink", pageLink);
@@ -121,7 +123,7 @@ public class ProductController {
 		
 		return "redirect:/admin/listproduct";
 	}
-	
+
 	@RequestMapping("editproduct")
 	public String editProduct(@ModelAttribute("sku") String sku, Model model) {
 		

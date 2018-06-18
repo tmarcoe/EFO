@@ -35,9 +35,21 @@ public class ProductOrdersService implements IProductOrders {
 		return new PagedListHolder<ProductOrders>(orderDao.retrieveRawList());
 	}
 	
+	public PagedListHolder<ProductOrders> retrieveOpenOrders() {
+		return new PagedListHolder<ProductOrders>(orderDao.retrieveOpenOrders());
+	}
+	
+	public void setStatus(int id, String status) {
+		orderDao.setStatus(id, status);
+	}
+	
 	@Override
 	public void update(ProductOrders orders) {
 		orderDao.update(orders);
+	}
+	
+	public void merge(ProductOrders orders) {
+		orderDao.merge(orders);
 	}
 
 	@Override

@@ -422,7 +422,20 @@ Wide styles
 	float: bottom;
 	font-size: 10px;	
 }
-
+.centerTitle {
+	margin-left: auto;
+	margin-right: auto;
+	font-family: JosefinSans-BoldItalic;
+	font-size: 31px;
+	text-align: center;		
+}
+.errorTitle {
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 31px;
+	text-align: center;		
+	color: red;
+}
 .error {
 	color: red;
 	font-size: 12px

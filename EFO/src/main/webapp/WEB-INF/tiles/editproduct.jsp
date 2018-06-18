@@ -77,7 +77,6 @@
 		</tr>
 	</table>
 	<sf:hidden path="inventory.sku"/>
-	<sf:hidden path="inventory.innvoice_num"/>
 	<sf:hidden path="inventory.amt_in_stock"/>
 	<sf:hidden path="inventory.min_amount"/>
 </sf:form>

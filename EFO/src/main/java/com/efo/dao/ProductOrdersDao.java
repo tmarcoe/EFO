@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -52,12 +53,40 @@ public class ProductOrdersDao implements IProductOrders {
 		
 		return orderList;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ProductOrders> retrieveOpenOrders() {
+		Session session = session();
+		Criterion delivered = Restrictions.ne("status", "D");
+		Criterion canceled = Restrictions.ne("status", "C");
+		List<ProductOrders> orderList = session.createCriteria(ProductOrders.class).add(Restrictions.and(delivered, canceled)).list();
+		session.disconnect();
+		
+		return orderList;
+	}
+	
+	public void setStatus(int id, String status) {
+		String hql = "UPDATE ProductOrders SET status = :status WHERE id = :id";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setString("status", status).setInteger("id", id).executeUpdate();
+		tx.commit();
+		session.disconnect();
+	}
 
 	@Override
 	public void update(ProductOrders orders) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.update(orders);
+		tx.commit();
+		session.disconnect();
+	}
+	
+	public void merge(ProductOrders orders) {
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.merge(orders);
 		tx.commit();
 		session.disconnect();
 	}

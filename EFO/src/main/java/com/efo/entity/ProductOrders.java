@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 
 
@@ -19,15 +20,20 @@ public class ProductOrders implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String sku;
+	private String product_name;
 	private String invoice_num;
 	private String vendor;
 	
 	@DecimalMin("0.01")
 	private double wholesale;
-	private double qty;
+	private double amt_ordered;
+	private double amt_received;
+	@Transient
+	private double amt_this_shipment;
 	private String payment_type;
 	private Date order_date;
 	private Date delivery_date;
+	private String status; //O = Ordered, D = Delivered, C = Canceled, X = Dispute
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SKU", nullable = false, insertable=false, updatable=false )
@@ -37,9 +43,10 @@ public class ProductOrders implements Serializable {
 	public ProductOrders() {
 	}
 	
-	public ProductOrders(String sku, Date order_date) {
+	public ProductOrders(String sku, Date order_date, String product_name) {
 		this.sku = sku;
 		this.order_date = order_date;
+		this.product_name = product_name;
 	}
 	
 	public int getId() {
@@ -54,6 +61,14 @@ public class ProductOrders implements Serializable {
 	public void setSku(String sku) {
 		this.sku = sku;
 	}
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+
 	public String getInvoice_num() {
 		return invoice_num;
 	}
@@ -74,12 +89,30 @@ public class ProductOrders implements Serializable {
 		this.wholesale = wholesale;
 	}
 
-	public double getQty() {
-		return qty;
+	public double getAmt_ordered() {
+		return amt_ordered;
 	}
-	public void setQty(double qty) {
-		this.qty = qty;
+
+	public void setAmt_ordered(double amt_ordered) {
+		this.amt_ordered = amt_ordered;
 	}
+
+	public double getAmt_received() {
+		return amt_received;
+	}
+
+	public void setAmt_received(double amt_received) {
+		this.amt_received = amt_received;
+	}
+	
+	public double getAmt_this_shipment() {
+		return amt_this_shipment;
+	}
+
+	public void setAmt_this_shipment(double amt_this_shipment) {
+		this.amt_this_shipment = amt_this_shipment;
+	}
+
 	public String getPayment_type() {
 		return payment_type;
 	}
@@ -97,6 +130,13 @@ public class ProductOrders implements Serializable {
 	}
 	public void setDelivery_date(Date delivery_date) {
 		this.delivery_date = delivery_date;
+	}
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Product getProduct() {

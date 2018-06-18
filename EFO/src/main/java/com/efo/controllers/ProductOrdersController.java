@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.antlr.v4.runtime.RecognitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
@@ -56,7 +57,7 @@ public class ProductOrdersController {
 
 	@RequestMapping("listproductorders")
 	public String listProductOrders(Model model) {
-		prdOrderList = ordersService.retrieveList();
+		prdOrderList = ordersService.retrieveOpenOrders();
 
 		model.addAttribute("objectList", prdOrderList);
 		model.addAttribute("pagelink", pageLink);
@@ -67,9 +68,10 @@ public class ProductOrdersController {
 	@RequestMapping("newproductorder")
 	public String newOrder(@ModelAttribute("sku") String sku, Model model) {
 
+		Product product = productService.retrieve(sku);
 		List<User> suppliers = vendorService.retrieveRawList("R");
 
-		model.addAttribute("productOrder", new ProductOrders(sku, new Date()));
+		model.addAttribute("productOrder", new ProductOrders(sku, new Date(), product.getProduct_name()));
 		model.addAttribute("suppliers", suppliers);
 
 		return "newproductorder";
@@ -88,6 +90,7 @@ public class ProductOrdersController {
 		}
 
 		Product product = productService.retrieve(productOrders.getSku());
+		productOrders.setProduct_name(product.getProduct_name());
 
 		fetalService.purchaseInventory(productOrders, product.getInventory());
 
@@ -96,8 +99,11 @@ public class ProductOrdersController {
 
 	@RequestMapping("editproductorder")
 	public String editProductOrder(@ModelAttribute("id") int id, Model model) {
-
-		model.addAttribute("productOrder", ordersService.retrieve(id));
+		
+		ProductOrders orders =  ordersService.retrieve(id);
+		
+		model.addAttribute("product", productService.retrieve(orders.getSku()));
+		model.addAttribute("productOrder", orders);
 
 		return "editproductorder";
 	}
@@ -107,6 +113,39 @@ public class ProductOrdersController {
 
 		ordersService.update(order);
 
+		return "redirect:/admin/listproductorders";
+	}
+	
+	@RequestMapping("receiveorder")
+	public String receiveOrder(@ModelAttribute("id") int id, Model model) {
+		
+		model.addAttribute("order", ordersService.retrieve(id));
+		
+		return "receiveorder";
+	}
+	
+	@RequestMapping("stockorder")
+	public String stockOrder(@ModelAttribute("productOrder") ProductOrders order) throws RecognitionException, IOException, RuntimeException {
+		
+		if (order.getDelivery_date() == null) {
+			order.setDelivery_date(new Date());
+		}
+		
+		fetalService.orderDelivered(order);
+		
+		return "redirect:/admin/listproductorders";
+	}
+	
+	@RequestMapping("cancelorder")
+	public String cancelOrder(@ModelAttribute("id") int id) throws IOException {
+		
+		ProductOrders orders = ordersService.retrieve(id);
+		if (orders.getAmt_received() > 0) {
+			return "/admin/listproductorders?error=true";
+		}
+		Product product = productService.retrieve(orders.getSku());
+		fetalService.cancelOrder(orders, product.getInventory());
+		
 		return "redirect:/admin/listproductorders";
 	}
 

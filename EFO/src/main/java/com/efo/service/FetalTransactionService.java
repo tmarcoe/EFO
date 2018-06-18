@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.antlr.v4.runtime.RecognitionException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,33 @@ public class FetalTransactionService extends FetalTransaction {
 	@Value("${fetal.properiesFile}")
 	private String filePath;
 	
+	public void cancelOrder(ProductOrders order, Inventory inventory ) throws IOException {
+		
+		try {
+			initTransaction(filePath);
+			setDescription("Cancel Order: " + order.getInvoice_num());
+			publish("order", VariableType.DAO, order);
+			publish("payables", VariableType.DAO, new Payables());
+			publish("inventory", VariableType.DAO, inventory);
+			loadRule("ordercancelled.trans");
+			}
+		finally {
+			closeFetal();
+		}
+	}
+	
+	public void orderDelivered(ProductOrders order ) throws RecognitionException, IOException, RuntimeException {
+		
+		try {
+			initTransaction(filePath);
+			publish("order", VariableType.DAO, order);
+			loadRule("orderdelivered.trans");
+			}
+		finally {
+			closeFetal();
+		}
+	}
+
 	public void purchaseInventory(ProductOrders order, Inventory inventory ) throws IOException {
 		try {
 			initTransaction(filePath);
