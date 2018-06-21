@@ -3,13 +3,16 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
+
 
 <sf:form id="details" method="post" action="/admin/updatecustomer" modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
-	<table class="table">
+	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>Email: </b><sf:input path="username" readonly="true" /></td>
-			<td><b>Enabled logins? </b><sf:checkbox path="enabled"/></td>
+			<td><b>Email: </b><sf:input class="fancy" path="username" readonly="true" /></td>
+			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="username" class="error" />
@@ -22,16 +25,16 @@
 			<td><b>&nbsp;</b></td>
 		</tr>
 		<tr>
-			<td><sf:select path="customer.salutation">
+			<td><sf:select class="fancy" path="customer.salutation">
 				<sf:option value="Mr.">Mr.</sf:option>
 				<sf:option value="Mrs.">Mrs.</sf:option>
 				<sf:option value="Ms.">Ms.</sf:option>
 				<sf:option value="Miss.">Miss.</sf:option>
 				<sf:option value="Dr.">Dr.</sf:option>
 			</sf:select></td>
-			<td><sf:input path="customer.firstname" /></td>
-			<td><sf:input path="customer.lastname" /></td>
-			<td><sf:select path="customer.maleFemale">
+			<td><sf:input class="fancy" path="customer.firstname" /></td>
+			<td><sf:input class="fancy" path="customer.lastname" /></td>
+			<td><sf:select class="fancy" path="customer.maleFemale">
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
 				</sf:select></td>
@@ -52,12 +55,12 @@
 			<td><b>Country Code</b></td>
 		</tr>
 		<tr>
-			<td><sf:input path="common.address1"/>
-			<td><sf:input path="common.address2"/>
-			<td><sf:input path="common.city"/>
-			<td><sf:input path="common.region"/>
-			<td><sf:input path="common.postalCode"/>
-			<td><sf:input path="common.country"/>
+			<td><sf:input class="fancy" path="common.address1"/>
+			<td><sf:input class="fancy" path="common.address2"/>
+			<td><sf:input class="fancy" path="common.city"/>
+			<td><sf:input class="fancy" path="common.region"/>
+			<td><sf:input class="fancy" path="common.postalCode"/>
+			<td><sf:input class="fancy" path="common.country"/>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.address1" class="error"/></td>
@@ -68,14 +71,14 @@
 			<td><sf:errors path="common.country" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Customer Since:<br></b><sf:input type="date" path="customer.since"/></td>
-			<td><b>Role(s):<br></b><sf:select path="roles" id="roles" multiselect="true">
+			<td><b>Customer Since:<br></b><sf:input class="fancy" type="date" path="customer.since"/></td>
+			<td><b>Role(s):<br></b><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
 		</tr>
 		<tr>
-			<td ><button type="button" onclick="formSubmit()">Save</button></td>
-			<td ><button type="button"onclick="window.history.back()" >Cancel</button></td>
+			<td ><button class="fancy-button" type="button" onclick="formSubmit()">Save</button></td>
+			<td ><button class="fancy-button" type="button"onclick="window.history.back()" >Cancel</button></td>
 		</tr>
 	</table>
 	<sf:hidden path="user_id" />

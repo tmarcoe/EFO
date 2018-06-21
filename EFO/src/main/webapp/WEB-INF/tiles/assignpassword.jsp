@@ -4,18 +4,21 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
+
 <sf:form id="details" method="post" action="/admin/savepassword"
 	modelAttribute="user">
 	<sf:hidden path="user_id" />
-	<table class="table">
+	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>Password</b></td>
 			<td><b>Confirm Password</b></td>
 		</tr>
 		<tr>
-			<td><sf:password path="password" autocomplete="false"
+			<td><sf:password class="fancy" path="password" autocomplete="false"
 					showPassword="true" /></td>
-			<td><input id="confirmpass" class="control" name="confirmpass"
+			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass"
 				type="password" /></td>
 		</tr>
 		<tr>
@@ -26,8 +29,8 @@
 			<td><div id="matchpass"></div>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><sf:button type="submit" >Save</sf:button></td>
-			<td><sf:button type="button" onclick="window.history.back()">Cancel</sf:button>
+			<td><sf:button class="fancy-button" type="submit" >Save</sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()">Cancel</sf:button>
 		</tr>
 	</table>
 </sf:form>

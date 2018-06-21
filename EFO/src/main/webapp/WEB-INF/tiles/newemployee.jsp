@@ -3,10 +3,12 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
 <sf:form id="details" method="post" action="/admin/addemployee" modelAttribute="user">
 <sf:hidden id="selectedRoles" path="roleString"/>
-	<table class="table">
+	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>Email</b></td>
 			<td><b>Temporary Password</b></td>
@@ -14,9 +16,9 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><sf:input path="username" autocomplete="false" /></td>
-			<td><sf:password path="password" autocomplete="false" showPassword="true" /></td>
-			<td><input id="confirmpass" class="control" name="confirmpass"
+			<td><sf:input class="fancy" path="username" autocomplete="false" /></td>
+			<td><sf:password class="fancy" path="password" autocomplete="false" showPassword="true" /></td>
+			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass"
 				type="password" /></td>
 			<td><b>Enable logins? </b><sf:checkbox path="enabled"/></td>
 		</tr>
@@ -39,16 +41,16 @@
 			<th>Ending Date</th>
 		</tr>
 		<tr>
-			<td><sf:select path="employee.salutation">
+			<td><sf:select class="fancy" path="employee.salutation">
 				<sf:option value="Mr.">Mr.</sf:option>
 				<sf:option value="Mrs.">Mrs.</sf:option>
 				<sf:option value="Ms.">Ms.</sf:option>
 				<sf:option value="Miss.">Miss.</sf:option>
 				<sf:option value="Dr.">Dr.</sf:option>
 			</sf:select></td>
-			<td><sf:input path="employee.firstname" /></td>
-			<td><sf:input path="employee.lastname" /></td>
-			<td><sf:select path="employee.maleFemale">
+			<td><sf:input class="fancy" path="employee.firstname" /></td>
+			<td><sf:input class="fancy" path="employee.lastname" /></td>
+			<td><sf:select class="fancy" path="employee.maleFemale">
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
 				</sf:select></td>
@@ -73,11 +75,11 @@
 			<th>Office Location</th>
 		</tr>
 		<tr>
-			<td><sf:input path="employee.company" /></td>
-			<td><sf:input path="employee.division" /></td>
-			<td><sf:input path="employee.supervisor" /></td>
-			<td><sf:input path="employee.extension" /></td>
-			<td><sf:input path="employee.office_loc" /></td>
+			<td><sf:input class="fancy" path="employee.company" /></td>
+			<td><sf:input class="fancy" path="employee.division" /></td>
+			<td><sf:input class="fancy" path="employee.supervisor" /></td>
+			<td><sf:input class="fancy" path="employee.extension" /></td>
+			<td><sf:input class="fancy" path="employee.office_loc" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="employee.company" class="error"/>
@@ -95,12 +97,12 @@
 			<th>Country Code</th>
 		</tr>
 		<tr>
-			<td><sf:input path="common.address1"/>
-			<td><sf:input path="common.address2"/>
-			<td><sf:input path="common.city"/>
-			<td><sf:input path="common.region"/>
-			<td><sf:input path="common.postalCode"/>
-			<td><sf:input path="common.country"/>
+			<td><sf:input class="fancy" path="common.address1"/>
+			<td><sf:input class="fancy" path="common.address2"/>
+			<td><sf:input class="fancy" path="common.city"/>
+			<td><sf:input class="fancy" path="common.region"/>
+			<td><sf:input class="fancy" path="common.postalCode"/>
+			<td><sf:input class="fancy" path="common.country"/>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.address1" class="error"/></td>
@@ -117,10 +119,10 @@
 			<th>Contact Ph</th>
 		</tr>
 		<tr>
-			<td><sf:input path="employee.home_phone"/></td>
-			<td><sf:input path="employee.cell_phone"/></td>
-			<td><sf:input path="employee.emer_contact"/></td>
-			<td><sf:input path="employee.emer_ph"/></td>
+			<td><sf:input class="fancy" path="employee.home_phone"/></td>
+			<td><sf:input class="fancy" path="employee.cell_phone"/></td>
+			<td><sf:input class="fancy" path="employee.emer_contact"/></td>
+			<td><sf:input class="fancy" path="employee.emer_ph"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="employee.home_phone" class="error"/></td>
@@ -129,9 +131,9 @@
 			<td><sf:errors path="employee.emer_ph" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Do Not Rehire:</b> <sf:checkbox path="employee.dnr" /></td>
+			<td><b>Do Not Rehire:</b> <sf:checkbox class="fancy" path="employee.dnr" /></td>
 			<td colspan="2"><b>Employment Type:</b>
-				<sf:select path="employee.emp_type">
+				<sf:select class="fancy" path="employee.emp_type">
 					<sf:option value="F">Full Time</sf:option>
 					<sf:option value="S">Salary (non-exempt)</sf:option>
 					<sf:option value="E">Salary (exempt)</sf:option>
@@ -139,15 +141,15 @@
 					<sf:option value="C">Contract</sf:option>
 					<sf:option value="T">Temporary</sf:option>
 				</sf:select></td>
-			<td><b>Role(s):</b><br><sf:select path="roles" id="roles" multiselect="true">
+			<td><b>Role(s):</b><br><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
 			
 		</tr>
 		<tr>
-			<td ><button type="button" onclick="formSubmit()" >Save</button></td>
-			<td><button type="button"  onclick="openPopup()">Financial Information</button></td>
-			<td ><button type="button" onclick="window.history.back()" >Cancel</button></td>
+			<td><button class="fancy-button" type="button" onclick="formSubmit()" ><b>Save</b></button></td>
+			<td><button class="fancy-button" type="button"  onclick="openPopup()"><b>Financial Information</b></button></td>
+			<td><button class="fancy-button" type="button" onclick="window.history.back()" ><b>Cancel</b></button></td>
 		</tr>
 	</table>
 		<div class="modal" id="empFinancial">

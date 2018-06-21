@@ -459,7 +459,9 @@ div.pageheading
 
 
 fieldset {
-	float: left;
+	position: fixed;
+	top: 110px;
+	left: 0;
 	display: block;
     margin-left: 2px;
     margin-right: 2px;
@@ -468,6 +470,8 @@ fieldset {
     padding-left: 0.75em;
     padding-right: 0.75em;
     border: 4px ridge #808080;
+    width: 20em;
+    height: 38em;
 }
 
 

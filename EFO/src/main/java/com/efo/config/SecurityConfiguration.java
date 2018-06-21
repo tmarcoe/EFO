@@ -51,6 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/access-denied").permitAll()
 				.antMatchers("/loggedout").permitAll()
 				.antMatchers("/public/**").permitAll()
+				.antMatchers("/rest/**").permitAll()
 				.antMatchers("/user/**").authenticated()
 				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.antMatchers("/supervisor/**").hasAuthority("SUPERVISOR")

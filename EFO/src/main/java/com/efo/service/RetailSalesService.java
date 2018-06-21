@@ -40,6 +40,10 @@ public class RetailSalesService implements IRetailSales {
 	public void update(RetailSales sales) {
 		retailSalesDao.update(sales);
 	}
+	
+	public void merge(RetailSales sales) {
+		retailSalesDao.merge(sales);
+	}
 
 	@Override
 	public void delete(RetailSales sales) {

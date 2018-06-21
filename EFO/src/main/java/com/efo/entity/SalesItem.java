@@ -21,6 +21,7 @@ public class SalesItem implements Serializable {
 	
 	private int invoice_num;
 	private String sku;
+	private String product_name;
 	private double qty;
 	private double sold_for;
 	private double regular_price;
@@ -55,6 +56,18 @@ public class SalesItem implements Serializable {
 	}
 	public void setSku(String sku) {
 		this.sku = sku;
+	}
+	public String getProduct_name() {
+		return product_name;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public UsedCoupons getUsedCoupons() {
+		return usedCoupons;
+	}
+	public void setUsedCoupons(UsedCoupons usedCoupons) {
+		this.usedCoupons = usedCoupons;
 	}
 	public double getQty() {
 		return qty;

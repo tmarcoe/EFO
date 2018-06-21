@@ -4,17 +4,20 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
+
 <sf:form method="post" action="/admin/addproduct" modelAttribute="product">
-	<table  class="table">
+	<table  class="fancy-table">
 		<tr>
 			<td><b>SKU</b></td>
 			<td><b>UPC</b></td>
 			<td><b>Name</b></td>
 		</tr>
 		<tr>
-			<td><sf:input path="sku"/></td>
-			<td><sf:input path="upc"/></td>
-			<td><sf:input path="product_name"/></td>
+			<td><sf:input class="fancy" path="sku"/></td>
+			<td><sf:input class="fancy" path="upc"/></td>
+			<td><sf:input class="fancy" path="product_name" size="55" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="sku" class="error" /></td>
@@ -23,13 +26,13 @@
 		</tr>
 		<tr>
 			<td><b>Reorder At</b></td>
-			<td><b>Price</b></td>
+			<td><b>Price Per Unit</b></td>
 			<td><b>Unit</b></td>
 		</tr>
 		<tr>
-			<td><sf:input type="number" step=".01" path="inventory.min_amount"/></td>
-			<td><sf:input type="number" step=".01" path="price"/></td>
-			<td><sf:select path="unit">
+			<td><sf:input class="fancy" type="number" step=".01" path="inventory.min_amount"/></td>
+			<td><sf:input class="fancy" type="number" step=".01" path="price"/></td>
+			<td><sf:select class="fancy" path="unit">
 				<sf:option value="Each">Each</sf:option>
 				<sf:option value="Pack">Pack</sf:option>
 				<sf:option value="Hourly">Hourly</sf:option>
@@ -56,9 +59,9 @@
 			<td colspan="2"><b>Keywords (separated by comas)</b></td>
 		</tr>
 		<tr>
-			<td><sf:input path="category" /></td>
-			<td><sf:input path="subcategory"/></td>
-			<td colspan="2"><sf:textarea path="keywords" rows="4" cols="58"/></td>
+			<td><sf:input class="fancy" path="category" /></td>
+			<td><sf:input class="fancy" path="subcategory"/></td>
+			<td colspan="2"><sf:textarea class="fancy-textarea" path="keywords" rows="4" cols="58"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="category" class="error"/></td>
@@ -66,12 +69,12 @@
 			<td colspan="3"><sf:errors path="keywords" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>On Sale? </b><sf:checkbox path="on_sale" /></td>
-			<td><b>Discontinue Product? </b><sf:checkbox path="discontinue"/></td>
+			<td><b>On Sale? </b><sf:checkbox class="fancy" path="on_sale" /></td>
+			<td><b>Discontinue Product? </b><sf:checkbox class="fancy" path="discontinue"/></td>
 		</tr>
 		<tr>
-			<td><sf:button type="submit">Save</sf:button></td>
-			<td><sf:button type="button" onclick="window.history.back()">Cancel</sf:button>
+			<td><sf:button class="fancy-button" type="submit">Save</sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()">Cancel</sf:button>
 		</tr>
 	</table>
 	<sf:hidden path="inventory.sku"/>

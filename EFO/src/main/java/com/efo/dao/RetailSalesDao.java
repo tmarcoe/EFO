@@ -61,6 +61,14 @@ public class RetailSalesDao implements IRetailSales {
 		tx.commit();
 		session.disconnect();
 	}
+	
+	public void merge(RetailSales sales) {
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.merge(sales);
+		tx.commit();
+		session.disconnect();
+	}
 
 	@Override
 	public void delete(RetailSales sales) {

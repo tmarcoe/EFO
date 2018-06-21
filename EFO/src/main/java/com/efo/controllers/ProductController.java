@@ -1,9 +1,7 @@
 package com.efo.controllers;
 
-import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.Product;
-import com.efo.entity.RetailSales;
-import com.efo.entity.SalesItem;
-import com.efo.entity.User;
 import com.efo.service.ProductService;
-import com.efo.service.RetailSalesService;
-import com.efo.service.UserService;
 
 @Controller
 @RequestMapping("/admin/")
@@ -32,13 +25,7 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private RetailSalesService retailSalesService;
-	
+		
 	private final String pageLink = "/admin/productpaging";
 	
 	private SimpleDateFormat dateFormat;
@@ -63,48 +50,7 @@ public class ProductController {
 
 		return "listproduct";
 	}
-	
-	@RequestMapping("browseproducts")
-	public String browseProducts(Model model) {
 		
-		prdList = productService.retrieveList();
-		
-		model.addAttribute("objectList", prdList);
-		model.addAttribute("pagelink", pageLink);
-		
-		return "browseproducts";
-	}
-	
-	@RequestMapping("productdetail") 
-	public String productDetail(@ModelAttribute("sku") String sku, Model model, Principal principal){
-		User user = userService.retrieve(principal.getName());
-		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
-		Product product = productService.retrieve(sku);
-
-		if (sales == null) {
-			sales = new RetailSales();
-			sales.setUser_id(user.getUser_id());
-			sales.setChanged(false);
-			sales.setOrdered(new Date());
-			sales.setTotal_price(0);
-			
-			retailSalesService.create(sales);
-		}
-		
-		
-		SalesItem item = new SalesItem();
-		item.setSku(sku);
-		item.setInvoice_num(sales.getInvoice_num());
-		item.setRetailSales(sales);
-		product.getSales().add(item);
-		sales.getSalesItem().add(item);
-
-		model.addAttribute("item", item);
-		model.addAttribute("product", product);
-		
-		return "productdetail";
-	}
-	
 	@RequestMapping("newproduct")
 	public String newProduct(Model model) {
 		
@@ -112,7 +58,7 @@ public class ProductController {
 		
 		return "newproduct";
 	}
-
+	
 	@RequestMapping("addproduct")
 	public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
 		

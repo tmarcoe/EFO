@@ -44,5 +44,9 @@ public class ProductService implements IProduct {
 	public void delete(String sku) {
 		productDao.delete(sku);
 	}
+	
+	public Product nameSearch(String name) {
+		return productDao.nameSearch(name);
+	}
 
 }

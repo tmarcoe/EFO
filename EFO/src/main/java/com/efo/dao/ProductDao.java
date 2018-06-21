@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -86,6 +87,16 @@ public class ProductDao implements IProduct {
 		session.createQuery(hql).setString("sku", sku).executeUpdate();
 		tx.commit();
 		session.disconnect();
+	}
+	
+	public Product nameSearch(String name) {
+		Session session = session();
+		Product product = (Product) session.createCriteria(Product.class)
+										   .add(Restrictions.like("product_name", name, MatchMode.ANYWHERE))
+										   .setMaxResults(1).uniqueResult();
+		session.disconnect();
+		
+		return product;
 	}
 
 }

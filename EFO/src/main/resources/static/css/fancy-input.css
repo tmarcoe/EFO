@@ -1,0 +1,57 @@
+
+.fancy {
+	box-sizing: border-box;
+	padding: 5px 5px;
+	background-color: white;
+	border-radius: 40px;
+	border: 2px solid var(--foreground);
+}
+
+
+
+.fancy-table {
+	position: fixed;	
+	top: 50px;
+	border: 2px solid var(--foreground);
+	border-radius: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;	
+}
+.bigError {
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 20px;
+	text-align: center;		
+	color: red;
+	
+}
+
+.fancy-button {
+	
+	box-sizing: border-box;
+	padding: 5px 5px;
+	background-color: white;
+	border-radius: 40px;
+	border: 2px solid var(--foreground);
+	text-align: center;
+	background-color: var(--background);
+}
+
+.fancy-textarea {
+	box-sizing: border-box;
+	padding: 5px 5px;
+	background-color: white;
+	border-radius: 20px;
+	border: 2px solid var(--foreground);
+	
+}
+.fancy-roles {
+	box-sizing: border-box;
+	padding: 5px 5px;
+	background-color: white;
+	border-radius: 20px;
+	border: 2px solid var(--foreground);
+	
+}
+

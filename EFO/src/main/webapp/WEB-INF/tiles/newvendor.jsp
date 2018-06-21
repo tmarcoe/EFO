@@ -4,10 +4,13 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
+
 <sf:form id="details" method="post" action="/admin/addvendor"
 	modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
-	<table class="table">
+	<table class="fancy-table tableshadow">
 		<thead>
 			<tr>
 				<td><sf:hidden path="user_id" /></td>
@@ -22,12 +25,12 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><sf:input path="username" autocomplete="false" />
+			<td><sf:input class="fancy" path="username" autocomplete="false" />
 				<sf:errors path="username" class="error" /></td>
-			<td><sf:password path="password" autocomplete="false"
+			<td><sf:password class="fancy" path="password" autocomplete="false"
 					showPassword="true" />
 				<sf:errors path="password" class="error" /></td>
-			<td><input id="confirmpass" class="control" name="confirmpass"
+			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass"
 						type="password" /></td>
 			<td><b>Enable Logins? </b><sf:checkbox path="enabled" /></td>
 		</tr>
@@ -47,16 +50,16 @@
 			<td><b>Company Name</b></td>
 		</tr>
 		<tr>
-			<td><sf:select path="vendor.salutation">
+			<td><sf:select class="fancy" path="vendor.salutation">
 				<sf:option value="Mr.">Mr.</sf:option>
 				<sf:option value="Mrs.">Mrs.</sf:option>
 				<sf:option value="Ms.">Ms.</sf:option>
 				<sf:option value="Miss.">Miss.</sf:option>
 				<sf:option value="Dr.">Dr.</sf:option>
 			</sf:select></td>
-			<td><sf:input path="vendor.firstname" /></td>
-			<td><sf:input path="vendor.lastname"/></td>
-			<td><sf:input path="vendor.company_name" /></td>
+			<td><sf:input class="fancy" path="vendor.firstname" /></td>
+			<td><sf:input class="fancy" path="vendor.lastname"/></td>
+			<td><sf:input class="fancy" path="vendor.company_name" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="vendor.salutation" class="error" /></td>			
@@ -73,12 +76,12 @@
 			<td><b>Country Code</b></td>
 		</tr>
 		<tr>
-			<td><sf:input path="common.address1" />
-			<td><sf:input path="common.address2" />
-			<td><sf:input path="common.city" /></td>
-			<td><sf:input path="common.region" /></td>
-			<td><sf:input path="common.postalCode" /></td>
-			<td><sf:input path="common.country" /></td>
+			<td><sf:input class="fancy" path="common.address1" />
+			<td><sf:input class="fancy" path="common.address2" />
+			<td><sf:input class="fancy" path="common.city" /></td>
+			<td><sf:input class="fancy" path="common.region" /></td>
+			<td><sf:input class="fancy" path="common.postalCode" /></td>
+			<td><sf:input class="fancy" path="common.country" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.address1" class="error" /></td>
@@ -94,12 +97,12 @@
 			<td colspan="2"><b>Keywords: (Separated by commas)</b></td>
 		</tr>
 		<tr>
-			<td><sf:select path="vendor.type">
+			<td><sf:select class="fancy" path="vendor.type">
 				<sf:option value="C">Capital</sf:option>
 				<sf:option value="R">Revenue</sf:option>
 			</sf:select></td>
-			<td><sf:input path="vendor.category" /></td>
-			<td colspan="2"><sf:textarea path="vendor.keywords" rows="4" cols="58"/></td>
+			<td><sf:input class="fancy" path="vendor.category" /></td>
+			<td colspan="2"><sf:textarea class="fancy-textarea" path="vendor.keywords" rows="4" cols="58"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="vendor.type" class="error" /></td>
@@ -107,13 +110,13 @@
 			<td><sf:errors path="vendor.keywords" /></td>
 		</tr>
 		<tr>
-			<td><b>Role(s):</b><br><sf:select path="roles" id="roles" multiselect="true">
+			<td><b>Role(s):</b><br><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
 		</tr>
 		<tr>
-			<td><sf:button type="button" onclick="formSubmit()">Save</sf:button></td>
-			<td><button type="button" onclick="window.history.back()">Cancel</button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="formSubmit()">Save</sf:button></td>
+			<td><button class="fancy-button" type="button" onclick="window.history.back()">Cancel</button></td>
 		</tr>
 	</table>
 </sf:form>

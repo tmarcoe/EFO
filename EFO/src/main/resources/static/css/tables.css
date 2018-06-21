@@ -10,7 +10,6 @@
 	border-collapse: collapse;
 	font-size: 12px;
 }
-
 table.tableview tr:nth-child(odd)
 {
 	background: var(--odd-rows);
@@ -22,6 +21,31 @@ table.tableview tr:nth-child(even)
 table.tableview th
 {
 	background: var(--heading-row);
+}
+
+.fieldTable {
+	position: fixed;
+	top: 5em;
+	left: 0;
+	border-collapse: collapse;
+	font-size: 12px;	
+}
+
+table.fieldTable tr:nth-child(odd)
+{
+	background: var(--odd-rows);
+}
+table.fieldTable tr:nth-child(even)
+{
+	background: var(--even-rows);
+}
+table.fieldTable th
+{
+	background: var(--heading-row);
+}
+
+.fieldTable td {
+	padding-right: 5em;
 }
 
 tfoot.tablefooter td 
@@ -36,6 +60,9 @@ tfoot.tablefooter td
 /***************************************************** 
  * Right justified
  *****************************************************/
+.rjSecond td:nth-child(2) {
+	text-align: right;	
+}
 .rjthird td:nth-child(3) {
 	text-align: right;
 }

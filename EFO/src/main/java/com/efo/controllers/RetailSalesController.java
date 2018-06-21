@@ -1,22 +1,41 @@
 package com.efo.controllers;
 
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.efo.entity.GeneralLedger;
+import com.efo.entity.Product;
+import com.efo.entity.RetailSales;
+import com.efo.entity.SalesItem;
+import com.efo.entity.User;
+import com.efo.service.RetailSalesService;
+import com.efo.service.UserService;
 
 @Controller
+@RequestMapping("/admin/")
 public class RetailSalesController {
 	private final String pageLink = "/accounting/salespaging";
+	
+	@Autowired
+	private RetailSalesService retailSalesService;
+	
+	@Autowired
+	UserService userService;
 	
 	PagedListHolder<GeneralLedger> salesList;
 	
@@ -28,8 +47,67 @@ public class RetailSalesController {
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
-
 	
+	@RequestMapping("browseproducts")
+	public String browseProducts(Model model, Principal principal) {
+		User user = userService.retrieve(principal.getName());
+		
+		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
+		if (sales != null) {
+			model.addAttribute("items", sales.getSalesItem());
+		}else{
+			model.addAttribute("items", new HashSet<SalesItem>(0));
+		}
+		
+		model.addAttribute("product", new Product());
+		
+		return "browseproducts";
+	}
+
+	@RequestMapping("retailorder")
+	public String retailOrder(@Valid @ModelAttribute("product") Product product, BindingResult result, Principal principal) {
+		User user = userService.retrieve(principal.getName());
+		
+		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
+		
+		if (sales == null) {
+			sales = new RetailSales();
+			sales.setUser_id(user.getUser_id());
+			sales.setChanged(false);
+			sales.setOrdered(new Date());
+			sales.setTotal_price(0);
+			
+			retailSalesService.create(sales);
+		}
+		
+		SalesItem item = new SalesItem();
+		item.setSku(product.getSku());
+		item.setInvoice_num(sales.getInvoice_num());
+		item.setProduct_name(product.getProduct_name());
+		item.setRegular_price(product.getPrice());
+		item.setSold_for(product.getPrice());
+		item.setRetailSales(sales);
+		item.setQty(product.getOrder_qty());
+		product.getSales().add(item);
+		sales.getSalesItem().add(item);
+		
+		retailSalesService.merge(sales);
+		
+		
+		return "redirect:/admin/browseproducts";
+	}
+	@RequestMapping("processorder")
+	public String processOrder(Principal principal) {
+		User user = userService.retrieve(principal.getName());
+		
+		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
+		
+		sales.setProcessed(new Date());
+		
+		retailSalesService.merge(sales);
+		
+		return "redirect:/admin/browseproducts";
+	}
 	
 	@RequestMapping(value = "salespaging", method = RequestMethod.GET)
 	public String handleSalesRequest(@ModelAttribute("page") String page, Model model) throws Exception {

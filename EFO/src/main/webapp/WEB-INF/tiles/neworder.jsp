@@ -4,8 +4,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
+
 <sf:form method="post" action="/admin/addproductorder" modelAttribute="productOrder">
-	<table class="table">
+	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>SKU</b></td>
 			<td><b>Product Name</b></td>
@@ -13,10 +16,10 @@
 			<td><b>Vendor</b></td>
 		</tr>
 		<tr>
-			<td><sf:input path="sku" readonly="true"/></td>
-			<td><sf:input path="product_name" readonly="true"/>
-			<td><sf:input path="invoice_num" /></td>
-			<td><sf:input onclick="chooseSupplier()" id="supplierInp" path="vendor" /></td>
+			<td><sf:input class="fancy" path="sku" readonly="true"/></td>
+			<td><sf:input class="fancy" path="product_name" readonly="true"/>
+			<td><sf:input class="fancy" path="invoice_num" /></td>
+			<td><sf:input class="fancy" onclick="chooseSupplier()" id="supplierInp" path="vendor" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="sku" class="error" /></td>
@@ -31,14 +34,14 @@
 			<td><b>Date Ordered</b></td>
 		</tr>
 		<tr>
-			<td><sf:input type="number" step=".01" path="wholesale" /></td>
-			<td><sf:input type="number" step=".01" path="amt_ordered" /></td>
-			<td><sf:select path="payment_type">
+			<td><sf:input class="fancy" type="number" step=".01" path="wholesale" /></td>
+			<td><sf:input class="fancy" type="number" step=".01" path="amt_ordered" /></td>
+			<td><sf:select class="fancy" path="payment_type">
 				<sf:option value="">---Select---</sf:option>
 				<sf:option value="Cash">Cash</sf:option>
 				<sf:option value="Credit">Credit</sf:option>
 			</sf:select></td>
-			<td><sf:input type="date" path="order_date" /></td>
+			<td><sf:input class="fancy" type="date" path="order_date" /></td>
 			<td><sf:errors path="wholesale" class="error" /></td>
 		</tr>
 		<tr>
@@ -47,8 +50,8 @@
 			<td><sf:errors path="order_date" class="error" /></td>
 		</tr>
 		<tr>
-			<td><sf:button type="submit">Save</sf:button></td>
-			<td><sf:button type="button" onclick="window.history.back()">Cancel</sf:button></td>
+			<td><sf:button class="fancy-button" type="submit"><b>Save</b></sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()"><b>Cancel</b></sf:button></td>
 		</tr>
 	</table>
 	<div id="getSupplier" class="modal">

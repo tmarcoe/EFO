@@ -3,24 +3,27 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
+
 <sf:form method="post" action="/admin/stockorder" modelAttribute="order">
 	<div class="centerTitle">Product: ${order.product_name}</div>
-	<table class="table">
+	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>Delivery Date</b></td>
 			<td><b>Amount Recieved</b></td>
 		</tr>
 		<tr>
-			<td><sf:input type="date" path="delivery_date" /></td>
-			<td><sf:input type="number" step=".01" path="amt_this_shipment" />
+			<td><sf:input class="fancy" type="date" path="delivery_date" /></td>
+			<td><sf:input class="fancy" type="number" step=".01" path="amt_this_shipment" />
 		</tr>
 		<tr>
 			<td><sf:errors class="error" path="delivery_date" /></td>
 			<td><sf:errors class="error" path="amt_this_shipment" /></td>
 		</tr>
 		<tr>
-			<td><sf:button type="submit" >Receive</sf:button></td>
-			<td><sf:button type="button" onclick="window.history.back()" >Back</sf:button>
+			<td><sf:button class="fancy-button" type="submit" ><b>Receive</b></sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()" ><b>Back</b></sf:button>
 		</tr>
 	</table>
 	<sf:hidden path="id"/>

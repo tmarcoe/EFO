@@ -305,12 +305,6 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="productdetail" extends="accounting.base">
-		<put-attribute name="title" value="Product Detail"></put-attribute>
-		<put-attribute name="heading_title" value="Product Details"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/productdetail.jsp"></put-attribute>
-	</definition>
-	
 	<!-- Product Orders Controller -->
 	<definition name="listproductorders" extends="accounting.base">
 		<put-attribute name="title" value="Product Orders"></put-attribute>

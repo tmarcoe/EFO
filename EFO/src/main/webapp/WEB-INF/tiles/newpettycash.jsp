@@ -3,8 +3,11 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
+
 <sf:form method="post" action="/accounting/addpettycash" modelAttribute="pettyCashVoucher">
-	<table class="table">
+	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>Date</b></td>
 			<td><b>Recipient</b></td>
@@ -12,16 +15,16 @@
 			<td><b>Amount</b></td>
 		</tr>
 		<tr>
-			<td><sf:input type="date" path="timeStamp"/></td>
-			<td><sf:input path="recipient"/></td>
-			<td><sf:select path="fromAccount">
+			<td><sf:input class="fancy" type="date" path="timeStamp"/></td>
+			<td><sf:input class="fancy" path="recipient"/></td>
+			<td><sf:select class="fancy" path="fromAccount">
 				<sf:option value="Petty Cash (Office Supplies)">Office Supplies</sf:option>
 				<sf:option value="Petty Cash (Delivery Expense)">Delivery Expense</sf:option>
 				<sf:option value="Petty Cash (Postage Expense)">Postage Expense</sf:option>
 				<sf:option value="Petty Cash (General Office Expense)">General Office Expense</sf:option>
 			</sf:select>
 			</td>
-			<td><sf:input type="number" step=".01" path="amount" /></td>
+			<td><sf:input class="fancy" type="number" step=".01" path="amount" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors class="error" path="timeStamp" /></td>
@@ -30,11 +33,11 @@
 			<td><sf:errors class="error" path="amount" /></td>
 		</tr>
 		<tr>
-			<td colspan="3"><b>Notes:</b><br><sf:textarea path="reason" rows="10" cols="50"/></td>
+			<td colspan="3"><b>Notes:</b><br><sf:textarea class="fancy-textarea" path="reason" rows="10" cols="50"/></td>
 		</tr>
 		<tr>
-			<td><sf:button type="submit" >Save</sf:button></td>
-			<td><sf:button type="button" onclick="window.history.back()">Back</sf:button>
+			<td><sf:button class="fancy-button" type="submit" >Save</sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()">Back</sf:button>
 		</tr>
 	</table>
 	<sf:hidden path="id"/>
