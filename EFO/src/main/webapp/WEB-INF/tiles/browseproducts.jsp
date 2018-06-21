@@ -76,18 +76,22 @@
 <c:if test="${items.size() > 0}">
 	<table class="fieldTable tableborder tableshadow rjthird">
 		<tr>
-			<th colspan="3">Invoice</th>
+			<th colspan="4">Invoice</th>
 		</tr>
 		<tr>
 			<th>SKU#</th>
 			<th>Product Name</th>
 			<th>Qty</th>
+			<th>&nbsp;</th>
 		</tr>
 		<c:forEach var="item" items="${items}">
 			<tr>
 				<td>${item.sku}</td>
 				<td>${item.product_name}</td>
 				<td>${item.qty}</td>
+				<td><button type="button" onclick="window.location.href='/admin/editsalesitem?item_id=${item.item_id}'">Edit</button>
+					<button type="button" onclick="window.location.href='/admin/deletesalesitem?item_id=${item.item_id}'">Delete</button>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

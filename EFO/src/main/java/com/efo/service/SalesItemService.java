@@ -50,5 +50,17 @@ public class SalesItemService implements ISalesItem {
 		SalesItem salesItem = salesItemDao.retrieve(item_id);
 		salesItemDao.delete(salesItem);
 	}
+	
+	public void deleteSalesItem(int item_id) {
+		salesItemDao.deleteSalesItem(item_id);
+	}
+	
+	public SalesItem getItemBySku(int invoice_num, String sku) {
+		return salesItemDao.getItemBySku(invoice_num, sku);
+	}
+	
+	public void addQuantity(SalesItem salesItem, double qty) {
+		salesItemDao.addQuantity(salesItem, qty);
+	}
 
 }

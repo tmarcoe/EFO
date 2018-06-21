@@ -298,13 +298,6 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editproduct.jsp"></put-attribute>
 	</definition>
 		
-	<definition name="browseproducts" extends="accounting.base">
-		<put-attribute name="title" value="Browse Products"></put-attribute>
-		<put-attribute name="heading_title" value="Browse Products"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/browseproducts.jsp"></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
-	</definition>
-	
 	<!-- Product Orders Controller -->
 	<definition name="listproductorders" extends="accounting.base">
 		<put-attribute name="title" value="Product Orders"></put-attribute>
@@ -329,6 +322,19 @@
 		<put-attribute name="title" value="Receive Order"></put-attribute>
 		<put-attribute name="heading_title" value="Receive Order"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/receiveorder.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Retail Sales Controller -->
+	<definition name="browseproducts" extends="accounting.base">
+		<put-attribute name="title" value="Browse Products"></put-attribute>
+		<put-attribute name="heading_title" value="Browse Products"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/browseproducts.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editsalesitem" extends="accounting.base">
+		<put-attribute name="title" value="Edit Sales Item"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Sales Item"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editsalesitem.jsp"></put-attribute>
 	</definition>
 		
 </tiles-definitions>
