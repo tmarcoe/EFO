@@ -57,7 +57,7 @@
 					<b>Process Order</b>
 				</sf:button></td>
 			<td><sf:button type="button" class="fancy-button"
-					onclick="window.location.href='#'">
+					onclick="window.location.href='/admin/cancelsales'">
 					<b>Cancel Order</b>
 				</sf:button></td>
 			<td><sf:button type="button" class="fancy-button"

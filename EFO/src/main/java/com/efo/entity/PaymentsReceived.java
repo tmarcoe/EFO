@@ -17,7 +17,7 @@ public class PaymentsReceived implements Serializable{
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String invoice_num;
+	private Long invoice_num;
 	private Date payment_date;
 	private Date date_due;
 	private double payment_due;
@@ -36,11 +36,11 @@ public class PaymentsReceived implements Serializable{
 		this.id = id;
 	}
 
-	public String getInvoice_num() {
+	public Long getInvoice_num() {
 		return invoice_num;
 	}
 
-	public void setInvoice_num(String invoice_num) {
+	public void setInvoice_num(Long invoice_num) {
 		this.invoice_num = invoice_num;
 	}
 

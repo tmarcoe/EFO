@@ -62,7 +62,7 @@ public class PaymentsReceivedDao implements IPaymentsReceived {
 		session.disconnect();			
 	}
 
-	public List<PaymentsReceived> retreiveList(String invoice_num) {
+	public List<PaymentsReceived> retreiveList(Long invoice_num) {
 		Session session = session();
 		
 		@SuppressWarnings("unchecked")

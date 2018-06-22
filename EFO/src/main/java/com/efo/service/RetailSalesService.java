@@ -22,8 +22,8 @@ public class RetailSalesService implements IRetailSales {
 	}
 
 	@Override
-	public RetailSales retrieve(int id) {
-		return retailSalesDao.retrieve(id);
+	public RetailSales retrieve(Long invoice_num) {
+		return retailSalesDao.retrieve(invoice_num);
 	}
 
 	@Override
@@ -50,13 +50,15 @@ public class RetailSalesService implements IRetailSales {
 		retailSalesDao.delete(sales);
 	}
 	
-	public void delete(int id) {
-		RetailSales sales = retailSalesDao.retrieve(id);
+	public void delete(Long invoice_num) {
+		RetailSales sales = retailSalesDao.retrieve(invoice_num);
 		retailSalesDao.delete(sales);
 	}
 	
 	public RetailSales getOpenInvoice(int user_id) {
 		return retailSalesDao.getOpenInvoice(user_id);
 	}
-
+	public void cancelSales(Long invoice_num) {
+		retailSalesDao.cancelSales(invoice_num);
+	}
 }

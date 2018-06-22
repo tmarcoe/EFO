@@ -41,14 +41,14 @@
 			</sf:select></td>
 		</tr>
 		<tr>
-			<sf:errors path="date_due" class="error" />
-			<sf:errors path="total_payments" class="error" />
-			<sf:errors path="total_balance" class="error" />
-			<sf:errors path="status" class="error" />
+			<td><sf:errors path="date_due" class="error" /></td>
+			<td><sf:errors path="total_payments" class="error" /></td>
+			<td><sf:errors path="total_balance" class="error" /></td>
+			<td><sf:errors path="status" class="error" /></td>
 		</tr>
 		<tr>
-			<td><sf:button class="fancy-button" type="submit">Save</sf:button>
-			<td><sf:button class="fancy-button" type="button" onclick="window.location.href='/accounting/ar'">Cancel</sf:button>
+			<td><sf:button class="fancy-button" type="submit"><b>Save</b></sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.location.href='/accounting/ar'"><b>Cancel</b></sf:button></td>
 		</tr>
 	</table>
 	<sf:hidden path="username"/>

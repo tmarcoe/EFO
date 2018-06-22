@@ -48,13 +48,13 @@ public class ARPaymentsController {
 	}
 
 	@RequestMapping("requestpayment")
-	public String requestPayment(@ModelAttribute("invoice_num") String invoice_num, Model model) {
+	public String requestPayment(@ModelAttribute("invoice_num") Long invoice_num, Model model) {
 		
 		return "requestpayment";
 	}
 	
 	@RequestMapping("arpaymentlist")
-	public String arPaymentList(@ModelAttribute("invoice_num") String invoice_num, Model model) {
+	public String arPaymentList(@ModelAttribute("invoice_num") Long invoice_num, Model model) {
 		
 		rList = paymentsService.retreiveList(invoice_num);
 
@@ -72,7 +72,7 @@ public class ARPaymentsController {
 	}
 	
 	@RequestMapping("newrpayment")
-	public String newPaymentReceived(@ModelAttribute("invoice_num") String invoice_num, Model model) {
+	public String newPaymentReceived(@ModelAttribute("invoice_num") Long invoice_num, Model model) {
 		PaymentsReceived payment = new PaymentsReceived();
 		payment.setInvoice_num(invoice_num);
 		

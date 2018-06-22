@@ -35,7 +35,7 @@ public class ReceivablesDao implements IReceivables {
 	}
 
 	@Override
-	public Receivables retreive(String invoice_num) {
+	public Receivables retreive(Long invoice_num) {
 		Session session = session();
 		Receivables r = (Receivables) session.createCriteria(Receivables.class).add(Restrictions.idEq(invoice_num)).uniqueResult();
 		session.disconnect();
@@ -60,7 +60,7 @@ public class ReceivablesDao implements IReceivables {
 	
 	
 	@Override
-	public void delete(String invoice_num) {
+	public void delete(Long invoice_num) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		Receivables r = retreive(invoice_num);

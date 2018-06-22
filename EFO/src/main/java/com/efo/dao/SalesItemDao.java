@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -44,7 +45,7 @@ public class SalesItemDao implements ISalesItem {
 		return salesItem;
 	}
 	
-	public SalesItem getItemBySku(int invoice_num, String sku) {
+	public SalesItem getItemBySku(Long invoice_num, String sku) {
 		Session session = session();
 		SalesItem item = (SalesItem) session.createCriteria(SalesItem.class)
 											.add(Restrictions
@@ -99,6 +100,16 @@ public class SalesItemDao implements ISalesItem {
 		session.delete(salesItem);
 		tx.commit();
 		session.disconnect();
+	}
+	
+	public Long rowCount(Long invoice_num) {
+		Session session = session();
+		Long count = (Long) session.createCriteria(SalesItem.class)
+								   .setProjection(Projections.rowCount())
+								   .add(Restrictions.eq("invoice_num", invoice_num)).uniqueResult();
+		session.disconnect();
+		
+		return count;
 	}
 
 }

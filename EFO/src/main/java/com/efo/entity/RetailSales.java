@@ -18,7 +18,7 @@ public class RetailSales implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id  @GeneratedValue(strategy = GenerationType.AUTO)
-	private int invoice_num;
+	private Long invoice_num;
 		
 	private int user_id;
 	private double total_price;
@@ -30,11 +30,11 @@ public class RetailSales implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "retailSales", cascade = CascadeType.ALL)
 	private Set<SalesItem> salesItem = new HashSet<SalesItem>(0);
 	
-	public int getInvoice_num() {
+	public Long getInvoice_num() {
 		return invoice_num;
 	}
-	public void setInvoice_num(int id) {
-		this.invoice_num = id;
+	public void setInvoice_num(Long invoice_num) {
+		this.invoice_num = invoice_num;
 	}
 	public int getUser_id() {
 		return user_id;

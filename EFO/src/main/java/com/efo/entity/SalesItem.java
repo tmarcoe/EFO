@@ -19,7 +19,7 @@ public class SalesItem implements Serializable {
 	@Id  @GeneratedValue(strategy = GenerationType.AUTO)
 	private int item_id;
 	
-	private int invoice_num;
+	private Long invoice_num;
 	private String sku;
 	private String product_name;
 	private double qty;
@@ -45,11 +45,12 @@ public class SalesItem implements Serializable {
 	public void setItem_id(int item_id) {
 		this.item_id = item_id;
 	}
-	public int getInvoice_num() {
+	
+	public Long getInvoice_num() {
 		return invoice_num;
 	}
-	public void setInvoice_num(int id) {
-		this.invoice_num = id;
+	public void setInvoice_num(Long invoice_num) {
+		this.invoice_num = invoice_num;
 	}
 	public String getSku() {
 		return sku;

@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,7 +19,8 @@ public class Receivables implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private String invoice_num;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+	private Long invoice_num;
 	private Date invoice_date;
 	private String customer;
 	private double total_due;
@@ -30,11 +33,11 @@ public class Receivables implements Serializable{
 	@OneToMany(fetch=FetchType.EAGER, mappedBy = "receivables")
 	private Set<PaymentsReceived> payments = new HashSet<PaymentsReceived>(0);
 
-	public String getInvoice_num() {
+	public Long getInvoice_num() {
 		return invoice_num;
 	}
 
-	public void setInvoice_num(String invoice_num) {
+	public void setInvoice_num(Long invoice_num) {
 		this.invoice_num = invoice_num;
 	}
 

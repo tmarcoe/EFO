@@ -36,8 +36,8 @@
 			<td colspan="3"><b>Notes:</b><br><sf:textarea class="fancy-textarea" path="reason" rows="10" cols="50"/></td>
 		</tr>
 		<tr>
-			<td><sf:button class="fancy-button" type="submit" >Save</sf:button></td>
-			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()">Back</sf:button>
+			<td><sf:button class="fancy-button" type="submit" ><b>Save</b></sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()"><b>Back</b></sf:button></td>
 		</tr>
 	</table>
 	<sf:hidden path="id"/>

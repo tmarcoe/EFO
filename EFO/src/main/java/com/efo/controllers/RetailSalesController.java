@@ -75,8 +75,6 @@ public class RetailSalesController {
 		
 		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
 		
-		
-		
 		if (sales == null) {
 			sales = new RetailSales();
 			sales.setUser_id(user.getUser_id());
@@ -101,12 +99,24 @@ public class RetailSalesController {
 		}else{
 			salesItemService.addQuantity(item, product.getOrder_qty());
 		}
+		sales.setChanged(true);
 		
 		retailSalesService.merge(sales);
 		
 		
 		return "redirect:/admin/browseproducts";
 	}
+	
+	@RequestMapping("cancelsales")
+	public String cancelOrder(Principal principal) {
+		User user = userService.retrieve(principal.getName());
+		
+		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
+		retailSalesService.cancelSales(sales.getInvoice_num());
+		
+		return "redirect:/admin/browseproducts";
+	}
+	
 	@RequestMapping("processorder")
 	public String processOrder(Principal principal) {
 		User user = userService.retrieve(principal.getName());
@@ -120,8 +130,16 @@ public class RetailSalesController {
 		return "redirect:/admin/browseproducts";
 	}
 	@RequestMapping("deletesalesitem")
-	public String deleteSalesItem(@ModelAttribute("item_id") int item_id) {
+	public String deleteSalesItem(@ModelAttribute("item_id") int item_id, Principal principal) {
 		salesItemService.deleteSalesItem(item_id);
+		User user = userService.retrieve(principal.getName());
+		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
+		if (salesItemService.rowCount(sales.getInvoice_num()) == 0) {
+			retailSalesService.cancelSales(sales.getInvoice_num());
+		}else{
+			sales.setChanged(true);
+			retailSalesService.merge(sales);
+		}
 		
 		return "redirect:/admin/browseproducts";
 	}

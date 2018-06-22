@@ -95,7 +95,7 @@ public class AccountsReceivableController {
 	}
 	
 	@RequestMapping("editreceivable")
-	public String editReceivable(@ModelAttribute("invoice_num") String invoice_num, Model model) {
+	public String editReceivable(@ModelAttribute("invoice_num") Long invoice_num, Model model) {
 		
 		model.addAttribute("receivables", receivablesService.retreive(invoice_num));
 		

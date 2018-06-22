@@ -35,7 +35,7 @@ public class PaymentsReceivedService implements IPaymentsReceived {
 		receivedDao.delete(id);
 	}
 	
-	public PagedListHolder<PaymentsReceived> retreiveList(String invoice_num) {
+	public PagedListHolder<PaymentsReceived> retreiveList(Long invoice_num) {
 		
 		return new PagedListHolder<PaymentsReceived>(receivedDao.retreiveList(invoice_num));
 	}

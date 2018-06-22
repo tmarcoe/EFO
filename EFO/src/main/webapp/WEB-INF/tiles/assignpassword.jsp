@@ -29,8 +29,8 @@
 			<td><div id="matchpass"></div>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><sf:button class="fancy-button" type="submit" >Save</sf:button></td>
-			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()">Cancel</sf:button>
+			<td><sf:button class="fancy-button" type="submit" ><b>Save</b></sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()"><b>Cancel</b></sf:button>
 		</tr>
 	</table>
 </sf:form>

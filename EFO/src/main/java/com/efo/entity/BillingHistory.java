@@ -14,7 +14,7 @@ public class BillingHistory implements Serializable {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String invoice_num;
+	private Long invoice_num;
 	private Date invoice_date;
 	private String customer;
 	private double amount_due;
@@ -25,10 +25,10 @@ public class BillingHistory implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getInvoice_num() {
+	public Long getInvoice_num() {
 		return invoice_num;
 	}
-	public void setInvoice_num(String invoice_num) {
+	public void setInvoice_num(Long invoice_num) {
 		this.invoice_num = invoice_num;
 	}
 	public Date getInvoice_date() {

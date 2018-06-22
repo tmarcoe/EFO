@@ -7,19 +7,16 @@
 <sf:form method="post" action="/accounting/addreceivable" modelAttribute="receivables">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>Invoice Number</b></td>
 			<td><b>Invoice Date</b></td>
 			<td><b>Customer</b></td>
 			<td><b>Total Due</b></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="invoice_num" /></td>
 			<td><sf:input class="fancy" path="invoice_date" type="date" /></td>
 			<td><sf:input class="fancy" path="customer" readonly="true" /></td>
 			<td><sf:input class="fancy" path="total_due" type="number" step=".01"/>
 		</tr>
 		<tr>
-			<td><sf:errors path="invoice_num" class="error" /></td>
 			<td><sf:errors path="invoice_date" class="error" /></td>
 			<td>&nbsp;</td>
 			<td><sf:errors path="total_due" class="error" /></td>
@@ -47,8 +44,8 @@
 			<sf:errors path="status" class="error" />
 		</tr>
 		<tr>
-			<td><sf:button class="fancy-button" type="submit">Save</sf:button>
-			<td><sf:button class="fancy-button" type="button" onclick="window.location.href='/accounting/ar'">Cancel</sf:button>
+			<td><sf:button class="fancy-button" type="submit"><b>Save</b></sf:button>
+			<td><sf:button class="fancy-button" type="button" onclick="window.location.href='/accounting/ar'"><b>Cancel</b></sf:button></td>
 		</tr>
 	</table>
 	<sf:hidden path="username"/>

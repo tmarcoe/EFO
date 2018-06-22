@@ -55,12 +55,16 @@ public class SalesItemService implements ISalesItem {
 		salesItemDao.deleteSalesItem(item_id);
 	}
 	
-	public SalesItem getItemBySku(int invoice_num, String sku) {
+	public SalesItem getItemBySku(Long invoice_num, String sku) {
 		return salesItemDao.getItemBySku(invoice_num, sku);
 	}
 	
 	public void addQuantity(SalesItem salesItem, double qty) {
 		salesItemDao.addQuantity(salesItem, qty);
+	}
+	
+	public Long rowCount(Long invoice_num) {
+		return salesItemDao.rowCount(invoice_num);
 	}
 
 }
