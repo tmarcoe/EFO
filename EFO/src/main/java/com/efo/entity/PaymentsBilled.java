@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class PaymentsPaid implements Serializable {
+public class PaymentsBilled implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,6 +22,7 @@ public class PaymentsPaid implements Serializable {
 	private Date date_due;
 	private double payment_due;
 	private double payment;
+	private double penalties;
 	private String comments;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -74,6 +75,13 @@ public class PaymentsPaid implements Serializable {
 
 	public void setPayment(double payment) {
 		this.payment = payment;
+	}
+	public double getPenalties() {
+		return penalties;
+	}
+
+	public void setPenalties(double penalties) {
+		this.penalties = penalties;
 	}
 
 	public String getComments() {

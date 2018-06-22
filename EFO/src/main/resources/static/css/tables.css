@@ -83,6 +83,10 @@ tfoot.tablefooter td
 	text-align: right;
 }
 
+.rjtenth td:nth-child(10) {
+	text-align: right;
+}
+
 /******************************************************
  * Center justified
  ******************************************************/

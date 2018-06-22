@@ -20,13 +20,17 @@ public class Payables implements Serializable {
 	private String supplier;
 	private String type;
 	private double total_due;
-	private Date date_due;
+	private double down_payment;
+	private double intrest;
+	private double each_payment;
+	private Long   num_payments;
+	private String schedule;
 	private double total_balance;
 	
 	private String status; // O = open, C = closed, D = dispute
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "payables")
-	private Set<PaymentsPaid> payments = new HashSet<PaymentsPaid>(0);
+	private Set<PaymentsBilled> payments = new HashSet<PaymentsBilled>(0);
 
 	public String getInvoice_num() {
 		return invoice_num;
@@ -68,12 +72,44 @@ public class Payables implements Serializable {
 		this.total_due = total_due;
 	}
 
-	public Date getDate_due() {
-		return date_due;
+	public double getDown_payment() {
+		return down_payment;
 	}
 
-	public void setDate_due(Date date_due) {
-		this.date_due = date_due;
+	public void setDown_payment(double down_payment) {
+		this.down_payment = down_payment;
+	}
+
+	public double getIntrest() {
+		return intrest;
+	}
+
+	public void setIntrest(double intrest) {
+		this.intrest = intrest;
+	}
+
+	public double getEach_payment() {
+		return each_payment;
+	}
+
+	public void setEach_payment(double each_payment) {
+		this.each_payment = each_payment;
+	}
+
+	public Long getNum_payments() {
+		return num_payments;
+	}
+
+	public void setNum_payments(Long num_payments) {
+		this.num_payments = num_payments;
+	}
+
+	public String getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(String schedule) {
+		this.schedule = schedule;
 	}
 
 	public double getTotal_balance() {
@@ -92,11 +128,11 @@ public class Payables implements Serializable {
 		this.status = status;
 	}
 
-	public Set<PaymentsPaid> getPayments() {
+	public Set<PaymentsBilled> getPayments() {
 		return payments;
 	}
 
-	public void setPayments(Set<PaymentsPaid> payments) {
+	public void setPayments(Set<PaymentsBilled> payments) {
 		this.payments = payments;
 	}
 

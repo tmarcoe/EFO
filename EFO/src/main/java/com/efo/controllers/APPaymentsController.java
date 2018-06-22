@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.Payables;
-import com.efo.entity.PaymentsPaid;
+import com.efo.entity.PaymentsBilled;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PayablesService;
-import com.efo.service.PaymentsPaidService;
+import com.efo.service.PaymentsBilledService;
 
 @Controller
 @RequestMapping("/accounting/")
 public class APPaymentsController {
 	
 	@Autowired
-	PaymentsPaidService paymentsService;
+	PaymentsBilledService paymentsService;
 	
 	@Autowired
 	PayablesService payablesService;
@@ -34,7 +34,7 @@ public class APPaymentsController {
 	@Autowired
 	FetalTransactionService fetalService;	
 	
-	PagedListHolder<PaymentsPaid> pList;
+	PagedListHolder<PaymentsBilled> pList;
 	
 	private final String pageLink = "/accounting/ppaging";
 	
@@ -67,7 +67,7 @@ public class APPaymentsController {
 	
 	@RequestMapping("newppayment")
 	public String newPPayment(@ModelAttribute("invoice_num") String invoice_num, Model model) {
-		PaymentsPaid payment = new PaymentsPaid();
+		PaymentsBilled payment = new PaymentsBilled();
 		payment.setInvoice_num(invoice_num);
 		
 		model.addAttribute("payment", payment);
@@ -78,7 +78,7 @@ public class APPaymentsController {
 	@RequestMapping("editppayment")
 	public String editPPayment(@ModelAttribute("id") int id, Model model) {
 		
-		PaymentsPaid paid = paymentsService.retreive(id);
+		PaymentsBilled paid = paymentsService.retreive(id);
 		
 		model.addAttribute("payment", paid);
 		
@@ -86,7 +86,7 @@ public class APPaymentsController {
 	}
 	
 	@RequestMapping("addppayment")
-	public String addPayablePayment(@ModelAttribute("payment") PaymentsPaid payment) throws IOException {
+	public String addPayablePayment(@ModelAttribute("payment") PaymentsBilled payment) throws IOException {
 		
 		Payables payables = payablesService.retreive(payment.getInvoice_num());
 		
@@ -96,7 +96,7 @@ public class APPaymentsController {
 	}
 	
 	@RequestMapping("updateppayment")
-	public String updatePPayment(@ModelAttribute("payment") PaymentsPaid payment) {
+	public String updatePPayment(@ModelAttribute("payment") PaymentsBilled payment) {
 		
 		paymentsService.update(payment);
 		

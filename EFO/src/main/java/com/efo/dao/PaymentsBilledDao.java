@@ -11,13 +11,13 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.PaymentsPaid;
-import com.efo.interfaces.IPaymentsPaid;
+import com.efo.entity.PaymentsBilled;
+import com.efo.interfaces.IPaymentsBilled;
 
 
 @Transactional
 @Repository
-public class PaymentsPaidDao implements IPaymentsPaid {
+public class PaymentsBilledDao implements IPaymentsBilled {
 
 
 	@Autowired
@@ -28,7 +28,7 @@ public class PaymentsPaidDao implements IPaymentsPaid {
 	}
 	
 	@Override
-	public void create(PaymentsPaid payments) {
+	public void create(PaymentsBilled payments) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.save(payments);
@@ -37,15 +37,15 @@ public class PaymentsPaidDao implements IPaymentsPaid {
 	}
 
 	@Override
-	public PaymentsPaid retreive(int id) {
+	public PaymentsBilled retreive(int id) {
 		Session session = session();
-		PaymentsPaid p = (PaymentsPaid) session.createCriteria(PaymentsPaid.class).add(Restrictions.idEq(id)).uniqueResult();
+		PaymentsBilled p = (PaymentsBilled) session.createCriteria(PaymentsBilled.class).add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
 		return p;
 	}
 
 	@Override
-	public void update(PaymentsPaid payments) {
+	public void update(PaymentsBilled payments) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.update(payments);
@@ -57,17 +57,17 @@ public class PaymentsPaidDao implements IPaymentsPaid {
 	public void delete(int id) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		PaymentsPaid p = retreive(id);
+		PaymentsBilled p = retreive(id);
 		session.delete(p);
 		tx.commit();
 		session.disconnect();
 	}
 	
-	public List<PaymentsPaid> retreiveList(String invoice_num) {
+	public List<PaymentsBilled> retreiveList(String invoice_num) {
 		Session session = session();
 		
 		@SuppressWarnings("unchecked")
-		List<PaymentsPaid> pList = session.createCriteria(PaymentsPaid.class)
+		List<PaymentsBilled> pList = session.createCriteria(PaymentsBilled.class)
 										  .add(Restrictions.eq("invoice_num", invoice_num))
 										  .list();
 		

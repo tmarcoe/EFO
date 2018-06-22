@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 import com.efo.entity.Payables;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PayablesService;
-import com.efo.service.PaymentsPaidService;
+import com.efo.service.PaymentsBilledService;
 import com.efo.service.VendorService;
 
 
@@ -35,7 +35,7 @@ public class AccountsPayableController {
 	PayablesService payablesService;
 	
 	@Autowired
-	PaymentsPaidService paymentService;
+	PaymentsBilledService paymentService;
 	
 	@Autowired
 	VendorService vendorService;

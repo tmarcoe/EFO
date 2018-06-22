@@ -21,7 +21,7 @@ import com.efo.entity.Receivables;
 import com.efo.dao.FetalTransactionDao;
 import com.efo.entity.Inventory;
 import com.efo.entity.Payables;
-import com.efo.entity.PaymentsPaid;
+import com.efo.entity.PaymentsBilled;
 import com.ftl.helper.FetalTransaction;
 import com.ftl.helper.VariableType;
 
@@ -165,7 +165,7 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 
 	}
-	public void disbursePayment(PaymentsPaid payments, Payables payables) throws IOException {
+	public void disbursePayment(PaymentsBilled payments, Payables payables) throws IOException {
 		try {
 			initTransaction(filePath);
 			publish("payables", VariableType.DAO, payables);
