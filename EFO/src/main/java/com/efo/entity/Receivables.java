@@ -24,8 +24,11 @@ public class Receivables implements Serializable{
 	private Date invoice_date;
 	private String customer;
 	private double total_due;
-	private Date date_due;
-	private long total_payments;
+	private double down_payment;
+	private double intrest;
+	private double each_payment;
+	private Long   num_payments;
+	private String schedule;
 	private double total_balance;
 	private String status; // O = open, C = closed, D = dispute
 	private String username;
@@ -65,20 +68,45 @@ public class Receivables implements Serializable{
 		this.total_due = total_due;
 	}
 
-	public Date getDate_due() {
-		return date_due;
+
+	public double getDown_payment() {
+		return down_payment;
 	}
 
-	public void setDate_due(Date date_due) {
-		this.date_due = date_due;
+	public void setDown_payment(double down_payment) {
+		this.down_payment = down_payment;
 	}
 
-	public long getTotal_payments() {
-		return total_payments;
+	public double getIntrest() {
+		return intrest;
 	}
 
-	public void setTotal_payments(long total_payments) {
-		this.total_payments = total_payments;
+	public void setIntrest(double intrest) {
+		this.intrest = intrest;
+	}
+
+	public double getEach_payment() {
+		return each_payment;
+	}
+
+	public void setEach_payment(double each_payment) {
+		this.each_payment = each_payment;
+	}
+
+	public Long getNum_payments() {
+		return num_payments;
+	}
+
+	public void setNum_payments(Long num_payments) {
+		this.num_payments = num_payments;
+	}
+
+	public String getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(String schedule) {
+		this.schedule = schedule;
 	}
 
 	public double getTotal_balance() {

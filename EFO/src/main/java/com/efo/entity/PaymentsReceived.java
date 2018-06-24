@@ -22,6 +22,7 @@ public class PaymentsReceived implements Serializable{
 	private Date date_due;
 	private double payment_due;
 	private double payment;
+	private double penalties;
 	private String comments;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -74,6 +75,14 @@ public class PaymentsReceived implements Serializable{
 
 	public void setPayment(double payment) {
 		this.payment = payment;
+	}
+
+	public double getPenalties() {
+		return penalties;
+	}
+
+	public void setPenalties(double penalties) {
+		this.penalties = penalties;
 	}
 
 	public String getComments() {

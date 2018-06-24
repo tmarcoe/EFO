@@ -37,8 +37,7 @@
 	</c:forEach>
 	<tfoot class="tablefooter" >
 		<tr>
-			<td colspan="11"><button type="button" onclick="window.location.href='/accounting/newpayable'">New Payable</button></td>
-			<td><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>
+			<td colspan="12"><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>
 		</tr>
 	</tfoot>
 </table>

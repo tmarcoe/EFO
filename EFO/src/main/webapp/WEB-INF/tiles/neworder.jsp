@@ -59,15 +59,15 @@
 			<table style="margin-left: auto; margin-right: auto;">
 				<tr><th>Select the Supplier</th></tr>
 				<tr>
-					<td><select id="selectedSupplier" >
+					<td><select class="fancy" id="selectedSupplier" >
 						<c:forEach var="item" items="${suppliers}">
 							<option value="${item.vendor.company_name}" >${item.vendor.company_name}</option>
 						</c:forEach>
 					</select></td>
 				</tr>
 				<tr>
-					<td><button type="button" onclick="cancel()" >Cancel</button>
-					<td><button type="button" onclick="getSupplier()" >OK</button>
+					<td><button class="fancy-button" type="button" onclick="getSupplier()" ><b>OK</b></button>
+					<td><button class="fancy-button" type="button" onclick="cancel()" ><b>Cancel</b></button>
 				</tr>
 			</table>
 		</div>

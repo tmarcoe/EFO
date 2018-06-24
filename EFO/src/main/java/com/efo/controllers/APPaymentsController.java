@@ -4,17 +4,22 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.efo.component.ScheduleUtilities;
+import com.efo.component.ScheduleUtilities.ScheduleType;
 import com.efo.entity.Payables;
 import com.efo.entity.PaymentsBilled;
 import com.efo.service.FetalTransactionService;
@@ -33,6 +38,9 @@ public class APPaymentsController {
 	
 	@Autowired
 	FetalTransactionService fetalService;	
+	
+	@Autowired
+	ScheduleUtilities sched;
 	
 	PagedListHolder<PaymentsBilled> pList;
 	
@@ -64,6 +72,35 @@ public class APPaymentsController {
 		
 		return "appaymentlist";
 	}
+	@RequestMapping("payamount")
+	public String payAmount(@ModelAttribute("id") int id, Model model) {
+		
+		PaymentsBilled billed = paymentsService.retreive(id);
+		billed.setPayment_date(new Date());
+		model.addAttribute("billed", billed);
+		
+		return "payamount";
+	}
+	@RequestMapping("addpayment") 
+	public String addPayment(@ModelAttribute("billed") PaymentsBilled billed) throws IOException {
+		
+		Payables payables = payablesService.retreive(billed.getInvoice_num());
+		paymentsService.update(billed);
+		fetalService.makePayment(payables, billed);
+		
+		billed.setId(0);
+		billed.setInvoice_num(payables.getInvoice_num());
+		billed.setPayment_date(null);
+		billed.setPayment(0);
+		ScheduleType type = sched.stringToEnum(payables.getSchedule());
+		Date nextPayment = sched.nextPayment(payables.getDate_begin(), billed.getDate_due(), type);
+		billed.setDate_due(nextPayment);
+		
+		paymentsService.create(billed);
+
+		
+		return "redirect:/accounting/appaymentlist?invoice_num=" + billed.getInvoice_num();
+	}
 	
 	@RequestMapping("newppayment")
 	public String newPPayment(@ModelAttribute("invoice_num") String invoice_num, Model model) {
@@ -86,11 +123,9 @@ public class APPaymentsController {
 	}
 	
 	@RequestMapping("addppayment")
-	public String addPayablePayment(@ModelAttribute("payment") PaymentsBilled payment) throws IOException {
+	public String addPayablePayment(@Valid @ModelAttribute("payment") PaymentsBilled payment, BindingResult result) {
 		
-		Payables payables = payablesService.retreive(payment.getInvoice_num());
-		
-		fetalService.disbursePayment(payment, payables);
+		paymentsService.create(payment);
 		
 		return "redirect:/accounting/appaymentlist?invoice_num=" + payment.getInvoice_num();
 	}

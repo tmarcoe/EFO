@@ -45,7 +45,7 @@
 				id="lookup" autocomplete="off" /></td>
 			<td colspan="2"><b>Quantity: <br></b> <sf:input
 					class="fancy" id="order_qty" type="number" step=".01"
-					path="order_qty" /></td>
+					path="order_qty" value="1.0"/></td>
 		</tr>
 		<tr>
 			<td><sf:button type="button" class="fancy-button"
@@ -76,19 +76,17 @@
 <c:if test="${items.size() > 0}">
 	<table class="fieldTable tableborder tableshadow rjthird">
 		<tr>
-			<th colspan="4">Invoice</th>
+			<th colspan="3">Invoice</th>
 		</tr>
 		<tr>
-			<th>SKU#</th>
-			<th>Product Name</th>
 			<th>Qty</th>
+			<th>Product Name</th>
 			<th>&nbsp;</th>
 		</tr>
 		<c:forEach var="item" items="${items}">
 			<tr>
-				<td>${item.sku}</td>
-				<td>${item.product_name}</td>
 				<td>${item.qty}</td>
+				<td>${item.product_name}</td>
 				<td><button type="button" onclick="window.location.href='/admin/editsalesitem?item_id=${item.item_id}'">Edit</button>
 					<button type="button" onclick="window.location.href='/admin/deletesalesitem?item_id=${item.item_id}'">Delete</button>
 				</td>

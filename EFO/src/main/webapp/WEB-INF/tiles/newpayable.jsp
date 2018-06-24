@@ -45,31 +45,29 @@
 			<td><b>Total Due</b></td>
 			<td><b>Down Payment</b></td>
 			<td><b>Interest</b></td>
-			<td><b>Payment Amount</b></td>
 			<td><b>Number of Payments</b></td>
-			<td><b>Current Balance</b></td>
+			<td><b>Payment Amount</b></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="total_due" type="number" step=".01"/></td>
-			<td><sf:input class="fancy" path="down_payment" type="number" step=".01"/>
-			<td><sf:input class="fancy" path="intrest" type="number" step=".01"/>
-			<td><sf:input class="fancy" path="each_payment" type="number" step=".01"/>
-			<td><sf:input class="fancy" path="num_payments" type="number" step="1"/>
-			<td><sf:input class="fancy" path="total_balance" type="number" step=".01"/></td>
+			<td><sf:input id="total_due" class="fancy" path="total_due" type="number" step=".01"/></td>
+			<td><sf:input id="down_payment" class="fancy" path="down_payment" type="number" step=".01"/>
+			<td><sf:input id="intrest" class="fancy" path="intrest" type="number" step=".01"/>
+			<td><sf:input id="num_payments" class="fancy" path="num_payments" type="number" step="1"/>
+			<td><sf:input id="each_payment" class="fancy" path="each_payment" type="number" step=".01" onclick="eachPayment()"/>
 		</tr>
 		<tr>
 			<td><sf:errors path="total_due" class="error" /></td>
 			<td><sf:errors path="down_payment" class="error" /></td>
 			<td><sf:errors path="intrest" class="error" /></td>
-			<td><sf:errors path="each_payment" class="error" /></td>
 			<td><sf:errors path="num_payments" class="error" /></td>
-			<td><sf:errors path="total_balance" class="error" /></td>
+			<td><sf:errors path="each_payment" class="error" /></td>
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="submit"><b>Save</b></sf:button></td>
 			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()"><b>Cancel</b></sf:button></td>
 		</tr>
 	</table>
+	<sf:hidden path="total_balance" value="0.0"/>
 	<div id="getSupplier" class="modal">
 		<div class="modal-content small-modal">
 			<table style="margin-left: auto; margin-right: auto;">
@@ -105,6 +103,26 @@
 		$("#typeInp").val(rec[1]);
 		var modal = document.getElementById('getSupplier');
 		modal.style.display = "none";
+	}
+	function eachPayment() {
+		var total_due = $("#total_due").val();
+		var down_payment = $("#down_payment").val();
+		var intrest = $("#intrest").val();
+		var num_payments = $("#num_payments").val();
+		
+		if (total_due !=0 && down_payment !=0 && intrest != 0 && num_payments) {
+			$.getJSON("/rest/calculatepayments?total=" + total_due +
+					  "&down=" + down_payment +
+					  "&intrest=" + intrest +
+					  "&num_payments=" + num_payments, function(data) {
+					$("#each_payment").val(data.each_payment);
+				}).fail(function(jqXHR, textStatus, errorThrown) {
+					alert("error " + textStatus + "\n"
+							+ "incoming Text "
+							+ jqXHR.responseText);
+			});
+		}
+		
 	}
 </script>
 

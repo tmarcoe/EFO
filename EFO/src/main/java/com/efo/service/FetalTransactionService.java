@@ -41,6 +41,37 @@ public class FetalTransactionService extends FetalTransaction {
 
 	@Value("${fetal.properiesFile}")
 	private String filePath;
+	public void makePayment(Payables payables, PaymentsBilled billed) throws IOException {
+		try {
+			Double num_of_payments = Double.valueOf(String.valueOf(payables.getNum_payments()));
+			initTransaction(filePath);
+			publish("billed", VariableType.DAO, billed);
+			publish("payables", VariableType.DAO, payables);
+			publish("num_of_payments", VariableType.DECIMAL, num_of_payments);
+			loadRule("paymentmade.trans");
+		}
+		finally {
+			closeFetal();
+		}
+		
+	}
+	public Double calculatePayments(double total, double down, double intrest, long payments) throws Exception {
+		Double result = 0.0;
+		try {
+			initTransaction(filePath);
+			publish("total", VariableType.DECIMAL, total);
+			publish("down", VariableType.DECIMAL, down);
+			publish("intrest", VariableType.DECIMAL, intrest);
+			publish("payments", VariableType.DECIMAL, Double.valueOf(String.valueOf(payments)));
+			loadRule("calcpayment.trans");
+			result = (Double) getValue("eachPayment");
+		}
+		finally {
+			closeFetal();
+		}
+		
+		return result;
+	}
 	
 	public void cancelOrder(ProductOrders order, Inventory inventory ) throws IOException {
 		
@@ -135,10 +166,11 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 
-	public void addAp(Payables payables) throws IOException {
+	public void addAp(Payables payables, PaymentsBilled billed) throws IOException {
 		try {
 			initTransaction(filePath);
 			publish("payables", VariableType.DAO, payables);
+			publish("billed", VariableType.DAO, billed);
 			loadRule("ap.trans");
 			if (hasErrors()) {
 				throw new RuntimeException();

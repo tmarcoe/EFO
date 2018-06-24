@@ -8,30 +8,18 @@
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>Invoice Number</b></td>
-			<td><b>Payment Date</b></td>
+			<td><b>Date Due</b></td>
+			<td><b>Payment Due</b></td>
 		</tr>
 		<tr>
 			<td><sf:input class="fancy" path="invoice_num" readonly="true" /></td>
-			<td><sf:input class="fancy" path="payment_date" type="date" /></td>
+			<td><sf:input class="fancy" path="date_due" type="date" /></td>
+			<td><sf:input class="fancy" path="payment_due" type="number" step=".01"/></td>
 		</tr>
 		<tr>
 			<sf:errors path="invoice_num" class="error" />
-			<sf:errors path="payment_date" class="error" />
-		</tr>
-		<tr>
-			<td><b>Date Due</b></td>
-			<td><b>Payment Due</b></td>
-			<td><b>Payment</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="date_due" type="date" /></td>
-			<td><sf:input class="fancy" path="payment_due" type="number" step=".01"/></td>
-			<td><sf:input class="fancy" path="payment" type="number" step=".01" /></td>
-		</tr>
-		<tr>
 			<sf:errors path="date_due" class="error" />
-			<sf:errors path="payment_due" class="error" />
-			<sf:errors path="payment" class="error" />
+		<sf:errors path="payment_due" class="error" />
 		</tr>
 		<tr>
 			<td colspan="3"><b>Comments:<br></b>
@@ -43,7 +31,9 @@
 			<td><button class="fancy-button" type="button" onclick="window.history.back()"><b>Cancel</b></button></td>
 		</tr>
 	</table>
-
+	<sf:hidden path="payment" value="0.00"/>
+	<sf:hidden path="payment_date" />
+	<sf:hidden path="penalties" value="0.00"/>
 </sf:form>
 
 

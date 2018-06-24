@@ -76,6 +76,7 @@ public class PaymentsBilled implements Serializable {
 	public void setPayment(double payment) {
 		this.payment = payment;
 	}
+	
 	public double getPenalties() {
 		return penalties;
 	}

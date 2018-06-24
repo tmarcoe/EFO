@@ -26,7 +26,6 @@ public class Payables implements Serializable {
 	private Long   num_payments;
 	private String schedule;
 	private double total_balance;
-	
 	private String status; // O = open, C = closed, D = dispute
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "payables")

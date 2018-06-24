@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.xml.sax.SAXException;
 
-
+import com.efo.component.ScheduleUtilities;
+import com.efo.component.ScheduleUtilities.ScheduleType;
 import com.efo.entity.Payables;
+import com.efo.entity.PaymentsBilled;
+import com.efo.entity.ProductOrders;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PayablesService;
-import com.efo.service.PaymentsBilledService;
+import com.efo.service.ProductOrdersService;
 import com.efo.service.VendorService;
 
 
@@ -32,13 +35,16 @@ import com.efo.service.VendorService;
 public class AccountsPayableController {
 	
 	@Autowired
-	PayablesService payablesService;
+	private PayablesService payablesService;
 	
 	@Autowired
-	PaymentsBilledService paymentService;
+	private VendorService vendorService;
 	
 	@Autowired
-	VendorService vendorService;
+	private ProductOrdersService ordersService;
+	
+	@Autowired
+	ScheduleUtilities sched;
 	
 	private final String pageLink = "/accounting/appaging";
 	
@@ -68,22 +74,38 @@ public class AccountsPayableController {
 		return "ap";
 	}
 	
-	@RequestMapping("newpayable")
-	public String newPayable(Model model) {
+	@RequestMapping("newretailpayable")
+	public String newRetailPayable(@ModelAttribute("id") int id, Model model) {
+		
+		ProductOrders orders = ordersService.retrieve(id);
+		Payables payables = new Payables();
+		
+		payables.setInvoice_num(orders.getInvoice_num());
+		payables.setDate_begin(new Date());
+		payables.setSupplier(orders.getVendor());
+		payables.setType("R");
+		payables.setTotal_due(orders.getWholesale());
 		
 		model.addAttribute("suppliers", vendorService.retrieveRawList());
-		model.addAttribute("payables", new Payables());
+		model.addAttribute("payables",payables);
 		
 		return "newpayable";
 	}
+	
 	@RequestMapping("addpayable")
 	public String addPayable(@Valid @ModelAttribute("payables") Payables payables, BindingResult result) throws IOException {
 		
 		if (result.hasErrors() == true) {
 			return "newpayable";
 		}
+
+		PaymentsBilled bill = new PaymentsBilled();
+		bill.setInvoice_num(payables.getInvoice_num());
+		ScheduleType type = sched.stringToEnum(payables.getSchedule());
+		Date nextPayment = sched.nextPayment(payables.getDate_begin(), payables.getDate_begin(), type);
+		bill.setDate_due(nextPayment);
 		
-		fetalService.addAp(payables);		
+		fetalService.addAp(payables, bill);		
 		
 		return "redirect:/accounting/ap";
 	}

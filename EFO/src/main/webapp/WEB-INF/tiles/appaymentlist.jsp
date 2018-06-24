@@ -13,6 +13,7 @@
 			<th>Payment Due</th>
 			<th>Payment Made</th>
 			<th>&nbsp;</th>
+			<th>&nbsp;</th>
 		</tr>
 	</thead>
 
@@ -28,12 +29,13 @@
 					value="${item.payment}" /></td>
 			<td><button type="button"
 					onclick="window.location.href = '/accounting/editppayment?id=${item.id}'">Edit</button></td>
+			<td><button type="button" onclick="window.location.href='/accounting/payamount?id=${item.id}'" >Pay Amount</button></td>
 		</tr>
 	</c:forEach>
 
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="5"><button type="button"
+			<td colspan="6"><button type="button"
 					onclick="window.location.href = '/accounting/newppayment?invoice_num=${invoice_num}'">New
 					Payment</button></td>
 			<td><button type="button"

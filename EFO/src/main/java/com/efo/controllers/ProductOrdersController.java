@@ -92,7 +92,12 @@ public class ProductOrdersController {
 		Product product = productService.retrieve(productOrders.getSku());
 		productOrders.setProduct_name(product.getProduct_name());
 
-		fetalService.purchaseInventory(productOrders, product.getInventory());
+		if (productOrders.getPayment_type().compareTo("Cash") == 0) {
+			fetalService.purchaseInventory(productOrders, product.getInventory());
+		}else{
+			ordersService.create(productOrders);
+			return "redirect:/accounting/newretailpayable?id=" + productOrders.getId();
+		}
 
 		return "redirect:/admin/listproduct";
 	}

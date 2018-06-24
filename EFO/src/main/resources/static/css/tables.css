@@ -83,6 +83,10 @@ tfoot.tablefooter td
 	text-align: right;
 }
 
+.rjeighth td:nth-child(8) {
+	text-align: right;
+}
+
 .rjtenth td:nth-child(10) {
 	text-align: right;
 }
@@ -104,7 +108,12 @@ tfoot.tablefooter td
  .cjseventh td:nth-child(7) {
  	text-align: center;
  }
- 
+ .cjnineth td:nth-child(9) {
+ 	text-align: center;
+ }
+ .cjeleventh td:nth-child(11) {
+ 	text-align: center;
+ }
  /*********************************************************
   * Table options
   *********************************************************/

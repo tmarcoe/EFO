@@ -91,6 +91,12 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editppayment.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="payamount" extends="accounting.base">
+		<put-attribute name="title" value="New AP Payment"></put-attribute>
+		<put-attribute name="heading_title" value="New AP Payment"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/payamount.jsp"></put-attribute>
+	</definition>
+	
 	<!-- Accounts Receivable controller -->
 	<definition name="ar" extends="accounting.base">
 		<put-attribute name="title" value="Accounts Receivable"></put-attribute>
