@@ -51,14 +51,14 @@
 		<tr>
 			<td><sf:input id="total_due" class="fancy" path="total_due" type="number" step=".01"/></td>
 			<td><sf:input id="down_payment" class="fancy" path="down_payment" type="number" step=".01"/>
-			<td><sf:input id="intrest" class="fancy" path="intrest" type="number" step=".01"/>
+			<td><sf:input id="interest" class="fancy" path="interest" type="number" step=".01"/>
 			<td><sf:input id="num_payments" class="fancy" path="num_payments" type="number" step="1"/>
 			<td><sf:input id="each_payment" class="fancy" path="each_payment" type="number" step=".01" onclick="eachPayment()"/>
 		</tr>
 		<tr>
 			<td><sf:errors path="total_due" class="error" /></td>
 			<td><sf:errors path="down_payment" class="error" /></td>
-			<td><sf:errors path="intrest" class="error" /></td>
+			<td><sf:errors path="interest" class="error" /></td>
 			<td><sf:errors path="num_payments" class="error" /></td>
 			<td><sf:errors path="each_payment" class="error" /></td>
 		</tr>
@@ -107,13 +107,13 @@
 	function eachPayment() {
 		var total_due = $("#total_due").val();
 		var down_payment = $("#down_payment").val();
-		var intrest = $("#intrest").val();
+		var interest = $("#interest").val();
 		var num_payments = $("#num_payments").val();
 		
-		if (total_due !=0 && down_payment !=0 && intrest != 0 && num_payments) {
+		if (total_due !=0 && down_payment !=0 && interest != 0 && num_payments) {
 			$.getJSON("/rest/calculatepayments?total=" + total_due +
 					  "&down=" + down_payment +
-					  "&intrest=" + intrest +
+					  "&interest=" + interest +
 					  "&num_payments=" + num_payments, function(data) {
 					$("#each_payment").val(data.each_payment);
 				}).fail(function(jqXHR, textStatus, errorThrown) {

@@ -25,7 +25,7 @@ public class Receivables implements Serializable{
 	private String customer;
 	private double total_due;
 	private double down_payment;
-	private double intrest;
+	private double interest;
 	private double each_payment;
 	private Long   num_payments;
 	private String schedule;
@@ -77,12 +77,12 @@ public class Receivables implements Serializable{
 		this.down_payment = down_payment;
 	}
 
-	public double getIntrest() {
-		return intrest;
+	public double getinterest() {
+		return interest;
 	}
 
-	public void setIntrest(double intrest) {
-		this.intrest = intrest;
+	public void setinterest(double interest) {
+		this.interest = interest;
 	}
 
 	public double getEach_payment() {

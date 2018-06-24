@@ -46,7 +46,7 @@
 		<tr>
 			<td><sf:input class="fancy" path="total_due" type="number" step=".01"/></td>
 			<td><sf:input class="fancy" path="down_payment" type="number" step=".01"/>
-			<td><sf:input class="fancy" path="intrest" type="number" step=".01"/>
+			<td><sf:input class="fancy" path="interest" type="number" step=".01"/>
 			<td><sf:input class="fancy" path="num_payments" type="number" step="1"/>
 			<td><sf:input class="fancy" path="each_payment" type="number" step=".01"/>
 			<td><sf:input class="fancy" path="total_balance" type="number" step=".01" readonly="true"/></td>
@@ -54,7 +54,7 @@
 		<tr>
 			<td><sf:errors path="total_due" class="error" /></td>
 			<td><sf:errors path="down_payment" class="error" /></td>
-			<td><sf:errors path="intrest" class="error" /></td>
+			<td><sf:errors path="interest" class="error" /></td>
 			<td><sf:errors path="num_payments" class="error" /></td>
 			<td><sf:errors path="each_payment" class="error" /></td>
 			<td><sf:errors path="total_balance" class="error" /></td>

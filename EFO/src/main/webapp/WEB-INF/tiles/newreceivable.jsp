@@ -18,7 +18,7 @@
 			<td><sf:input class="fancy" path="customer" readonly="true" /></td>
 			<td><sf:input class="fancy" path="total_due" type="number" step=".01"/>
 			<td><sf:input class="fancy" path="down_payment" type="number" step=".01"/>
-			<td><sf:input class="fancy" path="intrest" type="number" step=".01"/>
+			<td><sf:input class="fancy" path="interest" type="number" step=".01"/>
 		</tr>
 		<tr>
 			<td><sf:errors path="invoice_date" class="error" /></td>

@@ -20,7 +20,7 @@
 			<td><sf:input class="fancy" path="customer" readonly="true" /></td>
 			<td><sf:input class="fancy" path="total_due" type="number" step=".01"/></td>
 			<td><sf:input class="fancy" path="down_payment" type="number" step=".01"/></td>
-			<td><sf:input class="fancy" path="intrest" type="number" step=".01"/></td>			
+			<td><sf:input class="fancy" path="interest" type="number" step=".01"/></td>			
 		</tr>
 		<tr>
 			<td><sf:errors path="invoice_num" class="error" /></td>
@@ -28,7 +28,7 @@
 			<td><sf:errors path="customer" class="error" /></td>
 			<td><sf:errors path="total_due" class="error" /></td>
 			<td><sf:errors path="down_payment" class="error" /></td>
-			<td><sf:errors path="intrest" class="error" /></td>
+			<td><sf:errors path="interest" class="error" /></td>
 		</tr>
 		<tr>
 			<td><b>Each Payment</b></td>

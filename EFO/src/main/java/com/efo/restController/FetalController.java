@@ -18,14 +18,14 @@ public class FetalController {
 	@RequestMapping("calculatepayments")
 	public String calculatePayments(@RequestParam(value = "total") Double total, 
 									@RequestParam(value = "down") Double down,
-									@RequestParam(value = "intrest") Double intrest,
+									@RequestParam(value = "interest") Double interest,
 									@RequestParam(value = "num_payments") Long num_payment) throws Exception {
-		double each_payment = fetalService.calculatePayments(total, down, intrest, num_payment);
+		double each_payment = fetalService.calculatePayments(total, down, interest, num_payment);
 		/*
 		DecimalFormat df = new DecimalFormat(".##");
 		df.setRoundingMode(RoundingMode.HALF_EVEN);
 		
-		Double each_payment = ((total - down) * (1.0 + (intrest / 100.00))) / Double.valueOf(String.valueOf(num_payment));
+		Double each_payment = ((total - down) * (1.0 + (interest / 100.00))) / Double.valueOf(String.valueOf(num_payment));
 		
 		each_payment = Double.valueOf(df.format(each_payment.doubleValue()));
 		*/

@@ -26,7 +26,7 @@
 			<td>${item.supplier}</td>
 			<td>${item.type}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_due}"/></td>
-			<td><fmt:formatNumber type="percent" value="${item.intrest / 100}"/></td>
+			<td><fmt:formatNumber type="percent" value="${item.interest / 100}"/></td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.down_payment}"/></td>
 			<td>${item.schedule}</td>
 			<td>${item.num_payments}</td>

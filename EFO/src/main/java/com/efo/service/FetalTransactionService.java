@@ -55,13 +55,13 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		
 	}
-	public Double calculatePayments(double total, double down, double intrest, long payments) throws Exception {
+	public Double calculatePayments(double total, double down, double interest, long payments) throws Exception {
 		Double result = 0.0;
 		try {
 			initTransaction(filePath);
 			publish("total", VariableType.DECIMAL, total);
 			publish("down", VariableType.DECIMAL, down);
-			publish("intrest", VariableType.DECIMAL, intrest);
+			publish("interest", VariableType.DECIMAL, interest);
 			publish("payments", VariableType.DECIMAL, Double.valueOf(String.valueOf(payments)));
 			loadRule("calcpayment.trans");
 			result = (Double) getValue("eachPayment");
