@@ -49,6 +49,7 @@
 					<td><a href="#"><img class="tile" alt="Cogs" src="<c:url value='/images/cogs.png'/>"></a></td>
 					<td><a href="#"><img class="tile" alt="Profit and Loss" src="<c:url value='/images/profit-loss.png'/>"></a></td>
 					<td><a href="#"><img class="tile" alt="Shelf Time" src="<c:url value='/images/shelf-time.png'/>"></a></td>
+					<td><a href="#"><img class="tile" alt="System Audit" src="<c:url value='/images/audit.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
@@ -59,12 +60,14 @@
 					<td><a href="/accounting/ap"><img class="tile" alt="Accounts Payable" src="<c:url value='/images/payable.png'/>"></a></td>
 					<td><a href="#" onclick="inputDate()"><img class="tile" alt="General Ledger" src="<c:url value='/images/general.png'/>"></a></td>
 					<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts" src="<c:url value='/images/accounts.png'/>"></a></td>
+					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash" src="<c:url value='/images/petty-cash.png'/>"></a></td>
 				</tr>
 				<tr>
-					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash" src="<c:url value='/images/petty-cash.png'/>"></a></td>
 					<td><a href="#tabs-4"><img class="tile" alt="Budget" src="<c:url value='/images/budget.png'/>"></a></td>
 					<td><a href="/admin/listproduct"><img class="tile" alt="Products" src="<c:url value='/images/products.png'/>"></a></td>
 					<td><a href="/admin/browseproducts"><img class="tile" alt="Sales" src="<c:url value='/images/sales.png'/>"></a></td>
+					<td><a href="/accounting/listassets"><img class="tile" alt="Capital Assets" src="<c:url value='/images/capitalassets.png'/>"></a></td>
+					<td><a href="#tabs-4"><img class="tile" alt="Regular Expenses" src="<c:url value='/images/regular-expenses.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>

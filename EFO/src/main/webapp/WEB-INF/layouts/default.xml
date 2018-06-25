@@ -342,5 +342,26 @@
 		<put-attribute name="heading_title" value="Edit Sales Item"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/editsalesitem.jsp"></put-attribute>
 	</definition>
-		
+	
+	<!-- Capital Assets Controller -->	
+	<definition name="listassets" extends="accounting.base">
+		<put-attribute name="title" value="Capital Assets"></put-attribute>
+		<put-attribute name="heading_title" value="Capital Assets"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listassets.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newasset" extends="accounting.base">
+		<put-attribute name="title" value="Capital Assets"></put-attribute>
+		<put-attribute name="heading_title" value="Capital Assets"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newasset.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editasset" extends="accounting.base">
+		<put-attribute name="title" value="Capital Assets"></put-attribute>
+		<put-attribute name="heading_title" value="Capital Assets"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editasset.jsp"></put-attribute>
+	</definition>
+	
+
 </tiles-definitions>
