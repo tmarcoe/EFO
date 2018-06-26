@@ -14,7 +14,6 @@
 			<th>Supplier</th>
 			<th>Price</th>
 			<th>&nbsp;</th>
-			<th>&nbsp;</th>
 		</tr>
 	</thead>
 	<c:forEach var="item" items="${objectList.pageList}">
@@ -28,7 +27,8 @@
 	</c:forEach>
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="6"><button type="button" onclick="window.location.href='/accounting/newasset'" >New Asset</button></td>
+			<td colspan="4"><button type="button" onclick="window.location.href='/accounting/newasset'" >Purchase Asset</button></td>
+			<td><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>
 		</tr>
 	</tfoot>
 </table>

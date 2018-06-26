@@ -10,6 +10,7 @@
 	url="jdbc:mysql://localhost/efo?useSSL=false"
 	user="donzalma_admin" password="In_heaven3" />
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 
 <sf:form method="post" action="/user/savepassword" commandName="user">
 	<div id="tabs">
@@ -73,7 +74,7 @@
 		</div>
 	</div>
 	<div id="sPass" class="modal">
-		<div class="modal-content small-modal">
+		<div class="modal-content small-modal fancy">
 			<h2>Change your password</h2>
 			<table style="margin-left: auto; margin-right: auto;">
 				<tr>
@@ -82,8 +83,8 @@
 				</tr>
 				<tr>
 					<td><sf:password id="password" name="password" path="password"
-							class="control" /></td>
-					<td><input id="confirmpass" class="control" name="confirmpass"
+							class="control fancy" /></td>
+					<td><input class="fancy" id="confirmpass" class="control fancy" name="confirmpass"
 						type="password" /></td>
 				</tr>
 				<tr>
@@ -100,7 +101,7 @@
 		</div>
 	</div>
 	<div id="getPeriod" class="modal">
-		<div class="modal-content small-modal">
+		<div class="modal-content small-modal fancy">
 			<h2>Enter the Period</h2>
 			<table style="margin-left: auto; margin-right: auto;">
 				<tr>
@@ -108,12 +109,12 @@
 					<th>End Date</th>
 				</tr>
 				<tr>
-					<td><input id="stDate" type="date" /></td>
-					<td><input id="endDate" type="date" /></td>
+					<td><input class="fancy" id="stDate" type="date" /></td>
+					<td><input class="fancy" id="endDate" type="date" /></td>
 				</tr>
 				<tr>
-					<td><button type="button" onclick="setDate()">View Period</button></td>
-					<td><button type="button" onclick="cancelLedger()">Cancel</button></td>
+					<td><button class="fancy-button" type="button" onclick="setDate()">View Period</button></td>
+					<td><button class="fancy-button" type="button" onclick="cancelLedger()">Cancel</button></td>
 				</tr>
 			</table>
 		</div>

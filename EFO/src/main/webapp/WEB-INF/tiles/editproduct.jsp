@@ -18,7 +18,7 @@
 		<tr>
 			<td><sf:input class="fancy" path="sku" readonly="true" /></td>
 			<td><sf:input class="fancy" path="upc"/></td>
-			<td><sf:input class="fancy" path="product_name"/></td>
+			<td colspan="2"><sf:input class="fancy" path="product_name"  size="55" /></td>
 			<td><b>Amount In Stock: </b>${product.inventory.amt_in_stock}</td>
 		</tr>
 		<tr>
@@ -49,6 +49,7 @@
 				<sf:option value="Kilogram">Kilogram</sf:option>
 				<sf:option value="Liter">Liter</sf:option>
 			</sf:select></td>
+			<td><b>Consignment: </b><sf:checkbox path="consignment"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="inventory.min_amount" class="error"/></td>
@@ -58,12 +59,12 @@
 		<tr>
 			<td><b>Category</b></td>
 			<td><b>Subcategory</b></td>
-			<td colspan="2"><b>Keywords (separated by comas)</b></td>
+			<td colspan="3"><b>Keywords (separated by comas)</b></td>
 		</tr>
 		<tr>
 			<td><sf:input class="fancy" path="category" /></td>
 			<td><sf:input class="fancy" path="subcategory"/></td>
-			<td colspan="2"><sf:textarea class="fancy-textarea" path="keywords" rows="4" cols="58"/></td>
+			<td colspan="3"><sf:textarea class="fancy-textarea" path="keywords" rows="4" cols="58"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="category" class="error"/></td>

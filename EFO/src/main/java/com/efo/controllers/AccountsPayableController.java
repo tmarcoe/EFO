@@ -21,9 +21,11 @@ import org.xml.sax.SAXException;
 
 import com.efo.component.ScheduleUtilities;
 import com.efo.component.ScheduleUtilities.ScheduleType;
+import com.efo.entity.CapitalAssets;
 import com.efo.entity.Payables;
 import com.efo.entity.PaymentsBilled;
 import com.efo.entity.ProductOrders;
+import com.efo.service.CapitalAssetsService;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PayablesService;
 import com.efo.service.ProductOrdersService;
@@ -42,6 +44,9 @@ public class AccountsPayableController {
 	
 	@Autowired
 	private ProductOrdersService ordersService;
+	
+	@Autowired
+	private CapitalAssetsService assetsService;
 	
 	@Autowired
 	ScheduleUtilities sched;
@@ -80,7 +85,7 @@ public class AccountsPayableController {
 		ProductOrders orders = ordersService.retrieve(id);
 		Payables payables = new Payables();
 		
-		payables.setInvoice_num(orders.getInvoice_num());
+		payables.setInvoice_num("RET-" + orders.getInvoice_num());
 		payables.setDate_begin(new Date());
 		payables.setSupplier(orders.getVendor());
 		payables.setType("R");
@@ -88,6 +93,24 @@ public class AccountsPayableController {
 		
 		model.addAttribute("suppliers", vendorService.retrieveRawList());
 		model.addAttribute("payables",payables);
+		
+		return "newpayable";
+	}
+	
+	@RequestMapping("newcapitalpayable")
+	public String newCapitalPayable(@ModelAttribute("id") Long id, Model model) {
+		CapitalAssets assets = assetsService.retrieve(id);
+		Payables payables = new Payables();
+		
+		payables.setInvoice_num("CAP-" + assets.getInvoice_num());
+		payables.setDate_begin(new Date());
+		payables.setSupplier(assets.getVendor());
+		payables.setType("C");
+		payables.setTotal_due(assets.getItem_cost());
+		
+		model.addAttribute("suppliers", vendorService.retrieveRawList());
+		model.addAttribute("payables",payables);
+	
 		
 		return "newpayable";
 	}

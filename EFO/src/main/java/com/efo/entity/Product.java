@@ -28,6 +28,7 @@ public class Product implements Serializable {
 	private String keywords;
 	private boolean on_sale;
 	private boolean discontinue;
+	private boolean consignment;
 	
 	@Transient
 	private double order_qty;
@@ -109,6 +110,12 @@ public class Product implements Serializable {
 	public void setOrder_qty(double order_qty) {
 		this.order_qty = order_qty;
 	}
+	public boolean isConsignment() {
+		return consignment;
+	}
+	public void setConsignment(boolean consignment) {
+		this.consignment = consignment;
+	}
 	public Inventory getInventory() {
 		return inventory;
 	}
@@ -127,5 +134,5 @@ public class Product implements Serializable {
 	public void setSales(Set<SalesItem> sales) {
 		this.sales = sales;
 	}
-
+	
 }

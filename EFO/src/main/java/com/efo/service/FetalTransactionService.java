@@ -19,6 +19,7 @@ import com.efo.entity.PettyCashVoucher;
 import com.efo.entity.ProductOrders;
 import com.efo.entity.Receivables;
 import com.efo.dao.FetalTransactionDao;
+import com.efo.entity.CapitalAssets;
 import com.efo.entity.Inventory;
 import com.efo.entity.Payables;
 import com.efo.entity.PaymentsBilled;
@@ -41,6 +42,22 @@ public class FetalTransactionService extends FetalTransaction {
 
 	@Value("${fetal.properiesFile}")
 	private String filePath;
+	
+	public void purchaseCapitalCash(CapitalAssets asset) throws Exception {
+		
+		try {
+			initTransaction(filePath);
+			setDescription("Purchase of Capital Asset -(" + asset.getItem_name() + ")");
+			publish("asset", VariableType.DAO, asset);
+			loadRule("purchasecapital.trans");
+		}
+		finally {
+			closeFetal();
+		}
+		
+	}
+
+	
 	public void makePayment(Payables payables, PaymentsBilled billed) throws IOException {
 		try {
 			Double num_of_payments = Double.valueOf(String.valueOf(payables.getNum_payments()));

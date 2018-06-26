@@ -15,20 +15,33 @@ public class CapitalAssets implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	private String invoice_num;
 	private String item_name;
 	private String item_description;
 	private Date date_purchased;
+	private String purchase_type; //Cash, Credit
 	private String vendor;
 	private String depreciation_method;  // Straight Method, Double Declining
 	private double item_cost;
 	private double salvage_value;
 	private double lifetime;
-	
+		
+	public CapitalAssets(Date date_purchased) {
+		this.date_purchased = date_purchased;
+	}
+	public CapitalAssets() {
+	}
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getInvoice_num() {
+		return invoice_num;
+	}
+	public void setInvoice_num(String invoice_num) {
+		this.invoice_num = invoice_num;
 	}
 	public String getItem_name() {
 		return item_name;
@@ -47,6 +60,12 @@ public class CapitalAssets implements Serializable {
 	}
 	public void setDate_purchased(Date date_purchased) {
 		this.date_purchased = date_purchased;
+	}
+	public String getPurchase_type() {
+		return purchase_type;
+	}
+	public void setPurchase_type(String purchase_type) {
+		this.purchase_type = purchase_type;
 	}
 	public String getVendor() {
 		return vendor;

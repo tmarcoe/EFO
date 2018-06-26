@@ -7,6 +7,8 @@
 	modelAttribute="asset">
 	<table class="fancy-table tableshadow">
 		<tr>
+			<td><b>Invoice Number: </b><br> <sf:input class="fancy"
+					path="invoice_num" /></td>
 			<td><b>Name: </b><br> <sf:input class="fancy"
 					path="item_name" /></td>
 			<td><b>Purchase Date: </b><br> <sf:input type="date"
@@ -23,22 +25,28 @@
 			<td><sf:errors path="item_cost" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Depreciation Method: </b><br> <sf:select class="fancy" path="depreciation_method">
-					<sf:option value="Double Declining">Double Declining</sf:option>
-					<sf:option value="Straight Method">Straight Method</sf:option>
-				</sf:select></td>
 			<td><b>Salvage Value: </b><br> <sf:input type="number" step=".01"
 					class="fancy" path="salvage_value" /></td>
 			<td><b>Asset Lifetime: </b><br> <sf:input type="number" step="1"
 					class="fancy" path="lifetime" /></td>
+			<td><b>Depreciation Method: </b><br> <sf:select class="fancy" path="depreciation_method">
+					<sf:option value="Double Declining">Double Declining</sf:option>
+					<sf:option value="Straight Method">Straight Method</sf:option>
+				</sf:select></td>
+			<td><b>Purchase Type: </b><br> <sf:select class="fancy" path="purchase_type">
+					<sf:option value="">---Select---</sf:option>
+					<sf:option value="Cash">Cash</sf:option>
+					<sf:option value="Credit">Credit</sf:option>
+				</sf:select></td>			
 		</tr>
 		<tr>
-			<td><sf:errors path="item_description" class="error" /></td>
 			<td><sf:errors path="salvage_value" class="error" /></td>
 			<td><sf:errors path="lifetime" class="error" /></td>
+			<td><sf:errors path="depreciation_method" class="error" /></td>
+			<td><sf:errors path="purchase_type" class="error" /></td>
 		</tr>
 		<tr>
-			<td colspan="4"><b></b><br> <sf:textarea
+			<td colspan="4"><b>Item Description: </b><br> <sf:textarea
 					class="fancy-textarea" path="item_description" rows="4" cols="102" /></td>
 		</tr>
 		<tr>

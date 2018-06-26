@@ -54,14 +54,21 @@ public class CapitalAssetsController {
 	@RequestMapping("newasset")
 	public String newAsset(Model model) {
 		
-		model.addAttribute("asset", new CapitalAssets());
+		model.addAttribute("asset", new CapitalAssets(new Date()));
 		
 		return "newasset";
 	}
 	
 	@RequestMapping("addasset")
-	public String addAsset(@Valid @ModelAttribute("assets") CapitalAssets assets, BindingResult result) {
-		capitalAssetsService.create(assets);
+	public String addAsset(@Valid @ModelAttribute("assets") CapitalAssets assets, BindingResult result) throws Exception {
+		
+
+		if (assets.getPurchase_type().compareTo("Cash") == 0) {
+			transactionService.purchaseCapitalCash(assets);			
+		}else{
+			capitalAssetsService.create(assets);
+			return "redirect:/accounting/newcapitalpayable?id=" + assets.getId();
+		}
 		
 		return "redirect:/accounting/listassets";
 	}
