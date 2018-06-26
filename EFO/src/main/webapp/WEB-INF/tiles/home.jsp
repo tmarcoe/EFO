@@ -95,7 +95,7 @@
 					<td><div id="matchpass"></div>&nbsp;</td>
 				</tr>
 				<tr>
-					<td><button type="submit">Save</button></td>
+					<td><button class="fancy-button" type="submit"><b>Save</b></button></td>
 				</tr>
 			</table>
 		</div>

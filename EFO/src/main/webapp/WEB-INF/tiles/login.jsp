@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
 
 <script type="text/javascript">
@@ -19,18 +21,18 @@
 		</c:if>
 
 		<form action='/login' method='post' id=loginForm>
-			<table class="login-table">
+			<table class="fancy-table tableshadow">
 				<tr>
-					<td class="login-label">Email</td>
+					<td><div class="fancy" style="text-align:center;"><b>Email</b></div></td>
 				</tr>
 				<tr>
-					<td><input type='text' name='username' value=''></td>
+					<td><input class="fancy" type='text' name='username' value=''></td>
 				</tr>
 				<tr>
-					<td class="login-label">Password</td>
+					<td><div class="fancy" style="text-align:center;"><b>Password</b></div></td>
 				</tr>
 				<tr>
-					<td><input type='password' name='password' /></td>
+					<td><input class="fancy" type='password' name='password' /></td>
 				</tr>
 				<!-- 
 		<tr>
@@ -40,7 +42,7 @@
 		</tr>
 		 -->
 				<tr>
-					<td><button type="submit" style="width: 100%;">Login</button></td>
+					<td><button class="fancy-button" type="submit" style="width: 100%;"><b>Login</b></button></td>
 				</tr>
 			</table>
 		</form>

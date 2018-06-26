@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.entity.ChartOfAccounts;
 import com.efo.entity.PettyCash;
 import com.efo.entity.PettyCashVoucher;
 import com.efo.service.ChartOfAccountsService;
@@ -87,15 +86,16 @@ public class PettyCashVoucherController {
 	public String updateChange(@ModelAttribute("pettyCash") PettyCash pettyCash, BindingResult result) throws IOException {
 		
 		pettyCashService.saveOrUpdate(pettyCash);
-		ChartOfAccounts cOfA = chartOfAccountsService.retrieve("3000");
-		double pcAmount = pettyCash.getMaxAmount() - cOfA.getAccountBalance();
-		if (pcAmount != 0) {
-			fetalTransactionService.replenishPettyCash(pettyCash, pcAmount);
-		}
 		
 		return "redirect:/accounting/listpettycash";
 	}
-	
+	@RequestMapping("replenish") 
+	public String replensih() throws IOException{
+		PettyCash pc = pettyCashService.retrieve(1);
+		fetalTransactionService.replenishPettyCash(pc.getMaxAmount());
+		
+		return "redirect:/accounting/listpettycash";
+	}
 	@RequestMapping("newpettycash")
 	public String newPettyCash(Model model) {
 		

@@ -35,10 +35,8 @@
 
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="6"><button type="button"
-					onclick="window.location.href = '/accounting/newppayment?invoice_num=${invoice_num}'">New
-					Payment</button></td>
-			<td><button type="button"
+
+			<td colspan="7"><button type="button"
 					onclick="window.location.href = '/accounting/ap'">Back</button></td>
 		</tr>
 	</tfoot>

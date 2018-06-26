@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.efo.entity.PaymentsReceived;
-import com.efo.entity.PettyCash;
 import com.efo.entity.PettyCashVoucher;
 import com.efo.entity.ProductOrders;
 import com.efo.entity.Receivables;
@@ -131,12 +130,10 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 	
-	public void replenishPettyCash(PettyCash pettyCash, double pcAmount) throws IOException {
+	public void replenishPettyCash( double pettyCashCeiling) throws IOException {
 		try {
 			initTransaction(filePath);
-			setDescription("Replenising Petty cash to " + pcAmount);
-			publish("pettyCash", VariableType.DAO, pettyCash);
-			publish("pcAmount", VariableType.DECIMAL, pcAmount);
+			publish("pettyCashCeiling", VariableType.DECIMAL, pettyCashCeiling);
 			loadRule("replenishpc.trans");
 			}
 		finally {

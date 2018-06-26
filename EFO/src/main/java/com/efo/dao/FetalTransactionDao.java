@@ -98,8 +98,8 @@ public class FetalTransactionDao {
 
 	public double getBalance(String account, Session session) {
 		String hql = "FROM ChartOfAccounts WHERE account_num = :account";
-		double retVal = (double) session.createQuery(hql).setString("account", account).uniqueResult();
-		return retVal;
+		ChartOfAccounts cofa = (ChartOfAccounts) session.createQuery(hql).setString("account", account).uniqueResult();
+		return cofa.getAccountBalance();
 	}
 
 
