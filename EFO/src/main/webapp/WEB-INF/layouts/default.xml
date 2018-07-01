@@ -343,6 +343,12 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editsalesitem.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="processorder" extends="accounting.base">
+		<put-attribute name="title" value="Edit Sales Item"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Sales Item"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/processorder.jsp"></put-attribute>
+	</definition>
+	
 	<!-- Capital Assets Controller -->	
 	<definition name="listassets" extends="accounting.base">
 		<put-attribute name="title" value="Capital Assets"></put-attribute>

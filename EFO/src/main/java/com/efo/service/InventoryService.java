@@ -20,8 +20,8 @@ public class InventoryService implements IInventory {
 	}
 	
 	@Override
-	public Inventory retrieve(int id) {
-		return inventoryDao.retrieve(id);
+	public Inventory retrieve(String sku) {
+		return inventoryDao.retrieve(sku);
 	}
 	
 	public PagedListHolder<Inventory> retrieveList() {
@@ -38,9 +38,17 @@ public class InventoryService implements IInventory {
 		inventoryDao.delete(inventory);
 	}
 	
-	public void delete(int id) {
-		Inventory inventory = retrieve(id);
+	public void delete(String sku) {
+		Inventory inventory = retrieve(sku);
 		delete(inventory);
 	}
+	public void commitStock(String sku, double amt) {
+		inventoryDao.commitInventory(sku,amt);
+	}
+	
+	public void depleteStock(String sku, double amt) {
+		inventoryDao.depleteInventory(sku,amt);
+	}
+
 
 }

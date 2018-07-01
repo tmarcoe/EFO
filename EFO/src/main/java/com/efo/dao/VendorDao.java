@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -96,6 +97,18 @@ public class VendorDao implements IVendor {
 		session.disconnect();
 		
 		return vendors;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Vendor> queryVendor(String name, String type) {
+		Session session = session();
+		List<Vendor> vendorList = session.createCriteria(Vendor.class)
+										 .add(Restrictions.like("company_name", name, MatchMode.ANYWHERE))
+										 .add(Restrictions.eq("type", type)).list();
+		
+		session.disconnect();
+		
+		return vendorList;
 	}
 
 }

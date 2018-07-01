@@ -48,4 +48,8 @@ public class VendorService implements IVendor {
 	public List<Vendor> retrieveRawList() {
 		return vendorDao.retrieveList();
 	}
+	
+	public List<Vendor> queryVendow(String name, String type) {
+		return vendorDao.queryVendor(name, type);
+	}
 }

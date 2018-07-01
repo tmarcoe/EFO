@@ -75,7 +75,7 @@
 				<sf:option value="C">Capital</sf:option>
 				<sf:option value="R">Revenue</sf:option>
 			</sf:select></td>
-			<td><sf:input path="vendor.category" /></td>
+			<td><sf:input class="fancy" path="vendor.category" /></td>
 			<td colspan="2"><sf:textarea class="fancy-textarea" path="vendor.keywords" rows="4" cols="56"/></td>
 		</tr>
 		<tr>

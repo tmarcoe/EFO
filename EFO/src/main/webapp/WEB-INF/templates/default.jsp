@@ -22,6 +22,8 @@
 <script type="text/javascript" src="/script/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/script/Chart.js"></script>
 <script type="text/javascript" src="/script/jquery-ui.js"></script>
+<script type="text/javascript" src="/script/jquery.autocomplete.min.js"></script>
+
 <tiles:insertAttribute name="includes"></tiles:insertAttribute>
 
 </head>

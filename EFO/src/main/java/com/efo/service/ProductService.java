@@ -1,9 +1,12 @@
 package com.efo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
+import com.efo.dao.InventoryDao;
 import com.efo.dao.ProductDao;
 import com.efo.entity.Product;
 import com.efo.interfaces.IProduct;
@@ -12,6 +15,9 @@ import com.efo.interfaces.IProduct;
 public class ProductService implements IProduct {
 	@Autowired
 	ProductDao productDao;
+	
+	@Autowired
+	InventoryDao inventoryDao;
 
 	@Override
 	public void create(Product product) {
@@ -45,7 +51,7 @@ public class ProductService implements IProduct {
 		productDao.delete(sku);
 	}
 	
-	public Product nameSearch(String name) {
+	public List<Product> nameSearch(String name) {
 		return productDao.nameSearch(name);
 	}
 

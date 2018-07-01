@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form id="details" method="post" action="/admin/addcustomer"
+<sf:form id="customer" method="post" action="/admin/addcustomer"
 	modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
 	<table class="fancy-table tableshadow">
@@ -26,11 +26,11 @@
 		</tr>
 		<tr>
 			<td><sf:input class="fancy" path="username" autocomplete="false" /></td>
-			<td><sf:password class="fancy" path="password" autocomplete="false"
+			<td><sf:password id="password" class="fancy" path="password" autocomplete="false"
 					showPassword="true" /></td>
 			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass"
 				type="password" /></td>
-			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled" /></td>
+			<td><b>Enabled logins? </b><sf:checkbox id="enabled" class="fancy" path="enabled" onclick="disableInput()"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="username" class="error" /></td>
@@ -63,7 +63,7 @@
 			</sf:select></td>
 			<td><sf:input class="fancy" path="customer.firstname" /></td>
 			<td><sf:input class="fancy" path="customer.lastname" /></td>
-			<td><sf:select path="customer.maleFemale">
+			<td><sf:select class="fancy" path="customer.maleFemale">
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
 				</sf:select></td>
@@ -78,22 +78,28 @@
 			<td><b>Address 1</b></td>
 			<td><b>Address 2</b></td>
 			<td><b>City</b></td>
-			<td><b>Region</b></td>
-			<td><b>Postal Code</b></td>
-			<td><b>Country Code</b></td>
 		</tr>
 		<tr>
 			<td><sf:input class="fancy" path="common.address1" />
 			<td><sf:input class="fancy" path="common.address2" />
 			<td><sf:input class="fancy" path="common.city" /></td>
-			<td><sf:input class="fancy" path="common.region" /></td>
-			<td><sf:input class="fancy" path="common.postalCode" /></td>
-			<td><sf:input class="fancy" path="common.country" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.address1" class="error" /></td>
 			<td><sf:errors path="common.address2" class="error" /></td>
 			<td><sf:errors path="common.city" class="error" /></td>
+		</tr>
+		<tr>
+			<td><b>Region</b></td>
+			<td><b>Postal Code</b></td>
+			<td><b>Country Code</b></td>
+		</tr>
+		<tr>
+			<td><sf:input class="fancy" path="common.region" /></td>
+			<td><sf:input class="fancy" path="common.postalCode" /></td>
+			<td><sf:input class="fancy" path="common.country" /></td>
+		</tr>
+		<tr>
 			<td><sf:errors path="common.region" class="error" /></td>
 			<td><sf:errors path="common.postalCode" class="error" /></td>
 			<td><sf:errors path="common.country" class="error" /></td>
@@ -123,10 +129,16 @@
 					$("#roles").find("option[value=" + optionVal + "]").prop(
 							"selected", "selected");
 				}
+				if ($("#enabled").prop('checked') == false) {
+					$("#password").prop("readonly",true);
+					$("#confirmpass").prop("readonly",true);
+				}
 			});
 
 	function formSubmit() {
-
+		if ($("#password").val() == "" ) {
+			$("#password").val("password");
+		}
 		var opt = document.getElementById("roles");
 		var userRoles = "";
 		for (var i = 0; i < opt.options.length; i++) {
@@ -140,6 +152,15 @@
 		}
 		var rs = document.getElementById("selectedRoles");
 		rs.value = userRoles;
-		document.getElementById("details").submit();
+		document.getElementById("customer").submit();
+	}
+	function disableInput() {
+		if ($("#enabled").prop('checked') == false) {
+			$("#password").prop("readonly",true);
+			$("#confirmpass").prop("readonly",true);
+		}else{			
+			$("#password").prop("readonly",false);
+			$("#confirmpass").prop("readonly",false);
+		}
 	}
 </script>

@@ -1,67 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
-<link type="text/css" rel="stylesheet" href="/css/tables.css" />
+<link type="text/css" href="/css/tables.css" rel="stylesheet" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form method="post" action="/admin/addproductorder"
-	modelAttribute="productOrder">
+
+<sf:form id="details" method="post" action="/admin/updorder"
+	modelAttribute="sales">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>SKU</b></td>
-			<td><b>Product Name</b></td>
-			<td><b>Invoice #</b></td>
-			<td><b>Vendor</b></td>
+			<td><b>Invoice: </b><br>
+				<div class="fancy">
+					<fmt:formatNumber type="number" pattern="00000000"
+						value="${sales.invoice_num}" />
+				</div></td>
+			<td><b>Total Price: </b><br>
+				<div class="fancy">
+					<fmt:formatNumber type="currency" currencySymbol=""
+						value="${sales.total_price}" />
+				</div></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="sku" readonly="true" /></td>
-			<td><sf:input class="fancy" path="product_name" readonly="true" />
-			<td><sf:input class="fancy" path="invoice_num" /></td>
-			<td><sf:input class="fancy" id="supplierInp" path="vendor" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="sku" class="error" /></td>
-			<td>&nbsp;</td>
-			<td><sf:errors path="invoice_num" class="error" /></td>
-			<td><sf:errors onclick="chooseSupplier()" id="supplierInp"
-					path="vendor" class="error" /></td>
-		</tr>
-		<tr>
-			<td><b>Order Price</b></td>
-			<td><b>Amount Ordered</b></td>
-			<td><b>Payment Type</b></td>
-			<td><b>Date Ordered</b></td>
-		</tr>
-		<tr>
-			<td><sf:input id="total_due" class="fancy" type="number"
-					step=".01" path="wholesale" /></td>
-			<td><sf:input class="fancy" type="number" step=".01"
-					path="amt_ordered" /></td>
-			<td><sf:select id="paymentType" class="fancy"
-					path="payment_type" onchange="showReceivable()">
+			<td><b>Date Ordered: </b><br>
+				<div class="fancy">
+					<fmt:formatDate value="${sales.ordered}" />
+				</div></td>
+			<td><b>Payment Type: </b><br> <sf:select id="paymentType"
+					class="fancy" path="payment_type" onchange="showReceivable()">
 					<sf:option value="">---Select---</sf:option>
 					<sf:option value="Cash">Cash</sf:option>
 					<sf:option value="Credit">Credit</sf:option>
 				</sf:select></td>
-			<td><sf:input class="fancy" type="date" path="order_date" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="wholesale" class="error" /></td>
-			<td><sf:errors path="amt_ordered" class="error" /></td>
-			<td><sf:errors path="payment_type" class="error" /></td>
-			<td><sf:errors path="order_date" class="error" /></td>
+			<td><b>Customer: </b><br> <sf:input class="fancy"
+					id="autocomplete" path="customer_name"
+					placeholder="Enter Customer Name" /></td>
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="submit">
-					<b>Save</b>
+					<b>Process</b>
 				</sf:button></td>
 			<td><sf:button class="fancy-button" type="button"
-					onclick="window.history.back()">
+					onclick="window.location.href='/#tabs-4'">
 					<b>Cancel</b>
 				</sf:button></td>
 		</tr>
@@ -72,20 +58,23 @@
 			<table style="margin-left: auto; margin-right: auto;">
 				<tr>
 					<td><b>Amount Due: </b><br>
-						<div id="popupTotal" class="fancy"></div></td>
+						<div class="fancy">
+							<fmt:formatNumber type="currency" currencySymbol=""
+								value="${sales.receivables.total_due}" />
+						</div></td>
 					<td><b>Down Payment: </b><br> <sf:input id="down_payment"
 							class="fancy" type="number" step=".01"
-							path="payables.down_payment" onchange="eachPayment()" /></td>
+							path="receivables.down_payment" onchange="eachPayment()" /></td>
 					<td><b>Interest: </b><br> <sf:input id="interest"
-							class="fancy" type="number" step=".01" path="payables.interest"
-							onchange="eachPayment()" />%</td>
+							class="fancy" type="number" step=".01"
+							path="receivables.interest" onchange="eachPayment()" />%</td>
 				</tr>
 				<tr>
 					<td><b>Number of Payments: </b><br> <sf:input
 							id="num_payments" class="fancy" type="number" step="1"
-							path="payables.num_payments" onchange="eachPayment()" /></td>
+							path="receivables.num_payments" onchange="eachPayment()" /></td>
 					<td><b>Payment Schedule: </b><br> <sf:select
-							class="fancy" path="payables.schedule">
+							class="fancy" path="receivables.schedule">
 							<sf:option value="Annually">Annually</sf:option>
 							<sf:option value="Bi-Annually">Bi-Annually</sf:option>
 							<sf:option value="Quarterly">Quarterly</sf:option>
@@ -96,7 +85,7 @@
 						</sf:select></td>
 					<td><b>Amount Per Payment: </b><br> <sf:input
 							id="each_payment" class="fancy" type="number" step=".01"
-							path="payables.each_payment" /></td>
+							path="receivables.each_payment" /></td>
 				</tr>
 				<tr>
 					<td><sf:button class="fancy-button" type="submit">
@@ -110,29 +99,34 @@
 			</table>
 		</div>
 	</div>
-	<sf:hidden path="amt_received" />
-	<sf:hidden path="amt_this_shipment" />
-	<sf:hidden path="delivery_date" />
-	<sf:hidden path="status" value="O" />
-	<sf:hidden id="hiddenTotalDue" path="payables.total_due" />
+	<sf:hidden path="invoice_num" />
+	<sf:hidden path="user_id" />
+	<sf:hidden id="total_due" path="total_price" />
+	<sf:hidden path="ordered" />
+	<sf:hidden path="processed" />
+	<sf:hidden path="shipped" />
+	<sf:hidden path="changed" />
+	<sf:hidden id="customer_id" path="customer_id" />
+	<sf:hidden path="receivables.invoice_num" />
+	<sf:hidden path="receivables.invoice_date" />
+	<sf:hidden path="receivables.customer" />
+	<sf:hidden path="receivables.customer" />
+	<sf:hidden path="receivables.status" value="O" />
+	<sf:hidden path="receivables.username" />
+	<sf:hidden path="receivables.total_due" />
 </sf:form>
-
 <script type="text/javascript">
-	function receiveCancel() {
-		$("#paymentType").val("Cash").change();
-		var modal = document.getElementById('setReceivable');
-		modal.style.display = "none";
-	}
-
 	function showReceivable() {
 		if ($("#paymentType option:selected").text() == "Credit") {
-			var newVal = Number($("#total_due").val());
-			$("#popupTotal").text(newVal.toFixed(2));
-			$("#hiddenTotalDue").val(newVal);
 			var modal = document.getElementById('setReceivable');
 			modal.style.display = "block";
 			eachPayment();
 		}
+	}
+	function receiveCancel() {
+		var modal = document.getElementById('setReceivable');
+		$("#paymentType").val("Cash").change();
+		modal.style.display = "none";
 	}
 
 	function eachPayment() {
@@ -154,12 +148,13 @@
 					});
 		}
 	}
-	
-	$('#supplierInp').devbridgeAutocomplete(
+
+	$('#autocomplete').devbridgeAutocomplete(
 			{
+
 				lookup : function(query, done) {
-					var name = $("#supplierInp").val();
-					$.getJSON("/rest/lookupvendor?name=" + name + "&type=R",
+					var name = $("#autocomplete").val();
+					$.getJSON("/rest/lookupcustomer?name=" + name,
 							function(result) {
 								var data = {
 									suggestions : result
@@ -175,7 +170,7 @@
 
 				},
 				onSelect : function(data) {
-					$("#supplierInp").val(data.data.company_name);
+					$("#customer_id").val(data.data);
 				}
 			});
 </script>

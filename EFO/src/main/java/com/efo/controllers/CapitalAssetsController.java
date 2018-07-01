@@ -62,19 +62,13 @@ public class CapitalAssetsController {
 	@RequestMapping("addasset")
 	public String addAsset(@Valid @ModelAttribute("assets") CapitalAssets assets, BindingResult result) throws Exception {
 		
-
-		if (assets.getPurchase_type().compareTo("Cash") == 0) {
-			transactionService.purchaseCapitalCash(assets);			
-		}else{
-			capitalAssetsService.create(assets);
-			return "redirect:/accounting/newcapitalpayable?id=" + assets.getId();
-		}
+		transactionService.purchaseCapital(assets);
 		
 		return "redirect:/accounting/listassets";
 	}
 	@RequestMapping("editasset")
-	public String editAsset(@ModelAttribute("id") Long id, Model model) {
-		CapitalAssets asset = capitalAssetsService.retrieve(id);
+	public String editAsset(@ModelAttribute("invoice_num") String invoice_num, Model model) {
+		CapitalAssets asset = capitalAssetsService.retrieve(invoice_num);
 		
 		model.addAttribute("asset", asset);
 		

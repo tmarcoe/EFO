@@ -3,18 +3,17 @@ package com.efo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class CapitalAssets implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	private String invoice_num;
 	private String item_name;
 	private String item_description;
@@ -26,16 +25,14 @@ public class CapitalAssets implements Serializable {
 	private double salvage_value;
 	private double lifetime;
 		
+	@OneToOne
+	(fetch=FetchType.LAZY, mappedBy = "capitalAssets", cascade = CascadeType.ALL)
+	private Payables payables = new Payables();
+	
 	public CapitalAssets(Date date_purchased) {
 		this.date_purchased = date_purchased;
 	}
 	public CapitalAssets() {
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public String getInvoice_num() {
 		return invoice_num;
@@ -96,6 +93,12 @@ public class CapitalAssets implements Serializable {
 	}
 	public void setLifetime(double lifetime) {
 		this.lifetime = lifetime;
+	}
+	public Payables getPayables() {
+		return payables;
+	}
+	public void setPayables(Payables payables) {
+		this.payables = payables;
 	}
 	
 }

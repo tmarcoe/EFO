@@ -35,10 +35,10 @@ public class InventoryDao implements IInventory {
 	}
 	
 	@Override
-	public Inventory retrieve(int id) {
+	public Inventory retrieve(String sku) {
 		Session session = session();
 		
-		Inventory inventory = (Inventory) session.createCriteria(Inventory.class).add(Restrictions.idEq(id)).uniqueResult();
+		Inventory inventory = (Inventory) session.createCriteria(Inventory.class).add(Restrictions.idEq(sku)).uniqueResult();
 		
 		session.disconnect();
 		
@@ -63,7 +63,26 @@ public class InventoryDao implements IInventory {
 		tx.commit();
 		session.disconnect();
 	}
-
+	
+	public void commitInventory(String sku, double amt) {
+		String hql = "UPDATE Inventory SET amt_in_stock = amt_in_stock - :amt, "
+				   + "amt_committed = amt_committed + :amt WHERE sku = :sku";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setDouble("amt", amt).setString("sku", sku).executeUpdate();
+		tx.commit();
+		session.disconnect();
+	}
+	
+	public void depleteInventory(String sku, double amt) {
+		String hql = "UPDATE Inventory SET amt_committed = amt_committed - :amt WHERE sku = :sku";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setDouble("amt", amt).setString("sku", sku).executeUpdate();
+		tx.commit();
+		session.disconnect();
+	}
+	
 	@Override
 	public void delete(Inventory inventory) {
 		Session session = session();

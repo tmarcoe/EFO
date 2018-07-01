@@ -32,9 +32,9 @@
 			<td>${item.amt_received}</td>
 			<td><fmt:formatDate value="${item.order_date}"/></td>
 			<td><fmt:formatDate value="${item.delivery_date}" /></td>
-			<td><button type="button" onclick="window.location.href='/admin/receiveorder?id=${item.id}'">Receive Order</button></td>
-			<td><button type="button" onclick="window.location.href='/admin/editproductorder?id=${item.id}'">Edit Order</button></td>
-			<td><button type="button" onclick="window.location.href='/admin/cancelorder?id=${item.id}'">CancelOrder</button></td>
+			<td><button type="button" onclick="window.location.href='/admin/receiveorder?invoice_num=${item.invoice_num}'">Receive Order</button></td>
+			<td><button type="button" onclick="window.location.href='/admin/editproductorder?invoice_num=${item.invoice_num}'">Edit Order</button></td>
+			<td><button type="button" onclick="window.location.href='/admin/cancelorder?invoice_num=${item.invoice_num}'">CancelOrder</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot  class="tablefooter">

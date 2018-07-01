@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form id="details" method="post" action="/admin/addemployee" modelAttribute="user">
+<sf:form id="employee" method="post" action="/admin/addemployee" modelAttribute="user">
 <sf:hidden id="selectedRoles" path="roleString"/>
 	<table class="fancy-table tableshadow">
 		<tr>
@@ -17,10 +17,10 @@
 		</tr>
 		<tr>
 			<td><sf:input class="fancy" path="username" autocomplete="false" /></td>
-			<td><sf:password class="fancy" path="password" autocomplete="false" showPassword="true" /></td>
+			<td><sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" /></td>
 			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass"
 				type="password" /></td>
-			<td><b>Enable logins? </b><sf:checkbox path="enabled"/></td>
+			<td><b>Enable logins? </b><sf:checkbox id="enabled" path="enabled" onclick="disableInput()"/></td>
 		</tr>
 		<tr>
 			<td>&nbsp;<sf:errors path="username" class="error" /></td>
@@ -54,9 +54,9 @@
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
 				</sf:select></td>
-			<td><sf:input path="employee.position" /></td>
-			<td><sf:input type="date" path="employee.start_date"/></td>
-			<td><sf:input type="date" path="employee.end_date"/></td>
+			<td><sf:input class="fancy" path="employee.position" /></td>
+			<td><sf:input class="fancy" type="date" path="employee.start_date"/></td>
+			<td><sf:input class="fancy" type="date" path="employee.end_date"/></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -153,7 +153,7 @@
 		</tr>
 	</table>
 		<div class="modal" id="empFinancial">
-		<div class="modal-content medium-modal">
+		<div class="modal-content medium-large-modal fancy">
 			<table>
 				<tr>
 					<th>Tax ID</th>
@@ -161,9 +161,9 @@
 					<th>Federal Exemptioins</th>
 				</tr>
 				<tr>
-					<td><sf:input type="text" path="employee.emp_financial.tax_id" /></td>
-					<td><sf:input type="number" step="1" path="employee.emp_financial.st_exempt" /></td>
-					<td><sf:input type="number" step="1" path="employee.emp_financial.fd_exempt"/></td>
+					<td><sf:input class="fancy" type="text" path="employee.emp_financial.tax_id" /></td>
+					<td><sf:input class="fancy" type="number" step="1" path="employee.emp_financial.st_exempt" /></td>
+					<td><sf:input class="fancy" type="number" step="1" path="employee.emp_financial.fd_exempt"/></td>
 				</tr>
 				<tr>
 					<td>Hourly Rate</td>
@@ -172,10 +172,10 @@
 					<td>% Fed Unemployment</td>
 				</tr>
 				<tr>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.hourlyRate" /></td>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.fTaxPrcnt" /></td>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.sTaxPrcnt" /></td>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.fUnPrcnt" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.hourlyRate" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.fTaxPrcnt" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.sTaxPrcnt" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.fUnPrcnt" /></td>
 				</tr>
 				<tr>
 					<td>% St Unemployment</td>
@@ -184,10 +184,10 @@
 					<td>% Ret</td>
 				</tr>
 				<tr>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.sUnPrcnt" /></td>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.medPrcnt" /></td>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.ssiPrcnt" /></td>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.retirePrcnt" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.sUnPrcnt" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.medPrcnt" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.ssiPrcnt" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.retirePrcnt" /></td>
 				</tr>
 				<tr>
 					<td>Garnishment</td>
@@ -195,9 +195,9 @@
 					<td>Reason</td>
 				</tr>
 				<tr>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.garnishment" /></td>
-					<td><sf:input type="number" step=".01" path="employee.emp_financial.other" /></td>
-					<td><sf:input type="text" path="employee.emp_financial.otherExpl" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.garnishment" /></td>
+					<td><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.other" /></td>
+					<td><sf:input class="fancy" type="text" path="employee.emp_financial.otherExpl" /></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -214,15 +214,15 @@
 					<td>Routing Number</td>
 				</tr>
 				<tr>
-					<td><sf:select type="text" path="employee.emp_financial.payMethod">
+					<td><sf:select class="fancy" type="text" path="employee.emp_financial.payMethod">
 						<sf:option value="Check">Check</sf:option>
 						<sf:option value="Automatic Deposit">Automatic Deposit</sf:option>
 					</sf:select></td>
-					<td><sf:input type="text" path="employee.emp_financial.accountNum" /></td>
-					<td><sf:input type="text" path="employee.emp_financial.routingNum" /></td>
+					<td><sf:input class="fancy" type="text" path="employee.emp_financial.accountNum" /></td>
+					<td><sf:input class="fancy" type="text" path="employee.emp_financial.routingNum" /></td>
 				</tr>
 				<tr>
-					<td><button type="button" onclick="closePopup();">Save</button></td>
+					<td><button class="fancy-button" type="button" onclick="closePopup();">Save</button></td>
 				</tr>
 			</table>
 		</div>
@@ -241,34 +241,50 @@ $( document ).ready(function() {
 		 var optionVal = selectedOptions[i];
 		$("#roles").find("option[value="+optionVal+"]").prop("selected", "selected");
 	}
+
+	if ($("#enabled").prop('checked') == false) {
+					$("#password").prop("readonly", true);
+					$("#confirmpass").prop("readonly", true);
+				}
 });
 
-function openPopup() {
-	var modal = document.getElementById('empFinancial');
-	modal.style.display = "block"
-}
+	function openPopup() {
+		var modal = document.getElementById('empFinancial');
+		modal.style.display = "block"
+	}
 
-function closePopup() {
-	var modal = document.getElementById('empFinancial');
-	modal.style.display = "none";
-}
+	function closePopup() {
+		var modal = document.getElementById('empFinancial');
+		modal.style.display = "none";
+	}
 
-function formSubmit() {
-
-	var opt = document.getElementById("roles");
-	var userRoles = "";
-	for (var i=0; i < opt.options.length; i++) {
-		if (opt.options[i].selected) {
-			if (userRoles == "") {
-				userRoles += opt.options[i].value;
-			}else{
-				userRoles += ";" + opt.options[i].value;
+	function formSubmit() {
+		if ($("#password").val() == "") {
+			$("#password").val("password");
+		}
+		var opt = document.getElementById("roles");
+		var userRoles = "";
+		for (var i = 0; i < opt.options.length; i++) {
+			if (opt.options[i].selected) {
+				if (userRoles == "") {
+					userRoles += opt.options[i].value;
+				} else {
+					userRoles += ";" + opt.options[i].value;
+				}
 			}
 		}
+		var rs = document.getElementById("selectedRoles");
+		rs.value = userRoles;
+		document.getElementById("employee").submit();
 	}
-	var rs = document.getElementById("selectedRoles");
-	rs.value = userRoles;
-	document.getElementById("details").submit();
-}
 
+	function disableInput() {
+		if ($("#enabled").prop('checked') == false) {
+			$("#password").prop("readonly", true);
+			$("#confirmpass").prop("readonly", true);
+		} else {
+			$("#password").prop("readonly", false);
+			$("#confirmpass").prop("readonly", false);
+		}
+	}
 </script>

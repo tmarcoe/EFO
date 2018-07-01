@@ -2,26 +2,29 @@ package com.efo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 
 @Entity
 public class ProductOrders implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@Id
+	@NotBlank
+	private String invoice_num;
 	private String sku;
 	private String product_name;
-	private String invoice_num;
 	private String vendor;
 	
 	@DecimalMin("0.01")
@@ -39,6 +42,9 @@ public class ProductOrders implements Serializable {
 	@JoinColumn(name="SKU", nullable = false, insertable=false, updatable=false )
 	private Product product;
 	
+	@OneToOne
+	(fetch=FetchType.LAZY, mappedBy = "productOrders", cascade = CascadeType.ALL)
+	private Payables payables = new Payables();
 	
 	public ProductOrders() {
 	}
@@ -49,12 +55,6 @@ public class ProductOrders implements Serializable {
 		this.product_name = product_name;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getSku() {
 		return sku;
 	}
@@ -145,5 +145,14 @@ public class ProductOrders implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}	
+	}
+
+	public Payables getPayables() {
+		return payables;
+	}
+
+	public void setPayables(Payables payables) {
+		this.payables = payables;
+	}
+	
 }

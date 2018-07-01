@@ -31,6 +31,10 @@ public class SalesItemService implements ISalesItem {
 	public List<SalesItem> retrieveRawList() {
 		return salesItemDao.retrieveRawList();
 	}
+	
+	public List<SalesItem> retrieveRawList(Long invoice_num) {
+		return salesItemDao.retrieveRawList(invoice_num);
+	}
 
 	public PagedListHolder<SalesItem> retrieveList() {
 		return new PagedListHolder<SalesItem>(salesItemDao.retrieveRawList());
@@ -66,5 +70,5 @@ public class SalesItemService implements ISalesItem {
 	public Long rowCount(Long invoice_num) {
 		return salesItemDao.rowCount(invoice_num);
 	}
-
+	
 }

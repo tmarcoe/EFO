@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Payables implements Serializable {
@@ -30,6 +33,14 @@ public class Payables implements Serializable {
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "payables")
 	private Set<PaymentsBilled> payments = new HashSet<PaymentsBilled>(0);
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="INVOICE_NUM")
+	private ProductOrders productOrders;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="INVOICE_NUM")
+	private CapitalAssets capitalAssets;
 
 	public String getInvoice_num() {
 		return invoice_num;
@@ -130,11 +141,16 @@ public class Payables implements Serializable {
 	public Set<PaymentsBilled> getPayments() {
 		return payments;
 	}
-
 	public void setPayments(Set<PaymentsBilled> payments) {
 		this.payments = payments;
 	}
 
+	public ProductOrders getProductOrders() {
+		return productOrders;
+	}
 
-
+	public void setProductOrders(ProductOrders productOrders) {
+		this.productOrders = productOrders;
+	}
+	
 }

@@ -22,7 +22,7 @@
 			<td><fmt:formatDate value="${item.date_purchased}"/></td>
 			<td>${item.vendor}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.item_cost}" /></td>
-			<td><button type="button" onclick="window.location.href='/accounting/editasset?id=${item.id}'">Edit</button></td>
+			<td><button type="button" onclick="window.location.href='/accounting/editasset?invoice_num=${item.invoice_num}'">Edit</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter">

@@ -36,9 +36,9 @@ public class CapitalAssetsDao implements ICapitalAssets {
 	}
 
 	@Override
-	public CapitalAssets retrieve(Long id) {
+	public CapitalAssets retrieve(String invoice_num) {
 		Session session = session();
-		CapitalAssets assets = (CapitalAssets) session.createCriteria(CapitalAssets.class).add(Restrictions.idEq(id)).uniqueResult();
+		CapitalAssets assets = (CapitalAssets) session.createCriteria(CapitalAssets.class).add(Restrictions.idEq(invoice_num)).uniqueResult();
 		session.disconnect();
 		
 		return assets;

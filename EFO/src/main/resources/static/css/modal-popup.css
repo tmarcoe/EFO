@@ -36,10 +36,15 @@ div.modal {
 }
 .medium-modal {
 	width: 45%;
-	text-align: center;
+	text-align: center;	
+}
+.medium-large-modal {
+	width: 50%;
+	text-align: center;	
+	
 }
 .large-modal {
-	width: 70%
+	width: 60%
 	text-align: center;
 }
 

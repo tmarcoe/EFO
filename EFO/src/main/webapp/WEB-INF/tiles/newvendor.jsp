@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form id="details" method="post" action="/admin/addvendor"
+<sf:form id="vendor" method="post" action="/admin/addvendor"
 	modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
 	<table class="fancy-table tableshadow">
@@ -27,12 +27,13 @@
 		<tr>
 			<td><sf:input class="fancy" path="username" autocomplete="false" />
 				<sf:errors path="username" class="error" /></td>
-			<td><sf:password class="fancy" path="password" autocomplete="false"
-					showPassword="true" />
-				<sf:errors path="password" class="error" /></td>
-			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass"
-						type="password" /></td>
-			<td><b>Enable Logins? </b><sf:checkbox path="enabled" /></td>
+			<td><sf:password id="password" class="fancy" path="password"
+					autocomplete="false" showPassword="true" /> <sf:errors
+					path="password" class="error" /></td>
+			<td><input class="fancy" id="confirmpass" class="control"
+				name="confirmpass" type="password" /></td>
+			<td><b>Enable Logins? </b> <sf:checkbox id="enabled"
+					path="enabled" onclick="disableInput()"/></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -44,25 +45,19 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><b>Salutation</b></td>
-			<td><b>First Name</b></td>
-			<td><b>Last Name</b></td>
-			<td><b>Company Name</b></td>
-		</tr>
-		<tr>
-			<td><sf:select class="fancy" path="vendor.salutation">
-				<sf:option value="Mr.">Mr.</sf:option>
-				<sf:option value="Mrs.">Mrs.</sf:option>
-				<sf:option value="Ms.">Ms.</sf:option>
-				<sf:option value="Miss.">Miss.</sf:option>
-				<sf:option value="Dr.">Dr.</sf:option>
-			</sf:select></td>
-			<td><sf:input class="fancy" path="vendor.firstname" /></td>
-			<td><sf:input class="fancy" path="vendor.lastname"/></td>
+			<td colspan="3"><b>Contanct: </b><sf:select class="fancy" path="vendor.salutation">
+					<sf:option value="Mr.">Mr.</sf:option>
+					<sf:option value="Mrs.">Mrs.</sf:option>
+					<sf:option value="Ms.">Ms.</sf:option>
+					<sf:option value="Miss.">Miss.</sf:option>
+					<sf:option value="Dr.">Dr.</sf:option>
+				</sf:select>
+			<sf:input class="fancy" path="vendor.firstname" placeholder="First Name"/>
+			<sf:input class="fancy" path="vendor.lastname"  placeholder="Last Name"/></td>
 			<td><sf:input class="fancy" path="vendor.company_name" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="vendor.salutation" class="error" /></td>			
+			<td><sf:errors path="vendor.salutation" class="error" /></td>
 			<td><sf:errors path="vendor.firstname" class="error" /></td>
 			<td><sf:errors path="vendor.lastname" class="error" /></td>
 			<td><sf:errors path="vendor.company_name" class="error" /></td>
@@ -98,11 +93,12 @@
 		</tr>
 		<tr>
 			<td><sf:select class="fancy" path="vendor.type">
-				<sf:option value="C">Capital</sf:option>
-				<sf:option value="R">Revenue</sf:option>
-			</sf:select></td>
+					<sf:option value="C">Capital</sf:option>
+					<sf:option value="R">Revenue</sf:option>
+				</sf:select></td>
 			<td><sf:input class="fancy" path="vendor.category" /></td>
-			<td colspan="2"><sf:textarea class="fancy-textarea" path="vendor.keywords" rows="4" cols="58"/></td>
+			<td colspan="2"><sf:textarea class="fancy-textarea"
+					path="vendor.keywords" rows="4" cols="58" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="vendor.type" class="error" /></td>
@@ -110,13 +106,16 @@
 			<td><sf:errors path="vendor.keywords" /></td>
 		</tr>
 		<tr>
-			<td><b>Role(s):</b><br><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
+			<td><b>Role(s):</b><br> <sf:select class="fancy-roles"
+					path="roles" id="roles" multiselect="true">
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
 		</tr>
 		<tr>
-			<td><sf:button class="fancy-button" type="button" onclick="formSubmit()">Save</sf:button></td>
-			<td><button class="fancy-button" type="button" onclick="window.history.back()">Cancel</button></td>
+			<td><sf:button class="fancy-button" type="button"
+					onclick="formSubmit()"><b>Save</b></sf:button></td>
+			<td><button class="fancy-button" type="button"
+					onclick="window.history.back()"><b>Cancel</b></button></td>
 		</tr>
 	</table>
 </sf:form>
@@ -130,10 +129,17 @@
 					$("#roles").find("option[value=" + optionVal + "]").prop(
 							"selected", "selected");
 				}
+				if ($("#enabled").prop('checked') == false) {
+					$("#password").prop("readonly", true);
+					$("#confirmpass").prop("readonly", true);
+				}
 			});
 
 	function formSubmit() {
 
+		if ($("#password").val() == "") {
+			$("#password").val("password");
+		}
 		var opt = document.getElementById("roles");
 		var userRoles = "";
 		for (var i = 0; i < opt.options.length; i++) {
@@ -147,6 +153,16 @@
 		}
 		var rs = document.getElementById("selectedRoles");
 		rs.value = userRoles;
-		document.getElementById("details").submit();
+		document.getElementById("vendor").submit();
+	}
+
+	function disableInput() {
+		if ($("#enabled").prop('checked') == false) {
+			$("#password").prop("readonly", true);
+			$("#confirmpass").prop("readonly", true);
+		} else {
+			$("#password").prop("readonly", false);
+			$("#confirmpass").prop("readonly", false);
+		}
 	}
 </script>

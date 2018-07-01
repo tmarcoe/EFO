@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class RetailSales implements Serializable {
@@ -25,10 +26,17 @@ public class RetailSales implements Serializable {
 	private Date ordered;
 	private Date processed;
 	private Date shipped;
+	private String payment_type; // Cash or Credit
+	private int customer_id;
+	private String customer_name;
 	private boolean changed; //Has the SalesItem list changed?
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "retailSales", cascade = CascadeType.ALL)
 	private Set<SalesItem> salesItem = new HashSet<SalesItem>(0);
+	
+	@OneToOne
+	(fetch=FetchType.LAZY, mappedBy = "retailSales", cascade = CascadeType.ALL)
+	private Receivables receivables;
 	
 	public Long getInvoice_num() {
 		return invoice_num;
@@ -66,6 +74,24 @@ public class RetailSales implements Serializable {
 	public void setShipped(Date shipped) {
 		this.shipped = shipped;
 	}
+	public String getPayment_type() {
+		return payment_type;
+	}
+	public void setPayment_type(String payment_type) {
+		this.payment_type = payment_type;
+	}
+	public int getCustomer_id() {
+		return customer_id;
+	}
+	public void setCustomer_id(int customer_id) {
+		this.customer_id = customer_id;
+	}
+	public String getCustomer_name() {
+		return customer_name;
+	}
+	public void setCustomer_name(String customer_name) {
+		this.customer_name = customer_name;
+	}
 	public boolean isChanged() {
 		return changed;
 	}
@@ -78,4 +104,11 @@ public class RetailSales implements Serializable {
 	public void setSalesItem(Set<SalesItem> salesItem) {
 		this.salesItem = salesItem;
 	}
+	public Receivables getReceivables() {
+		return receivables;
+	}
+	public void setReceivables(Receivables receivables) {
+		this.receivables = receivables;
+	}
+	
 }

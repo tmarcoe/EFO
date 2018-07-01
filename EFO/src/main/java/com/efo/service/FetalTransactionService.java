@@ -17,6 +17,8 @@ import com.efo.entity.PaymentsReceived;
 import com.efo.entity.PettyCashVoucher;
 import com.efo.entity.ProductOrders;
 import com.efo.entity.Receivables;
+import com.efo.entity.RetailSales;
+import com.efo.component.SalesItemProcessor;
 import com.efo.dao.FetalTransactionDao;
 import com.efo.entity.CapitalAssets;
 import com.efo.entity.Inventory;
@@ -42,12 +44,26 @@ public class FetalTransactionService extends FetalTransaction {
 	@Value("${fetal.properiesFile}")
 	private String filePath;
 	
-	public void purchaseCapitalCash(CapitalAssets asset) throws Exception {
+	public void retailSalesOrder(RetailSales sales, SalesItemProcessor salesItemProcessor) throws IOException {
+		try {
+			initTransaction(filePath);
+			setDescription("Retail Sales - (Invoice Number = " + sales.getInvoice_num() + ")");
+			publish("sales", VariableType.DAO, sales);
+			publish("salesItemProcessor", VariableType.OBJECT, salesItemProcessor);
+			loadRule("retailpurchase.trans");
+		}
+		finally {
+			closeFetal();
+		}
+	}
+	
+	public void purchaseCapital(CapitalAssets asset) throws Exception {
 		
 		try {
 			initTransaction(filePath);
 			setDescription("Purchase of Capital Asset -(" + asset.getItem_name() + ")");
 			publish("asset", VariableType.DAO, asset);
+			publish("payables", VariableType.DAO, asset.getPayables());
 			loadRule("purchasecapital.trans");
 		}
 		finally {
@@ -116,15 +132,15 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 
-	public void purchaseInventory(ProductOrders order, Inventory inventory ) throws IOException {
+	public void purchaseInventory(ProductOrders order, PaymentsBilled payments) throws IOException {
 		try {
 			initTransaction(filePath);
 			setDescription("Purchase of Inventory (SKU: " + order.getSku() + ")");
 			publish("order", VariableType.DAO, order);
-			publish("payables", VariableType.DAO, new Payables());
-			publish("inventory", VariableType.DAO, inventory);
-			loadRule("retailpurchase.trans");
-			}
+			publish("payables", VariableType.DAO, order.getPayables());
+			publish("payments", VariableType.DAO, payments);
+			loadRule("orderinventory.trans");
+		}
 		finally {
 			closeFetal();
 		}

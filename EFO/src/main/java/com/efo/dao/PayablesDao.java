@@ -72,12 +72,11 @@ public class PayablesDao implements IPayables {
 		session.disconnect();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Payables> retreiveList() {
+		String hql = "FROM Payables";
 		Session session = session();
-		
-		@SuppressWarnings("unchecked")
-		List<Payables> p = session.createCriteria(Payables.class).list();
-		
+		List<Payables> p = session.createQuery(hql).list();
 		session.disconnect();
 		
 		return p;

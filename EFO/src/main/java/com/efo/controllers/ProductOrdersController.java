@@ -3,7 +3,9 @@ package com.efo.controllers;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.efo.component.ScheduleUtilities;
+import com.efo.component.ScheduleUtilities.ScheduleType;
+import com.efo.entity.PaymentsBilled;
 import com.efo.entity.Product;
 import com.efo.entity.ProductOrders;
 import com.efo.entity.User;
@@ -41,12 +46,16 @@ public class ProductOrdersController {
 
 	@Autowired
 	private ProductService productService;
+	
 
 	@Autowired
 	private VendorService vendorService;
 
 	@Autowired
 	FetalTransactionService fetalService;
+	
+	@Autowired
+	ScheduleUtilities sched;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -88,24 +97,36 @@ public class ProductOrdersController {
 			return "newproductorder";
 
 		}
-
+		PaymentsBilled payments = null;
+		
 		Product product = productService.retrieve(productOrders.getSku());
 		productOrders.setProduct_name(product.getProduct_name());
+		productOrders.setProduct(product);
+		if (productOrders.getPayment_type().compareTo("Credit") == 0) {
+			productOrders.getPayables().setProductOrders(productOrders);
+			productOrders.getPayables().setInvoice_num(productOrders.getInvoice_num());
+			payments = new PaymentsBilled();
+			payments.setInvoice_num(productOrders.getInvoice_num());
+			payments.setDate_due(sched.nextPayment(productOrders.getPayables().getDate_begin(), 
+								productOrders.getPayables().getDate_begin(), ScheduleType.MONTHLY));
+			payments.setPayment_due(productOrders.getPayables().getEach_payment());
 
-		if (productOrders.getPayment_type().compareTo("Cash") == 0) {
-			fetalService.purchaseInventory(productOrders, product.getInventory());
+			Set<PaymentsBilled> paymentsList = new HashSet<PaymentsBilled>();
+			paymentsList.add(payments);
+			productOrders.getPayables().setPayments(paymentsList);
 		}else{
-			ordersService.create(productOrders);
-			return "redirect:/accounting/newretailpayable?id=" + productOrders.getId();
+			productOrders.setPayables(null);
 		}
-
+		
+		fetalService.purchaseInventory(productOrders, payments);
+		
 		return "redirect:/admin/listproduct";
 	}
 
 	@RequestMapping("editproductorder")
-	public String editProductOrder(@ModelAttribute("id") int id, Model model) {
+	public String editProductOrder(@ModelAttribute("invoice_num") String invoice_num, Model model) {
 		
-		ProductOrders orders =  ordersService.retrieve(id);
+		ProductOrders orders =  ordersService.retrieve(invoice_num);
 		
 		model.addAttribute("product", productService.retrieve(orders.getSku()));
 		model.addAttribute("productOrder", orders);
@@ -122,9 +143,12 @@ public class ProductOrdersController {
 	}
 	
 	@RequestMapping("receiveorder")
-	public String receiveOrder(@ModelAttribute("id") int id, Model model) {
+	public String receiveOrder(@ModelAttribute("invoice_num") String invoice_num, Model model) {
+		ProductOrders order = ordersService.retrieve(invoice_num);
 		
-		model.addAttribute("order", ordersService.retrieve(id));
+		order.setDelivery_date(new Date());
+		
+		model.addAttribute("order", order);
 		
 		return "receiveorder";
 	}
@@ -142,9 +166,9 @@ public class ProductOrdersController {
 	}
 	
 	@RequestMapping("cancelorder")
-	public String cancelOrder(@ModelAttribute("id") int id) throws IOException {
+	public String cancelOrder(@ModelAttribute("invoice_num") String invoice_num) throws IOException {
 		
-		ProductOrders orders = ordersService.retrieve(id);
+		ProductOrders orders = ordersService.retrieve(invoice_num);
 		if (orders.getAmt_received() > 0) {
 			return "/admin/listproductorders?error=true";
 		}

@@ -48,5 +48,8 @@ public class CustomerService implements ICustomer {
 	public List<User> retrieveRawList() {
 		return customerDao.retrieveEditList();
 	}
+	public List<Customer> queryCustomer(String name) {
+		return customerDao.queryCustomer(name);
+	}
 	
 }

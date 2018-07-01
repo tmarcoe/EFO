@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
+<link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 
 <table class="tableview tableshadow tableborder cjfirst">
 	<c:forEach var="item" items="${objectList.pageList}">
@@ -20,15 +21,15 @@
 	</tfoot>
 </table>
 <div id="enterRole" class="modal">
-	<div class="modal-content small-modal">
+	<div class="modal-content small-modal fancy">
 		<h2>Enter the New Role</h2>
 		<table style="margin-left: auto; margin-right: auto;">
 			<tr>
-				<td><input id="newrole" /></td>
+				<td><input class="fancy" id="newrole" /></td>
 			</tr>
 			<tr>
-				<td><button type="button" onclick="addRole()">Save</button></td>
-				<td><button type="button"
+				<td><button class="fancy-button" type="button" onclick="addRole()">Save</button></td>
+				<td><button class="fancy-button" type="button"
 						onclick="window.location.href='/#tabs-2'">Cancel</button></td>
 			</tr>
 		</table>

@@ -22,8 +22,8 @@ public class CapitalAssetsService implements ICapitalAssets {
 	}
 
 	@Override
-	public CapitalAssets retrieve(Long id) {
-		return assetsDao.retrieve(id);
+	public CapitalAssets retrieve(String invoice_num) {
+		return assetsDao.retrieve(invoice_num);
 	}
 	
 	public PagedListHolder<CapitalAssets> retrieveList() {

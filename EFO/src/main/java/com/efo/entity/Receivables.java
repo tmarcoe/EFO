@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -33,8 +36,12 @@ public class Receivables implements Serializable{
 	private String status; // O = open, C = closed, D = dispute
 	private String username;
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy = "receivables")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "receivables")
 	private Set<PaymentsReceived> payments = new HashSet<PaymentsReceived>(0);
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="INVOICE_NUM")
+	private RetailSales retailSales = new RetailSales();
 
 	public Long getInvoice_num() {
 		return invoice_num;
@@ -77,11 +84,11 @@ public class Receivables implements Serializable{
 		this.down_payment = down_payment;
 	}
 
-	public double getinterest() {
+	public double getInterest() {
 		return interest;
 	}
 
-	public void setinterest(double interest) {
+	public void setInterest(double interest) {
 		this.interest = interest;
 	}
 
@@ -139,6 +146,14 @@ public class Receivables implements Serializable{
 
 	public void setPayments(Set<PaymentsReceived> payments) {
 		this.payments = payments;
+	}
+
+	public RetailSales getRetailSales() {
+		return retailSales;
+	}
+
+	public void setRetailSales(RetailSales retailSales) {
+		this.retailSales = retailSales;
 	}
 	
 

@@ -89,11 +89,11 @@ public class ProductDao implements IProduct {
 		session.disconnect();
 	}
 	
-	public Product nameSearch(String name) {
+	@SuppressWarnings("unchecked")
+	public List<Product> nameSearch(String name) {
 		Session session = session();
-		Product product = (Product) session.createCriteria(Product.class)
-										   .add(Restrictions.like("product_name", name, MatchMode.ANYWHERE))
-										   .setMaxResults(1).uniqueResult();
+		List<Product> product = session.createCriteria(Product.class)
+									   .add(Restrictions.like("product_name", name, MatchMode.ANYWHERE)).list();
 		session.disconnect();
 		
 		return product;

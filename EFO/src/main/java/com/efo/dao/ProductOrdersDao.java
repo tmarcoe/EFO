@@ -36,9 +36,9 @@ public class ProductOrdersDao implements IProductOrders {
 	}
 
 	@Override
-	public ProductOrders retrieve(int id) {
+	public ProductOrders retrieve(String invoice_num) {
 		Session session = session();
-		ProductOrders orders = (ProductOrders) session.createCriteria(ProductOrders.class).add(Restrictions.idEq(id)).uniqueResult();
+		ProductOrders orders = (ProductOrders) session.createCriteria(ProductOrders.class).add(Restrictions.idEq(invoice_num)).uniqueResult();
 		session.disconnect();
 		
 		return orders;
@@ -65,11 +65,11 @@ public class ProductOrdersDao implements IProductOrders {
 		return orderList;
 	}
 	
-	public void setStatus(int id, String status) {
+	public void setStatus(String invoice_num, String status) {
 		String hql = "UPDATE ProductOrders SET status = :status WHERE id = :id";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.createQuery(hql).setString("status", status).setInteger("id", id).executeUpdate();
+		session.createQuery(hql).setString("status", status).setString("invoice_num", invoice_num).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}

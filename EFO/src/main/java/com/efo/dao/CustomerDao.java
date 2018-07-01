@@ -74,5 +74,15 @@ public class CustomerDao implements ICustomer {
 	return chooseList;
 
 	}
+	@SuppressWarnings("unchecked")
+	public List<Customer> queryCustomer(String name) {
+		String sql = "FROM Customer WHERE CONCAT(firstname, ' ', lastname) LIKE :name";
+		name = "%" + name + "%";
+		Session session = session();
+		List<Customer> customer = session.createQuery(sql).setString("name", name).list();
+		session.disconnect();
+		
+		return customer;
+	}
 
 }

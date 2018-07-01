@@ -26,7 +26,6 @@
 			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()" ><b>Back</b></sf:button>
 		</tr>
 	</table>
-	<sf:hidden path="id"/>
 	<sf:hidden path="sku"/>
 	<sf:hidden path="product_name"/>
 	<sf:hidden path="invoice_num"/>

@@ -65,6 +65,16 @@ public class SalesItemDao implements ISalesItem {
 		
 		return itemList;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SalesItem> retrieveRawList(Long invoice_num) {
+		
+		Session session = session();
+		List<SalesItem> itemList = session.createCriteria(SalesItem.class).add(Restrictions.eq("invoice_num", invoice_num)).list();
+		session.disconnect();
+		
+		return itemList;
+	}
 
 	@Override
 	public void update(SalesItem salesItem) {

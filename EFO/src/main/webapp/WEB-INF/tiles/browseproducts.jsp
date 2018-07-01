@@ -6,51 +6,51 @@
 
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
+<link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
 <sf:form id="orderProduct" method="post" action="/admin/retailorder"
 	modelAttribute="product" autocomplete="off">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td colspan="2"><b>SKU Code: <br></b> <sf:input
-					class="fancy" id="sku" path="sku" readonly="true" /></td>
-			<td colspan="2"><b>UPC Code: <br></b> <sf:input
-					class="fancy" id="upc" path="upc" readonly="true" /></td>
+			<td colspan="4"><sf:input class="fancy" id="product_name" 
+							path="product_name" size="46" 
+							placeholder="Enter the Product Name"/></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Product Name: <br></b> <sf:input
-					class="fancy" id="product_name" path="product_name" readonly="true" /></td>
+			<td colspan="2"><b>SKU Code: <br></b> <sf:input
+					class="fancy" id="sku" path="sku" readonly="true" /></td>
 			<td colspan="2"><b>Price: <br></b> <sf:input class="fancy"
 					id="price" path="price" readonly="true" /></td>
 		</tr>
 		<tr>
+			<td colspan="2"><b>UPC Code: <br></b> <sf:input
+					class="fancy" id="upc" path="upc" readonly="true" /></td>
 			<td colspan="2"><b>Units Sold As: <br></b> <sf:input
 					class="fancy" id="unit" path="unit" readonly="true" /></td>
-			<td colspan="2"><b>Category: <br></b> <sf:input
-					class="fancy" id="category" path="category" readonly="true" /></td>
 		</tr>
 		<tr>
+			<td colspan="2"><b>Category: <br></b> <sf:input
+					class="fancy" id="category" path="category" readonly="true" /></td>
 			<td colspan="2"><b>Sub-Category: <br></b> <sf:input
 					class="fancy" id="subcategory" path="subcategory" readonly="true" /></td>
-			<td colspan="2"><b>Keywords: <br></b> <sf:input
-					class="fancy" id="keywords" path="keywords" readonly="true" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><b>Is On Sale: <br></b> <sf:input
 					class="fancy" id="on_sale" path="on_sale" readonly="true" /></td>
+			<td colspan="2"><b>Keywords: <br></b> <sf:input
+					class="fancy" id="keywords" path="keywords" readonly="true" /></td>
+		</tr>
+		<tr>
+			<td colspan="2"><b>Quantity: <br></b> <sf:input
+					class="fancy" id="order_qty" type="number" step=".01"
+					path="order_qty" value="1.0" /></td>
 			<td colspan="2"><b>Discontinue: <br></b> <sf:input
 					class="fancy" id="discontinue" path="discontinue" readonly="true" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Search: <br></b><input class="fancy"
-				id="lookup" autocomplete="off" /></td>
-			<td colspan="2"><b>Quantity: <br></b> <sf:input
-					class="fancy" id="order_qty" type="number" step=".01"
-					path="order_qty" value="1.0"/></td>
-		</tr>
-		<tr>
 			<td><sf:button type="button" class="fancy-button"
 					onclick="formSubmit()">
-					<b>Add Order</b>
+					<b>Add Item</b>
 				</sf:button></td>
 			<td><sf:button type="button" class="fancy-button"
 					onclick="window.location.href='/admin/processorder'">
@@ -87,55 +87,49 @@
 			<tr>
 				<td>${item.qty}</td>
 				<td>${item.product_name}</td>
-				<td><button type="button" onclick="window.location.href='/admin/editsalesitem?item_id=${item.item_id}'">Edit</button>
-					<button type="button" onclick="window.location.href='/admin/deletesalesitem?item_id=${item.item_id}'">Delete</button>
+				<td><button type="button"
+						onclick="window.location.href='/admin/editsalesitem?item_id=${item.item_id}'">Edit</button>
+					<button type="button"
+						onclick="window.location.href='/admin/deletesalesitem?item_id=${item.item_id}'">Delete</button>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
 </c:if>
 <script type="text/javascript">
-	$("#lookup").keyup(
-			function(name) {
-				var name = $("#lookup").val();
-				if (name.length > 0) {
-					$.getJSON("/rest/lookupname?name=" + name, function(data) {
-						$("#sku").val(data.sku);
-						$("#upc").val(data.upc);
-						$("#product_name").val(data.product_name);
-						$("#price").val(data.price);
-						$("#unit").val(data.sku);
-						$("#category").val(data.upc);
-						$("#subcategory").val(data.product_name);
-						$("#keywords").val(data.price);
-						$("#on_sale").val(data.product_name);
-						$("#discontinue").val(data.price);
+	$('#product_name').devbridgeAutocomplete(
+			{
 
-					})
+				lookup : function(query, done) {
+					var name = $("#product_name").val();
+					$.getJSON("/rest/lookupname?name=" + name,
+							function(result) {
+								var data = {
+									suggestions : result
+								};
+								done(data);
+							})
 							.fail(
 									function(jqXHR, textStatus, errorThrown) {
 										alert("error " + textStatus + "\n"
 												+ "incoming Text "
 												+ jqXHR.responseText);
 									});
-				} else {
-					clearAll();
+
+				},
+				onSelect : function(data) {
+					$("#sku").val(data.data.sku);
+					$("#upc").val(data.data.upc);
+					$("#product_name").val(data.data.product_name);
+					$("#price").val(data.data.price);
+					$("#unit").val(data.data.unit);
+					$("#category").val(data.data.category);
+					$("#subcategory").val(data.data.subcategory);
+					$("#keywords").val(data.data.keywords);
+					$("#on_sale").val(data.data.on_sale);
+					$("#discontinue").val(data.data.discontinue);
 				}
 			});
-
-	function clearAll() {
-		$("#sku").val("");
-		$("#upc").val("");
-		$("#product_name").val("");
-		$("#price").val("0");
-		$("#unit").val("");
-		$("#category").val("");
-		$("#subcategory").val("");
-		$("#keywords").val("");
-		$("#on_sale").val("false");
-		$("#discontinue").val("false");
-
-	}
 	function formSubmit() {
 		if ($("#sku").val().length > 0) {
 			var qty = parseFloat($("#order_qty").val(), 10);
@@ -143,7 +137,7 @@
 				$("#errorMsg").text("Order quantity cannot be 0.")
 			} else {
 				$("#orderProduct").submit();
-			}	
+			}
 		}
 	}
 </script>

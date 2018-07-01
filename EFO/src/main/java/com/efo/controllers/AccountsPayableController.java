@@ -21,15 +21,10 @@ import org.xml.sax.SAXException;
 
 import com.efo.component.ScheduleUtilities;
 import com.efo.component.ScheduleUtilities.ScheduleType;
-import com.efo.entity.CapitalAssets;
 import com.efo.entity.Payables;
 import com.efo.entity.PaymentsBilled;
-import com.efo.entity.ProductOrders;
-import com.efo.service.CapitalAssetsService;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PayablesService;
-import com.efo.service.ProductOrdersService;
-import com.efo.service.VendorService;
 
 
 @Controller
@@ -38,15 +33,6 @@ public class AccountsPayableController {
 	
 	@Autowired
 	private PayablesService payablesService;
-	
-	@Autowired
-	private VendorService vendorService;
-	
-	@Autowired
-	private ProductOrdersService ordersService;
-	
-	@Autowired
-	private CapitalAssetsService assetsService;
 	
 	@Autowired
 	ScheduleUtilities sched;
@@ -79,41 +65,7 @@ public class AccountsPayableController {
 		return "ap";
 	}
 	
-	@RequestMapping("newretailpayable")
-	public String newRetailPayable(@ModelAttribute("id") int id, Model model) {
-		
-		ProductOrders orders = ordersService.retrieve(id);
-		Payables payables = new Payables();
-		
-		payables.setInvoice_num("RET-" + orders.getInvoice_num());
-		payables.setDate_begin(new Date());
-		payables.setSupplier(orders.getVendor());
-		payables.setType("R");
-		payables.setTotal_due(orders.getWholesale());
-		
-		model.addAttribute("suppliers", vendorService.retrieveRawList());
-		model.addAttribute("payables",payables);
-		
-		return "newpayable";
-	}
 	
-	@RequestMapping("newcapitalpayable")
-	public String newCapitalPayable(@ModelAttribute("id") Long id, Model model) {
-		CapitalAssets assets = assetsService.retrieve(id);
-		Payables payables = new Payables();
-		
-		payables.setInvoice_num("CAP-" + assets.getInvoice_num());
-		payables.setDate_begin(new Date());
-		payables.setSupplier(assets.getVendor());
-		payables.setType("C");
-		payables.setTotal_due(assets.getItem_cost());
-		
-		model.addAttribute("suppliers", vendorService.retrieveRawList());
-		model.addAttribute("payables",payables);
-	
-		
-		return "newpayable";
-	}
 	
 	@RequestMapping("addpayable")
 	public String addPayable(@Valid @ModelAttribute("payables") Payables payables, BindingResult result) throws IOException {
