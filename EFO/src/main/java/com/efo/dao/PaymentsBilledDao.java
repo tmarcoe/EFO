@@ -1,5 +1,6 @@
 package com.efo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -73,6 +74,15 @@ public class PaymentsBilledDao implements IPaymentsBilled {
 		
 		session.disconnect();
 		return pList;
+	}
+	
+	public Date lastestDate(String invoice_num) {
+		String hql = "SELECT MAX(date_due) FROM PaymentsBilled WHERE invoice_num = :invoice_num)";
+		Session session = session();
+		Date maxDate = (Date) session.createQuery(hql).setString("invoice_num", invoice_num).uniqueResult();
+		session.disconnect();
+		
+		return maxDate;
 	}
 
 }

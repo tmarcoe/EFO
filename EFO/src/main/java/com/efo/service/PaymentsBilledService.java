@@ -1,5 +1,7 @@
 package com.efo.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,11 @@ public class PaymentsBilledService implements IPaymentsBilled {
 	
 	public PagedListHolder<PaymentsBilled> retrieveList(String invoice_num) {
 		return new PagedListHolder<PaymentsBilled>(paymentsPaidDao.retreiveList(invoice_num));
+	}
+	
+	public Date lastestDate(String invoice_num) {
+		
+		return paymentsPaidDao.lastestDate(invoice_num);
 	}
 
 }

@@ -116,7 +116,13 @@ public class ScheduleUtilities {
 		
 		return result;
 	}
-	
+
+	public Date nextPayment(Date base, Date last, String type ) {
+		Date result = nextPayment(base, last, stringToEnum(type));
+		
+		return result;
+	}
+
 	private Date annually(Date base, Date last) {
 		LocalDate result = null;
 		LocalDate jBase = new LocalDate(base);

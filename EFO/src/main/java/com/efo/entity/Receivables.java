@@ -8,8 +8,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -22,7 +20,6 @@ public class Receivables implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long invoice_num;
 	private Date invoice_date;
 	private String customer;
@@ -36,7 +33,7 @@ public class Receivables implements Serializable{
 	private String status; // O = open, C = closed, D = dispute
 	private String username;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "receivables")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "receivables", cascade = { CascadeType.ALL,CascadeType.PERSIST,CascadeType.MERGE })
 	private Set<PaymentsReceived> payments = new HashSet<PaymentsReceived>(0);
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

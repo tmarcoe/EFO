@@ -18,8 +18,8 @@ public class SalesItemService implements ISalesItem {
 	private SalesItemDao salesItemDao;
 	
 	@Override
-	public void creat(SalesItem salesItem) {
-		salesItemDao.creat(salesItem);
+	public void create(SalesItem salesItem) {
+		salesItemDao.create(salesItem);
 	}
 
 	@Override

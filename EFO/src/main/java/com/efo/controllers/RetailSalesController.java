@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -22,13 +23,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.component.SalesItemProcessor;
+import com.efo.component.ScheduleUtilities;
 import com.efo.entity.GeneralLedger;
+import com.efo.entity.PaymentsReceived;
 import com.efo.entity.Product;
 import com.efo.entity.Receivables;
 import com.efo.entity.RetailSales;
 import com.efo.entity.SalesItem;
 import com.efo.entity.User;
 import com.efo.service.FetalTransactionService;
+import com.efo.service.PaymentsReceivedService;
+import com.efo.service.ProductService;
 import com.efo.service.RetailSalesService;
 import com.efo.service.SalesItemService;
 import com.efo.service.UserService;
@@ -51,7 +56,13 @@ public class RetailSalesController {
 	private String schedule;
 	
 	@Autowired
+	private ProductService productService;
+	
+	@Autowired
 	private RetailSalesService retailSalesService;
+	
+	@Autowired
+	private PaymentsReceivedService paymentsService;
 	
 	@Autowired
 	private SalesItemService salesItemService;
@@ -64,6 +75,9 @@ public class RetailSalesController {
 	
 	@Autowired
 	FetalTransactionService transactionService;
+	
+	@Autowired
+	ScheduleUtilities sched;
 	
 	PagedListHolder<GeneralLedger> salesList;
 	
@@ -81,52 +95,49 @@ public class RetailSalesController {
 		User user = userService.retrieve(principal.getName());
 		
 		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
-		if (sales != null) {
-			model.addAttribute("items", sales.getSalesItem());
-		}else{
-			model.addAttribute("items", new HashSet<SalesItem>(0));
+		if (sales == null) {
+			sales = new RetailSales();
+			sales.setOrdered(new Date());
+			sales.setUser_id(user.getUser_id());
+			sales.setChanged(true);
+			retailSalesService.create(sales);
+			sales.setSalesItem(new HashSet<SalesItem>(0));
 		}
 		
-		model.addAttribute("product", new Product());
+		model.addAttribute("sales", sales);
 		
 		return "browseproducts";
 	}
-
-	@RequestMapping("retailorder")
-	public String retailOrder(@Valid @ModelAttribute("product") Product product, BindingResult result, Principal principal) {
-		User user = userService.retrieve(principal.getName());
+	
+	@RequestMapping("additem")
+	public String addItem(@ModelAttribute("invoice_num") Long invoice_num, 
+						  @ModelAttribute("sku") String sku, 
+						  @ModelAttribute("order_qty") Double order_qty, Model model) {
 		
-		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
-		
-		if (sales == null) {
-			sales = new RetailSales();
-			sales.setUser_id(user.getUser_id());
-			sales.setChanged(false);
-			sales.setOrdered(new Date());
-			sales.setTotal_price(0);
-			
-			retailSalesService.create(sales);
-		}
-		SalesItem item = salesItemService.getItemBySku(sales.getInvoice_num(), product.getSku());
+		RetailSales sales = retailSalesService.retrieve(invoice_num);
+		Product product = productService.retrieve(sku);
+		SalesItem item = salesItemService.getItemBySku(sales.getInvoice_num(), sku);
 		if (item == null) {
 			item = new SalesItem();
-			item.setSku(product.getSku());
 			item.setInvoice_num(sales.getInvoice_num());
+			item.setProduct(product);
 			item.setProduct_name(product.getProduct_name());
+			item.setQty(order_qty.doubleValue());
 			item.setRegular_price(product.getPrice());
-			item.setSold_for(product.getPrice());
 			item.setRetailSales(sales);
-			item.setQty(product.getOrder_qty());
-			product.getSales().add(item);
+			item.setSku(sku);
+			item.setSold_for(product.getPrice());
 			sales.getSalesItem().add(item);
 		}else{
-			salesItemService.addQuantity(item, product.getOrder_qty());
+			salesItemService.addQuantity(item, order_qty);
 		}
 		sales.setChanged(true);
-		
+
 		retailSalesService.merge(sales);
+
 		
-		
+		model.addAttribute("sales", sales);
+			
 		return "redirect:/admin/browseproducts";
 	}
 	
@@ -141,16 +152,15 @@ public class RetailSalesController {
 	}
 	
 	@RequestMapping("processorder")
-	public String processOrder(Principal principal, Model model) {
-		User user = userService.retrieve(principal.getName());
+	public String processOrder(@Valid @ModelAttribute("sales") RetailSales sales, BindingResult result, Model model) {
 		
-		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
-		
+		Set<SalesItem> itemList = new HashSet<SalesItem>(salesItemService.retrieveRawList(sales.getInvoice_num()));
+		sales.setSalesItem(itemList);
 		
 		if (sales.isChanged()) {
-			sales.setTotal_price(totalOrder(sales));
-			sales.setChanged(false);
+			sales.setTotal_price(totalOrder(sales));	
 		}
+		
 		sales.setReceivables(new Receivables());
 		sales.getReceivables().setRetailSales(sales);
 		sales.getReceivables().setInvoice_num(sales.getInvoice_num());
@@ -165,21 +175,44 @@ public class RetailSalesController {
 		
 		return "processorder";
 	}
+	
 	@RequestMapping("updorder")
 	public String updOrder(@Valid @ModelAttribute("sales") RetailSales sales, BindingResult result) throws IOException {
-		sales.setProcessed(new Date());
 		
+		if (result.hasFieldErrors("customer_name") ) {
+			return "processorder";
+		}
+		sales.setProcessed(new Date());
+		sales.setSalesItem(new HashSet<SalesItem>(salesItemService.retrieveRawList(sales.getInvoice_num())));
+		itemProcessor.commitItems(sales.getSalesItem());
+	
 		if (sales.getPayment_type().compareTo("Cash") == 0) {
 			sales.setReceivables(null);
 		}else{
-			sales.getReceivables().setCustomer(sales.getCustomer_name());	
-			sales.getReceivables().setInvoice_date(sales.getProcessed());
-		}
+			Receivables receivables = sales.getReceivables();
+			receivables.setInvoice_num(sales.getInvoice_num());
+			receivables.setCustomer(sales.getCustomer_name());	
+			receivables.setInvoice_date(sales.getProcessed());
+			receivables.setStatus("O");
+
+			PaymentsReceived payment = new PaymentsReceived();
+			Date date_due = paymentsService.latestDate(sales.getInvoice_num());
+			if (date_due == null) {
+				date_due = sales.getReceivables().getInvoice_date();
+			}
+			payment.setDate_due(sched.nextPayment(sales.getReceivables().getInvoice_date(), date_due , sales.getReceivables().getSchedule()));
+			payment.setInvoice_num(sales.getInvoice_num());
+			payment.setPayment_due(sales.getReceivables().getEach_payment());
+			payment.setReceivables(sales.getReceivables());
+			receivables.getPayments().add(payment);
+			receivables.setRetailSales(sales);
+	}
 		
-		sales.setSalesItem(new HashSet<SalesItem>(salesItemService.retrieveRawList(sales.getInvoice_num())));
-		transactionService.retailSalesOrder(sales, new SalesItemProcessor());
-		itemProcessor.commitItems(sales.getSalesItem());
 		retailSalesService.merge(sales);
+		
+		transactionService.retailSalesOrder(sales);
+		
+		
 		
 		return "redirect:/#Tabs-4";
 	}
@@ -216,6 +249,9 @@ public class RetailSalesController {
 			RetailSales sales = retailSalesService.retrieve(salesItem.getInvoice_num());
 			sales.setChanged(true);
 			retailSalesService.merge(sales);
+			if (salesItem.getQty() == 0) {
+				salesItemService.deleteSalesItem(salesItem.getItem_id());
+			}
 		}else{
 			salesItemService.update(salesItem);
 		}
@@ -267,7 +303,7 @@ public class RetailSalesController {
 		for (SalesItem item : sales.getSalesItem()) {
 			total += (item.getSold_for() * item.getQty());
 		}
-		
+		sales.setChanged(false);
 		return total;
 	}
 	

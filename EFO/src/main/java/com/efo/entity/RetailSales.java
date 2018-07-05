@@ -28,10 +28,11 @@ public class RetailSales implements Serializable {
 	private Date shipped;
 	private String payment_type; // Cash or Credit
 	private int customer_id;
+	
 	private String customer_name;
 	private boolean changed; //Has the SalesItem list changed?
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "retailSales", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "retailSales", cascade = { CascadeType.ALL,CascadeType.PERSIST,CascadeType.MERGE })
 	private Set<SalesItem> salesItem = new HashSet<SalesItem>(0);
 	
 	@OneToOne

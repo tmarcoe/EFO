@@ -57,13 +57,6 @@ public class ARPaymentsController {
 	public String arPaymentList(@ModelAttribute("invoice_num") Long invoice_num, Model model) {
 		
 		rList = paymentsService.retreiveList(invoice_num);
-
-		if (rList.getSource().size() == 0) {
-			rList = null;
-			System.gc();
-			
-			return "redirect:/accounting/newrpayment?invoice_num=" + invoice_num;
-		}
 		
 		model.addAttribute("objectList", rList);
 		model.addAttribute("pagelink", pageLink);

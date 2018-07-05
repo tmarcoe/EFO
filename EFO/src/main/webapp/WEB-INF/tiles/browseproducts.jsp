@@ -1,67 +1,50 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
+<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form id="orderProduct" method="post" action="/admin/retailorder"
-	modelAttribute="product" autocomplete="off">
-	<table class="fancy-table tableshadow">
+<sf:form id="orderProduct" method="post" action="/admin/processorder" modelAttribute="sales" autocomplete="off">
+	<table class="fancy-table tableshadow" style="position: fixed; top: 100px; right: 100px;">
 		<tr>
-			<td colspan="4"><sf:input class="fancy" id="product_name" 
-							path="product_name" size="46" 
-							placeholder="Enter the Product Name"/></td>
+			<td colspan="4"><input class="fancy" id="product_name" size="46" placeholder="Enter the Product Name" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>SKU Code: <br></b> <sf:input
-					class="fancy" id="sku" path="sku" readonly="true" /></td>
-			<td colspan="2"><b>Price: <br></b> <sf:input class="fancy"
-					id="price" path="price" readonly="true" /></td>
+			<td colspan="2"><b>SKU Code: <br></b> <input class="fancy" id="sku" readonly="true" /></td>
+			<td colspan="2"><b>Price: </b><br> <input class="fancy" id="price" readonly="true" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>UPC Code: <br></b> <sf:input
-					class="fancy" id="upc" path="upc" readonly="true" /></td>
-			<td colspan="2"><b>Units Sold As: <br></b> <sf:input
-					class="fancy" id="unit" path="unit" readonly="true" /></td>
+			<td colspan="2"><b>UPC Code: <br></b> <input class="fancy" id="upc" readonly="true" /></td>
+			<td colspan="2"><b>Units Sold As: <br></b> <input class="fancy" id="unit" readonly="true" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Category: <br></b> <sf:input
-					class="fancy" id="category" path="category" readonly="true" /></td>
-			<td colspan="2"><b>Sub-Category: <br></b> <sf:input
-					class="fancy" id="subcategory" path="subcategory" readonly="true" /></td>
+			<td colspan="2"><b>Category: <br></b> <input class="fancy" id="category" readonly="true" /></td>
+			<td colspan="2"><b>Sub-Category: <br></b> <input class="fancy" id="subcategory" readonly="true" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Is On Sale: <br></b> <sf:input
-					class="fancy" id="on_sale" path="on_sale" readonly="true" /></td>
-			<td colspan="2"><b>Keywords: <br></b> <sf:input
-					class="fancy" id="keywords" path="keywords" readonly="true" /></td>
+			<td colspan="2"><b>Is On Sale: <br></b> <input class="fancy" id="on_sale" readonly="true" /></td>
+			<td colspan="2"><b>Keywords: <br></b> <input class="fancy" id="keywords" readonly="true" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Quantity: <br></b> <sf:input
-					class="fancy" id="order_qty" type="number" step=".01"
-					path="order_qty" value="1.0" /></td>
-			<td colspan="2"><b>Discontinue: <br></b> <sf:input
-					class="fancy" id="discontinue" path="discontinue" readonly="true" /></td>
+			<td colspan="2"><b>Quantity: <br></b> <input class="fancy" id="order_qty" type="number" step=".01"
+				value="1.0" /></td>
+			<td colspan="2"><b>Discontinue: <br></b> <input class="fancy" id="discontinue" readonly="true" /></td>
 		</tr>
 		<tr>
-			<td><sf:button type="button" class="fancy-button"
-					onclick="formSubmit()">
+			<td><button type="button" class="fancy-button" onclick="checkStock()">
 					<b>Add Item</b>
-				</sf:button></td>
-			<td><sf:button type="button" class="fancy-button"
-					onclick="window.location.href='/admin/processorder'">
+				</button></td>
+			<td><sf:button type="submit" class="fancy-button">
 					<b>Process Order</b>
 				</sf:button></td>
-			<td><sf:button type="button" class="fancy-button"
-					onclick="window.location.href='/admin/cancelsales'">
+			<td><sf:button type="button" class="fancy-button" onclick="window.location.href='/admin/cancelsales'">
 					<b>Cancel Order</b>
 				</sf:button></td>
-			<td><sf:button type="button" class="fancy-button"
-					onclick="window.location.href='/#tabs-4'">
+			<td><sf:button type="button" class="fancy-button" onclick="window.location.href='/#tabs-4'">
 					<b>Back</b>
 				</sf:button></td>
 		</tr>
@@ -69,33 +52,77 @@
 			<tr>
 				<td colspan="4"><div id="errorMsg" class="bigError"></div></td>
 			</tr>
+			<tr>
+				<td colspan="4"><div id="subtotal" class="totalsDiv"></div></td>
+			</tr>
+			<tr>
+				<td colspan="4"><div id="totalTax" class="totalsDiv"></div></td>
+			</tr>
+			<tr>
+				<td colspan="4"><div id="grandTotal" class="totalsDiv"></div></td>
+			</tr>
 		</tfoot>
 	</table>
+	<div id="errMsg" class="modal">
+		<div class="modal-content small-modal fancy-button">
+			<h2 class="error" style="font-size: 20px;" >Order Quanity Exceeds Stock</h2>
+			<br>
+			<button class="fancy-button" type="button" onclick="closeError()">OK</button>
+		</div>
+	</div>
 
+	<sf:hidden id="invoice_num" path="invoice_num" />
+	<sf:hidden path="user_id" />
+	<sf:hidden path="total_price" />
+	<sf:hidden path="ordered" />
+	<sf:hidden path="processed" />
+	<sf:hidden path="shipped" />
+	<sf:hidden path="payment_type" />
+	<sf:hidden path="customer_id" />
+	<sf:hidden path="customer_name" />
+	<sf:hidden path="changed" />
+	<sf:hidden path="salesItem" />
+
+	<div class="scrollPanel">
+		<c:set var="subtotal" value="0" />
+		<c:set var="totalTax" value="0" />
+		<c:set var="grandTotal" value="0" />
+		<c:if test="${sales.salesItem.size() > 0}">
+			<table class="fieldTable tableborder tableshadow rjthird">
+				<tr>
+					<th colspan="7">Invoice</th>
+				</tr>
+				<tr>
+					<th>Qty</th>
+					<th>Product Name</th>
+					<th>Price (each)</th>
+					<th>Total</th>
+					<th>Tax</th>
+					<th>&nbsp;</th>
+					<th>&nbsp;</th>
+				</tr>
+				<c:forEach var="item" items="${sales.salesItem}">
+					<tr>
+						<td>${item.qty}</td>
+						<td>${item.product_name}</td>
+						<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.sold_for}" /></td>
+						<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.qty * item.sold_for}" /></td>
+						<td><fmt:formatNumber type="currency" currencySymbol="" value="${(item.qty * item.sold_for) * .08}" /></td>
+						<td>
+							<button type="button" onclick="window.location.href='/admin/editsalesitem?item_id=${item.item_id}'">Edit</button>
+						</td>
+						<td>
+							<button type="button" onclick="window.location.href='/admin/deletesalesitem?item_id=${item.item_id}'">Delete</button>
+						</td>
+					</tr>
+					<c:set var="subtotal" value="${subtotal + (item.qty * item.sold_for)}" />
+					<c:set var="totalTax" value="${subtotal * .08}" />
+					<c:set var="grandTotal" value="${subtotal + totalTax}" />
+				</c:forEach>
+			</table>
+		</c:if>
+	</div>
 </sf:form>
-<c:if test="${items.size() > 0}">
-	<table class="fieldTable tableborder tableshadow rjthird">
-		<tr>
-			<th colspan="3">Invoice</th>
-		</tr>
-		<tr>
-			<th>Qty</th>
-			<th>Product Name</th>
-			<th>&nbsp;</th>
-		</tr>
-		<c:forEach var="item" items="${items}">
-			<tr>
-				<td>${item.qty}</td>
-				<td>${item.product_name}</td>
-				<td><button type="button"
-						onclick="window.location.href='/admin/editsalesitem?item_id=${item.item_id}'">Edit</button>
-					<button type="button"
-						onclick="window.location.href='/admin/deletesalesitem?item_id=${item.item_id}'">Delete</button>
-				</td>
-			</tr>
-		</c:forEach>
-	</table>
-</c:if>
 <script type="text/javascript">
 	$('#product_name').devbridgeAutocomplete(
 			{
@@ -130,14 +157,77 @@
 					$("#discontinue").val(data.data.discontinue);
 				}
 			});
-	function formSubmit() {
-		if ($("#sku").val().length > 0) {
-			var qty = parseFloat($("#order_qty").val(), 10);
-			if (qty == 0.0) {
-				$("#errorMsg").text("Order quantity cannot be 0.")
-			} else {
-				$("#orderProduct").submit();
+
+	function addItem() {
+
+		var sku = $("#sku").val();
+		var invoice_num = $("#invoice_num").val();
+		var order_qty = $("#order_qty").val();
+		if (order_qty == 0.0) {
+			$("#errorMsg").text("Order quantity cannot be 0.")
+		} else {
+			if (sku.length > 0 && invoice_num.length > 0) {
+					window.location.href = "/admin/additem?invoice_num="
+							+ invoice_num + "&sku=" + sku + "&order_qty="
+							+ order_qty;
+				}
 			}
 		}
+	
+	function checkStock() {
+		var sku = $("#sku").val();
+		$.getJSON("/rest/checkstock?sku=" + sku,
+				function(result) {
+					var qty = $("#order_qty").val();
+				if (Number(qty) > Number(result.amt_in_stock)) {
+					$("#errMsg").css("display","block");
+				}else{
+					addItem();
+				}
+			}).fail( function(jqXHR, textStatus, errorThrown) {
+						alert("error " + textStatus + "\n"
+									+ "incoming Text "
+									+ jqXHR.responseText);
+					});
+
 	}
+	
+	function closeError() {
+		$("#errMsg").css("display","none");	
+		clearAll();
+	}
+	function clearAll() {
+		$("#product_name").val("");
+		$("#sku").val("");
+		$("#price").val("0.0");
+		$("#upc").val("");
+		$("#unit").val("");
+		$("#category").val("");
+		$("#subcategory").val("");
+		$("#on_sale").val("false");
+		$("#keywords").val("");
+		$("#order_qty").val("1.0");
+		$("#discontinue").val("false");
+	}
+	var subttl = ${subtotal};
+	{
+		subtotal
+	};
+	var ttltax = ${totalTax};
+	{
+		totalTax
+	};
+	var grandttl = ${grandTotal};
+	{
+		grandTotal
+	};
+	function totals() {
+		$("#subtotal").text("Subtotal: " + subttl + "    ");
+		$("#totalTax").text("Tax: " + ttltax + "    ");
+		$("#grandTotal").text("Grand Total: " + grandttl + "    ");
+	}
+	
 </script>
+<c:if test="${sales.salesItem.size() > 0}">
+	<script>totals();</script>
+</c:if>

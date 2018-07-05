@@ -651,3 +651,18 @@ hr {
 	margin-right: auto;
 	
 }
+div.scrollPanel {
+	position: fixed;
+	top: 100px;
+	left: 0;
+	width: 50%;
+	height: 80%;
+	overflow: auto;
+}
+
+.totalsDiv {
+	text-align: right;
+	font-family: JosefinSans-BoldItalic;
+	padding-right: 2em;
+	background: white;
+}

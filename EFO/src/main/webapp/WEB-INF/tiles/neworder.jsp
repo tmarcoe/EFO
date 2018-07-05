@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,46 +8,33 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form method="post" action="/admin/addproductorder"
-	modelAttribute="productOrder">
+<sf:form method="post" action="/admin/addproductorder" modelAttribute="productOrder">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>SKU</b></td>
-			<td><b>Product Name</b></td>
-			<td><b>Invoice #</b></td>
-			<td><b>Vendor</b></td>
+			<td><b>Invoice #: </b><br> <sf:input class="fancy" path="invoice_num" /></td>
+			<td><b>SKU: </b><br> <sf:input class="fancy" path="sku" readonly="true" /></td>
+			<td><b>Product Name: </b><br> <sf:input class="fancy" path="product_name" readonly="true" />
+			<td><b>Vendor: </b><br> <sf:input class="fancy" id="supplierInp" path="vendor" /></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="sku" readonly="true" /></td>
-			<td><sf:input class="fancy" path="product_name" readonly="true" />
-			<td><sf:input class="fancy" path="invoice_num" /></td>
-			<td><sf:input class="fancy" id="supplierInp" path="vendor" /></td>
-		</tr>
-		<tr>
+			<td><sf:errors path="invoice_num" class="error" /></td>
 			<td><sf:errors path="sku" class="error" /></td>
 			<td>&nbsp;</td>
-			<td><sf:errors path="invoice_num" class="error" /></td>
-			<td><sf:errors onclick="chooseSupplier()" id="supplierInp"
-					path="vendor" class="error" /></td>
+			<td><sf:errors path="vendor" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Order Price</b></td>
-			<td><b>Amount Ordered</b></td>
-			<td><b>Payment Type</b></td>
-			<td><b>Date Ordered</b></td>
-		</tr>
-		<tr>
-			<td><sf:input id="total_due" class="fancy" type="number"
-					step=".01" path="wholesale" /></td>
-			<td><sf:input class="fancy" type="number" step=".01"
-					path="amt_ordered" /></td>
-			<td><sf:select id="paymentType" class="fancy"
-					path="payment_type" onchange="showReceivable()">
+			<td><b>Order Price: </b><br>
+			<sf:input id="total_due" class="fancy" type="number" step=".01" path="wholesale" /></td>
+			<td><b>Amount Ordered: </b><br>
+			<sf:input class="fancy" type="number" step=".01" path="amt_ordered" /></td>
+			<td><b>Payment Type: </b><br>
+			<sf:select id="paymentType" class="fancy" path="payment_type" onchange="showReceivable()">
 					<sf:option value="">---Select---</sf:option>
 					<sf:option value="Cash">Cash</sf:option>
 					<sf:option value="Credit">Credit</sf:option>
 				</sf:select></td>
-			<td><sf:input class="fancy" type="date" path="order_date" /></td>
+			<td><b>Date Ordered: </b><br>
+			<sf:input class="fancy" type="date" path="order_date" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="wholesale" class="error" /></td>
@@ -60,8 +46,7 @@
 			<td><sf:button class="fancy-button" type="submit">
 					<b>Save</b>
 				</sf:button></td>
-			<td><sf:button class="fancy-button" type="button"
-					onclick="window.history.back()">
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()">
 					<b>Cancel</b>
 				</sf:button></td>
 		</tr>
@@ -73,19 +58,15 @@
 				<tr>
 					<td><b>Amount Due: </b><br>
 						<div id="popupTotal" class="fancy"></div></td>
-					<td><b>Down Payment: </b><br> <sf:input id="down_payment"
-							class="fancy" type="number" step=".01"
+					<td><b>Down Payment: </b><br> <sf:input id="down_payment" class="fancy" type="number" step=".01"
 							path="payables.down_payment" onchange="eachPayment()" /></td>
-					<td><b>Interest: </b><br> <sf:input id="interest"
-							class="fancy" type="number" step=".01" path="payables.interest"
-							onchange="eachPayment()" />%</td>
+					<td><b>Interest: </b><br> <sf:input id="interest" class="fancy" type="number" step=".01"
+							path="payables.interest" onchange="eachPayment()" />%</td>
 				</tr>
 				<tr>
-					<td><b>Number of Payments: </b><br> <sf:input
-							id="num_payments" class="fancy" type="number" step="1"
+					<td><b>Number of Payments: </b><br> <sf:input id="num_payments" class="fancy" type="number" step="1"
 							path="payables.num_payments" onchange="eachPayment()" /></td>
-					<td><b>Payment Schedule: </b><br> <sf:select
-							class="fancy" path="payables.schedule">
+					<td><b>Payment Schedule: </b><br> <sf:select class="fancy" path="payables.schedule">
 							<sf:option value="Annually">Annually</sf:option>
 							<sf:option value="Bi-Annually">Bi-Annually</sf:option>
 							<sf:option value="Quarterly">Quarterly</sf:option>
@@ -94,16 +75,14 @@
 							<sf:option value="Weekly">Weekly</sf:option>
 							<sf:option value="Daily">Daily</sf:option>
 						</sf:select></td>
-					<td><b>Amount Per Payment: </b><br> <sf:input
-							id="each_payment" class="fancy" type="number" step=".01"
+					<td><b>Amount Per Payment: </b><br> <sf:input id="each_payment" class="fancy" type="number" step=".01"
 							path="payables.each_payment" /></td>
 				</tr>
 				<tr>
 					<td><sf:button class="fancy-button" type="submit">
 							<b>Process</b>
 						</sf:button></td>
-					<td><sf:button class="fancy-button" type="button"
-							onclick="receiveCancel()">
+					<td><sf:button class="fancy-button" type="button" onclick="receiveCancel()">
 							<b>Cancel</b>
 						</sf:button></td>
 				</tr>
@@ -154,7 +133,7 @@
 					});
 		}
 	}
-	
+
 	$('#supplierInp').devbridgeAutocomplete(
 			{
 				lookup : function(query, done) {

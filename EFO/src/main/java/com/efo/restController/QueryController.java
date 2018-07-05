@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.efo.entity.Customer;
+import com.efo.entity.Inventory;
 import com.efo.entity.Product;
 import com.efo.entity.Vendor;
 import com.efo.service.CustomerService;
@@ -51,6 +52,13 @@ public class QueryController {
 		return vendorToJson(vendorList);
 	}
 	
+	@RequestMapping("checkstock")
+	public String checkStock(@RequestParam(value = "sku") String sku ) throws JSONException {
+		Product product = productService.retrieve(sku);
+		
+		return inventoryToJson(product.getInventory());
+	}
+	
 	private String vendorToJson(List<Vendor> v) throws JSONException {
 		JSONArray jsonArray = new JSONArray();
 		for (Vendor item : v) {
@@ -70,6 +78,16 @@ public class QueryController {
 			jsonArray.put(suggestion);
 		}
 		return jsonArray.toString();
+	}
+	private String inventoryToJson(Inventory i) throws JSONException {
+		JSONObject json = new JSONObject();
+		json.put("sku", i.getSku());
+		json.put("amt_in_stock", i.getAmt_in_stock());
+		json.put("amt_committed", i.getAmt_committed());
+		json.put("amt_ordered", i.getAmt_ordered());
+		json.put("min_amount", i.getMin_amount());
+
+		return json.toString();
 	}
 	
 	private String productToJson(List<Product> p) throws JSONException {

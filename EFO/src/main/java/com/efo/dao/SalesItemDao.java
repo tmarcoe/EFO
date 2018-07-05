@@ -27,7 +27,7 @@ public class SalesItemDao implements ISalesItem {
 	}
 	
 	@Override
-	public void creat(SalesItem salesItem) {
+	public void create(SalesItem salesItem) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.save(salesItem);

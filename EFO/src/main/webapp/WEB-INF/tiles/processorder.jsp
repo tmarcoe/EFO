@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,19 +9,16 @@
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
 
-<sf:form id="details" method="post" action="/admin/updorder"
-	modelAttribute="sales">
+<sf:form id="details" method="post" action="/admin/updorder" modelAttribute="sales">
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>Invoice: </b><br>
 				<div class="fancy">
-					<fmt:formatNumber type="number" pattern="00000000"
-						value="${sales.invoice_num}" />
+					<fmt:formatNumber type="number" pattern="00000000" value="${sales.invoice_num}" />
 				</div></td>
 			<td><b>Total Price: </b><br>
 				<div class="fancy">
-					<fmt:formatNumber type="currency" currencySymbol=""
-						value="${sales.total_price}" />
+					<fmt:formatNumber type="currency" currencySymbol="" value="${sales.total_price}" />
 				</div></td>
 		</tr>
 		<tr>
@@ -30,24 +26,22 @@
 				<div class="fancy">
 					<fmt:formatDate value="${sales.ordered}" />
 				</div></td>
-			<td><b>Payment Type: </b><br> <sf:select id="paymentType"
-					class="fancy" path="payment_type" onchange="showReceivable()">
+			<td><b>Payment Type: </b><br> <sf:select id="paymentType" class="fancy" path="payment_type"
+					onchange="showReceivable()">
 					<sf:option value="">---Select---</sf:option>
 					<sf:option value="Cash">Cash</sf:option>
 					<sf:option value="Credit">Credit</sf:option>
 				</sf:select></td>
 		</tr>
 		<tr>
-			<td><b>Customer: </b><br> <sf:input class="fancy"
-					id="autocomplete" path="customer_name"
+			<td><b>Customer: </b><br> <sf:input class="fancy" id="autocomplete" path="customer_name"
 					placeholder="Enter Customer Name" /></td>
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="submit">
 					<b>Process</b>
 				</sf:button></td>
-			<td><sf:button class="fancy-button" type="button"
-					onclick="window.location.href='/#tabs-4'">
+			<td><sf:button class="fancy-button" type="button" onclick="window.location.href='/#tabs-4'">
 					<b>Cancel</b>
 				</sf:button></td>
 		</tr>
@@ -59,22 +53,17 @@
 				<tr>
 					<td><b>Amount Due: </b><br>
 						<div class="fancy">
-							<fmt:formatNumber type="currency" currencySymbol=""
-								value="${sales.receivables.total_due}" />
+							<fmt:formatNumber type="currency" currencySymbol="" value="${sales.receivables.total_due}" />
 						</div></td>
-					<td><b>Down Payment: </b><br> <sf:input id="down_payment"
-							class="fancy" type="number" step=".01"
+					<td><b>Down Payment: </b><br> <sf:input id="down_payment" class="fancy" type="number" step=".01"
 							path="receivables.down_payment" onchange="eachPayment()" /></td>
-					<td><b>Interest: </b><br> <sf:input id="interest"
-							class="fancy" type="number" step=".01"
+					<td><b>Interest: </b><br> <sf:input id="interest" class="fancy" type="number" step=".01"
 							path="receivables.interest" onchange="eachPayment()" />%</td>
 				</tr>
 				<tr>
-					<td><b>Number of Payments: </b><br> <sf:input
-							id="num_payments" class="fancy" type="number" step="1"
+					<td><b>Number of Payments: </b><br> <sf:input id="num_payments" class="fancy" type="number" step="1"
 							path="receivables.num_payments" onchange="eachPayment()" /></td>
-					<td><b>Payment Schedule: </b><br> <sf:select
-							class="fancy" path="receivables.schedule">
+					<td><b>Payment Schedule: </b><br> <sf:select class="fancy" path="receivables.schedule">
 							<sf:option value="Annually">Annually</sf:option>
 							<sf:option value="Bi-Annually">Bi-Annually</sf:option>
 							<sf:option value="Quarterly">Quarterly</sf:option>
@@ -83,16 +72,14 @@
 							<sf:option value="Weekly">Weekly</sf:option>
 							<sf:option value="Daily">Daily</sf:option>
 						</sf:select></td>
-					<td><b>Amount Per Payment: </b><br> <sf:input
-							id="each_payment" class="fancy" type="number" step=".01"
+					<td><b>Amount Per Payment: </b><br> <sf:input id="each_payment" class="fancy" type="number" step=".01"
 							path="receivables.each_payment" /></td>
 				</tr>
 				<tr>
-					<td><sf:button class="fancy-button" type="submit">
-							<b>Process</b>
+					<td><sf:button class="fancy-button" type="button" onclick="receiveClose()">
+							<b>OK</b>
 						</sf:button></td>
-					<td><sf:button class="fancy-button" type="button"
-							onclick="receiveCancel()">
+					<td><sf:button class="fancy-button" type="button" onclick="receiveCancel()">
 							<b>Cancel</b>
 						</sf:button></td>
 				</tr>
@@ -112,7 +99,6 @@
 	<sf:hidden path="receivables.customer" />
 	<sf:hidden path="receivables.customer" />
 	<sf:hidden path="receivables.status" value="O" />
-	<sf:hidden path="receivables.username" />
 	<sf:hidden path="receivables.total_due" />
 </sf:form>
 <script type="text/javascript">
@@ -126,6 +112,11 @@
 	function receiveCancel() {
 		var modal = document.getElementById('setReceivable');
 		$("#paymentType").val("Cash").change();
+		modal.style.display = "none";
+	}
+	
+	function receiveClose() {
+		var modal = document.getElementById('setReceivable');
 		modal.style.display = "none";
 	}
 

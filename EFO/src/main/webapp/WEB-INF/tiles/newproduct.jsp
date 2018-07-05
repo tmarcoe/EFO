@@ -10,14 +10,9 @@
 <sf:form method="post" action="/admin/addproduct" modelAttribute="product">
 	<table  class="fancy-table">
 		<tr>
-			<td><b>SKU</b></td>
-			<td><b>UPC</b></td>
-			<td><b>Name</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="sku"/></td>
-			<td><sf:input class="fancy" path="upc"/></td>
-			<td colspan="2"><sf:input class="fancy" path="product_name" size="55" /></td>
+			<td><b>SKU: </b><br><sf:input class="fancy" path="sku"/></td>
+			<td><b>UPC: </b><br><sf:input class="fancy" path="upc"/></td>
+			<td colspan="2"><b>Name</b><br><sf:input class="fancy" path="product_name" size="55" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="sku" class="error" /></td>
@@ -25,14 +20,9 @@
 			<td><sf:errors path="product_name" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Reorder At</b></td>
-			<td><b>Price Per Unit</b></td>
-			<td><b>Unit</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" type="number" step=".01" path="inventory.min_amount"/></td>
-			<td><sf:input class="fancy" type="number" step=".01" path="price"/></td>
-			<td><sf:select class="fancy" path="unit">
+			<td><b>Reorder At: </b><br><sf:input class="fancy" type="number" step=".01" path="inventory.min_amount"/></td>
+			<td><b>Price Per Unit: </b><br><sf:input class="fancy" type="number" step=".01" path="price"/></td>
+			<td><b>Unit: </b><br><sf:select class="fancy" path="unit">
 				<sf:option value="Each">Each</sf:option>
 				<sf:option value="Pack">Pack</sf:option>
 				<sf:option value="Hourly">Hourly</sf:option>
@@ -55,14 +45,9 @@
 			<td><sf:errors path="unit" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Category</b></td>
-			<td><b>Subcategory</b></td>
-			<td colspan="3"><b>Keywords (separated by comas)</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="category" /></td>
-			<td><sf:input class="fancy" path="subcategory"/></td>
-			<td colspan="3"><sf:textarea class="fancy-textarea" path="keywords" rows="4" cols="58"/></td>
+			<td><b>Category: </b><br><sf:input class="fancy" path="category" /></td>
+			<td><b>Subcategory</b><br><sf:input class="fancy" path="subcategory"/></td>
+			<td colspan="3"><b>Keywords (separated by comas)</b><br><sf:textarea class="fancy-textarea" path="keywords" rows="4" cols="58"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="category" class="error"/></td>

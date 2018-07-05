@@ -10,16 +10,9 @@
 <sf:form method="post" action="/admin/updateproduct" modelAttribute="product">
 	<table  class="fancy-table tableshadow">
 		<tr>
-			<td><b>SKU</b></td>
-			<td><b>UPC</b></td>
-			<td><b>Name</b></td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="sku" readonly="true" /></td>
-			<td><sf:input class="fancy" path="upc"/></td>
-			<td colspan="2"><sf:input class="fancy" path="product_name"  size="55" /></td>
-			<td><b>Amount In Stock: </b>${product.inventory.amt_in_stock}</td>
+			<td><b>SKU: </b><br><sf:input class="fancy" path="sku" readonly="true" /></td>
+			<td><b>UPC: </b><br><sf:input class="fancy" path="upc" readonly="true" /></td>
+			<td colspan="2"><b>Product Name: </b><br><sf:input class="fancy" path="product_name"  size="56" readonly="true" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="sku" class="error" /></td>
@@ -27,14 +20,9 @@
 			<td><sf:errors path="product_name" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Reorder At</b></td>
-			<td><b>Price</b></td>
-			<td><b>Unit</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" type="number" step=".01" path="inventory.min_amount"/></td>
-			<td><sf:input class="fancy" type="number" step=".01" path="price"/></td>
-			<td><sf:select class="fancy" path="unit">
+			<td><b>Reorder At: </b><br><sf:input class="fancy" type="number" step=".01" path="inventory.min_amount"/></td>
+			<td><b>Price: </b><br><sf:input class="fancy" type="number" step=".01" path="price"/></td>
+			<td><b>Unit</b><br><sf:select class="fancy" path="unit">
 				<sf:option value="Each">Each</sf:option>
 				<sf:option value="Pack">Pack</sf:option>
 				<sf:option value="Hourly">Hourly</sf:option>
@@ -48,8 +36,8 @@
 				<sf:option value="Gram">Gram</sf:option>
 				<sf:option value="Kilogram">Kilogram</sf:option>
 				<sf:option value="Liter">Liter</sf:option>
-			</sf:select></td>
-			<td><b>Consignment: </b><sf:checkbox path="consignment"/></td>
+			</sf:select>&nbsp;<b>Consignment: </b><sf:checkbox path="consignment"/></td>
+			<td><b>Amount In Stock: </b><br><sf:input class="fancy" path="inventory.amt_in_stock" readonly="true" size="5"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="inventory.min_amount" class="error"/></td>

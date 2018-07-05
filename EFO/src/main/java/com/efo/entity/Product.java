@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 public class Product implements Serializable {
@@ -29,9 +28,6 @@ public class Product implements Serializable {
 	private boolean on_sale;
 	private boolean discontinue;
 	private boolean consignment;
-	
-	@Transient
-	private double order_qty;
 	
 	@OneToOne(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
 	private Inventory inventory = new Inventory();
@@ -103,12 +99,6 @@ public class Product implements Serializable {
 	}
 	public void setDiscontinue(boolean discontinue) {
 		this.discontinue = discontinue;
-	}
-	public double getOrder_qty() {
-		return order_qty;
-	}
-	public void setOrder_qty(double order_qty) {
-		this.order_qty = order_qty;
 	}
 	public boolean isConsignment() {
 		return consignment;

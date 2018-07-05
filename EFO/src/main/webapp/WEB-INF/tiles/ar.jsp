@@ -22,7 +22,7 @@
 	</thead>
 	<c:forEach var="item" items="${objectList.pageList}" >
 		<tr>
-			<td>${item.invoice_num}</td>
+			<td><fmt:formatNumber type="number" pattern="00000000" value="${item.invoice_num}"/></td>
 			<td><fmt:formatDate value="${item.invoice_date}"/></td>
 			<td>${item.customer}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_due}"/></td>
@@ -39,8 +39,7 @@
 	</c:forEach>
 	<tfoot class="tablefooter" >
 		<tr>
-			<td colspan="12"><button type="button" onclick="window.location.href='/admin/choosecustomer'">New Receivable</button></td>
-			<td><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>
+			<td colspan="13"><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>
 		</tr>
 	</tfoot>
 </table>

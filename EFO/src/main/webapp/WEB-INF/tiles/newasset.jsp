@@ -21,8 +21,9 @@
 			<td><sf:errors path="vendor" class="error" /></td>
 		</tr>
 		<tr>
+			<td><b>Cost: </b><br> <sf:input id="item_cost" type="number" step=".01" class="fancy" path="item_cost" /></td>
+			<td><b>Lifetime (Years): </b><br> <sf:input type="number" step="1" class="fancy" path="lifetime" /></td>
 			<td><b>Salvage Value: </b><br> <sf:input type="number" step=".01" class="fancy" path="salvage_value" /></td>
-			<td><b>Asset Lifetime: </b><br> <sf:input type="number" step="1" class="fancy" path="lifetime" /></td>
 			<td><b>Depreciation Method: </b><br> <sf:select class="fancy" path="depreciation_method">
 					<sf:option value="Double Declining">Double Declining</sf:option>
 					<sf:option value="Straight Method">Straight Method</sf:option>
@@ -33,7 +34,6 @@
 					<sf:option value="Cash">Cash</sf:option>
 					<sf:option value="Credit">Credit</sf:option>
 				</sf:select></td>
-			<td><b>Cost: </b><br> <sf:input id="item_cost" type="number" step=".01" class="fancy" path="item_cost" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="salvage_value" class="error" /></td>

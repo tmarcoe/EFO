@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.efo.component.ScheduleUtilities;
 import com.efo.entity.CapitalAssets;
+import com.efo.entity.PaymentsBilled;
 import com.efo.service.CapitalAssetsService;
 import com.efo.service.FetalTransactionService;
+import com.efo.service.PaymentsBilledService;
 
 @Controller
 @RequestMapping("/accounting/")
@@ -29,6 +32,12 @@ public class CapitalAssetsController {
 
 	@Autowired
 	private CapitalAssetsService capitalAssetsService;
+	
+	@Autowired
+	private PaymentsBilledService billedService;
+	
+	@Autowired
+	private ScheduleUtilities sched;
 	
 	@Autowired
 	FetalTransactionService transactionService;
@@ -61,8 +70,18 @@ public class CapitalAssetsController {
 	
 	@RequestMapping("addasset")
 	public String addAsset(@Valid @ModelAttribute("assets") CapitalAssets assets, BindingResult result) throws Exception {
+		PaymentsBilled payments = null;
 		
-		transactionService.purchaseCapital(assets);
+		if (assets.getPurchase_type().compareTo("Cash") == 0) {
+			assets.setPayables(null);
+		}else{
+			payments = new PaymentsBilled();
+			Date lastPayment = billedService.lastestDate(assets.getInvoice_num());
+			if (lastPayment == null) lastPayment = assets.getDate_purchased();
+			payments.setDate_due(sched.nextPayment(assets.getDate_purchased(), lastPayment, assets.getPayables().getSchedule()));
+		}
+		
+		transactionService.purchaseCapital(assets, payments);
 		
 		return "redirect:/accounting/listassets";
 	}

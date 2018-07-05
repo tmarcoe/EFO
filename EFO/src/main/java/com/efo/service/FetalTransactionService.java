@@ -18,7 +18,6 @@ import com.efo.entity.PettyCashVoucher;
 import com.efo.entity.ProductOrders;
 import com.efo.entity.Receivables;
 import com.efo.entity.RetailSales;
-import com.efo.component.SalesItemProcessor;
 import com.efo.dao.FetalTransactionDao;
 import com.efo.entity.CapitalAssets;
 import com.efo.entity.Inventory;
@@ -44,12 +43,12 @@ public class FetalTransactionService extends FetalTransaction {
 	@Value("${fetal.properiesFile}")
 	private String filePath;
 	
-	public void retailSalesOrder(RetailSales sales, SalesItemProcessor salesItemProcessor) throws IOException {
+	public void retailSalesOrder(RetailSales sales) throws IOException {
 		try {
 			initTransaction(filePath);
 			setDescription("Retail Sales - (Invoice Number = " + sales.getInvoice_num() + ")");
 			publish("sales", VariableType.DAO, sales);
-			publish("salesItemProcessor", VariableType.OBJECT, salesItemProcessor);
+			publish("receivables", VariableType.DAO, sales.getReceivables());
 			loadRule("retailpurchase.trans");
 		}
 		finally {
@@ -57,13 +56,14 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 	
-	public void purchaseCapital(CapitalAssets asset) throws Exception {
+	public void purchaseCapital(CapitalAssets asset, PaymentsBilled payments) throws Exception {
 		
 		try {
 			initTransaction(filePath);
 			setDescription("Purchase of Capital Asset -(" + asset.getItem_name() + ")");
 			publish("asset", VariableType.DAO, asset);
 			publish("payables", VariableType.DAO, asset.getPayables());
+			publish("billed", VariableType.DAO, payments);
 			loadRule("purchasecapital.trans");
 		}
 		finally {
