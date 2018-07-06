@@ -240,10 +240,15 @@ public class RetailSalesController {
 	}
 	
 	@RequestMapping("updsalesitem")
-	public String updateSalesItem(@ModelAttribute("salesItem") SalesItem salesItem) {
+	public String updateSalesItem(@Valid @ModelAttribute("salesItem") SalesItem salesItem, BindingResult result) {
 		
 		SalesItem oldItem = salesItemService.retrieve(salesItem.getItem_id());
-		
+		Product product = productService.retrieve(salesItem.getSku());
+		if (salesItem.getQty() > product.getInventory().getAmt_in_stock()) {
+			result.rejectValue("qty", "Quantity.salesItem.qty");
+			
+			return "editsalesitem";
+		}
 		if(oldItem.getQty() != salesItem.getQty()) {
 			salesItemService.update(salesItem);
 			RetailSales sales = retailSalesService.retrieve(salesItem.getInvoice_num());
