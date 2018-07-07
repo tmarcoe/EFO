@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.efo.component.SalesItemProcessor;
 import com.efo.component.ScheduleUtilities;
 import com.efo.entity.GeneralLedger;
@@ -129,6 +128,9 @@ public class RetailSalesController {
 			item.setSold_for(product.getPrice());
 			sales.getSalesItem().add(item);
 		}else{
+			if ((item.getQty() + order_qty) > product.getInventory().getAmt_in_stock()) {				
+				return "redirect:/admin/browseproducts";
+			}
 			salesItemService.addQuantity(item, order_qty);
 		}
 		sales.setChanged(true);
@@ -179,9 +181,16 @@ public class RetailSalesController {
 	@RequestMapping("updorder")
 	public String updOrder(@Valid @ModelAttribute("sales") RetailSales sales, BindingResult result) throws IOException {
 		
-		if (result.hasFieldErrors("customer_name") ) {
+		if (sales.getCustomer_name().length() == 0 ) {
+			result.rejectValue("customer_name", "NotBlank.sales.customer_name");
 			return "processorder";
 		}
+		
+		if (sales.getPayment_type().length() == 0 ) {
+			result.rejectValue("payment_type", "NotBlank.sales.payment_type");
+			return "processorder";
+		}
+		
 		sales.setProcessed(new Date());
 		sales.setSalesItem(new HashSet<SalesItem>(salesItemService.retrieveRawList(sales.getInvoice_num())));
 		itemProcessor.commitItems(sales.getSalesItem());

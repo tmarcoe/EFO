@@ -48,7 +48,7 @@
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="submit">
-					<b>Save</b>
+					<b>Process</b>
 				</sf:button></td>
 			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()">
 					<b>Cancel</b>
@@ -83,8 +83,8 @@
 							path="payables.each_payment" /></td>
 				</tr>
 				<tr>
-					<td><sf:button class="fancy-button" type="submit">
-							<b>Process</b>
+					<td><sf:button class="fancy-button" type="button" onclick="closeReceivable()">
+							<b>Save</b>
 						</sf:button></td>
 					<td><sf:button class="fancy-button" type="button" onclick="receiveCancel()">
 							<b>Cancel</b>
@@ -97,6 +97,10 @@
 <script type="text/javascript">
 	function receiveCancel() {
 		$("#paymentType").val("Cash").change();
+		var modal = document.getElementById('setReceivable');
+		modal.style.display = "none";
+	}
+	function closeReceivable() {
 		var modal = document.getElementById('setReceivable');
 		modal.style.display = "none";
 	}

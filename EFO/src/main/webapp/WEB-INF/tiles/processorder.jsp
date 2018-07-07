@@ -34,8 +34,15 @@
 				</sf:select></td>
 		</tr>
 		<tr>
+			<td>&nbsp;</td>
+			<td><sf:errors path="payment_type" class="error" /></td>
+		</tr>
+		<tr>
 			<td><b>Customer: </b><br> <sf:input class="fancy" id="autocomplete" path="customer_name"
 					placeholder="Enter Customer Name" /></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="customer_name" class="error"/>
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="submit">

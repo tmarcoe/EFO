@@ -65,7 +65,7 @@
 	</table>
 	<div id="errMsg" class="modal">
 		<div class="modal-content small-modal fancy-button">
-			<h2 class="error" style="font-size: 20px;" >Order Quanity Exceeds Stock</h2>
+			<h2 class="error" style="font-size: 20px;">Order Quanity Exceeds Stock</h2>
 			<br>
 			<button class="fancy-button" type="button" onclick="closeError()">OK</button>
 		</div>
@@ -167,33 +167,34 @@
 			$("#errorMsg").text("Order quantity cannot be 0.")
 		} else {
 			if (sku.length > 0 && invoice_num.length > 0) {
-					window.location.href = "/admin/additem?invoice_num="
-							+ invoice_num + "&sku=" + sku + "&order_qty="
-							+ order_qty;
-				}
+				window.location.href = "/admin/additem?invoice_num="
+						+ invoice_num + "&sku=" + sku + "&order_qty="
+						+ order_qty;
 			}
 		}
-	
+	}
+
 	function checkStock() {
 		var sku = $("#sku").val();
-		$.getJSON("/rest/checkstock?sku=" + sku,
-				function(result) {
-					var qty = $("#order_qty").val();
-				if (Number(qty) > Number(result.amt_in_stock)) {
-					$("#errMsg").css("display","block");
-				}else{
-					addItem();
-				}
-			}).fail( function(jqXHR, textStatus, errorThrown) {
-						alert("error " + textStatus + "\n"
-									+ "incoming Text "
-									+ jqXHR.responseText);
-					});
+		if (sku.length == 0)
+			return;
+		$.getJSON("/rest/checkstock?sku=" + sku, function(result) {
+			var qty = $("#order_qty").val();
+			if (Number(qty) > Number(result.amt_in_stock)) {
+				$("#errMsg").css("display", "block");
+			} else {
+				addItem();
+			}
+		}).fail(
+				function(jqXHR, textStatus, errorThrown) {
+					alert("error " + textStatus + "\n" + "incoming Text "
+							+ jqXHR.responseText);
+				});
 
 	}
-	
+
 	function closeError() {
-		$("#errMsg").css("display","none");	
+		$("#errMsg").css("display", "none");
 		clearAll();
 	}
 	function clearAll() {
@@ -210,24 +211,17 @@
 		$("#discontinue").val("false");
 	}
 	var subttl = ${subtotal};
-	{
-		subtotal
-	};
 	var ttltax = ${totalTax};
-	{
-		totalTax
-	};
 	var grandttl = ${grandTotal};
-	{
-		grandTotal
-	};
 	function totals() {
 		$("#subtotal").text("Subtotal: " + subttl + "    ");
 		$("#totalTax").text("Tax: " + ttltax + "    ");
 		$("#grandTotal").text("Grand Total: " + grandttl + "    ");
 	}
-	
 </script>
 <c:if test="${sales.salesItem.size() > 0}">
-	<script>totals();</script>
+	<script>
+		totals();
+	</script>
 </c:if>
+
