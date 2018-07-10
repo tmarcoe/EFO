@@ -35,9 +35,9 @@ public class RetailSalesDao implements IRetailSales {
 	}
 
 	@Override
-	public RetailSales retrieve(Long invoice_num) {
+	public RetailSales retrieve(Long reference) {
 		Session session = session();
-		RetailSales sales = (RetailSales) session.createCriteria(RetailSales.class).add(Restrictions.idEq(invoice_num)).uniqueResult();
+		RetailSales sales = (RetailSales) session.createCriteria(RetailSales.class).add(Restrictions.idEq(reference)).uniqueResult();
 		session.disconnect();
 		
 		return sales;
@@ -88,13 +88,13 @@ public class RetailSalesDao implements IRetailSales {
 		return sales;
 	}
 	
-	public void cancelSales(Long invoice_num) {
-		String removeItems = "DELETE FROM SalesItem WHERE invoice_num = :invoice_num";
-		String removeSales = "DELETE FROM RetailSales WHERE invoice_num = :invoice_num";
+	public void cancelSales(Long reference) {
+		String removeItems = "DELETE FROM SalesItem WHERE reference = :reference";
+		String removeSales = "DELETE FROM RetailSales WHERE reference = :reference";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.createQuery(removeItems).setLong("invoice_num", invoice_num).executeUpdate();
-		session.createQuery(removeSales).setLong("invoice_num", invoice_num).executeUpdate();
+		session.createQuery(removeItems).setLong("reference", reference).executeUpdate();
+		session.createQuery(removeSales).setLong("reference", reference).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}

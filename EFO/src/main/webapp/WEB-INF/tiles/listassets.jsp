@@ -30,7 +30,7 @@
 			<td>${item.depreciation_method}</td>
 			<td>${item.lifetime} years</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.salvage_value}" /></td>
-			<td><button type="button" onclick="window.location.href='/accounting/editasset?invoice_num=${item.invoice_num}'">Edit</button></td>
+			<td><button type="button" onclick="window.location.href='/accounting/editasset?reference=${item.reference}'">Edit</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter">

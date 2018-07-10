@@ -24,7 +24,7 @@
 	</tr>
 	<c:forEach var="item" items="${objectList.pageList}">
 		<tr>
-			<td>${item.invoice_num}</td>
+			<td>${item.reference}</td>
 			<td>${item.product_name}</td>
 			<td>${item.vendor}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.wholesale}" /></td>
@@ -32,9 +32,9 @@
 			<td>${item.amt_received}</td>
 			<td><fmt:formatDate value="${item.order_date}"/></td>
 			<td><fmt:formatDate value="${item.delivery_date}" /></td>
-			<td><button type="button" onclick="window.location.href='/admin/receiveorder?invoice_num=${item.invoice_num}'">Receive Order</button></td>
-			<td><button type="button" onclick="window.location.href='/admin/editproductorder?invoice_num=${item.invoice_num}'">Edit Order</button></td>
-			<td><button type="button" onclick="window.location.href='/admin/cancelorder?invoice_num=${item.invoice_num}'">CancelOrder</button></td>
+			<td><button type="button" onclick="window.location.href='/admin/receiveorder?reference=${item.reference}'">Receive Order</button></td>
+			<td><button type="button" onclick="window.location.href='/admin/editproductorder?reference=${item.reference}'">Edit Order</button></td>
+			<td><button type="button" onclick="window.location.href='/admin/cancelorder?reference=${item.reference}'">CancelOrder</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot  class="tablefooter">

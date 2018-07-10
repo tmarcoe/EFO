@@ -21,7 +21,7 @@
 	</thead>
 	<c:forEach var="item" items="${objectList.pageList}" >
 		<tr>
-			<td>${item.invoice_num}</td>
+			<td>${item.reference}</td>
 			<td><fmt:formatDate value="${item.date_begin}"/></td>
 			<td>${item.supplier}</td>
 			<td>${item.type}</td>
@@ -31,8 +31,8 @@
 			<td>${item.schedule}</td>
 			<td>${item.num_payments}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_balance}"/></td>
-			<td><button type="button" onclick="window.location.href = '/accounting/appaymentlist?invoice_num=${item.invoice_num}'">View Payments</button></td>
-			<td><button type="button" onclick="window.location.href = '/accounting/editpayable?invoice_num=${item.invoice_num}'">Edit</button></td>
+			<td><button type="button" onclick="window.location.href = '/accounting/appaymentlist?reference=${item.reference}'">View Payments</button></td>
+			<td><button type="button" onclick="window.location.href = '/accounting/editpayable?reference=${item.reference}'">Edit</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter" >

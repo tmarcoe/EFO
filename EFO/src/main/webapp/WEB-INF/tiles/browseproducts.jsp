@@ -71,7 +71,7 @@
 		</div>
 	</div>
 
-	<sf:hidden id="invoice_num" path="invoice_num" />
+	<sf:hidden id="reference" path="reference" />
 	<sf:hidden path="user_id" />
 	<sf:hidden path="total_price" />
 	<sf:hidden path="ordered" />
@@ -161,14 +161,14 @@
 	function addItem() {
 
 		var sku = $("#sku").val();
-		var invoice_num = $("#invoice_num").val();
+		var reference = $("#reference").val();
 		var order_qty = $("#order_qty").val();
 		if (order_qty == 0.0) {
 			$("#errorMsg").text("Order quantity cannot be 0.")
 		} else {
-			if (sku.length > 0 && invoice_num.length > 0) {
-				window.location.href = "/admin/additem?invoice_num="
-						+ invoice_num + "&sku=" + sku + "&order_qty="
+			if (sku.length > 0 && reference > 0) {
+				window.location.href = "/admin/additem?reference="
+						+ reference + "&sku=" + sku + "&order_qty="
 						+ order_qty;
 			}
 		}

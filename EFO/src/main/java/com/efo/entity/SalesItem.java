@@ -19,7 +19,7 @@ public class SalesItem implements Serializable {
 	@Id  @GeneratedValue(strategy = GenerationType.AUTO)
 	private int item_id;
 	
-	private Long invoice_num;
+	private Long reference;
 	private String sku;
 	private String product_name;
 	private double qty;
@@ -28,7 +28,7 @@ public class SalesItem implements Serializable {
 	private String options;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="INVOICE_NUM", nullable = false, insertable=false, updatable=false )
+	@JoinColumn(name="REFERENCE", nullable = false, insertable=false, updatable=false )
 	private RetailSales retailSales;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -46,11 +46,11 @@ public class SalesItem implements Serializable {
 		this.item_id = item_id;
 	}
 	
-	public Long getInvoice_num() {
-		return invoice_num;
+	public Long getReference() {
+		return reference;
 	}
-	public void setInvoice_num(Long invoice_num) {
-		this.invoice_num = invoice_num;
+	public void setReference(Long reference) {
+		this.reference = reference;
 	}
 	public String getSku() {
 		return sku;

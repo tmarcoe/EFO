@@ -56,15 +56,15 @@ public class APPaymentsController {
 	}
 	
 	@RequestMapping("appaymentlist")
-	public String apPaymentList(@ModelAttribute("invoice_num") String invoice_num, Model model) {
+	public String apPaymentList(@ModelAttribute("reference") Long reference, Model model) {
 		
-		pList = paymentsService.retrieveList(invoice_num);
+		pList = paymentsService.retrieveList(reference);
 		
 		if (pList.getSource().size() == 0) {
 			pList = null;
 			System.gc();
 			
-			return "redirect:/accounting/newppayment?invoice_num=" + invoice_num;
+			return "redirect:/accounting/newppayment?reference=" + reference;
 		}
 		
 		model.addAttribute("objectList", pList);
@@ -84,12 +84,12 @@ public class APPaymentsController {
 	@RequestMapping("addpayment") 
 	public String addPayment(@ModelAttribute("billed") PaymentsBilled billed) throws IOException {
 		
-		Payables payables = payablesService.retreive(billed.getInvoice_num());
+		Payables payables = payablesService.retreive(billed.getReference());
 		paymentsService.update(billed);
 		fetalService.makePayment(payables, billed);
 		
 		billed.setId(0);
-		billed.setInvoice_num(payables.getInvoice_num());
+		billed.setReference(payables.getReference());
 		billed.setPayment_date(null);
 		billed.setPayment(0);
 		ScheduleType type = sched.stringToEnum(payables.getSchedule());
@@ -99,13 +99,13 @@ public class APPaymentsController {
 		paymentsService.create(billed);
 
 		
-		return "redirect:/accounting/appaymentlist?invoice_num=" + billed.getInvoice_num();
+		return "redirect:/accounting/appaymentlist?reference=" + billed.getReference();
 	}
 	
 	@RequestMapping("newppayment")
-	public String newPPayment(@ModelAttribute("invoice_num") String invoice_num, Model model) {
+	public String newPPayment(@ModelAttribute("reference") Long reference, Model model) {
 		PaymentsBilled payment = new PaymentsBilled();
-		payment.setInvoice_num(invoice_num);
+		payment.setReference(reference);
 		
 		model.addAttribute("payment", payment);
 		
@@ -127,7 +127,7 @@ public class APPaymentsController {
 		
 		paymentsService.create(payment);
 		
-		return "redirect:/accounting/appaymentlist?invoice_num=" + payment.getInvoice_num();
+		return "redirect:/accounting/appaymentlist?reference=" + payment.getReference();
 	}
 	
 	@RequestMapping("updateppayment")
@@ -135,7 +135,7 @@ public class APPaymentsController {
 		
 		paymentsService.update(payment);
 		
-		return "redirect:/accounting/appaymentlist?invoice_num=" + payment.getInvoice_num();
+		return "redirect:/accounting/appaymentlist?reference=" + payment.getReference();
 	}
 	
 	/************************************************************************************

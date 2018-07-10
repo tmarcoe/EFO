@@ -17,7 +17,8 @@ public class PaymentsReceived implements Serializable{
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private Long invoice_num;
+	private Long reference;
+	private String invoice_num;
 	private Date payment_date;
 	private Date date_due;
 	private double payment_due;
@@ -26,7 +27,7 @@ public class PaymentsReceived implements Serializable{
 	private String comments;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="INVOICE_NUM", referencedColumnName="INVOICE_NUM", nullable = false, insertable=false, updatable=false )
+	@JoinColumn(name="REFERENCE", referencedColumnName="REFERENCE", nullable = false, insertable=false, updatable=false )
 	private Receivables receivables;
 
 	public int getId() {
@@ -37,11 +38,19 @@ public class PaymentsReceived implements Serializable{
 		this.id = id;
 	}
 
-	public Long getInvoice_num() {
+	public Long getReference() {
+		return reference;
+	}
+
+	public void setReference(Long reference) {
+		this.reference = reference;
+	}
+
+	public String getInvoice_num() {
 		return invoice_num;
 	}
 
-	public void setInvoice_num(Long invoice_num) {
+	public void setInvoice_num(String invoice_num) {
 		this.invoice_num = invoice_num;
 	}
 

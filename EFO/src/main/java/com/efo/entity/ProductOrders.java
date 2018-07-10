@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,15 +15,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 
-import org.hibernate.validator.constraints.NotBlank;
-
-
 @Entity
 public class ProductOrders implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@NotBlank
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long reference;
 	private String invoice_num;
 	private String sku;
 	private String product_name;
@@ -44,7 +44,7 @@ public class ProductOrders implements Serializable {
 	
 	@OneToOne
 	(fetch=FetchType.LAZY, mappedBy = "productOrders", cascade = CascadeType.ALL)
-	private Payables payables = new Payables();
+	private Payables payables;
 	
 	public ProductOrders() {
 	}
@@ -69,12 +69,22 @@ public class ProductOrders implements Serializable {
 		this.product_name = product_name;
 	}
 
+	public Long getReference() {
+		return reference;
+	}
+
+	public void setReference(Long reference) {
+		this.reference = reference;
+	}
+
 	public String getInvoice_num() {
 		return invoice_num;
 	}
+
 	public void setInvoice_num(String invoice_num) {
 		this.invoice_num = invoice_num;
 	}
+
 	public String getVendor() {
 		return vendor;
 	}

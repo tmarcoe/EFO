@@ -31,6 +31,7 @@ INSERT IGNORE INTO `chart_of_accounts` (`account_num`, `description`, `account_b
 ('1003', 'This is Inventory Expense', 0, 'Inventory Expense', 'Expense'),
 ('1004', 'Owner\'s Equity Account', 0, 'Equity Accounts', 'Equity'),
 ('1005', 'Capital Equipment Account', 0, 'Capital', 'Asset'),
+('1006', 'Interest Expense', 0, 'Interest Expense', 'Expense'),
 ('1009', 'Income through Sales', 0, 'Sales', 'Revenue'),
 ('1010', 'Tax Expense', 0, 'Tax Account', 'Liability'),
 ('1015', 'Investment Account', 0, 'Investments', 'Asset'),
@@ -98,6 +99,7 @@ INSERT IGNORE INTO `user_role` (`user_id`, `role_id`) VALUES
 (1, 3),
 (1, 4),
 (1, 5);
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

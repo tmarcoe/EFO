@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.component.ScheduleUtilities;
 import com.efo.component.ScheduleUtilities.ScheduleType;
+import com.efo.entity.Payables;
 import com.efo.entity.PaymentsBilled;
 import com.efo.entity.Product;
 import com.efo.entity.ProductOrders;
@@ -97,19 +98,25 @@ public class ProductOrdersController {
 			return "newproductorder";
 
 		}
+		Payables payables = productOrders.getPayables();
+		productOrders.setPayables(null);
+		ordersService.create(productOrders);
 		PaymentsBilled payments = null;
+
 		
 		Product product = productService.retrieve(productOrders.getSku());
 		productOrders.setProduct_name(product.getProduct_name());
 		productOrders.setProduct(product);
 		if (productOrders.getPayment_type().compareTo("Credit") == 0) {
-			productOrders.getPayables().setProductOrders(productOrders);
-			productOrders.getPayables().setInvoice_num(productOrders.getInvoice_num());
+			productOrders.setPayables(payables);
+			payables.setProductOrders(productOrders);
+			payables.setReference(productOrders.getReference());
 			payments = new PaymentsBilled();
-			payments.setInvoice_num(productOrders.getInvoice_num());
+			payments.setReference(productOrders.getReference());
 			payments.setDate_due(sched.nextPayment(productOrders.getPayables().getDate_begin(), 
 								productOrders.getPayables().getDate_begin(), ScheduleType.MONTHLY));
 			payments.setPayment_due(productOrders.getPayables().getEach_payment());
+			
 
 			Set<PaymentsBilled> paymentsList = new HashSet<PaymentsBilled>();
 			paymentsList.add(payments);
@@ -118,15 +125,15 @@ public class ProductOrdersController {
 			productOrders.setPayables(null);
 		}
 		
-		fetalService.purchaseInventory(productOrders, payments);
+		fetalService.purchaseInventory(productOrders, payables, new PaymentsBilled());
 		
 		return "redirect:/admin/listproduct";
 	}
 
 	@RequestMapping("editproductorder")
-	public String editProductOrder(@ModelAttribute("invoice_num") String invoice_num, Model model) {
+	public String editProductOrder(@ModelAttribute("reference") Long reference, Model model) {
 		
-		ProductOrders orders =  ordersService.retrieve(invoice_num);
+		ProductOrders orders =  ordersService.retrieve(reference);
 		
 		model.addAttribute("product", productService.retrieve(orders.getSku()));
 		model.addAttribute("productOrder", orders);
@@ -143,8 +150,8 @@ public class ProductOrdersController {
 	}
 	
 	@RequestMapping("receiveorder")
-	public String receiveOrder(@ModelAttribute("invoice_num") String invoice_num, Model model) {
-		ProductOrders order = ordersService.retrieve(invoice_num);
+	public String receiveOrder(@ModelAttribute("reference") Long reference, Model model) {
+		ProductOrders order = ordersService.retrieve(reference);
 		
 		order.setDelivery_date(new Date());
 		
@@ -166,9 +173,9 @@ public class ProductOrdersController {
 	}
 	
 	@RequestMapping("cancelorder")
-	public String cancelOrder(@ModelAttribute("invoice_num") String invoice_num) throws IOException {
+	public String cancelOrder(@ModelAttribute("reference") Long reference) throws IOException {
 		
-		ProductOrders orders = ordersService.retrieve(invoice_num);
+		ProductOrders orders = ordersService.retrieve(reference);
 		if (orders.getAmt_received() > 0) {
 			return "/admin/listproductorders?error=true";
 		}

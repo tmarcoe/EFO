@@ -14,7 +14,7 @@
 		<tr>
 			<td><b>Invoice: </b><br>
 				<div class="fancy">
-					<fmt:formatNumber type="number" pattern="00000000" value="${sales.invoice_num}" />
+					${sales.invoice_num}
 				</div></td>
 			<td><b>Total Price: </b><br>
 				<div class="fancy">
@@ -93,7 +93,8 @@
 			</table>
 		</div>
 	</div>
-	<sf:hidden path="invoice_num" />
+	<sf:hidden path="reference" />
+	<sf:hidden path="invoice_num"/>
 	<sf:hidden path="user_id" />
 	<sf:hidden id="total_due" path="total_price" />
 	<sf:hidden path="ordered" />
@@ -101,7 +102,7 @@
 	<sf:hidden path="shipped" />
 	<sf:hidden path="changed" />
 	<sf:hidden id="customer_id" path="customer_id" />
-	<sf:hidden path="receivables.invoice_num" />
+	<sf:hidden path="receivables.reference" />
 	<sf:hidden path="receivables.invoice_date" />
 	<sf:hidden path="receivables.customer" />
 	<sf:hidden path="receivables.customer" />
@@ -133,7 +134,7 @@
 		var interest = $("#interest").val();
 		var num_payments = $("#num_payments").val();
 
-		if (total_due != 0 && interest != 0 && num_payments) {
+		if (total_due > 0 && num_payments > 0) {
 			$.getJSON(
 					"/rest/calculatepayments?total=" + total_due + "&down="
 							+ down_payment + "&interest=" + interest

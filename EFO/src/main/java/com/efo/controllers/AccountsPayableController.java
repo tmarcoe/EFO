@@ -75,7 +75,7 @@ public class AccountsPayableController {
 		}
 
 		PaymentsBilled bill = new PaymentsBilled();
-		bill.setInvoice_num(payables.getInvoice_num());
+		bill.setReference(payables.getReference());
 		ScheduleType type = sched.stringToEnum(payables.getSchedule());
 		Date nextPayment = sched.nextPayment(payables.getDate_begin(), payables.getDate_begin(), type);
 		bill.setDate_due(nextPayment);
@@ -86,8 +86,8 @@ public class AccountsPayableController {
 	}
 	
 	@RequestMapping("editpayable")
-	public String editPayable(@ModelAttribute("invoice_num") String invoice_num, Model model) {
-		Payables p = payablesService.retreive(invoice_num);
+	public String editPayable(@ModelAttribute("reference") Long reference, Model model) {
+		Payables p = payablesService.retreive(reference);
 		
 		model.addAttribute("payables", p);
 		
@@ -101,7 +101,7 @@ public class AccountsPayableController {
 			return "editpayable";
 		}
 		
-		Payables oldPayables = payablesService.retreive(payables.getInvoice_num());
+		Payables oldPayables = payablesService.retreive(payables.getReference());
 		
 		if (payables.getTotal_due() != oldPayables.getTotal_due()) {
 			double adj = payables.getTotal_due() - oldPayables.getTotal_due();

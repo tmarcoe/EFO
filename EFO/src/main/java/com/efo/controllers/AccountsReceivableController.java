@@ -64,7 +64,7 @@ public class AccountsReceivableController {
 		
 		receivables.setCustomer(user.getCustomer().getFirstname() + " " + user.getCustomer().getLastname());
 		receivables.setInvoice_date(new Date());
-		receivables.setUsername(username);
+		receivables.setUser_id(user.getUser_id());
 		
 		model.addAttribute("receivables", receivables);
 		
@@ -95,9 +95,9 @@ public class AccountsReceivableController {
 	}
 	
 	@RequestMapping("editreceivable")
-	public String editReceivable(@ModelAttribute("invoice_num") Long invoice_num, Model model) {
+	public String editReceivable(@ModelAttribute("reference") Long reference, Model model) {
 		
-		model.addAttribute("receivables", receivablesService.retreive(invoice_num));
+		model.addAttribute("receivables", receivablesService.retreive(reference));
 		
 		return "editreceivable";
 	}
@@ -109,7 +109,7 @@ public class AccountsReceivableController {
 			return "editreceivable";
 		}
 		
-		Receivables oldReceivables = receivablesService.retreive(receivables.getInvoice_num());
+		Receivables oldReceivables = receivablesService.retreive(receivables.getReference());
 		
 		if (oldReceivables.getTotal_due() != receivables.getTotal_due() ) {
 			double adj = receivables.getTotal_due() - oldReceivables.getTotal_due();

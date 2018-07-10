@@ -11,11 +11,11 @@
 			<td><b>Payment Date</b></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="invoice_num" readonly="true" /></td>
+			<td><sf:input class="fancy" path="reference" readonly="true" /></td>
 			<td><sf:input class="fancy" path="payment_date" type="date" /></td>
 		</tr>
 		<tr>
-			<sf:errors path="invoice_num" class="error" />
+			<sf:errors path="reference" class="error" />
 			<sf:errors path="payment_date" class="error" />
 		</tr>
 		<tr>

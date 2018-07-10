@@ -19,8 +19,8 @@ public class RetailSales implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id  @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long invoice_num;
-		
+	private Long reference;
+	private String invoice_num;	
 	private int user_id;
 	private double total_price;
 	private Date ordered;
@@ -39,10 +39,17 @@ public class RetailSales implements Serializable {
 	(fetch=FetchType.LAZY, mappedBy = "retailSales", cascade = CascadeType.ALL)
 	private Receivables receivables;
 	
-	public Long getInvoice_num() {
+	public Long getReference() {
+		return reference;
+	}
+	public void setReference(Long reference) {
+		this.reference = reference;
+	}
+	
+	public String getInvoice_num() {
 		return invoice_num;
 	}
-	public void setInvoice_num(Long invoice_num) {
+	public void setInvoice_num(String invoice_num) {
 		this.invoice_num = invoice_num;
 	}
 	public int getUser_id() {

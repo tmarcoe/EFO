@@ -32,8 +32,8 @@ public class SalesItemService implements ISalesItem {
 		return salesItemDao.retrieveRawList();
 	}
 	
-	public List<SalesItem> retrieveRawList(Long invoice_num) {
-		return salesItemDao.retrieveRawList(invoice_num);
+	public List<SalesItem> retrieveRawList(Long reference) {
+		return salesItemDao.retrieveRawList(reference);
 	}
 
 	public PagedListHolder<SalesItem> retrieveList() {
@@ -59,16 +59,16 @@ public class SalesItemService implements ISalesItem {
 		salesItemDao.deleteSalesItem(item_id);
 	}
 	
-	public SalesItem getItemBySku(Long invoice_num, String sku) {
-		return salesItemDao.getItemBySku(invoice_num, sku);
+	public SalesItem getItemBySku(Long reference, String sku) {
+		return salesItemDao.getItemBySku(reference, sku);
 	}
 	
 	public void addQuantity(SalesItem salesItem, double qty) {
 		salesItemDao.addQuantity(salesItem, qty);
 	}
 	
-	public Long rowCount(Long invoice_num) {
-		return salesItemDao.rowCount(invoice_num);
+	public Long rowCount(Long reference) {
+		return salesItemDao.rowCount(reference);
 	}
 	
 }

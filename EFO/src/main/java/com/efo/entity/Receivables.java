@@ -20,9 +20,10 @@ public class Receivables implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private Long invoice_num;
+	private Long reference;
 	private Date invoice_date;
 	private String customer;
+	private int	user_id;
 	private double total_due;
 	private double down_payment;
 	private double interest;
@@ -31,21 +32,20 @@ public class Receivables implements Serializable{
 	private String schedule;
 	private double total_balance;
 	private String status; // O = open, C = closed, D = dispute
-	private String username;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "receivables", cascade = { CascadeType.ALL,CascadeType.PERSIST,CascadeType.MERGE })
 	private Set<PaymentsReceived> payments = new HashSet<PaymentsReceived>(0);
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="INVOICE_NUM")
+	@JoinColumn(name="REFERENCE")
 	private RetailSales retailSales = new RetailSales();
 
-	public Long getInvoice_num() {
-		return invoice_num;
+	public Long getReference() {
+		return reference;
 	}
 
-	public void setInvoice_num(Long invoice_num) {
-		this.invoice_num = invoice_num;
+	public void setReference(Long reference) {
+		this.reference = reference;
 	}
 
 	public Date getInvoice_date() {
@@ -62,6 +62,14 @@ public class Receivables implements Serializable{
 
 	public void setCustomer(String customer) {
 		this.customer = customer;
+	}
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 
 	public double getTotal_due() {
@@ -127,14 +135,6 @@ public class Receivables implements Serializable{
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public Set<PaymentsReceived> getPayments() {

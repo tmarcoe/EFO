@@ -20,8 +20,8 @@ public class PayablesService implements IPayables {
 	}
 
 	@Override
-	public Payables retreive(String invoice_num) {
-		return payablesDao.retreive(invoice_num);
+	public Payables retreive(Long reference) {
+		return payablesDao.retreive(reference);
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class PayablesService implements IPayables {
 	}
 
 	@Override
-	public void delete(String invoice_num) {
-		payablesDao.delete(invoice_num);
+	public void delete(Long reference) {
+		payablesDao.delete(reference);
 	}
 	
 	public PagedListHolder<Payables> retrieveList() {

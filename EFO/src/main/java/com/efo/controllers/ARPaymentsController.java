@@ -48,15 +48,15 @@ public class ARPaymentsController {
 	}
 
 	@RequestMapping("requestpayment")
-	public String requestPayment(@ModelAttribute("invoice_num") Long invoice_num, Model model) {
+	public String requestPayment(@ModelAttribute("reference") Long reference, Model model) {
 		
 		return "requestpayment";
 	}
 	
 	@RequestMapping("arpaymentlist")
-	public String arPaymentList(@ModelAttribute("invoice_num") Long invoice_num, Model model) {
+	public String arPaymentList(@ModelAttribute("reference") Long reference, Model model) {
 		
-		rList = paymentsService.retreiveList(invoice_num);
+		rList = paymentsService.retreiveList(reference);
 		
 		model.addAttribute("objectList", rList);
 		model.addAttribute("pagelink", pageLink);
@@ -65,9 +65,9 @@ public class ARPaymentsController {
 	}
 	
 	@RequestMapping("newrpayment")
-	public String newPaymentReceived(@ModelAttribute("invoice_num") Long invoice_num, Model model) {
+	public String newPaymentReceived(@ModelAttribute("reference") Long reference, Model model) {
 		PaymentsReceived payment = new PaymentsReceived();
-		payment.setInvoice_num(invoice_num);
+		payment.setReference(reference);
 		
 		model.addAttribute("payment", payment);
 		
@@ -84,15 +84,37 @@ public class ARPaymentsController {
 		return "editrpayment";
 	}
 	
+	@RequestMapping("receivepayment")
+	public String receivePayment(@ModelAttribute("id") int id, Model model) {
+		
+		PaymentsReceived rec = paymentsService.retreive(id);
+		Receivables receivables = receivablesService.retreive(rec.getReference());
+		
+		rec.setPayment_date(new Date());
+		rec.setPayment(receivables.getEach_payment());
+		
+		model.addAttribute("payment", rec);
+		
+		return "receivepayment";
+	}
+	
+	@RequestMapping("updatereceive")
+	public String updateReceivePayment(@ModelAttribute("payment")PaymentsReceived payment) throws IOException {
+		
+		Receivables receivables = receivablesService.retreive(payment.getReference());
+		fetalService.receivePaymentFromReceivable(payment, receivables);
+		
+		return "redirect:/accounting/arpaymentlist?reference=" + payment.getReference();
+	}
 	
 	@RequestMapping("addrpayment")
 	public String addReceivablePayment(@ModelAttribute("payment") PaymentsReceived payment) throws IOException {
 		
-		Receivables receivables = receivablesService.retreive(payment.getInvoice_num());
+		Receivables receivables = receivablesService.retreive(payment.getReference());
 		
 		fetalService.receivePayment(payment, receivables);
 		
-		return "redirect:/accounting/arpaymentlist?invoice_num=" + payment.getInvoice_num();
+		return "redirect:/accounting/arpaymentlist?reference=" + payment.getReference();
 	}
 	
 	@RequestMapping("updaterpayment")
@@ -100,7 +122,7 @@ public class ARPaymentsController {
 		
 		paymentsService.update(payment);
 		
-		return "redirect:/accounting/arpaymentlist?invoice_num=" + payment.getInvoice_num();
+		return "redirect:/accounting/arpaymentlist?reference=" + payment.getReference();
 	}
 	
 	@RequestMapping(value = "rpaging", method = RequestMethod.GET)

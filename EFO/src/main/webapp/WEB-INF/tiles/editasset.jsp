@@ -8,7 +8,7 @@
 <sf:form method="post" action="/accounting/updateasset" modelAttribute="asset">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>Invoice Number: </b><br> <sf:input class="fancy" path="invoice_num" readonly="true" /></td>
+			<td><b>Invoice Number: </b><br> <sf:input class="fancy" path="invoice_num" /></td>
 			<td><b>Name: </b><br> <sf:input class="fancy" path="item_name" /></td>
 			<td><b>Purchase Date: </b><br> <sf:input type="date" class="fancy" path="date_purchased" /></td>
 			<td colspan="2"><b>Supplier: </b><br> <sf:input id="vendor" class="fancy" path="vendor" size="36" /></td>
@@ -48,9 +48,10 @@
 		</tr>
 	</table>
 
+	<sf:hidden path="reference"/>
 	<sf:hidden path="depreciation_method" />
 	<sf:hidden path="purchase_type" />
-	<sf:hidden path="payables.invoice_num" />
+	<sf:hidden path="payables.reference" />
 	<sf:hidden path="payables.date_begin" />
 	<sf:hidden path="payables.supplier" />
 	<sf:hidden path="payables.type" />

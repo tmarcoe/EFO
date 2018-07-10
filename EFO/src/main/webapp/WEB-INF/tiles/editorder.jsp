@@ -11,12 +11,12 @@
 <sf:form method="post" action="/admin/updproductorder" modelAttribute="productOrder">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>Invoice #: </b><br><sf:input class="fancy" path="invoice_num" readonly="true"/></td>
+			<td><b>Invoice #: </b><br><sf:input class="fancy" path="reference" readonly="true"/></td>
 			<td colspan="2"><b>Product Name: </b><br><sf:input class="fancy" path="product_name" readonly="true" size="47"/>
 			<td><b>Vendor: </b><br><sf:input class="fancy" id="vendor" path="vendor" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="invoice_num" class="error" /></td>
+			<td><sf:errors path="reference" class="error" /></td>
 			<td><sf:errors path="product_name" class="error"/></td>
 			<td><sf:errors path="vendor" class="error" /></td>
 		</tr>

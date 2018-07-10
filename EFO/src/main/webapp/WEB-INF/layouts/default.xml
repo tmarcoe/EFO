@@ -138,6 +138,12 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editrpayment.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="receivepayment" extends="accounting.base">
+		<put-attribute name="title" value="Receive Payment"></put-attribute>
+		<put-attribute name="heading_title" value="Receive Payment"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/receivepayment.jsp"></put-attribute>
+	</definition>
+	
 	<!-- Chart Of Accounts Controller -->
 	<definition name="accountslist" extends="accounting.base">
 		<put-attribute name="title" value="Chart Of Accounts"></put-attribute>

@@ -63,20 +63,20 @@ public class PaymentsReceivedDao implements IPaymentsReceived {
 		session.disconnect();			
 	}
 
-	public List<PaymentsReceived> retreiveList(Long invoice_num) {
+	public List<PaymentsReceived> retreiveList(Long reference) {
 		Session session = session();
 		
 		@SuppressWarnings("unchecked")
-		List<PaymentsReceived> rList = session.createCriteria(PaymentsReceived.class).add(Restrictions.eq("invoice_num", invoice_num)).list();
+		List<PaymentsReceived> rList = session.createCriteria(PaymentsReceived.class).add(Restrictions.eq("reference", reference)).list();
 		
 		session.disconnect();
 		
 		return rList;
 	}
-	public Date lastestDate(Long invoice_num) {
-		String hql = "SELECT MAX(date_due) FROM PaymentsReceived WHERE invoice_num = :invoice_num)";
+	public Date lastestDate(Long reference) {
+		String hql = "SELECT MAX(date_due) FROM PaymentsReceived WHERE reference = :reference)";
 		Session session = session();
-		Date maxDate = (Date) session.createQuery(hql).setLong("invoice_num", invoice_num).uniqueResult();
+		Date maxDate = (Date) session.createQuery(hql).setLong("reference", reference).uniqueResult();
 		session.disconnect();
 		
 		return maxDate;

@@ -20,8 +20,8 @@ public class ReceivablesService implements IReceivables {
 	}
 
 	@Override
-	public Receivables retreive(Long invoice_num) {
-		return receivablesDao.retreive(invoice_num);
+	public Receivables retreive(Long reference) {
+		return receivablesDao.retreive(reference);
 	}
 
 	@Override
@@ -31,8 +31,8 @@ public class ReceivablesService implements IReceivables {
 	}
 
 	@Override
-	public void delete(Long invoice_num) {
-		receivablesDao.delete(invoice_num);
+	public void delete(Long reference) {
+		receivablesDao.delete(reference);
 
 	}
 	

@@ -37,9 +37,9 @@ public class PayablesDao implements IPayables {
 	}
 
 	@Override
-	public Payables retreive(String invoice_num) {
+	public Payables retreive(Long reference) {
 		Session session = session();
-		Payables p = (Payables) session.createCriteria(Payables.class).add(Restrictions.idEq(invoice_num)).uniqueResult();
+		Payables p = (Payables) session.createCriteria(Payables.class).add(Restrictions.idEq(reference)).uniqueResult();
 		session.disconnect();
 		
 		return p;
@@ -63,10 +63,10 @@ public class PayablesDao implements IPayables {
 	}
 
 	@Override
-	public void delete(String invoice_num) {
+	public void delete(Long reference) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		Payables p = retreive(invoice_num);
+		Payables p = retreive(reference);
 		session.delete(p);
 		tx.commit();
 		session.disconnect();

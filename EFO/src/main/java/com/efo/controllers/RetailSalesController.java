@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.efo.component.SalesItemProcessor;
 import com.efo.component.ScheduleUtilities;
 import com.efo.entity.GeneralLedger;
 import com.efo.entity.PaymentsReceived;
@@ -31,6 +30,7 @@ import com.efo.entity.RetailSales;
 import com.efo.entity.SalesItem;
 import com.efo.entity.User;
 import com.efo.service.FetalTransactionService;
+import com.efo.service.InvoiceNumService;
 import com.efo.service.PaymentsReceivedService;
 import com.efo.service.ProductService;
 import com.efo.service.RetailSalesService;
@@ -67,9 +67,6 @@ public class RetailSalesController {
 	private SalesItemService salesItemService;
 	
 	@Autowired
-	private SalesItemProcessor itemProcessor;
-	
-	@Autowired
 	UserService userService;
 	
 	@Autowired
@@ -77,6 +74,9 @@ public class RetailSalesController {
 	
 	@Autowired
 	ScheduleUtilities sched;
+	
+	@Autowired
+	InvoiceNumService invoiceNumService;
 	
 	PagedListHolder<GeneralLedger> salesList;
 	
@@ -109,16 +109,16 @@ public class RetailSalesController {
 	}
 	
 	@RequestMapping("additem")
-	public String addItem(@ModelAttribute("invoice_num") Long invoice_num, 
+	public String addItem(@ModelAttribute("reference") Long reference, 
 						  @ModelAttribute("sku") String sku, 
 						  @ModelAttribute("order_qty") Double order_qty, Model model) {
 		
-		RetailSales sales = retailSalesService.retrieve(invoice_num);
+		RetailSales sales = retailSalesService.retrieve(reference);
 		Product product = productService.retrieve(sku);
-		SalesItem item = salesItemService.getItemBySku(sales.getInvoice_num(), sku);
+		SalesItem item = salesItemService.getItemBySku(sales.getReference(), sku);
 		if (item == null) {
 			item = new SalesItem();
-			item.setInvoice_num(sales.getInvoice_num());
+			item.setReference(sales.getReference());
 			item.setProduct(product);
 			item.setProduct_name(product.getProduct_name());
 			item.setQty(order_qty.doubleValue());
@@ -148,7 +148,7 @@ public class RetailSalesController {
 		User user = userService.retrieve(principal.getName());
 		
 		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
-		retailSalesService.cancelSales(sales.getInvoice_num());
+		retailSalesService.cancelSales(sales.getReference());
 		
 		return "redirect:/admin/browseproducts";
 	}
@@ -156,16 +156,18 @@ public class RetailSalesController {
 	@RequestMapping("processorder")
 	public String processOrder(@Valid @ModelAttribute("sales") RetailSales sales, BindingResult result, Model model) {
 		
-		Set<SalesItem> itemList = new HashSet<SalesItem>(salesItemService.retrieveRawList(sales.getInvoice_num()));
+		Set<SalesItem> itemList = new HashSet<SalesItem>(salesItemService.retrieveRawList(sales.getReference()));
 		sales.setSalesItem(itemList);
 		
 		if (sales.isChanged()) {
 			sales.setTotal_price(totalOrder(sales));	
 		}
 		
+		sales.setInvoice_num(invoiceNumService.getNextKey());
+		
 		sales.setReceivables(new Receivables());
 		sales.getReceivables().setRetailSales(sales);
-		sales.getReceivables().setInvoice_num(sales.getInvoice_num());
+		sales.getReceivables().setReference(sales.getReference());
 		sales.getReceivables().setInvoice_date(sales.getProcessed());
 		sales.getReceivables().setTotal_due(sales.getTotal_price());
 		sales.getReceivables().setDown_payment(Double.valueOf(downPayment));
@@ -180,7 +182,6 @@ public class RetailSalesController {
 	
 	@RequestMapping("updorder")
 	public String updOrder(@Valid @ModelAttribute("sales") RetailSales sales, BindingResult result) throws IOException {
-		
 		if (sales.getCustomer_name().length() == 0 ) {
 			result.rejectValue("customer_name", "NotBlank.sales.customer_name");
 			return "processorder";
@@ -190,36 +191,31 @@ public class RetailSalesController {
 			result.rejectValue("payment_type", "NotBlank.sales.payment_type");
 			return "processorder";
 		}
-		
+		sales.getReceivables().setInvoice_date(sales.getOrdered());
+		PaymentsReceived payment = null;
+		Date latest_date = null;
 		sales.setProcessed(new Date());
-		sales.setSalesItem(new HashSet<SalesItem>(salesItemService.retrieveRawList(sales.getInvoice_num())));
-		itemProcessor.commitItems(sales.getSalesItem());
+		sales.setSalesItem(new HashSet<SalesItem>(salesItemService.retrieveRawList(sales.getReference())));
 	
 		if (sales.getPayment_type().compareTo("Cash") == 0) {
 			sales.setReceivables(null);
 		}else{
 			Receivables receivables = sales.getReceivables();
-			receivables.setInvoice_num(sales.getInvoice_num());
-			receivables.setCustomer(sales.getCustomer_name());	
-			receivables.setInvoice_date(sales.getProcessed());
-			receivables.setStatus("O");
 
-			PaymentsReceived payment = new PaymentsReceived();
-			Date date_due = paymentsService.latestDate(sales.getInvoice_num());
-			if (date_due == null) {
-				date_due = sales.getReceivables().getInvoice_date();
+			payment = new PaymentsReceived();
+			latest_date = paymentsService.latestDate(sales.getReference());
+			if (latest_date == null) {
+				latest_date = sales.getReceivables().getInvoice_date();
 			}
-			payment.setDate_due(sched.nextPayment(sales.getReceivables().getInvoice_date(), date_due , sales.getReceivables().getSchedule()));
-			payment.setInvoice_num(sales.getInvoice_num());
+			payment.setReference(sales.getReference());
 			payment.setPayment_due(sales.getReceivables().getEach_payment());
 			payment.setReceivables(sales.getReceivables());
+
 			receivables.getPayments().add(payment);
 			receivables.setRetailSales(sales);
 	}
 		
-		retailSalesService.merge(sales);
-		
-		transactionService.retailSalesOrder(sales);
+		transactionService.retailSalesOrder(sales, payment, latest_date);
 		
 		
 		
@@ -231,8 +227,8 @@ public class RetailSalesController {
 		salesItemService.deleteSalesItem(item_id);
 		User user = userService.retrieve(principal.getName());
 		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
-		if (salesItemService.rowCount(sales.getInvoice_num()) == 0) {
-			retailSalesService.cancelSales(sales.getInvoice_num());
+		if (salesItemService.rowCount(sales.getReference()) == 0) {
+			retailSalesService.cancelSales(sales.getReference());
 		}else{
 			sales.setChanged(true);
 			retailSalesService.merge(sales);
@@ -260,7 +256,7 @@ public class RetailSalesController {
 		}
 		if(oldItem.getQty() != salesItem.getQty()) {
 			salesItemService.update(salesItem);
-			RetailSales sales = retailSalesService.retrieve(salesItem.getInvoice_num());
+			RetailSales sales = retailSalesService.retrieve(salesItem.getReference());
 			sales.setChanged(true);
 			retailSalesService.merge(sales);
 			if (salesItem.getQty() == 0) {

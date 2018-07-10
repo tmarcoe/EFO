@@ -63,6 +63,7 @@ public class CapitalAssetsController {
 	@RequestMapping("newasset")
 	public String newAsset(Model model) {
 		
+		
 		model.addAttribute("asset", new CapitalAssets(new Date()));
 		
 		return "newasset";
@@ -72,11 +73,12 @@ public class CapitalAssetsController {
 	public String addAsset(@Valid @ModelAttribute("assets") CapitalAssets assets, BindingResult result) throws Exception {
 		PaymentsBilled payments = null;
 		
+		capitalAssetsService.create(assets);
 		if (assets.getPurchase_type().compareTo("Cash") == 0) {
 			assets.setPayables(null);
 		}else{
 			payments = new PaymentsBilled();
-			Date lastPayment = billedService.lastestDate(assets.getInvoice_num());
+			Date lastPayment = billedService.lastestDate(assets.getReference());
 			if (lastPayment == null) lastPayment = assets.getDate_purchased();
 			payments.setDate_due(sched.nextPayment(assets.getDate_purchased(), lastPayment, assets.getPayables().getSchedule()));
 		}
@@ -86,8 +88,8 @@ public class CapitalAssetsController {
 		return "redirect:/accounting/listassets";
 	}
 	@RequestMapping("editasset")
-	public String editAsset(@ModelAttribute("invoice_num") String invoice_num, Model model) {
-		CapitalAssets asset = capitalAssetsService.retrieve(invoice_num);
+	public String editAsset(@ModelAttribute("reference") Long reference, Model model) {
+		CapitalAssets asset = capitalAssetsService.retrieve(reference);
 		
 		model.addAttribute("asset", asset);
 		

@@ -16,7 +16,7 @@
 			<td><b>Payment Schedule</b></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="invoice_num" readonly="true"/></td>
+			<td><sf:input class="fancy" path="reference" readonly="true"/></td>
 			<td><sf:input class="fancy" path="date_begin" type="date" readonly="true"/></td>
 			<td colspan="2"><sf:input class="fancy" path="supplier" size="46" readonly="true"/></td>
 			<td><sf:input class="fancy" path="type" readonly="true" size="1" /></td>

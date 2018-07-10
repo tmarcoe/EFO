@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -14,6 +16,8 @@ public class CapitalAssets implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long reference;
 	private String invoice_num;
 	private String item_name;
 	private String item_description;
@@ -33,6 +37,12 @@ public class CapitalAssets implements Serializable {
 		this.date_purchased = date_purchased;
 	}
 	public CapitalAssets() {
+	}
+	public Long getReference() {
+		return reference;
+	}
+	public void setReference(Long reference) {
+		this.reference = reference;
 	}
 	public String getInvoice_num() {
 		return invoice_num;

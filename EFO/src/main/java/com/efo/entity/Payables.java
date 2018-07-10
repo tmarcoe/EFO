@@ -17,8 +17,8 @@ import javax.persistence.OneToOne;
 public class Payables implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id 
-	private String invoice_num;
+	@Id
+	private Long reference;
 	private Date date_begin;
 	private String supplier;
 	private String type;
@@ -31,23 +31,24 @@ public class Payables implements Serializable {
 	private double total_balance;
 	private String status; // O = open, C = closed, D = dispute
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "payables")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "payables", cascade = { CascadeType.ALL,CascadeType.PERSIST,CascadeType.MERGE })
 	private Set<PaymentsBilled> payments = new HashSet<PaymentsBilled>(0);
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="INVOICE_NUM")
+	@JoinColumn(name="REFERENCE")
 	private ProductOrders productOrders;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="INVOICE_NUM")
+	@JoinColumn(name="REFERENCE")
 	private CapitalAssets capitalAssets;
 
-	public String getInvoice_num() {
-		return invoice_num;
+
+	public Long getReference() {
+		return reference;
 	}
 
-	public void setInvoice_num(String invoice_number) {
-		this.invoice_num = invoice_number;
+	public void setReference(Long reference) {
+		this.reference = reference;
 	}
 
 	public Date getDate_begin() {
@@ -151,6 +152,18 @@ public class Payables implements Serializable {
 
 	public void setProductOrders(ProductOrders productOrders) {
 		this.productOrders = productOrders;
+	}
+
+	public CapitalAssets getCapitalAssets() {
+		return capitalAssets;
+	}
+
+	public void setCapitalAssets(CapitalAssets capitalAssets) {
+		this.capitalAssets = capitalAssets;
+	}
+	
+	public void addPayment(PaymentsBilled payment) {
+		payments.add(payment);
 	}
 	
 }

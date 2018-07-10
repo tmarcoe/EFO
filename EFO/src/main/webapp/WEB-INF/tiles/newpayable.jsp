@@ -16,7 +16,7 @@
 			<td><b>Payment Schedule</b></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="invoice_num" /></td>
+			<td><sf:input class="fancy" path="reference" /></td>
 			<td><sf:input class="fancy" path="date_begin" type="date"/></td>
 			<td><sf:input id="supplierInp" class="fancy" path="supplier" onclick="chooseSupplier()" /></td>
 			<td><sf:select class="fancy" id="typeInp" path="type">
@@ -35,7 +35,7 @@
 			</sf:select></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="invoice_num" class="error" /></td>
+			<td><sf:errors path="reference" class="error" /></td>
 			<td><sf:errors path="date_begin" class="error" /></td>
 			<td><sf:errors path="supplier" class="error" /></td>
 			<td>&nbsp;</td>

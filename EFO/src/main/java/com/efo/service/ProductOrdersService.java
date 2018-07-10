@@ -22,8 +22,8 @@ public class ProductOrdersService implements IProductOrders {
 	}
 
 	@Override
-	public ProductOrders retrieve(String invoice_num) {
-		return orderDao.retrieve(invoice_num);
+	public ProductOrders retrieve(Long reference) {
+		return orderDao.retrieve(reference);
 	}
 
 	@Override
@@ -39,8 +39,8 @@ public class ProductOrdersService implements IProductOrders {
 		return new PagedListHolder<ProductOrders>(orderDao.retrieveOpenOrders());
 	}
 	
-	public void setStatus(String invoice_num, String status) {
-		orderDao.setStatus(invoice_num, status);
+	public void setStatus(Long reference, String status) {
+		orderDao.setStatus(reference, status);
 	}
 	
 	@Override
@@ -57,8 +57,8 @@ public class ProductOrdersService implements IProductOrders {
 		orderDao.delete(orders);
 	}
 	
-	public void delete(String invoice_num) {
-		ProductOrders orders = retrieve(invoice_num);
+	public void delete(Long reference) {
+		ProductOrders orders = retrieve(reference);
 		orderDao.delete(orders);
 	}
 

@@ -2,6 +2,7 @@ package com.efo.service;
 
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,12 +44,29 @@ public class FetalTransactionService extends FetalTransaction {
 	@Value("${fetal.properiesFile}")
 	private String filePath;
 	
-	public void retailSalesOrder(RetailSales sales) throws IOException {
+	public void receivePaymentFromReceivable(PaymentsReceived payment, Receivables receivables) throws IOException {
+		
 		try {
 			initTransaction(filePath);
-			setDescription("Retail Sales - (Invoice Number = " + sales.getInvoice_num() + ")");
+			setDescription("Payment received (ID #" + payment.getId() + ")");
+			publish("payment", VariableType.DAO, payment);
+			publish("receivables", VariableType.DAO, receivables);
+			publish("nextPayment", VariableType.DAO, new PaymentsReceived() );
+			loadRule("receivepayment.trans");
+		}
+		finally {
+			closeFetal();
+		}
+	}
+	
+	public void retailSalesOrder(RetailSales sales, PaymentsReceived payment, Date latest_date) throws IOException {
+		try {
+			initTransaction(filePath);
+			setDescription("Retail Sales - (Invoice Number = " + sales.getReference() + ")");
 			publish("sales", VariableType.DAO, sales);
 			publish("receivables", VariableType.DAO, sales.getReceivables());
+			publish("payment", VariableType.DAO, payment);
+			publish("latest_date", VariableType.DATE, latest_date);
 			loadRule("retailpurchase.trans");
 		}
 		finally {
@@ -77,6 +95,9 @@ public class FetalTransactionService extends FetalTransaction {
 		try {
 			Double num_of_payments = Double.valueOf(String.valueOf(payables.getNum_payments()));
 			initTransaction(filePath);
+			if (billed.getPayables() == null) {
+				billed.setPayables(payables);
+			}
 			publish("billed", VariableType.DAO, billed);
 			publish("payables", VariableType.DAO, payables);
 			publish("num_of_payments", VariableType.DECIMAL, num_of_payments);
@@ -109,7 +130,7 @@ public class FetalTransactionService extends FetalTransaction {
 		
 		try {
 			initTransaction(filePath);
-			setDescription("Cancel Order: " + order.getInvoice_num());
+			setDescription("Cancel Order: " + order.getReference());
 			publish("order", VariableType.DAO, order);
 			publish("payables", VariableType.DAO, new Payables());
 			publish("inventory", VariableType.DAO, inventory);
@@ -132,13 +153,13 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 
-	public void purchaseInventory(ProductOrders order, PaymentsBilled payments) throws IOException {
+	public void purchaseInventory(ProductOrders order, Payables payables, PaymentsBilled payments) throws IOException {
 		try {
 			initTransaction(filePath);
 			setDescription("Purchase of Inventory (SKU: " + order.getSku() + ")");
 			publish("order", VariableType.DAO, order);
-			publish("payables", VariableType.DAO, order.getPayables());
-			publish("payments", VariableType.DAO, payments);
+			publish("payables", VariableType.DAO, payables);
+			publish("payment", VariableType.DAO, payments);
 			loadRule("orderinventory.trans");
 		}
 		finally {
@@ -380,13 +401,28 @@ public class FetalTransactionService extends FetalTransaction {
 	}
 
 	@Override
-	public void insert(String sql, Object record) {
+	public void insert(Object record) {
 		transDao.create(record, session);
 	}
 
 	@Override
 	public void delete(String sql, Object record) {
 		transDao.delete(record, session);
+	}
+
+	@Override
+	public void merge(Object record) {
+		transDao.merge(record, session);
+	}
+
+	@Override
+	public void commitStock(Set<?> items) {
+		transDao.commitStock(items, session);
+	}
+
+	@Override
+	public void depleteStock(Set<?> items) {
+		transDao.depleteStock(items, session);
 	}
 
 }

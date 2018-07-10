@@ -11,14 +11,13 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.CapitalAssets;
-import com.efo.interfaces.ICapitalAssets;
-
+import com.efo.entity.OverheadExpenses;
+import com.efo.interfaces.IOverheadExpenses;
 
 @Transactional
 @Repository
-public class CapitalAssetsDao implements ICapitalAssets {
-
+public class OverheadExpensesDao implements IOverheadExpenses {
+	
 	@Autowired
 	SessionFactory sessionFactory;
 	
@@ -26,46 +25,58 @@ public class CapitalAssetsDao implements ICapitalAssets {
 		return sessionFactory.getCurrentSession();
 	}
 	
+
 	@Override
-	public void create(CapitalAssets capitalAssets) {
+	public void create(OverheadExpenses expenses) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.save(capitalAssets);
+		session.save(expenses);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public CapitalAssets retrieve(Long reference) {
+	public OverheadExpenses retrieve(Long id) {
 		Session session = session();
-		CapitalAssets assets = (CapitalAssets) session.createCriteria(CapitalAssets.class).add(Restrictions.idEq(reference)).uniqueResult();
+		OverheadExpenses expenses = (OverheadExpenses) session.createCriteria(OverheadExpenses.class)
+															  .add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
 		
-		return assets;
+		return expenses;
 	}
+
 	@SuppressWarnings("unchecked")
-	public List<CapitalAssets> retrieveRawList() {
+	@Override
+	public List<OverheadExpenses> retrieveRawList() {
 		Session session = session();
-		List<CapitalAssets> assetsList = session.createCriteria(CapitalAssets.class).list();
+		List<OverheadExpenses> expenseList = session.createCriteria(OverheadExpenses.class).list();
 		session.disconnect();
 		
-		return assetsList;
+		return expenseList;
+	}
+
+	@Override
+	public void update(OverheadExpenses expenses) {
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.update(expenses);
+		tx.commit();
+		session.disconnect();
+	}
+
+	public void merge(OverheadExpenses expenses) {
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.merge(expenses);
+		tx.commit();
+		session.disconnect();		
 	}
 	
 	@Override
-	public void update(CapitalAssets capitalAssets) {
+	public void delete(OverheadExpenses expenses) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.update(capitalAssets);
-		tx.commit();
-		session.disconnect();
-	}
-
-	@Override
-	public void delete(CapitalAssets capitalAssets) {
-		Session session = session();
-		Transaction tx = session.beginTransaction();
-		session.delete(capitalAssets);
+		session.delete(expenses);
 		tx.commit();
 		session.disconnect();
 	}

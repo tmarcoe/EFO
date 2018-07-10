@@ -15,7 +15,7 @@
 			<td><b>Interest</b></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="invoice_num" readonly="true" /></td>
+			<td><sf:input class="fancy" path="reference" readonly="true" /></td>
 			<td><sf:input class="fancy" path="invoice_date" type="date"/></td>
 			<td><sf:input class="fancy" path="customer" readonly="true" /></td>
 			<td><sf:input class="fancy" path="total_due" type="number" step=".01"/></td>
@@ -23,7 +23,7 @@
 			<td><sf:input class="fancy" path="interest" type="number" step=".01"/></td>			
 		</tr>
 		<tr>
-			<td><sf:errors path="invoice_num" class="error" /></td>
+			<td><sf:errors path="reference" class="error" /></td>
 			<td><sf:errors path="invoice_date" class="error" /></td>
 			<td><sf:errors path="customer" class="error" /></td>
 			<td><sf:errors path="total_due" class="error" /></td>
@@ -68,5 +68,5 @@
 			<td><sf:button class="fancy-button" type="button" onclick="window.location.href='/accounting/ar'"><b>Cancel</b></sf:button></td>
 		</tr>
 	</table>
-	<sf:hidden path="username"/>
+	<sf:hidden path="user_id"/>
 </sf:form>

@@ -3,6 +3,7 @@ package com.efo.dao;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.efo.entity.ChartOfAccounts;
 import com.efo.entity.GeneralLedger;
+import com.efo.entity.SalesItem;
 
 
 
@@ -148,5 +150,25 @@ public class FetalTransactionDao {
 		}
 		
 		return result;
+	}
+
+	public void merge(Object record, Session session) {
+		session.merge(record);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void commitStock(Set<?> items, Session session) {
+		String hql = "UPDATE Inventory SET amt_in_stock = (amt_in_stock - :qty), amt_committed = (amt_committed + :qty) WHERE sku = :sku";
+		for (SalesItem item : (Set<SalesItem>) items) {
+			session.createQuery(hql).setDouble("qty", item.getQty()).setString("sku", item.getSku()).executeUpdate();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void depleteStock(Set<?> items, Session session) {
+		String hql = "UPDATE Inventory SET amt_committed = (amt_committed - :qty) WHERE sku = :sku";
+		for (SalesItem item : (Set<SalesItem>) items) {
+			session.createQuery(hql).setDouble("qty", item.getQty()).setString("sku", item.getSku()).executeUpdate();
+		}
 	}
 }

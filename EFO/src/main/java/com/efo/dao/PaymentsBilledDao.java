@@ -15,19 +15,17 @@ import org.springframework.stereotype.Repository;
 import com.efo.entity.PaymentsBilled;
 import com.efo.interfaces.IPaymentsBilled;
 
-
 @Transactional
 @Repository
 public class PaymentsBilledDao implements IPaymentsBilled {
 
-
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	private Session session() {
 		return sessionFactory.getCurrentSession();
 	}
-	
+
 	@Override
 	public void create(PaymentsBilled payments) {
 		Session session = session();
@@ -63,25 +61,26 @@ public class PaymentsBilledDao implements IPaymentsBilled {
 		tx.commit();
 		session.disconnect();
 	}
-	
-	public List<PaymentsBilled> retreiveList(String invoice_num) {
+
+	public List<PaymentsBilled> retreiveList(Long reference) {
 		Session session = session();
-		
+
 		@SuppressWarnings("unchecked")
-		List<PaymentsBilled> pList = session.createCriteria(PaymentsBilled.class)
-										  .add(Restrictions.eq("invoice_num", invoice_num))
-										  .list();
-		
+		List<PaymentsBilled> pList = session.createCriteria(PaymentsBilled.class).add(Restrictions.eq("reference", reference)).list();
+
 		session.disconnect();
 		return pList;
 	}
-	
-	public Date lastestDate(String invoice_num) {
-		String hql = "SELECT MAX(date_due) FROM PaymentsBilled WHERE invoice_num = :invoice_num)";
-		Session session = session();
-		Date maxDate = (Date) session.createQuery(hql).setString("invoice_num", invoice_num).uniqueResult();
-		session.disconnect();
-		
+
+	public Date lastestDate(Long reference) {
+		Date maxDate = null;
+		if (reference != null) {
+			String hql = "SELECT MAX(date_due) FROM PaymentsBilled WHERE reference = :reference)";
+			Session session = session();
+			maxDate = (Date) session.createQuery(hql).setLong("reference", reference).uniqueResult();
+			session.disconnect();
+		}
+
 		return maxDate;
 	}
 

@@ -37,13 +37,13 @@ public class PaymentsReceivedService implements IPaymentsReceived {
 		receivedDao.delete(id);
 	}
 	
-	public PagedListHolder<PaymentsReceived> retreiveList(Long invoice_num) {
+	public PagedListHolder<PaymentsReceived> retreiveList(Long reference) {
 		
-		return new PagedListHolder<PaymentsReceived>(receivedDao.retreiveList(invoice_num));
+		return new PagedListHolder<PaymentsReceived>(receivedDao.retreiveList(reference));
 	}
 	
-	public Date latestDate(Long invoice_num) {
-		return receivedDao.lastestDate(invoice_num);
+	public Date latestDate(Long reference) {
+		return receivedDao.lastestDate(reference);
 	}
 
 }

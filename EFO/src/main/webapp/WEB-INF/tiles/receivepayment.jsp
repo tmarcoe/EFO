@@ -4,22 +4,25 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form method="post" action="/accounting/updaterpayment" modelAttribute="payment" >
+<sf:form method="post" action="/accounting/updatereceive" modelAttribute="payment" >
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>Invoice Number</b></td>
-			<td><b>Date Due</b></td>
-			<td><b>Payment Due</b></td>
+			<td><b>Date Paid</b></td>
+			<td><b>Payment Made</b></td>
+			<td><b>Penalties</b></td>
 		</tr>
 		<tr>
 			<td><sf:input class="fancy" path="reference" readonly="true" /></td>
-			<td><sf:input class="fancy" path="date_due" type="date" /></td>
-			<td><sf:input class="fancy" path="payment_due" type="number" step=".01"/></td>
+			<td><sf:input class="fancy" type="date" path="payment_date" /></td>
+			<td><sf:input class="fancy" type="number" step=".01" path="payment"/>
+			<td><sf:input class="fancy" type="number" step=".01" path="penalties"/>
 		</tr>
 		<tr>
 			<sf:errors path="reference" class="error" />
-			<sf:errors path="date_due" class="error" />
-			<sf:errors path="payment_due" class="error" />
+			<sf:errors path="payment_date" class="error" />
+			<sf:errors path="payment" class="error" />
+			<sf:errors path="penalties" class="error" />
 		</tr>
 		<tr>
 			<td colspan="3">Comments:<br>
@@ -32,9 +35,8 @@
 		</tr>
 	</table>
 	<sf:hidden path="id" />
-	<sf:hidden path="payment_date"/>
-	<sf:hidden path="payment"/>
-	<sf:hidden path="penalties"/>
+	<sf:hidden path="date_due"/>
+	<sf:hidden path="payment_due"/>
 </sf:form>
 
 

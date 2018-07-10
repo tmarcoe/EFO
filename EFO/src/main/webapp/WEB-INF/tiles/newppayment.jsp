@@ -12,12 +12,12 @@
 			<td><b>Payment Due</b></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="invoice_num" readonly="true" /></td>
+			<td><sf:input class="fancy" path="reference" readonly="true" /></td>
 			<td><sf:input class="fancy" path="date_due" type="date" /></td>
 			<td><sf:input class="fancy" path="payment_due" type="number" step=".01"/></td>
 		</tr>
 		<tr>
-			<sf:errors path="invoice_num" class="error" />
+			<sf:errors path="reference" class="error" />
 			<sf:errors path="date_due" class="error" />
 		<sf:errors path="payment_due" class="error" />
 		</tr>

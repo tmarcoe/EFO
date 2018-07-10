@@ -27,7 +27,7 @@
 		</tr>
 	</table>
 	<sf:hidden path="id"/>
-	<sf:hidden path="invoice_num"/>
+	<sf:hidden path="reference"/>
 	<sf:hidden path="date_due"/>
 	<sf:hidden path="payment_due"/>
 </sf:form>

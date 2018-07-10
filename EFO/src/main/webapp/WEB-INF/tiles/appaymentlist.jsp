@@ -19,7 +19,7 @@
 
 	<c:forEach var="item" items="${objectList.pageList}">
 		<tr>
-			<c:set var="invoice_num" value="${item.invoice_num}" />
+			<c:set var="reference" value="${item.reference}" />
 			<td><fmt:formatNumber value="${item.id}" pattern="00000000" /></td>
 			<td><fmt:formatDate value="${item.payment_date}" /></td>
 			<td><fmt:formatDate value="${item.date_due}" /></td>
@@ -29,7 +29,14 @@
 					value="${item.payment}" /></td>
 			<td><button type="button"
 					onclick="window.location.href = '/accounting/editppayment?id=${item.id}'">Edit</button></td>
-			<td><button type="button" onclick="window.location.href='/accounting/payamount?id=${item.id}'" >Pay Amount</button></td>
+			<c:choose>
+				<c:when test="${empty item.payment_date}">
+					<td><button type="button" onclick="window.location.href='/accounting/payamount?id=${item.id}'" >Pay Amount</button></td>
+				</c:when>
+				<c:otherwise>
+					<td><b>Paid</b></td>
+				</c:otherwise>
+			</c:choose>
 		</tr>
 	</c:forEach>
 

@@ -89,6 +89,7 @@
 			</table>
 		</div>
 	</div>
+	<sf:hidden path="reference"/>
 	<sf:hidden path="amt_received" />
 	<sf:hidden path="amt_this_shipment" />
 	<sf:hidden path="delivery_date" />
@@ -125,7 +126,7 @@
 		var interest = $("#interest").val();
 		var num_payments = $("#num_payments").val();
 
-		if (total_due != 0 && interest != 0 && num_payments) {
+		if (total_due > 0 && num_payments > 0) {
 			$.getJSON(
 					"/rest/calculatepayments?total=" + total_due + "&down="
 							+ down_payment + "&interest=" + interest

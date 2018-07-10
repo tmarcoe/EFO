@@ -45,11 +45,11 @@ public class SalesItemDao implements ISalesItem {
 		return salesItem;
 	}
 	
-	public SalesItem getItemBySku(Long invoice_num, String sku) {
+	public SalesItem getItemBySku(Long reference, String sku) {
 		Session session = session();
 		SalesItem item = (SalesItem) session.createCriteria(SalesItem.class)
 											.add(Restrictions
-											.and(Restrictions.eq("invoice_num", invoice_num), Restrictions.eq("sku", sku)))
+											.and(Restrictions.eq("reference", reference), Restrictions.eq("sku", sku)))
 											.setMaxResults(1).uniqueResult();
 		session.disconnect();
 		
@@ -67,10 +67,10 @@ public class SalesItemDao implements ISalesItem {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<SalesItem> retrieveRawList(Long invoice_num) {
+	public List<SalesItem> retrieveRawList(Long reference) {
 		
 		Session session = session();
-		List<SalesItem> itemList = session.createCriteria(SalesItem.class).add(Restrictions.eq("invoice_num", invoice_num)).list();
+		List<SalesItem> itemList = session.createCriteria(SalesItem.class).add(Restrictions.eq("reference", reference)).list();
 		session.disconnect();
 		
 		return itemList;
@@ -112,11 +112,11 @@ public class SalesItemDao implements ISalesItem {
 		session.disconnect();
 	}
 	
-	public Long rowCount(Long invoice_num) {
+	public Long rowCount(Long reference) {
 		Session session = session();
 		Long count = (Long) session.createCriteria(SalesItem.class)
 								   .setProjection(Projections.rowCount())
-								   .add(Restrictions.eq("invoice_num", invoice_num)).uniqueResult();
+								   .add(Restrictions.eq("reference", reference)).uniqueResult();
 		session.disconnect();
 		
 		return count;

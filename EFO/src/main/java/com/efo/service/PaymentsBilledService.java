@@ -36,13 +36,13 @@ public class PaymentsBilledService implements IPaymentsBilled {
 		paymentsPaidDao.delete(id);
 	}
 	
-	public PagedListHolder<PaymentsBilled> retrieveList(String invoice_num) {
-		return new PagedListHolder<PaymentsBilled>(paymentsPaidDao.retreiveList(invoice_num));
+	public PagedListHolder<PaymentsBilled> retrieveList(Long reference) {
+		return new PagedListHolder<PaymentsBilled>(paymentsPaidDao.retreiveList(reference));
 	}
 	
-	public Date lastestDate(String invoice_num) {
+	public Date lastestDate(Long reference) {
 		
-		return paymentsPaidDao.lastestDate(invoice_num);
+		return paymentsPaidDao.lastestDate(reference);
 	}
 
 }

@@ -10,7 +10,7 @@
 	modelAttribute="salesItem" autocomplete="off">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td colspan="2"><b>Invoice #: <br></b><sf:input path="invoice_num" class="fancy" readonly="true"/></td>
+			<td colspan="2"><b>Invoice #: <br></b><sf:input path="reference" class="fancy" readonly="true"/></td>
 		</tr>
 		<tr>
 			<td colspan="2"><b>SkU #: <br></b><sf:input path="sku" class="fancy" readonly="true"/></td>

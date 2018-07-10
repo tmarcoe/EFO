@@ -6,7 +6,7 @@
 <table class="tableview tableshadow tableborder rjfourth rjfifth rjsixth rjseventh rjeighth cjnineth rjtenth cjeleventh" >
 	<thead>
 		<tr>
-			<th>Invoice Number</th>
+			<th>Reference Number</th>
 			<th>Invoice Date</th>
 			<th>Customer</th>
 			<th>Total Due</th>
@@ -22,7 +22,7 @@
 	</thead>
 	<c:forEach var="item" items="${objectList.pageList}" >
 		<tr>
-			<td><fmt:formatNumber type="number" pattern="00000000" value="${item.invoice_num}"/></td>
+			<td><fmt:formatNumber type="number" pattern="00000000" value="${item.reference}"/></td>
 			<td><fmt:formatDate value="${item.invoice_date}"/></td>
 			<td>${item.customer}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_due}"/></td>
@@ -33,8 +33,8 @@
 			<td>${item.schedule}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_balance}"/></td>
 			<td>${item.status}</td>
-			<td><button type="button" onclick="window.location.href = '/accounting/arpaymentlist?invoice_num=${item.invoice_num}'">View Payments</button></td>
-			<td><button type="button" onclick="window.location.href = '/accounting/editreceivable?invoice_num=${item.invoice_num}'">Edit</button></td>
+			<td><button type="button" onclick="window.location.href = '/accounting/arpaymentlist?reference=${item.reference}'">View Payments</button></td>
+			<td><button type="button" onclick="window.location.href = '/accounting/editreceivable?reference=${item.reference}'">Edit</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter" >
