@@ -48,6 +48,11 @@
 					<b>Back</b>
 				</sf:button></td>
 		</tr>
+		<tr>
+		
+			<td colspan="4"><button class="fancy-button" type="button" onclick="window.location.href='/admin/listsales'">
+							<b>View Processed Orders</b></button></td>
+		</tr>
 		<tfoot>
 			<tr>
 				<td colspan="4"><div id="errorMsg" class="bigError"></div></td>
@@ -61,6 +66,7 @@
 			<tr>
 				<td colspan="4"><div id="grandTotal" class="totalsDiv"></div></td>
 			</tr>
+			
 		</tfoot>
 	</table>
 	<div id="errMsg" class="modal">

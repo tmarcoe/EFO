@@ -88,6 +88,16 @@ public class RetailSalesDao implements IRetailSales {
 		return sales;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<RetailSales> getProcessedOrders() {
+		String hql = "FROM RetailSales WHERE ordered IS NOT null AND processed IS NOT null AND shipped IS null";
+		Session session = session();
+		List<RetailSales> salesList = session.createQuery(hql).list();
+		session.disconnect();
+		
+		return salesList;
+	}
+	
 	public void cancelSales(Long reference) {
 		String removeItems = "DELETE FROM SalesItem WHERE reference = :reference";
 		String removeSales = "DELETE FROM RetailSales WHERE reference = :reference";

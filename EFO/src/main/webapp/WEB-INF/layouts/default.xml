@@ -338,9 +338,22 @@
 	</definition>
 	
 	<definition name="processorder" extends="accounting.base">
-		<put-attribute name="title" value="Edit Sales Item"></put-attribute>
-		<put-attribute name="heading_title" value="Edit Sales Item"></put-attribute>
+		<put-attribute name="title" value="Process Sales"></put-attribute>
+		<put-attribute name="heading_title" value="Process Sales"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/processorder.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="listsales" extends="accounting.base">
+		<put-attribute name="title" value="Sales Receipts"></put-attribute>
+		<put-attribute name="heading_title" value="Sales Receipts"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listsales.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editsales" extends="accounting.base">
+		<put-attribute name="title" value="Retail Sales"></put-attribute>
+		<put-attribute name="heading_title" value="Retail Sales"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editsales.jsp"></put-attribute>
 	</definition>
 	
 	<!-- Capital Assets Controller -->	

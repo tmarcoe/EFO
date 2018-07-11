@@ -44,6 +44,18 @@ public class FetalTransactionService extends FetalTransaction {
 	@Value("${fetal.properiesFile}")
 	private String filePath;
 	
+	public void shipSales(RetailSales sales) throws IOException {
+		try {
+			initTransaction(filePath);
+			publish("sales", VariableType.DAO, sales);
+			loadRule("shipretailsales.trans");
+		}
+		finally {
+			closeFetal();
+		}
+		
+	}
+	
 	public void receivePaymentFromReceivable(PaymentsReceived payment, Receivables receivables) throws IOException {
 		
 		try {

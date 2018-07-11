@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.efo.component.ScheduleUtilities;
-import com.efo.entity.GeneralLedger;
 import com.efo.entity.PaymentsReceived;
 import com.efo.entity.Product;
 import com.efo.entity.Receivables;
@@ -78,7 +77,7 @@ public class RetailSalesController {
 	@Autowired
 	InvoiceNumService invoiceNumService;
 	
-	PagedListHolder<GeneralLedger> salesList;
+	PagedListHolder<RetailSales> salesList;
 	
 	private SimpleDateFormat dateFormat;
 
@@ -213,13 +212,24 @@ public class RetailSalesController {
 
 			receivables.getPayments().add(payment);
 			receivables.setRetailSales(sales);
-	}
-		
+		}
+
 		transactionService.retailSalesOrder(sales, payment, latest_date);
 		
 		
 		
-		return "redirect:/#Tabs-4";
+		return "redirect:/admin/browseproducts";
+	}
+	
+	@RequestMapping("listsales")
+	public String listSales(Model model) {
+		
+		salesList = retailSalesService.getProcessedOrders();
+
+		model.addAttribute("objectList", salesList);
+		model.addAttribute("pagelink", pageLink);
+		
+		return "listsales";
 	}
 	
 	@RequestMapping("deletesalesitem")
@@ -267,6 +277,32 @@ public class RetailSalesController {
 		}
 		
 		return "redirect:/admin/browseproducts";
+	}
+	@RequestMapping("editsales")
+	public String editSales(@ModelAttribute("reference") Long reference, Model model) {
+		RetailSales retailSales = retailSalesService.retrieve(reference);
+		
+		model.addAttribute("sales", retailSales);
+		
+		return "editsales";
+	}
+	
+	@RequestMapping("updatesales")
+	public String updateSales(@Valid @ModelAttribute("sales") RetailSales sales, BindingResult result) {
+		
+		retailSalesService.merge(sales);
+		
+		return "redirect:/admin/listsales";
+	}
+	
+	@RequestMapping("shipsales")
+	public String shipSales(@ModelAttribute("reference") Long reference) throws IOException {
+		RetailSales sales = retailSalesService.retrieve(reference);
+		sales.setSalesItem(new HashSet<SalesItem>(salesItemService.retrieveRawList(reference)));
+		
+		transactionService.shipSales(sales);
+		
+		return "redirect:/admin/listsales";
 	}
 	
 	@RequestMapping(value = "salespaging", method = RequestMethod.GET)

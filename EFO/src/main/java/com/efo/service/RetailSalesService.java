@@ -61,4 +61,8 @@ public class RetailSalesService implements IRetailSales {
 	public void cancelSales(Long reference) {
 		retailSalesDao.cancelSales(reference);
 	}
+	
+	public PagedListHolder<RetailSales> getProcessedOrders() {
+		return new PagedListHolder<RetailSales>(retailSalesDao.getProcessedOrders());
+	}
 }
