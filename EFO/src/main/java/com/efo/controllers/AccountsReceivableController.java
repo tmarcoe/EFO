@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.xml.sax.SAXException;
 
 import com.efo.entity.Receivables;
-import com.efo.entity.User;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PaymentsReceivedService;
 import com.efo.service.ReceivablesService;
@@ -56,33 +55,7 @@ public class AccountsReceivableController {
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
-	
-	@RequestMapping("newreceivable")
-	public String newReceivable(@ModelAttribute("username") String username, Model model) {
-		Receivables receivables = new Receivables();
-		User user = userService.retrieve(username);
-		
-		receivables.setCustomer(user.getCustomer().getFirstname() + " " + user.getCustomer().getLastname());
-		receivables.setInvoice_date(new Date());
-		receivables.setUser_id(user.getUser_id());
-		
-		model.addAttribute("receivables", receivables);
-		
-		return "newreceivable";
-	}
-	
-	@RequestMapping("addreceivable")
-	public String addReceivable(@Valid @ModelAttribute("receivables") Receivables receivables, BindingResult result) throws IOException {
-		
-		if (result.hasErrors() ) {
-			return "newreceivable";
-		}
-		
-		fetalService.addAr(receivables);
-		
-		return "redirect:/accounting/ar";
-	}
-		
+			
 	@RequestMapping("ar")
 	public String showAccountsReceivable(Model model) throws SAXException, IOException, ParserConfigurationException {
 		

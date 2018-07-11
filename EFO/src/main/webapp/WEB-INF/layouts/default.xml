@@ -58,12 +58,6 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="newpayable" extends="accounting.base">
-		<put-attribute name="title" value="Accounts Payable"></put-attribute>
-		<put-attribute name="heading_title" value="Accounts Payable"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/newpayable.jsp"></put-attribute>
-	</definition>
-
 	<definition name="editpayable" extends="accounting.base">
 		<put-attribute name="title" value="Edit Accounts Payable"></put-attribute>
 		<put-attribute name="heading_title" value="Edit Accounts Payable"></put-attribute>
@@ -103,12 +97,6 @@
 		<put-attribute name="heading_title" value="Accounts Receivable"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/ar.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
-	</definition>
-
-	<definition name="newreceivable" extends="accounting.base">
-		<put-attribute name="title" value="New Receivable"></put-attribute>
-		<put-attribute name="heading_title" value="New Receivable"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/newreceivable.jsp"></put-attribute>
 	</definition>
 
 	<definition name="editreceivable" extends="accounting.base">

@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.xml.sax.SAXException;
 
 import com.efo.component.ScheduleUtilities;
-import com.efo.component.ScheduleUtilities.ScheduleType;
 import com.efo.entity.Payables;
-import com.efo.entity.PaymentsBilled;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.PayablesService;
 
@@ -64,27 +62,7 @@ public class AccountsPayableController {
 
 		return "ap";
 	}
-	
-	
-	
-	@RequestMapping("addpayable")
-	public String addPayable(@Valid @ModelAttribute("payables") Payables payables, BindingResult result) throws IOException {
 		
-		if (result.hasErrors() == true) {
-			return "newpayable";
-		}
-
-		PaymentsBilled bill = new PaymentsBilled();
-		bill.setReference(payables.getReference());
-		ScheduleType type = sched.stringToEnum(payables.getSchedule());
-		Date nextPayment = sched.nextPayment(payables.getDate_begin(), payables.getDate_begin(), type);
-		bill.setDate_due(nextPayment);
-		
-		fetalService.addAp(payables, bill);		
-		
-		return "redirect:/accounting/ap";
-	}
-	
 	@RequestMapping("editpayable")
 	public String editPayable(@ModelAttribute("reference") Long reference, Model model) {
 		Payables p = payablesService.retreive(reference);

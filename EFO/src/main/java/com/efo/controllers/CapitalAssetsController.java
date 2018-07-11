@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.component.ScheduleUtilities;
 import com.efo.entity.CapitalAssets;
+import com.efo.entity.Payables;
 import com.efo.entity.PaymentsBilled;
 import com.efo.service.CapitalAssetsService;
 import com.efo.service.FetalTransactionService;
@@ -72,12 +73,15 @@ public class CapitalAssetsController {
 	@RequestMapping("addasset")
 	public String addAsset(@Valid @ModelAttribute("assets") CapitalAssets assets, BindingResult result) throws Exception {
 		PaymentsBilled payments = null;
+		Payables payables = assets.getPayables();
 		
+		assets.setPayables(null);
 		capitalAssetsService.create(assets);
 		if (assets.getPurchase_type().compareTo("Cash") == 0) {
 			assets.setPayables(null);
 		}else{
 			payments = new PaymentsBilled();
+			assets.setPayables(payables);
 			Date lastPayment = billedService.lastestDate(assets.getReference());
 			if (lastPayment == null) lastPayment = assets.getDate_purchased();
 			payments.setDate_due(sched.nextPayment(assets.getDate_purchased(), lastPayment, assets.getPayables().getSchedule()));

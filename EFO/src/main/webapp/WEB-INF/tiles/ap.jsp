@@ -10,7 +10,7 @@
 			<th>Begin Payments</th>
 			<th>Supplier</th>
 			<th>Type</th>
-			<th>Total Due</th>
+			<th>Total Principal</th>
 			<th>Interest</th>
 			<th>Down Payment</th>
 			<th>Payment Schedule</th>
