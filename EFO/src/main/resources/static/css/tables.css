@@ -107,6 +107,12 @@ tfoot.tablefooter td
  .cjseventh td:nth-child(7) {
  	text-align: center;
  }
+ 
+ .cjeighth td:nth-child(8) {
+ 	text-align: center;
+	
+}
+ 
  .cjnineth td:nth-child(9) {
  	text-align: center;
  }

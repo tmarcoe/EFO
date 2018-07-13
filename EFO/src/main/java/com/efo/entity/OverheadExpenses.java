@@ -1,6 +1,7 @@
 package com.efo.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,22 +19,22 @@ public class OverheadExpenses implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	private Long reference;
-	private String inv_num;
 	private String vendor;
 	private String reason;
 	private String account;
+	private String schedule;
+	private Date begin_date;
+
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "overheadExpenses", cascade = { CascadeType.ALL,CascadeType.PERSIST,CascadeType.MERGE })
 	private Set<PaymentHistory> paymentHistory = new HashSet<PaymentHistory>(0);
 
-	public Long getId() {
-		return id;
+	public OverheadExpenses() {
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	public OverheadExpenses(Date begin_date) {
+		this.begin_date = begin_date;
 	}
 
 	public Long getReference() {
@@ -42,14 +43,6 @@ public class OverheadExpenses implements Serializable {
 
 	public void setReference(Long reference) {
 		this.reference = reference;
-	}
-
-	public String getInv_num() {
-		return inv_num;
-	}
-
-	public void setInv_num(String inv_num) {
-		this.inv_num = inv_num;
 	}
 
 	public String getVendor() {
@@ -76,6 +69,22 @@ public class OverheadExpenses implements Serializable {
 		this.account = account;
 	}
 
+	public String getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(String schedule) {
+		this.schedule = schedule;
+	}
+
+	public Date getBegin_date() {
+		return begin_date;
+	}
+
+	public void setBegin_date(Date begin_date) {
+		this.begin_date = begin_date;
+	}
+
 	public Set<PaymentHistory> getPaymentHistory() {
 		return paymentHistory;
 	}
@@ -84,5 +93,7 @@ public class OverheadExpenses implements Serializable {
 		this.paymentHistory = paymentHistory;
 	}
 	
-	
+	public void addPaymentHistory(PaymentHistory payment) {
+		paymentHistory.add(payment);
+	}
 }

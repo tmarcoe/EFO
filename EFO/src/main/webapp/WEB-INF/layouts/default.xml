@@ -376,5 +376,39 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editasset.jsp"></put-attribute>
 	</definition>
 	
+	<!-- Overhead Expenses Controller -->
+	<definition name="listoverhead" extends="accounting.base">
+		<put-attribute name="title" value="Overhead Expenses"></put-attribute>
+		<put-attribute name="heading_title" value="Overhead Expenses"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listoverhead.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
 
+	<definition name="newexpense" extends="accounting.base">
+		<put-attribute name="title" value="New Overhead Expense"></put-attribute>
+		<put-attribute name="heading_title" value="New Overhead Expense"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newexpense.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editexpense" extends="accounting.base">
+		<put-attribute name="title" value="Edit Overhead Expense"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Overhead Expense"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editexpense.jsp"></put-attribute>
+	</definition>
+	
+	<!-- makepayment -->
+	<definition name="listpayments" extends="accounting.base">
+		<put-attribute name="title" value="Overhead Payments"></put-attribute>
+		<put-attribute name="heading_title" value="Overhead Payments"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listpayments.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="makepayment" extends="accounting.base">
+		<put-attribute name="title" value="Edit Overhead Expense"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Overhead Expense"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/makepayment.jsp"></put-attribute>
+	</definition>
+	
+	
 </tiles-definitions>

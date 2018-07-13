@@ -3,11 +3,14 @@ package com.efo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.stereotype.Service;
 
 import com.efo.dao.OverheadExpensesDao;
 import com.efo.entity.OverheadExpenses;
 import com.efo.interfaces.IOverheadExpenses;
 
+@Service
 public class OverheadExpensesService implements IOverheadExpenses {
 
 	@Autowired
@@ -26,6 +29,10 @@ public class OverheadExpensesService implements IOverheadExpenses {
 	@Override
 	public List<OverheadExpenses> retrieveRawList() {
 		return expensesDao.retrieveRawList();
+	}
+	
+	public PagedListHolder<OverheadExpenses> retrieveList() {
+		return new PagedListHolder<OverheadExpenses>(expensesDao.retrieveRawList());
 	}
 
 	@Override

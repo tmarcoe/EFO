@@ -20,9 +20,10 @@ public class PaymentHistory implements Serializable {
 	private Long id;
 	private Long reference;
 	private String invoice_num;
-	private Date lastPayment;
-	private double lastAmount;
-	private double nextAmount;
+	private Date date_due;
+	private Date date_paid;
+	private double amount_due;
+	private double amount_paid;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="REFERENCE", nullable = false, insertable=false, updatable=false )
@@ -52,28 +53,36 @@ public class PaymentHistory implements Serializable {
 		this.invoice_num = invoice_num;
 	}
 
-	public Date getLastPayment() {
-		return lastPayment;
+	public Date getDate_due() {
+		return date_due;
 	}
 
-	public void setLastPayment(Date lastPayment) {
-		this.lastPayment = lastPayment;
+	public void setDate_due(Date date_due) {
+		this.date_due = date_due;
 	}
 
-	public double getLastAmount() {
-		return lastAmount;
+	public Date getDate_paid() {
+		return date_paid;
 	}
 
-	public void setLastAmount(double lastAmount) {
-		this.lastAmount = lastAmount;
+	public void setDate_paid(Date date_paid) {
+		this.date_paid = date_paid;
 	}
 
-	public double getNextAmount() {
-		return nextAmount;
+	public double getAmount_due() {
+		return amount_due;
 	}
 
-	public void setNextAmount(double nextAmount) {
-		this.nextAmount = nextAmount;
+	public void setAmount_due(double amount_due) {
+		this.amount_due = amount_due;
+	}
+
+	public double getAmount_paid() {
+		return amount_paid;
+	}
+
+	public void setAmount_paid(double amount_paid) {
+		this.amount_paid = amount_paid;
 	}
 
 	public OverheadExpenses getOverheadExpenses() {

@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
 
-<table class="tableview tableshadow tableborder rjfourth rjfifth">
+<table class="tableview tableshadow tableborder rjfourth rjfifth cjseventh">
 	<thead>
 		<tr>
 			<th>Id</th>
@@ -30,7 +30,7 @@
 						Payment</button></td>
 				</c:when>
 				<c:otherwise>
-					<td><b>Payment Received</b></td>
+					<td><b>**Paid**</b></td>
 				</c:otherwise>
 			</c:choose>
 		</tr>

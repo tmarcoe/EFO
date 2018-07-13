@@ -22,7 +22,9 @@ import com.efo.entity.RetailSales;
 import com.efo.dao.FetalTransactionDao;
 import com.efo.entity.CapitalAssets;
 import com.efo.entity.Inventory;
+import com.efo.entity.OverheadExpenses;
 import com.efo.entity.Payables;
+import com.efo.entity.PaymentHistory;
 import com.efo.entity.PaymentsBilled;
 import com.ftl.helper.FetalTransaction;
 import com.ftl.helper.VariableType;
@@ -44,6 +46,33 @@ public class FetalTransactionService extends FetalTransaction {
 	@Value("${fetal.properiesFile}")
 	private String filePath;
 	
+	public void payOverheadExpense(OverheadExpenses expense, PaymentHistory payment) throws IOException {
+		try {
+			initTransaction(filePath);
+			publish("expense", VariableType.DAO, expense);
+			publish("payment", VariableType.DAO, payment);
+			publish("newPayment", VariableType.DAO, new PaymentHistory());
+			loadRule("payoverhead.trans");
+		}
+		finally {
+			closeFetal();
+		}
+		
+	}
+	
+	public void newOverheadExpense(OverheadExpenses expense) throws IOException {
+		try {
+			initTransaction(filePath);
+			publish("expense", VariableType.DAO, expense);
+			publish("payment", VariableType.DAO, new PaymentHistory());
+			loadRule("newoverhead.trans");
+		}
+		finally {
+			closeFetal();
+		}
+	
+	}
+	
 	public void shipSales(RetailSales sales) throws IOException {
 		try {
 			initTransaction(filePath);
@@ -53,7 +82,6 @@ public class FetalTransactionService extends FetalTransaction {
 		finally {
 			closeFetal();
 		}
-		
 	}
 	
 	public void receivePaymentFromReceivable(PaymentsReceived payment, Receivables receivables) throws IOException {

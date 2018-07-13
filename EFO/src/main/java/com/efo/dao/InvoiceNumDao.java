@@ -62,7 +62,7 @@ public class InvoiceNumDao implements IInvoiceNum {
 	
 	public String getNextKey() {
 		LocalDate today = new LocalDate();
-		String keySearch = String.format("%03d%%", today.getDayOfYear());
+		String keySearch = String.format("%04d%03d%%", today.getYear(), today.getDayOfYear());
 		Long keySeq = 0L;
 		Session session = session();
 		Transaction tx = session.beginTransaction();
@@ -74,7 +74,7 @@ public class InvoiceNumDao implements IInvoiceNum {
 			keySeq = Long.valueOf(inv.getInvoice_num().substring(3));
 			keySeq++;
 		}
-		String key = String.format("%03d%05d", today.getDayOfYear(), keySeq);
+		String key = String.format("%04d%03d%05d", today.getYear(), today.getDayOfYear(), keySeq);
 		
 		InvoiceNum inventory_num = new InvoiceNum(key);
 		

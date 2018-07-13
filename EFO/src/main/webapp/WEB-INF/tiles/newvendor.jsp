@@ -87,7 +87,7 @@
 			<td><sf:errors path="common.country" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Capital or Revenue?</b></td>
+			<td><b>Vendor Type</b></td>
 			<td><b>Type of Product</b></td>
 			<td colspan="2"><b>Keywords: (Separated by commas)</b></td>
 		</tr>
@@ -95,6 +95,7 @@
 			<td><sf:select class="fancy" path="vendor.type">
 					<sf:option value="C">Capital</sf:option>
 					<sf:option value="R">Revenue</sf:option>
+					<sf:option value="O">Overhead</sf:option>
 				</sf:select></td>
 			<td><sf:input class="fancy" path="vendor.category" /></td>
 			<td colspan="2"><sf:textarea class="fancy-textarea"
