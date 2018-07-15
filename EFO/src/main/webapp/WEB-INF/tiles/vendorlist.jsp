@@ -32,7 +32,14 @@
 				<td>${user.username}</td>
 				<td><button type="button" onclick="window.location.href='/admin/editvendor?user_id=${user.user_id}'">Edit</button></td>
 				<td><button type="button" onclick="deleteUser('${user.user_id}')">Delete</button></td>
-				<td><button type="button" onclick="window.location.href='/admin/assignpassword?user_id=${user.user_id}'">Temporary Password</button></td>
+				<c:choose>
+					<c:when test="${user.enabled == true}">
+						<td><button type="button" onclick="window.location.href='/admin/assignpassword?user_id=${user.user_id}'">Temporary Password</button></td>
+					</c:when>
+					<c:otherwise>
+						<td>&nbsp;</td>
+					</c:otherwise>
+				</c:choose>
 			</tr>
 		</c:forEach>
 		<tfoot class="tablefooter" >

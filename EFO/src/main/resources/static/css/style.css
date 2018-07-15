@@ -504,24 +504,6 @@ hr {
 	text-align: center;
 }
 
-.pieChart {
-	height: 500px;
-	width: 500px;	
-}
-.lineChart {
-	height: 500px;
-	width: 1000px;	
-}
-.barChart {
-	height: 500px;
-	width: 1000px		
-}
-.reportCharts {
-	width: 100%;
-	height: 100%;
-	border: 1px solid black;
-}
-
 
 .CodeMirror {
   border: 1px solid #eee;
@@ -655,7 +637,7 @@ div.scrollPanel {
 	position: fixed;
 	top: 100px;
 	left: 0;
-	width: 50%;
+	width: 65%;
 	height: 80%;
 	overflow: auto;
 }

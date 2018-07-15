@@ -13,13 +13,13 @@
 			<td><b>Penalties</b></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="reference" readonly="true" /></td>
+			<td><sf:input class="fancy" path="invoice_num" readonly="true" /></td>
 			<td><sf:input class="fancy" type="date" path="payment_date" /></td>
 			<td><sf:input class="fancy" type="number" step=".01" path="payment"/>
 			<td><sf:input class="fancy" type="number" step=".01" path="penalties"/>
 		</tr>
 		<tr>
-			<sf:errors path="reference" class="error" />
+			<sf:errors path="invoice_num" class="error" />
 			<sf:errors path="payment_date" class="error" />
 			<sf:errors path="payment" class="error" />
 			<sf:errors path="penalties" class="error" />

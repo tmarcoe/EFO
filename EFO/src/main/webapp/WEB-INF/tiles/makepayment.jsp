@@ -6,6 +6,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
 <sf:form method="post" action="/accounting/updmakepayment" modelAttribute="payment">
+	<div class="centerTitle">${expenses.vendor}: ${expenses.reason}</div>
 	<table class="fancy-table tableshadow"> 
 		<tr>
 			<td><b>Invoice #: </b><br>

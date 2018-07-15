@@ -410,5 +410,10 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/makepayment.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="cogsreport" extends="accounting.base">
+		<put-attribute name="title" value="COGS Report"></put-attribute>
+		<put-attribute name="heading_title" value="COGS Report"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/linechart.jsp"></put-attribute>
+	</definition>
 	
 </tiles-definitions>

@@ -65,7 +65,10 @@ public class PaymentHistoryController {
 	public String makePayment(@ModelAttribute("id") Long id, Model model) {
 		PaymentHistory payment = paymentService.retrieve(id);
 		payment.setDate_paid(new Date());
+		OverheadExpenses expenses = expensesService.retrieve(payment.getReference());
+		
 		model.addAttribute("payment", payment);
+		model.addAttribute("expenses", expenses);
 		
 		return "makepayment";
 	}

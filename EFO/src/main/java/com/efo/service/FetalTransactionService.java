@@ -49,6 +49,7 @@ public class FetalTransactionService extends FetalTransaction {
 	public void payOverheadExpense(OverheadExpenses expense, PaymentHistory payment) throws IOException {
 		try {
 			initTransaction(filePath);
+			setDescription("Pay Overhead - " + expense.getReason());
 			publish("expense", VariableType.DAO, expense);
 			publish("payment", VariableType.DAO, payment);
 			publish("newPayment", VariableType.DAO, new PaymentHistory());
@@ -76,6 +77,7 @@ public class FetalTransactionService extends FetalTransaction {
 	public void shipSales(RetailSales sales) throws IOException {
 		try {
 			initTransaction(filePath);
+			setDescription("Shipping Invoice #: " + sales.getInvoice_num());
 			publish("sales", VariableType.DAO, sales);
 			loadRule("retail_sales/shipretailsales.trans");
 		}
@@ -102,7 +104,7 @@ public class FetalTransactionService extends FetalTransaction {
 	public void retailSalesOrder(RetailSales sales, PaymentsReceived payment, Date latest_date) throws IOException {
 		try {
 			initTransaction(filePath);
-			setDescription("Retail Sales - (Invoice Number = " + sales.getReference() + ")");
+			setDescription("Retail Sales - (Invoice Number = " + sales.getInvoice_num() + ")");
 			publish("sales", VariableType.DAO, sales);
 			publish("receivables", VariableType.DAO, sales.getReceivables());
 			publish("payment", VariableType.DAO, payment);

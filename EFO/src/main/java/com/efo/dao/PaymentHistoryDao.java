@@ -1,5 +1,6 @@
 package com.efo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -69,6 +70,18 @@ public class PaymentHistoryDao implements IPaymentHistory {
 		session.delete(payment);
 		tx.commit();
 		session.disconnect();
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	public List<Object[]> totalPayentsByPeriod(Date from, Date to) {
+		String hql = "SELECT MONTH(date_paid), SUM(amount_paid) FROM PaymentHistory "
+				   + "WHERE DATE(date_paid) BETWEEN DATE(:from) AND DATE(:to) GROUP BY MONTH(date_paid)";
+		Session session = session();
+		List<Object[]> overheadList = session.createQuery(hql).setDate("from", from).setDate("to", to).list();
+		session.disconnect();
+		
+		return overheadList;
 	}
 
 }

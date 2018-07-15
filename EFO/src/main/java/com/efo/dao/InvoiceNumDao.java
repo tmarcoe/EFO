@@ -71,7 +71,7 @@ public class InvoiceNumDao implements IInvoiceNum {
 		if (inv == null) {
 			keySeq = 1L;
 		}else{
-			keySeq = Long.valueOf(inv.getInvoice_num().substring(3));
+			keySeq = Long.valueOf(inv.getInvoice_num().substring(7));
 			keySeq++;
 		}
 		String key = String.format("%04d%03d%05d", today.getYear(), today.getDayOfYear(), keySeq);

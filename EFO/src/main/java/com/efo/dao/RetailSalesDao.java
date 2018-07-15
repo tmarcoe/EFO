@@ -1,5 +1,6 @@
 package com.efo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -108,4 +109,16 @@ public class RetailSalesDao implements IRetailSales {
 		tx.commit();
 		session.disconnect();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Double> countProductsByPeriod(Date begin, Date end) {
+		String hql = "SELECT SUM(s.qty) FROM RetailSales r, SalesItem s "
+				   + "WHERE r.ordered BETWEEN DATE(:begin) AND DATE(:end) AND r.reference = s.reference GROUP BY MONTH(r.ordered)";
+		Session session = session();
+		List<Double> qty = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		
+		return qty;
+	}
+	
+
 }

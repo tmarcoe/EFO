@@ -1,5 +1,6 @@
 package com.efo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,10 @@ public class ProductOrdersService implements IProductOrders {
 	public void delete(Long reference) {
 		ProductOrders orders = retrieve(reference);
 		orderDao.delete(orders);
+	}
+	
+	public List<ProductOrders> getPeriodOrders(Date begin, Date end) {
+		return orderDao.getPeriodOrders(begin, end);
 	}
 
 }

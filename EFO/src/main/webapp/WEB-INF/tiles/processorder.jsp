@@ -23,9 +23,7 @@
 		</tr>
 		<tr>
 			<td><b>Date Ordered: </b><br>
-				<div class="fancy">
-					<fmt:formatDate value="${sales.ordered}" />
-				</div></td>
+				<sf:input type="date" class="fancy" path="ordered"/> </td>
 			<td><b>Payment Type: </b><br> <sf:select id="paymentType" class="fancy" path="payment_type"
 					onchange="showReceivable()">
 					<sf:option value="">---Select---</sf:option>
@@ -97,7 +95,6 @@
 	<sf:hidden path="invoice_num"/>
 	<sf:hidden path="user_id" />
 	<sf:hidden id="total_due" path="total_price" />
-	<sf:hidden path="ordered" />
 	<sf:hidden path="processed" />
 	<sf:hidden path="shipped" />
 	<sf:hidden path="changed" />

@@ -1,5 +1,8 @@
 package com.efo.service;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
@@ -42,5 +45,10 @@ public class PayablesService implements IPayables {
 		
 		return new PagedListHolder<Payables>(payablesDao.retreiveList());
 	}
-
+	
+	public List<Payables> getPeriodPayables(Date begin, Date end) {
+		return payablesDao.getPeriodPayables(begin, end);
+	}
+	
+	
 }

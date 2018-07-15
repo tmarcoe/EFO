@@ -71,4 +71,5 @@
 	<sf:hidden path="inventory.sku"/>
 	<sf:hidden path="inventory.amt_in_stock"/>
 	<sf:hidden path="inventory.min_amount"/>
+	<sf:hidden path="inventory.amt_ordered"/>
 </sf:form>

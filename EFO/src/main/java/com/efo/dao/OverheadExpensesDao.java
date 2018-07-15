@@ -1,5 +1,6 @@
 package com.efo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -80,5 +81,14 @@ public class OverheadExpensesDao implements IOverheadExpenses {
 		tx.commit();
 		session.disconnect();
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public List<OverheadExpenses> getPeriodOverhead(Date begin, Date end) {
+		String hql ="FROM OverheadExpenses WHERE begin_date BETWEEN DATE(:begin) AND DATE(:end)";
+		Session session = session();
+		 List<OverheadExpenses> overheadList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		 session.disconnect();
+		 
+		 return overheadList;
+	}
 }

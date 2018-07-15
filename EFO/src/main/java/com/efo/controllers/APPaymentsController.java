@@ -77,6 +77,7 @@ public class APPaymentsController {
 		
 		PaymentsBilled billed = paymentsService.retreive(id);
 		billed.setPayment_date(new Date());
+		billed.setPayment(billed.getPayment_due());
 		model.addAttribute("billed", billed);
 		
 		return "payamount";

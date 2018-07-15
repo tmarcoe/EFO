@@ -1,5 +1,6 @@
 package com.efo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -99,5 +100,15 @@ public class ProductOrdersDao implements IProductOrders {
 		tx.commit();
 		session.disconnect();
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public List<ProductOrders> getPeriodOrders(Date begin, Date end) {
+		String hql ="FROM ProductOrders WHERE order_date BETWEEN DATE(:begin) AND DATE(:end)";
+		Session session = session();
+		 List<ProductOrders> orderList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		 session.disconnect();
+		 
+		 return orderList;
+	}
+	
 }

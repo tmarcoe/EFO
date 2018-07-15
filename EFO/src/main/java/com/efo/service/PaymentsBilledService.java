@@ -1,6 +1,7 @@
 package com.efo.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -44,5 +45,7 @@ public class PaymentsBilledService implements IPaymentsBilled {
 		
 		return paymentsPaidDao.lastestDate(reference);
 	}
-
+	public List<Object[]> totalPayentsByPeriod(Date from, Date to) {
+		return paymentsPaidDao.totalPayentsByPeriod(from, to);
+	}
 }

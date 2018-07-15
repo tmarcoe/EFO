@@ -83,5 +83,17 @@ public class PaymentsBilledDao implements IPaymentsBilled {
 
 		return maxDate;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> totalPayentsByPeriod(Date from, Date to) {
+		String hql = "SELECT MONTH(payment_date), SUM(payment) FROM PaymentsBilled "
+				   + "WHERE DATE(payment_date) BETWEEN DATE(:from) AND DATE(:to) GROUP BY MONTH(payment_date)";
+		Session session = session();
+		List<Object[]> overheadList = session.createQuery(hql).setDate("from", from).setDate("to", to).list();
+		session.disconnect();
+		
+		return overheadList;
+	}
 
+	
 }

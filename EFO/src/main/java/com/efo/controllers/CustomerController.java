@@ -65,6 +65,7 @@ public class CustomerController {
 	public String customerList(Model model) {
 		customerList = customerService.retrieveEditList();
 		
+		customerList.setPageSize(20);
 		model.addAttribute("objectList", customerList);
 		model.addAttribute("pagelink", pageLink);
 
@@ -170,7 +171,7 @@ public class CustomerController {
 		model.addAttribute("objectList", customerList);
 		model.addAttribute("pagelink", pageLink);
 
-		return "listcustomers";
+		return "customerlist";
 	}
 
 	/**************************************************************************************************************************************

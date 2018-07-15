@@ -1,5 +1,6 @@
 package com.efo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -80,5 +81,15 @@ public class PayablesDao implements IPayables {
 		session.disconnect();
 		
 		return p;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Payables> getPeriodPayables(Date begin, Date end) {
+		String hql ="FROM Payables WHERE date_begin BETWEEN DATE(:begin) AND DATE(:end)";
+		Session session = session();
+		 List<Payables> payablesList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		 session.disconnect();
+		 
+		return payablesList;
 	}
 }

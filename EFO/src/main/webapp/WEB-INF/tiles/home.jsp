@@ -47,7 +47,7 @@
 			<table class="menuTable menuTableSpace">
 				<tr>
 					
-					<td><a href="#"><img class="tile" alt="Cogs" src="<c:url value='/images/cogs.png'/>"></a></td>
+					<td><a href="/accounting/cogsreport/from/2018-01-01/to/2018-12-31" ><img class="tile" alt="Cogs" src="<c:url value='/images/cogs.png'/>"></a></td>
 					<td><a href="#"><img class="tile" alt="Profit and Loss" src="<c:url value='/images/profit-loss.png'/>"></a></td>
 					<td><a href="#"><img class="tile" alt="Shelf Time" src="<c:url value='/images/shelf-time.png'/>"></a></td>
 					<td><a href="#"><img class="tile" alt="System Audit" src="<c:url value='/images/audit.png'/>"></a></td>

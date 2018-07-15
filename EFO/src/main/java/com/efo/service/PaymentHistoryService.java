@@ -1,5 +1,6 @@
 package com.efo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,10 @@ public class PaymentHistoryService implements IPaymentHistory {
 	@Override
 	public void delete(PaymentHistory payment) {
 		paymentDao.delete(payment);
+	}
+	
+	public List<Object[]> totalPayentsByPeriod(Date from, Date to) {
+		return paymentDao.totalPayentsByPeriod(from, to);
 	}
 
 }

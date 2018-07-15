@@ -1,5 +1,6 @@
 package com.efo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,10 @@ public class OverheadExpensesService implements IOverheadExpenses {
 	@Override
 	public void delete(OverheadExpenses expenses) {
 		expensesDao.delete(expenses);
+	}
+	
+	public List<OverheadExpenses> getPeriodOverhead(Date begin, Date end) {
+		return expensesDao.getPeriodOverhead(begin, end);
 	}
 
 }

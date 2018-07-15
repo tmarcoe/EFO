@@ -1,5 +1,6 @@
 package com.efo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,4 +66,8 @@ public class RetailSalesService implements IRetailSales {
 	public PagedListHolder<RetailSales> getProcessedOrders() {
 		return new PagedListHolder<RetailSales>(retailSalesDao.getProcessedOrders());
 	}
+	public List<Double> countProductsByPeriod(Date begin, Date end) {
+		return retailSalesDao.countProductsByPeriod(begin, end);
+	}
+
 }
