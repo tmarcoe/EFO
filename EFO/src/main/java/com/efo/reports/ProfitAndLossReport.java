@@ -15,59 +15,61 @@ import org.springframework.stereotype.Component;
 
 import com.efo.service.PaymentHistoryService;
 import com.efo.service.PaymentsBilledService;
-import com.efo.service.ProductOrdersService;
+import com.efo.service.PaymentsReceivedService;
+import com.efo.service.RetailSalesService;
 
 @Component
-public class CogsReport {
-	
+public class ProfitAndLossReport {
 	@Autowired
 	private ReportUtilities reportUtil;
+	
+	@Autowired
+	private RetailSalesService salesService;
 	
 	@Autowired
 	private PaymentsBilledService paymentService;
 	
 	@Autowired
-	private PaymentHistoryService overheadPaymentService;
+	private PaymentsReceivedService receivedService;
 	
 	@Autowired
-	private ProductOrdersService ordersService;
-		
-	public String calculateCogs(Date begin, Date end) throws JSONException {
-		
-		return getCostPerUnit(begin, end);
-	}
+	private PaymentHistoryService overheadPaymentService;
 	
-	private String getCostPerUnit(Date begin, Date end) throws JSONException {
+	public String ProfitAndLoss(Date begin, Date end) throws JSONException {
 		LocalDate jBegin = new LocalDate(begin);
 		LocalDate jEnd = new LocalDate(end);
 		int diff = Months.monthsBetween(jBegin, jEnd).getMonths() + 1;
+		List<Double> retailSales = reportUtil.translateToDoubleArray(salesService.getTotalSaleByPeriod(begin, end), begin, end);
+		List<Double> pmntReceived =  reportUtil.translateToDoubleArray(receivedService.totalPayentsByPeriod(begin, end), begin, end);
 		List<Double> overhead = reportUtil.translateToDoubleArray(overheadPaymentService.totalPayentsByPeriod(begin, end), begin, end);
 		List<Double> accountsPayable = reportUtil.translateToDoubleArray(paymentService.totalPayentsByPeriod(begin, end), begin, end);
-		List<Double> productOrders = reportUtil.translateToDoubleArray(ordersService.getTotalWholesaleByPeriod(begin, end), begin, end);
-
-		List<Double> expense = new ArrayList<Double>();
 		
+		
+		List<Double> expense = new ArrayList<Double>();
+		Iterator<Double> iRetailSales = retailSales.iterator();
+		Iterator<Double> iPmntReceived = pmntReceived.iterator();
 		Iterator<Double> iOverhead = overhead.iterator();
 		Iterator<Double> iAccountsPayable = accountsPayable.iterator();
-		Iterator<Double> iProductOrders = productOrders.iterator();
 		
-		while (iOverhead.hasNext()) {
+		while (iRetailSales.hasNext()) {
+			Double retail = iRetailSales.next();
+			Double ar = iPmntReceived.next();
 			Double ovr = iOverhead.next();
 			Double ap = iAccountsPayable.next();
-			Double orders = iProductOrders.next();
 			
-			expense.add(ovr + ap + orders);
+			expense.add((retail + ar) - (ovr + ap));
 		}
-			
-		return JSONCreateSalesReport(expense, diff, jBegin, String.format("CoGS Report From %tD To %tD", begin, end)).toString();
+		
+		return convertToJSON(expense, diff, jBegin, String.format("Profit and Loss From %tD To %tD", begin, end)).toString();
 	}
 	
-	private JSONObject JSONCreateSalesReport(List<Double> totals, int length, LocalDate start, String reportTitle) throws JSONException {
+	private JSONObject convertToJSON(List<Double> expense, int length, LocalDate start, String reportTitle) throws JSONException {	
 		final String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 		JSONObject json = new JSONObject();
 		JSONObject data = new JSONObject();
 		JSONArray datasets = new JSONArray();
-		JSONObject expense = new JSONObject();
+		
+		JSONObject exp = new JSONObject();
 		String[] labels = new String[length];
 		JSONObject options = new JSONObject();
 		JSONObject scales = new JSONObject();
@@ -85,13 +87,13 @@ public class CogsReport {
 		json.put("data", data);
 		data.put("labels", labels);
 		data.put("datasets", datasets);
-		datasets.put(expense);
-		expense.put("label", "Expense Per Unit Sold" );
-		expense.put("fill", false);
-		expense.put("backgroundColor", "rgba(158, 3, 3, 1.0)");
-		expense.put("borderColor", "rgba(158, 3, 3, .5)");
-		expense.put("data", totals.toArray());
-		expense.put("borderWidth", 2);
+		datasets.put(exp);
+		exp.put("label", "" );
+		exp.put("fill", false);
+		exp.put("backgroundColor", "rgba(158, 3, 3, 1.0)");
+		exp.put("borderColor", "rgba(158, 3, 3, .5)");
+		exp.put("data", expense.toArray());
+		exp.put("borderWidth", 2);
 		json.put("options", options);
 		options.put("scales", scales);
 		options.put("responsive", false);

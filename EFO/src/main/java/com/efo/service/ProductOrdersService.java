@@ -66,5 +66,8 @@ public class ProductOrdersService implements IProductOrders {
 	public List<ProductOrders> getPeriodOrders(Date begin, Date end) {
 		return orderDao.getPeriodOrders(begin, end);
 	}
-
+	
+	public List<Object[]> getTotalWholesaleByPeriod(Date begin, Date end) {
+		return orderDao.getTotalWholesaleByPeriod(begin, end);
+	}
 }

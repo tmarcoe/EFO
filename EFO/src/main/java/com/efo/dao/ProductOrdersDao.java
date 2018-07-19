@@ -111,4 +111,15 @@ public class ProductOrdersDao implements IProductOrders {
 		 return orderList;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getTotalWholesaleByPeriod(Date begin, Date end) {
+		String hql = "SELECT MONTH(order_date), SUM(wholesale) FROM ProductOrders "
+				   + "WHERE order_date BETWEEN DATE(:begin) AND DATE(:end) AND payment_type = 'Cash' ORDER BY MONTH(order_date)";
+		Session session = session();
+		List<Object[]> totalOrders = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		session.disconnect();
+		
+		return totalOrders;
+	}
+	
 }

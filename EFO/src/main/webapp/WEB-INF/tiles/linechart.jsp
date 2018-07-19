@@ -4,13 +4,14 @@
 
 <div class="lineChart">
 	<canvas class="reportCharts divshadow" id="myChart"></canvas>
-</div>
-<table class="buttonTable">
+	<table class="buttonTable">
 	<tr>
-		<td><button class="fancy-button" type="button" onclick="window.history.back()">OK</button></td>
-		<td><button class="fancy-button" type="button" onclick="renderCanvas()">View/Save Image</button></td>
+		<td><button class="fancy-button" type="button" onclick="window.location.href='/#tabs-3'"><b>OK</b></button></td>
+		<td><button class="fancy-button" type="button" onclick="renderCanvas()"><b>View/Save Image</b></button></td>
 	</tr>
 </table>
+	
+</div>
 <input id="fromValue" type="hidden" value="${from}"/>
 <input id="toValue" type="hidden" value="${to}"/>
 <input id="rpt" type="hidden" value="${report}" />

@@ -11,62 +11,64 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.Receivables;
-import com.efo.interfaces.IReceivables;
+import com.efo.entity.Loans;
+import com.efo.interfaces.ILoans;
 
 @Transactional
 @Repository
-public class ReceivablesDao implements IReceivables {
+public class LoansDao implements ILoans {
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 	
 	private Session session() {
 		return sessionFactory.getCurrentSession();
 	}
 	
 	@Override
-	public void create(Receivables receivables) {
+	public void create(Loans loans) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.save(receivables);
+		session.save(loans);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public Receivables retreive(Long reference) {
+	public Loans retrieve(Long trans_id) {
 		Session session = session();
-		Receivables r = (Receivables) session.createCriteria(Receivables.class).add(Restrictions.idEq(reference)).uniqueResult();
+		Loans loans = (Loans) session.createCriteria(Loans.class).add(Restrictions.idEq(trans_id)).uniqueResult();
 		session.disconnect();
-		return r;
+		
+		return loans;
 	}
-	
-	public List<Receivables> retreiveList() {
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Loans> retrieveRawList() {
 		Session session = session();
-		@SuppressWarnings("unchecked")
-		List<Receivables> rList = session.createCriteria(Receivables.class).list();
-		return rList;
+		List<Loans> loans = session.createCriteria(Loans.class).list();
+		session.disconnect();
+		
+		return loans;
 	}
 
 	@Override
-	public void update(Receivables receivables) {
+	public void update(Loans loans) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.merge(receivables);
+		session.update(loans);
 		tx.commit();
 		session.disconnect();
 	}
-	
-	
+
 	@Override
-	public void delete(Long reference) {
+	public void delete(Loans loans) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		Receivables r = retreive(reference);
-		session.delete(r);
+		session.delete(loans);
 		tx.commit();
 		session.disconnect();
 	}
-	
+
 }

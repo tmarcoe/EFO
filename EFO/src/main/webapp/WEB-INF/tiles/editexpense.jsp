@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form id="details" method="post" action="/admin/updateexpense" modelAttribute="expense">
+<sf:form id="details" method="post" action="/accounting/updateexpense" modelAttribute="expense">
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>Vendor: </b><br>

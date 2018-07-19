@@ -410,10 +410,37 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/makepayment.jsp"></put-attribute>
 	</definition>
 	
+	<!-- Report Controller -->
 	<definition name="cogsreport" extends="accounting.base">
 		<put-attribute name="title" value="COGS Report"></put-attribute>
 		<put-attribute name="heading_title" value="COGS Report"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/linechart.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="revenuereport" extends="accounting.base">
+		<put-attribute name="title" value="Revenue Report"></put-attribute>
+		<put-attribute name="heading_title" value="Revenue Report"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/linechart.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="plreport" extends="accounting.base">
+		<put-attribute name="title" value="Profit And Loss Report"></put-attribute>
+		<put-attribute name="heading_title" value="Profit And Loss Report"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/linechart.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="unitssold" extends="accounting.base">
+		<put-attribute name="title" value="Units Sold"></put-attribute>
+		<put-attribute name="heading_title" value="Units Sold"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/linechart.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Stocks Controller -->
+		<definition name="stockholderlist" extends="accounting.base">
+		<put-attribute name="title" value="Stockholder's List"></put-attribute>
+		<put-attribute name="heading_title" value="Stockholder's List"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/stockholderlist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+		
 </tiles-definitions>

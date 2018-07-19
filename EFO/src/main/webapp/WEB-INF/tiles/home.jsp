@@ -47,9 +47,10 @@
 			<table class="menuTable menuTableSpace">
 				<tr>
 					
-					<td><a href="/accounting/cogsreport/from/2018-01-01/to/2018-12-31" ><img class="tile" alt="Cogs" src="<c:url value='/images/cogs.png'/>"></a></td>
-					<td><a href="#"><img class="tile" alt="Profit and Loss" src="<c:url value='/images/profit-loss.png'/>"></a></td>
-					<td><a href="#"><img class="tile" alt="Shelf Time" src="<c:url value='/images/shelf-time.png'/>"></a></td>
+					<td><a href="#" onclick="inputDate('/accounting/cogsreport')"><img class="tile" alt="Cogs" src="<c:url value='/images/cogs.png'/>"></a></td>
+					<td><a href="#" onclick="inputDate('/accounting/revenuereport')" ><img class="tile" alt="Income Vs Expense" src="<c:url value='/images/income-expense.png'/>"></a></td>
+					<td><a href="#" onclick="inputDate('/accounting/plreport')" ><img class="tile" alt="Profit and Loss" src="<c:url value='/images/profit-loss.png'/>"></a></td>
+					<td><a href="#" onclick="inputDate('/accounting/unitssold')" ><img class="tile" alt="Profit and Loss" src="<c:url value='/images/units-sold.png'/>"></a></td>
 					<td><a href="#"><img class="tile" alt="System Audit" src="<c:url value='/images/audit.png'/>"></a></td>
 				</tr>
 			</table>
@@ -59,16 +60,20 @@
 				<tr>
 					<td><a href="/accounting/ar"><img class="tile" alt="Accounts Receivable" src="<c:url value='/images/receivable.png'/>"></a></td>
 					<td><a href="/accounting/ap"><img class="tile" alt="Accounts Payable" src="<c:url value='/images/payable.png'/>"></a></td>
-					<td><a href="#" onclick="inputDate()"><img class="tile" alt="General Ledger" src="<c:url value='/images/general.png'/>"></a></td>
+					<td><a href="#" onclick="inputDate('/accounting/ledgerlist')"><img class="tile" alt="General Ledger" src="<c:url value='/images/general.png'/>"></a></td>
 					<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts" src="<c:url value='/images/accounts.png'/>"></a></td>
-					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash" src="<c:url value='/images/petty-cash.png'/>"></a></td>
 				</tr>
 				<tr>
+					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash" src="<c:url value='/images/petty-cash.png'/>"></a></td>
 					<td><a href="#tabs-4"><img class="tile" alt="Budget" src="<c:url value='/images/budget.png'/>"></a></td>
 					<td><a href="/admin/listproduct"><img class="tile" alt="Products" src="<c:url value='/images/products.png'/>"></a></td>
 					<td><a href="/admin/browseproducts"><img class="tile" alt="Sales" src="<c:url value='/images/sales.png'/>"></a></td>
+				</tr>
+				<tr>
 					<td><a href="/accounting/listassets"><img class="tile" alt="Capital Assets" src="<c:url value='/images/capitalassets.png'/>"></a></td>
 					<td><a href="/accounting/listoverhead"><img class="tile" alt="Regular Expenses" src="<c:url value='/images/regular-expenses.png'/>"></a></td>
+					<td><a href="#"><img class="tile" alt="Purchase Stock" src="<c:url value='/images/stock.png'/>"></a></td>
+					<td><a href="#"><img class="tile" alt="Obtain a Loan" src="<c:url value='/images/loan.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
@@ -113,18 +118,20 @@
 					<td><input class="fancy" id="endDate" type="date" /></td>
 				</tr>
 				<tr>
-					<td><button class="fancy-button" type="button" onclick="setDate()">View Period</button></td>
-					<td><button class="fancy-button" type="button" onclick="cancelLedger()">Cancel</button></td>
+					<td><button class="fancy-button" type="button" onclick="setDate()"><b>View Period</b></button></td>
+					<td><button class="fancy-button" type="button" onclick="cancelLedger()"><b>Cancel</b></button></td>
 				</tr>
 			</table>
 		</div>
 	</div>
+	<input id="destination" type="hidden"/>
 </sf:form>
 <script type="text/javascript">
 	function disableButton(id) {
 		document.getElementById(id).disabled = true;
 	}
-	function inputDate() {
+	function inputDate(dest) {
+		$("#destination").val(dest);
 		var modal = document.getElementById('getPeriod');
 		modal.style.display = "block";
 	}
@@ -133,9 +140,12 @@
 		modal.style.display = "none";		
 	}
 	function setDate() {
+		var dest = $("#destination").val();
 		var from = document.getElementById('stDate').value;
 		var to = document.getElementById('endDate').value;
-		window.location.href = "/accounting/ledgerlist/from/" + from + "/to/" + to;
+		if (from.length > 0 && to.length > 0) {
+			window.location.href = dest + "/from/" + from + "/to/" + to;
+		}
 	}
 	function openPopup() {
 		var modal = document.getElementById('sPass');

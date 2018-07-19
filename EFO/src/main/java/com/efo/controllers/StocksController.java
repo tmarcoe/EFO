@@ -14,20 +14,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.entity.NonPhysicalInventory;
-import com.efo.service.InventoryService;
+import com.efo.entity.Stocks;
+import com.efo.service.StocksService;
 
 @Controller
 @RequestMapping("/accounting/")
-public class InventoryController {
+public class StocksController {
+	private final String pageLink = "/accounting/stockspaging";
+	private PagedListHolder<Stocks> stocksList;
 	
 	@Autowired
-	private InventoryService inventoryService;
-	
-	private final String pageLink = "/accounting/appaging";
+	private StocksService stocksService;
 	
 	private SimpleDateFormat dateFormat;
-	private PagedListHolder<NonPhysicalInventory> invList;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -36,33 +35,31 @@ public class InventoryController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
 	
-	@RequestMapping("listinventory")
-	public String listInventory(Model model) {
-		invList = inventoryService.retrieveList();
+	@RequestMapping("stockholderlist")
+	public String stockholderList(Model model) {
 		
-		model.addAttribute("objectList", invList);
-		model.addAttribute("pageLink", pageLink);
+		stocksList = stocksService.retrieveList();
 		
-		return "listinventory";
-	}	
+		return "stockholderlist";
+	}
 	
-	@RequestMapping(value = "inventorypaging", method = RequestMethod.GET)
-	public String handleUserRequest(@ModelAttribute("page") String page, Model model) throws Exception {
+	@RequestMapping(value = "stockspaging", method = RequestMethod.GET)
+	public String handleAssetsRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;
 
 		pgNum = isInteger(page);
 
 		if ("next".equals(page)) {
-			invList.nextPage();
+			stocksList.nextPage();
 		} else if ("prev".equals(page)) {
-			invList.previousPage();
+			stocksList.previousPage();
 		} else if (pgNum != -1) {
-			invList.setPage(pgNum);
+			stocksList.setPage(pgNum);
 		}
-		model.addAttribute("objectList", invList);
+		model.addAttribute("objectList", stocksList);
 		model.addAttribute("pagelink", pageLink);
 
-		return "listinventory";
+		return "stockholderlist";
 	}
 
 	/**************************************************************************************************************************************
@@ -83,6 +80,5 @@ public class InventoryController {
 		// only got here if we didn't return false
 		return retInt;
 	}
-
 
 }

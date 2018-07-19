@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.efo.entity.Customer;
-import com.efo.entity.Inventory;
+import com.efo.entity.NonPhysicalInventory;
 import com.efo.entity.Product;
 import com.efo.entity.Vendor;
 import com.efo.service.CustomerService;
@@ -79,7 +79,7 @@ public class QueryController {
 		}
 		return jsonArray.toString();
 	}
-	private String inventoryToJson(Inventory i) throws JSONException {
+	private String inventoryToJson(NonPhysicalInventory i) throws JSONException {
 		JSONObject json = new JSONObject();
 		json.put("sku", i.getSku());
 		json.put("amt_in_stock", i.getAmt_in_stock());

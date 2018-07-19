@@ -1,6 +1,7 @@
 package com.efo.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -45,5 +46,8 @@ public class PaymentsReceivedService implements IPaymentsReceived {
 	public Date latestDate(Long reference) {
 		return receivedDao.lastestDate(reference);
 	}
-
+	
+	public List<Object[]> totalPayentsByPeriod(Date from, Date to) {
+		return receivedDao.getReceivablesByPeriod(from, to);
+	}
 }

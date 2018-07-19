@@ -5,7 +5,7 @@ import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
 import com.efo.dao.InventoryDao;
-import com.efo.entity.Inventory;
+import com.efo.entity.NonPhysicalInventory;
 import com.efo.interfaces.IInventory;
 
 @Service
@@ -15,31 +15,31 @@ public class InventoryService implements IInventory {
 	InventoryDao inventoryDao;
 
 	@Override
-	public void create(Inventory inventory) {
+	public void create(NonPhysicalInventory inventory) {
 		inventoryDao.create(inventory);
 	}
 	
 	@Override
-	public Inventory retrieve(String sku) {
+	public NonPhysicalInventory retrieve(String sku) {
 		return inventoryDao.retrieve(sku);
 	}
 	
-	public PagedListHolder<Inventory> retrieveList() {
-		return new PagedListHolder<Inventory>(inventoryDao.retrieveList());
+	public PagedListHolder<NonPhysicalInventory> retrieveList() {
+		return new PagedListHolder<NonPhysicalInventory>(inventoryDao.retrieveList());
 	}
 
 	@Override
-	public void update(Inventory inventory) {
+	public void update(NonPhysicalInventory inventory) {
 		inventoryDao.update(inventory);
 	}
 
 	@Override
-	public void delete(Inventory inventory) {
+	public void delete(NonPhysicalInventory inventory) {
 		inventoryDao.delete(inventory);
 	}
 	
 	public void delete(String sku) {
-		Inventory inventory = retrieve(sku);
+		NonPhysicalInventory inventory = retrieve(sku);
 		delete(inventory);
 	}
 	public void commitStock(String sku, double amt) {

@@ -81,5 +81,17 @@ public class PaymentsReceivedDao implements IPaymentsReceived {
 		
 		return maxDate;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getReceivablesByPeriod(Date begin, Date end) {
+		String hql = "SELECT MONTH(payment_date), SUM(payment) FROM PaymentsReceived "
+				   + "WHERE payment_date IS NOT null AND payment_date BETWEEN DATE(:begin) AND DATE(:end) GROUP BY MONTH(payment_date)";
+		
+		Session session = session();
+		List<Object[]> receiveList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		session.disconnect();
+		
+		return receiveList;
+	}
 
 }

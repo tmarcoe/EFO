@@ -5,8 +5,10 @@
 	width: 500px;	
 }
 .lineChart {
-	height: 500px;
-	width: 1000px;	
+	margin: auto;
+	height: 600px;
+	width: 1500px;	
+	background-color: white;
 }
 .barChart {
 	height: 500px;

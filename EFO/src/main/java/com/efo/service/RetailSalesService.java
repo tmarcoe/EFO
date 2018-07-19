@@ -66,8 +66,12 @@ public class RetailSalesService implements IRetailSales {
 	public PagedListHolder<RetailSales> getProcessedOrders() {
 		return new PagedListHolder<RetailSales>(retailSalesDao.getProcessedOrders());
 	}
-	public List<Double> countProductsByPeriod(Date begin, Date end) {
+	public List<Object[]> countProductsByPeriod(Date begin, Date end) {
 		return retailSalesDao.countProductsByPeriod(begin, end);
+	}
+	
+	public List<Object[]> getTotalSaleByPeriod(Date begin, Date end) {
+		return retailSalesDao.getTotalSaleByPeriod(begin, end);
 	}
 
 }

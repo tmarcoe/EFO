@@ -21,7 +21,7 @@ import com.efo.entity.Receivables;
 import com.efo.entity.RetailSales;
 import com.efo.dao.FetalTransactionDao;
 import com.efo.entity.CapitalAssets;
-import com.efo.entity.Inventory;
+import com.efo.entity.NonPhysicalInventory;
 import com.efo.entity.OverheadExpenses;
 import com.efo.entity.Payables;
 import com.efo.entity.PaymentHistory;
@@ -168,7 +168,7 @@ public class FetalTransactionService extends FetalTransaction {
 		return result;
 	}
 	
-	public void cancelOrder(ProductOrders order, Inventory inventory ) throws IOException {
+	public void cancelOrder(ProductOrders order, NonPhysicalInventory inventory ) throws IOException {
 		
 		try {
 			initTransaction(filePath);

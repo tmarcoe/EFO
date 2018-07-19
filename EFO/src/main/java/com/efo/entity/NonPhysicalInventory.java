@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Inventory implements Serializable {
+public class NonPhysicalInventory implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 

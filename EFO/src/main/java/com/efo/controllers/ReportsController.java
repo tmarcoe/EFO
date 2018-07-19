@@ -34,5 +34,34 @@ public class ReportsController {
 		return "cogsreport";
 	}
 	
+	@RequestMapping("revenuereport/from/{from}/to/{to}")
+	public String revenueReport(@PathVariable("from") Date from, @PathVariable("to") Date to, Model model) {
+		
+		model.addAttribute("from", dateFormat.format(from));
+		model.addAttribute("to", dateFormat.format(to));
+		model.addAttribute("report", "revenue");
+
+		return "revenuereport";
+	}
+
+	@RequestMapping("plreport/from/{from}/to/{to}")
+	public String profitAndLossReport(@PathVariable("from") Date from, @PathVariable("to") Date to, Model model) {
+		
+		model.addAttribute("from", dateFormat.format(from));
+		model.addAttribute("to", dateFormat.format(to));
+		model.addAttribute("report", "profitandloss");
+		
+		return "plreport";
+	}
+	
+	@RequestMapping("unitssold/from/{from}/to/{to}")
+	public String unitsSold(@PathVariable("from") Date from, @PathVariable("to") Date to, Model model) {
+		
+		model.addAttribute("from", dateFormat.format(from));
+		model.addAttribute("to", dateFormat.format(to));
+		model.addAttribute("report", "unitsld");
+		
+		return "unitssold";
+	}
 
 }

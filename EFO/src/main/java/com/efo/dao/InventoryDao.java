@@ -11,7 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.Inventory;
+import com.efo.entity.NonPhysicalInventory;
 import com.efo.interfaces.IInventory;
 
 @Transactional
@@ -26,7 +26,7 @@ public class InventoryDao implements IInventory {
 	}
 	
 	@Override
-	public void create(Inventory inventory) {
+	public void create(NonPhysicalInventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.save(inventory);
@@ -35,10 +35,10 @@ public class InventoryDao implements IInventory {
 	}
 	
 	@Override
-	public Inventory retrieve(String sku) {
+	public NonPhysicalInventory retrieve(String sku) {
 		Session session = session();
 		
-		Inventory inventory = (Inventory) session.createCriteria(Inventory.class).add(Restrictions.idEq(sku)).uniqueResult();
+		NonPhysicalInventory inventory = (NonPhysicalInventory) session.createCriteria(NonPhysicalInventory.class).add(Restrictions.idEq(sku)).uniqueResult();
 		
 		session.disconnect();
 		
@@ -46,17 +46,17 @@ public class InventoryDao implements IInventory {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Inventory> retrieveList() {
+	public List<NonPhysicalInventory> retrieveList() {
 		Session session = session();
 		
-		List<Inventory> invList = session.createCriteria(Inventory.class).list();
+		List<NonPhysicalInventory> invList = session.createCriteria(NonPhysicalInventory.class).list();
 		session.disconnect();
 		
 		return invList;
 	}
 
 	@Override
-	public void update(Inventory inventory) {
+	public void update(NonPhysicalInventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.update(inventory);
@@ -84,7 +84,7 @@ public class InventoryDao implements IInventory {
 	}
 	
 	@Override
-	public void delete(Inventory inventory) {
+	public void delete(NonPhysicalInventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.delete(inventory);

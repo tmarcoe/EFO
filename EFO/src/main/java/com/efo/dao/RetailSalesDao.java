@@ -111,13 +111,25 @@ public class RetailSalesDao implements IRetailSales {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Double> countProductsByPeriod(Date begin, Date end) {
-		String hql = "SELECT SUM(s.qty) FROM RetailSales r, SalesItem s "
+	public List<Object[]> countProductsByPeriod(Date begin, Date end) {
+		String hql = "SELECT MONTH(r.ordered), SUM(s.qty) FROM RetailSales r, SalesItem s "
 				   + "WHERE r.ordered BETWEEN DATE(:begin) AND DATE(:end) AND r.reference = s.reference GROUP BY MONTH(r.ordered)";
 		Session session = session();
-		List<Double> qty = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		List<Object[]> qtyList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		session.disconnect();
 		
-		return qty;
+		return qtyList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getTotalSaleByPeriod(Date begin, Date end) {
+		String hql = "SELECT MONTH(ordered), SUM(total_price) FROM RetailSales "
+				   + "WHERE ordered BETWEEN DATE(:begin) AND DATE(:end) AND payment_type = 'Cash' GROUP BY MONTH(ordered)";
+		Session session = session();
+		List<Object[]> soldList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		session.disconnect();
+		
+		return soldList;
 	}
 	
 

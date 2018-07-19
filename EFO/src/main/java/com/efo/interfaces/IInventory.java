@@ -1,12 +1,12 @@
 package com.efo.interfaces;
 
-import com.efo.entity.Inventory;
+import com.efo.entity.NonPhysicalInventory;
 
 public interface IInventory {
 	
-	public void create(Inventory inventory);
-	public Inventory retrieve(String sku);
-	public void update(Inventory inventory);
-	public void delete(Inventory inventory);
+	public void create(NonPhysicalInventory inventory);
+	public NonPhysicalInventory retrieve(String sku);
+	public void update(NonPhysicalInventory inventory);
+	public void delete(NonPhysicalInventory inventory);
 
 }
