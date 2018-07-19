@@ -2,7 +2,7 @@ package com.efo.interfaces;
 
 import com.efo.entity.NonPhysicalInventory;
 
-public interface IInventory {
+public interface INonPhysicalInventory {
 	
 	public void create(NonPhysicalInventory inventory);
 	public NonPhysicalInventory retrieve(String sku);

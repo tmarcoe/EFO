@@ -25,6 +25,7 @@ public class Product implements Serializable {
 	private String category;
 	private String subcategory;
 	private String keywords;
+	private Long shelf_life; // In Days
 	private boolean on_sale;
 	private boolean discontinue;
 	private boolean consignment;
@@ -33,12 +34,13 @@ public class Product implements Serializable {
 	private NonPhysicalInventory inventory = new NonPhysicalInventory();
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+	private Set<PhysicalInventory> physicalInventory = new HashSet<PhysicalInventory>(0);
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
 	private Set<ProductOrders> orders = new HashSet<ProductOrders>(0);
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
 	private Set<SalesItem> sales = new HashSet<SalesItem>(0);
-	
-	
 	
 	public String getSku() {
 		return sku;
@@ -87,6 +89,12 @@ public class Product implements Serializable {
 	}
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
+	}
+	public Long getShelf_life() {
+		return shelf_life;
+	}
+	public void setShelf_life(Long shelf_life) {
+		this.shelf_life = shelf_life;
 	}
 	public boolean isOn_sale() {
 		return on_sale;

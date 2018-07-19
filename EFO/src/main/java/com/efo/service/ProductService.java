@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
-import com.efo.dao.InventoryDao;
+import com.efo.dao.NonPhysicalInventoryDao;
 import com.efo.dao.ProductDao;
 import com.efo.entity.Product;
 import com.efo.interfaces.IProduct;
@@ -17,7 +17,7 @@ public class ProductService implements IProduct {
 	ProductDao productDao;
 	
 	@Autowired
-	InventoryDao inventoryDao;
+	NonPhysicalInventoryDao inventoryDao;
 
 	@Override
 	public void create(Product product) {

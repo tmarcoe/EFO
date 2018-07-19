@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.NonPhysicalInventory;
-import com.efo.service.InventoryService;
+import com.efo.service.NonPhysicalInventoryService;
 
 @Controller
 @RequestMapping("/accounting/")
 public class InventoryController {
 	
 	@Autowired
-	private InventoryService inventoryService;
+	private NonPhysicalInventoryService inventoryService;
 	
 	private final String pageLink = "/accounting/appaging";
 	

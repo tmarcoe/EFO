@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.efo.entity.NonPhysicalInventory;
-import com.efo.interfaces.IInventory;
+import com.efo.interfaces.INonPhysicalInventory;
 
 @Transactional
 @Repository
-public class InventoryDao implements IInventory {
+public class NonPhysicalInventoryDao implements INonPhysicalInventory {
 	
 	@Autowired
 	SessionFactory sessionFactory;

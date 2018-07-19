@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
-import com.efo.dao.InventoryDao;
+import com.efo.dao.NonPhysicalInventoryDao;
 import com.efo.entity.NonPhysicalInventory;
-import com.efo.interfaces.IInventory;
+import com.efo.interfaces.INonPhysicalInventory;
 
 @Service
-public class InventoryService implements IInventory {
+public class NonPhysicalInventoryService implements INonPhysicalInventory {
 	
 	@Autowired
-	InventoryDao inventoryDao;
+	NonPhysicalInventoryDao inventoryDao;
 
 	@Override
 	public void create(NonPhysicalInventory inventory) {
