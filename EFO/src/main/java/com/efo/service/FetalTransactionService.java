@@ -16,12 +16,13 @@ import org.springframework.stereotype.Service;
 
 import com.efo.entity.PaymentsReceived;
 import com.efo.entity.PettyCashVoucher;
+import com.efo.entity.Product;
 import com.efo.entity.ProductOrders;
 import com.efo.entity.Receivables;
 import com.efo.entity.RetailSales;
 import com.efo.dao.FetalTransactionDao;
 import com.efo.entity.CapitalAssets;
-import com.efo.entity.NonPhysicalInventory;
+import com.efo.entity.FluidInventory;
 import com.efo.entity.OverheadExpenses;
 import com.efo.entity.Payables;
 import com.efo.entity.PaymentHistory;
@@ -168,7 +169,7 @@ public class FetalTransactionService extends FetalTransaction {
 		return result;
 	}
 	
-	public void cancelOrder(ProductOrders order, NonPhysicalInventory inventory ) throws IOException {
+	public void cancelOrder(ProductOrders order, FluidInventory inventory ) throws IOException {
 		
 		try {
 			initTransaction(filePath);
@@ -195,10 +196,11 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 
-	public void purchaseInventory(ProductOrders order, Payables payables, PaymentsBilled payments) throws IOException {
+	public void purchaseInventory(Product product, ProductOrders order, Payables payables, PaymentsBilled payments) throws IOException {
 		try {
 			initTransaction(filePath);
 			setDescription("Purchase of Inventory (SKU: " + order.getSku() + ")");
+			publish("product", VariableType.DAO, product);
 			publish("order", VariableType.DAO, order);
 			publish("payables", VariableType.DAO, payables);
 			publish("payment", VariableType.DAO, payments);

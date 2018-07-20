@@ -4,42 +4,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
-import com.efo.dao.NonPhysicalInventoryDao;
-import com.efo.entity.NonPhysicalInventory;
-import com.efo.interfaces.INonPhysicalInventory;
+import com.efo.dao.FluidInventoryDao;
+import com.efo.entity.FluidInventory;
+import com.efo.interfaces.IFluidInventory;
 
 @Service
-public class NonPhysicalInventoryService implements INonPhysicalInventory {
+public class FluidInventoryService implements IFluidInventory {
 	
 	@Autowired
-	NonPhysicalInventoryDao inventoryDao;
+	FluidInventoryDao inventoryDao;
 
 	@Override
-	public void create(NonPhysicalInventory inventory) {
+	public void create(FluidInventory inventory) {
 		inventoryDao.create(inventory);
 	}
 	
 	@Override
-	public NonPhysicalInventory retrieve(String sku) {
+	public FluidInventory retrieve(String sku) {
 		return inventoryDao.retrieve(sku);
 	}
 	
-	public PagedListHolder<NonPhysicalInventory> retrieveList() {
-		return new PagedListHolder<NonPhysicalInventory>(inventoryDao.retrieveList());
+	public PagedListHolder<FluidInventory> retrieveList() {
+		return new PagedListHolder<FluidInventory>(inventoryDao.retrieveList());
 	}
 
 	@Override
-	public void update(NonPhysicalInventory inventory) {
+	public void update(FluidInventory inventory) {
 		inventoryDao.update(inventory);
 	}
 
 	@Override
-	public void delete(NonPhysicalInventory inventory) {
+	public void delete(FluidInventory inventory) {
 		inventoryDao.delete(inventory);
 	}
 	
 	public void delete(String sku) {
-		NonPhysicalInventory inventory = retrieve(sku);
+		FluidInventory inventory = retrieve(sku);
 		delete(inventory);
 	}
 	public void commitStock(String sku, double amt) {

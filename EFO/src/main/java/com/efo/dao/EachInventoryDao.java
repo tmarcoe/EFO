@@ -12,12 +12,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.PhysicalInventory;
-import com.efo.interfaces.IPhysicalInventory;
+import com.efo.entity.EachInventory;
+import com.efo.interfaces.IEachInventory;
 
 @Transactional
 @Repository
-public class PhysicalInventoryDao implements IPhysicalInventory {
+public class EachInventoryDao implements IEachInventory {
 
 	@Autowired
 	SessionFactory sessionFactory;
@@ -27,7 +27,7 @@ public class PhysicalInventoryDao implements IPhysicalInventory {
 	}
 	
 	@Override
-	public void create(PhysicalInventory inventory) {
+	public void create(EachInventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.save(inventory);
@@ -36,9 +36,9 @@ public class PhysicalInventoryDao implements IPhysicalInventory {
 	}
 
 	@Override
-	public PhysicalInventory retrieve(Long id) {
+	public EachInventory retrieve(Long id) {
 		Session session = session();
-		PhysicalInventory inventory = (PhysicalInventory) session.createCriteria(PhysicalInventory.class).add(Restrictions.idEq(id)).uniqueResult();
+		EachInventory inventory = (EachInventory) session.createCriteria(EachInventory.class).add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
 		
 		return inventory;
@@ -46,16 +46,16 @@ public class PhysicalInventoryDao implements IPhysicalInventory {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PhysicalInventory> retrieveRawList() {
+	public List<EachInventory> retrieveRawList() {
 		Session session = session();
-		List<PhysicalInventory> invList = session.createCriteria(PhysicalInventory.class).list();
+		List<EachInventory> invList = session.createCriteria(EachInventory.class).list();
 		session.disconnect();
 		
 		return invList;
 	}
 
 	@Override
-	public void update(PhysicalInventory inventory) {
+	public void update(EachInventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.update(inventory);
@@ -64,7 +64,7 @@ public class PhysicalInventoryDao implements IPhysicalInventory {
 	}
 
 	@Override
-	public void delete(PhysicalInventory inventory) {
+	public void delete(EachInventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.delete(inventory);
@@ -72,12 +72,12 @@ public class PhysicalInventoryDao implements IPhysicalInventory {
 		session.disconnect();
 	}
 
-	public void stockShelf(PhysicalInventory inventory, Integer qty) {
+	public void stockShelf(EachInventory inventory, Integer qty) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		
 		for(int i=0; i < qty; i++) {
-			PhysicalInventory inv = new PhysicalInventory();
+			EachInventory inv = new EachInventory();
 			inv.setSku(inventory.getSku());
 			inv.setOrdered(new Date());
 			inv.setWholesale(inventory.getWholesale());

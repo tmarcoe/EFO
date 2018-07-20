@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.efo.entity.SalesItem;
-import com.efo.service.NonPhysicalInventoryService;
+import com.efo.service.FluidInventoryService;
 import com.efo.service.ProductService;
 import com.efo.service.SalesItemService;
 
@@ -20,7 +20,7 @@ public class SalesItemProcessor {
 	SalesItemService salseItemService;
 	
 	@Autowired
-	NonPhysicalInventoryService inventoryService;
+	FluidInventoryService inventoryService;
 	
 	public void commitItems(Set<SalesItem> items) {
 		for (SalesItem item : items) {

@@ -62,8 +62,8 @@ public class ProductController {
 	@RequestMapping("addproduct")
 	public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
 		
-		product.getInventory().setSku(product.getSku());
-		product.getInventory().setProduct(product);
+		product.getFluidInventory().setSku(product.getSku());
+		product.getFluidInventory().setProduct(product);
 		
 		productService.create(product);
 		

@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.entity.NonPhysicalInventory;
-import com.efo.service.NonPhysicalInventoryService;
+import com.efo.entity.FluidInventory;
+import com.efo.service.FluidInventoryService;
 
 @Controller
 @RequestMapping("/accounting/")
 public class InventoryController {
 	
 	@Autowired
-	private NonPhysicalInventoryService inventoryService;
+	private FluidInventoryService inventoryService;
 	
 	private final String pageLink = "/accounting/appaging";
 	
 	private SimpleDateFormat dateFormat;
-	private PagedListHolder<NonPhysicalInventory> invList;
+	private PagedListHolder<FluidInventory> invList;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

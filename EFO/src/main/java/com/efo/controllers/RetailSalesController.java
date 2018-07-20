@@ -127,7 +127,7 @@ public class RetailSalesController {
 			item.setSold_for(product.getPrice());
 			sales.getSalesItem().add(item);
 		}else{
-			if ((item.getQty() + order_qty) > product.getInventory().getAmt_in_stock()) {				
+			if ((item.getQty() + order_qty) > product.getFluidInventory().getAmt_in_stock()) {				
 				return "redirect:/admin/browseproducts";
 			}
 			salesItemService.addQuantity(item, order_qty);
@@ -259,7 +259,7 @@ public class RetailSalesController {
 		
 		SalesItem oldItem = salesItemService.retrieve(salesItem.getItem_id());
 		Product product = productService.retrieve(salesItem.getSku());
-		if (salesItem.getQty() > product.getInventory().getAmt_in_stock()) {
+		if (salesItem.getQty() > product.getFluidInventory().getAmt_in_stock()) {
 			result.rejectValue("qty", "Quantity.salesItem.qty");
 			
 			return "editsalesitem";

@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class PhysicalInventory implements Serializable {
+public class EachInventory implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -22,9 +22,11 @@ public class PhysicalInventory implements Serializable {
 	private Date ordered;
 	private Date received;
 	private Date sold;
+	private String invoice_num;
 	private Date shipped;
 	private String warehouse;
 	private double wholesale;
+	
 	private double sold_for;
 	private double tax;
 	private double shipping;
@@ -63,6 +65,13 @@ public class PhysicalInventory implements Serializable {
 	}
 	public void setSold(Date sold) {
 		this.sold = sold;
+	}
+	
+	public String getInvoice_num() {
+		return invoice_num;
+	}
+	public void setInvoice_num(String invoice_num) {
+		this.invoice_num = invoice_num;
 	}
 	public Date getShipped() {
 		return shipped;

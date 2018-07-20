@@ -11,12 +11,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.NonPhysicalInventory;
-import com.efo.interfaces.INonPhysicalInventory;
+import com.efo.entity.FluidInventory;
+import com.efo.interfaces.IFluidInventory;
 
 @Transactional
 @Repository
-public class NonPhysicalInventoryDao implements INonPhysicalInventory {
+public class FluidInventoryDao implements IFluidInventory {
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -26,7 +26,7 @@ public class NonPhysicalInventoryDao implements INonPhysicalInventory {
 	}
 	
 	@Override
-	public void create(NonPhysicalInventory inventory) {
+	public void create(FluidInventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.save(inventory);
@@ -35,10 +35,10 @@ public class NonPhysicalInventoryDao implements INonPhysicalInventory {
 	}
 	
 	@Override
-	public NonPhysicalInventory retrieve(String sku) {
+	public FluidInventory retrieve(String sku) {
 		Session session = session();
 		
-		NonPhysicalInventory inventory = (NonPhysicalInventory) session.createCriteria(NonPhysicalInventory.class).add(Restrictions.idEq(sku)).uniqueResult();
+		FluidInventory inventory = (FluidInventory) session.createCriteria(FluidInventory.class).add(Restrictions.idEq(sku)).uniqueResult();
 		
 		session.disconnect();
 		
@@ -46,17 +46,17 @@ public class NonPhysicalInventoryDao implements INonPhysicalInventory {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<NonPhysicalInventory> retrieveList() {
+	public List<FluidInventory> retrieveList() {
 		Session session = session();
 		
-		List<NonPhysicalInventory> invList = session.createCriteria(NonPhysicalInventory.class).list();
+		List<FluidInventory> invList = session.createCriteria(FluidInventory.class).list();
 		session.disconnect();
 		
 		return invList;
 	}
 
 	@Override
-	public void update(NonPhysicalInventory inventory) {
+	public void update(FluidInventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.update(inventory);
@@ -84,7 +84,7 @@ public class NonPhysicalInventoryDao implements INonPhysicalInventory {
 	}
 	
 	@Override
-	public void delete(NonPhysicalInventory inventory) {
+	public void delete(FluidInventory inventory) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.delete(inventory);

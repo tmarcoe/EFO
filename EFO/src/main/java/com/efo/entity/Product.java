@@ -31,10 +31,10 @@ public class Product implements Serializable {
 	private boolean consignment;
 	
 	@OneToOne(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
-	private NonPhysicalInventory inventory = new NonPhysicalInventory();
+	private FluidInventory fluidInventory = new FluidInventory();
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
-	private Set<PhysicalInventory> physicalInventory = new HashSet<PhysicalInventory>(0);
+	private Set<EachInventory> eachInventory = new HashSet<EachInventory>(0);
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
 	private Set<ProductOrders> orders = new HashSet<ProductOrders>(0);
@@ -114,11 +114,17 @@ public class Product implements Serializable {
 	public void setConsignment(boolean consignment) {
 		this.consignment = consignment;
 	}
-	public NonPhysicalInventory getInventory() {
-		return inventory;
+	public FluidInventory getFluidInventory() {
+		return fluidInventory;
 	}
-	public void setInventory(NonPhysicalInventory inventory) {
-		this.inventory = inventory;
+	public void setFluidInventory(FluidInventory inventory) {
+		this.fluidInventory = inventory;
+	}
+	public Set<EachInventory> getEachInventory() {
+		return eachInventory;
+	}
+	public void setEachInventory(Set<EachInventory> eachInventory) {
+		this.eachInventory = eachInventory;
 	}
 	public Set<ProductOrders> getOrders() {
 		return orders;

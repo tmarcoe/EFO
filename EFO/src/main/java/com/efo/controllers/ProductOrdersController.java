@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -26,13 +25,13 @@ import com.efo.component.ScheduleUtilities;
 import com.efo.component.ScheduleUtilities.ScheduleType;
 import com.efo.entity.Payables;
 import com.efo.entity.PaymentsBilled;
+import com.efo.entity.EachInventory;
 import com.efo.entity.Product;
 import com.efo.entity.ProductOrders;
-import com.efo.entity.User;
 import com.efo.service.FetalTransactionService;
+import com.efo.service.EachInventoryService;
 import com.efo.service.ProductOrdersService;
 import com.efo.service.ProductService;
-import com.efo.service.VendorService;
 
 @Controller
 @RequestMapping("/admin/")
@@ -48,12 +47,11 @@ public class ProductOrdersController {
 	@Autowired
 	private ProductService productService;
 	
-
-	@Autowired
-	private VendorService vendorService;
-
 	@Autowired
 	FetalTransactionService fetalService;
+	
+	@Autowired
+	private EachInventoryService inventoryService;
 	
 	@Autowired
 	ScheduleUtilities sched;
@@ -79,10 +77,7 @@ public class ProductOrdersController {
 	public String newOrder(@ModelAttribute("sku") String sku, Model model) {
 
 		Product product = productService.retrieve(sku);
-		List<User> suppliers = vendorService.retrieveRawList("R");
-
 		model.addAttribute("productOrder", new ProductOrders(sku, new Date(), product.getProduct_name()));
-		model.addAttribute("suppliers", suppliers);
 
 		return "newproductorder";
 	}
@@ -92,10 +87,8 @@ public class ProductOrdersController {
 			BindingResult result, Model model) throws IOException {
 
 		if (result.getErrorCount() > 1) {
-			List<User> suppliers = vendorService.retrieveRawList("R");
-			model.addAttribute("suppliers", suppliers);
 			
-			return "newproductorder";
+ 			return "newproductorder";
 
 		}
 		Payables payables = productOrders.getPayables();
@@ -125,7 +118,16 @@ public class ProductOrdersController {
 			productOrders.setPayables(null);
 		}
 		
-		fetalService.purchaseInventory(productOrders, payables, new PaymentsBilled());
+		fetalService.purchaseInventory(product, productOrders, payables, new PaymentsBilled());
+		if ( product.getUnit().compareTo("Each") == 0 || product.getUnit().compareTo("Pack") == 0 ) {
+			EachInventory inventory = new EachInventory();
+			inventory.setSku(product.getSku());
+			inventory.setOrdered(new Date());
+			inventory.setWholesale(productOrders.getWholesale()/ productOrders.getAmt_ordered());
+			int qty = (int) productOrders.getAmt_ordered();
+			inventoryService.stockShelf(inventory, qty);
+		}
+		
 		
 		return "redirect:/admin/listproduct";
 	}
@@ -180,7 +182,7 @@ public class ProductOrdersController {
 			return "/admin/listproductorders?error=true";
 		}
 		Product product = productService.retrieve(orders.getSku());
-		fetalService.cancelOrder(orders, product.getInventory());
+		fetalService.cancelOrder(orders, product.getFluidInventory());
 		
 		return "redirect:/admin/listproductorders";
 	}
