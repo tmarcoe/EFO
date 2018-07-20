@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.efo.dao.EachInventoryDao;
 import com.efo.entity.EachInventory;
+import com.efo.entity.ProductOrders;
 import com.efo.interfaces.IEachInventory;
 
 @Service
@@ -51,5 +52,23 @@ public class EachInventoryService implements IEachInventory {
 	public void stockShelf(EachInventory inventory, Integer qty) {
 		inventoryDao.stockShelf(inventory, qty);
 	}
+	public void markAsDelivered(ProductOrders order, int qty) {
+		inventoryDao.markAsDelivered(order, qty);
+	}
+	
+	public double getAmountOrdered(String sku) {
+		return inventoryDao.getAmountOrdered(sku);
+	}
+	
+	public double getAmountReceived(String sku) {
+		
+		return inventoryDao.getAmountReceived(sku);
+	}
+
+	public double getAmountCommitted(String sku) {
+		
+		return inventoryDao.getAmountCommitted(sku);
+	}
+
 
 }

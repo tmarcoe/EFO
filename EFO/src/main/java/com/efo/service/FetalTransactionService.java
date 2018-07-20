@@ -184,11 +184,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 	
-	public void orderDelivered(ProductOrders order ) throws RecognitionException, IOException, RuntimeException {
+	public void orderDelivered(ProductOrders order, Product product ) throws RecognitionException, IOException, RuntimeException {
 		
 		try {
 			initTransaction(filePath);
 			publish("order", VariableType.DAO, order);
+			publish("product", VariableType.DAO, product);
 			loadRule("order_inventory/orderdelivered.trans");
 			}
 		finally {

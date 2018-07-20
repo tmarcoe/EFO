@@ -19,9 +19,8 @@ public class FluidInventory implements Serializable {
 	private double amt_in_stock;
 	private double amt_committed;
 	private double amt_ordered;
-	private double min_amount;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name="SKU")
 	private Product product;
 
@@ -55,14 +54,6 @@ public class FluidInventory implements Serializable {
 
 	public void setAmt_ordered(double amt_ordered) {
 		this.amt_ordered = amt_ordered;
-	}
-
-	public double getMin_amount() {
-		return min_amount;
-	}
-
-	public void setMin_amount(double min_amount) {
-		this.min_amount = min_amount;
 	}
 
 	public Product getProduct() {

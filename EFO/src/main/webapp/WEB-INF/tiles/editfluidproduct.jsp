@@ -7,13 +7,22 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form method="post" action="/admin/addproduct" modelAttribute="product">
-	<table  class="fancy-table">
+<sf:form method="post" action="/admin/updatefluidproduct" modelAttribute="product">
+	<table  class="fancy-table tableshadow">
 		<tr>
-			<td><b>SKU: </b><br><sf:input class="fancy" path="sku"/></td>
-			<td><b>UPC: </b><br><sf:input class="fancy" path="upc"/></td>
-			<td colspan="2"><b>Name</b><br><sf:input class="fancy" path="product_name" size="55" /></td>
-			<td><b>Unit: </b><br><sf:select class="fancy" path="unit">
+			<td><b>SKU: </b><br><sf:input class="fancy" path="sku" readonly="true" /></td>
+			<td><b>UPC: </b><br><sf:input class="fancy" path="upc" readonly="true" /></td>
+			<td colspan="2"><b>Product Name: </b><br><sf:input class="fancy" path="product_name"  size="56" readonly="true" /></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="sku" class="error" /></td>
+			<td><sf:errors path="upc" class="error" /></td>
+			<td><sf:errors path="product_name" class="error" /></td>
+		</tr>
+		<tr>
+			<td><b>Reorder At: </b><br><sf:input class="fancy" type="number" step=".01" path="min_amount"/></td>
+			<td><b>Price: </b><br><sf:input class="fancy" type="number" step=".01" path="price"/></td>
+			<td><b>Unit</b><br><sf:select class="fancy" path="unit">
 				<sf:option value="Each">Each</sf:option>
 				<sf:option value="Pack">Pack</sf:option>
 				<sf:option value="Hourly">Hourly</sf:option>
@@ -27,30 +36,23 @@
 				<sf:option value="Gram">Gram</sf:option>
 				<sf:option value="Kilogram">Kilogram</sf:option>
 				<sf:option value="Liter">Liter</sf:option>
-			</sf:select></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="sku" class="error" /></td>
-			<td><sf:errors path="upc" class="error" /></td>
-			<td><sf:errors path="product_name" class="error" /></td>
-			<td><sf:errors path="unit" class="error"/></td>
-		</tr>
-		<tr>
-			<td><b>Reorder At: </b><br><sf:input class="fancy" type="number" step=".01" path="min_amount"/></td>
-			<td><b>Reorder Amount: </b><br><sf:input class="fancy" type="number" step=".01" path="order_amount"/></td>
-			<td><b>Price Per Unit: </b><br><sf:input class="fancy" type="number" step=".01" path="price"/></td>
-			<td><b>Self Life (in days): </b><br><sf:input class="fancy" type="number" step="1" path="shelf_life"/>
+			</sf:select>&nbsp;<b>Consignment: </b><sf:checkbox path="consignment"/></td>
+			<td><b>Amount In Stock: </b><br><sf:input class="fancy" path="fluidInventory.amt_in_stock" readonly="true" size="5"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="min_amount" class="error"/></td>
-			<td><sf:errors path="order_amount" class="error"/></td>
 			<td><sf:errors path="price" class="error"/></td>
-			<td><sf:errors path="shelf_life" class="error"/>
+			<td><sf:errors path="unit" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Category: </b><br><sf:input class="fancy" path="category" /></td>
-			<td><b>Subcategory</b><br><sf:input class="fancy" path="subcategory"/></td>
-			<td colspan="3"><b>Keywords (separated by comas)</b><br><sf:textarea class="fancy-textarea" path="keywords" rows="4" cols="58"/></td>
+			<td><b>Category</b></td>
+			<td><b>Subcategory</b></td>
+			<td colspan="3"><b>Keywords (separated by comas)</b></td>
+		</tr>
+		<tr>
+			<td><sf:input class="fancy" path="category" /></td>
+			<td><sf:input class="fancy" path="subcategory"/></td>
+			<td colspan="3"><sf:textarea class="fancy-textarea" path="keywords" rows="4" cols="58"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="category" class="error"/></td>
@@ -60,11 +62,13 @@
 		<tr>
 			<td><b>On Sale? </b><sf:checkbox class="fancy" path="on_sale" /></td>
 			<td><b>Discontinue Product? </b><sf:checkbox class="fancy" path="discontinue"/></td>
-			<td><b>Consignment: </b><sf:checkbox path="consignment"/></td>
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="submit"><b>Save</b></sf:button></td>
 			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()"><b>Cancel</b></sf:button>
 		</tr>
 	</table>
+	<sf:hidden path="fluidInventory.sku"/>
+	<sf:hidden path="fluidInventory.amt_in_stock"/>
+	<sf:hidden path="fluidInventory.amt_ordered"/>
 </sf:form>

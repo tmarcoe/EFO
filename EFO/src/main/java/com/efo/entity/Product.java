@@ -26,11 +26,13 @@ public class Product implements Serializable {
 	private String subcategory;
 	private String keywords;
 	private Long shelf_life; // In Days
+	private double min_amount;
+	private double order_amount;
 	private boolean on_sale;
 	private boolean discontinue;
 	private boolean consignment;
 	
-	@OneToOne(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToOne(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.MERGE)
 	private FluidInventory fluidInventory = new FluidInventory();
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
@@ -95,6 +97,18 @@ public class Product implements Serializable {
 	}
 	public void setShelf_life(Long shelf_life) {
 		this.shelf_life = shelf_life;
+	}
+	public double getMin_amount() {
+		return min_amount;
+	}
+	public void setMin_amount(double min_amount) {
+		this.min_amount = min_amount;
+	}
+	public double getOrder_amount() {
+		return order_amount;
+	}
+	public void setOrder_amount(double order_amount) {
+		this.order_amount = order_amount;
 	}
 	public boolean isOn_sale() {
 		return on_sale;

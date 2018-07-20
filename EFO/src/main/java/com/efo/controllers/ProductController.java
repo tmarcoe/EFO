@@ -62,24 +62,42 @@ public class ProductController {
 	@RequestMapping("addproduct")
 	public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
 		
-		product.getFluidInventory().setSku(product.getSku());
-		product.getFluidInventory().setProduct(product);
-		
-		productService.create(product);
+		if ("Each".compareTo(product.getUnit()) != 0 && "Pack".compareTo(product.getUnit()) != 0) {
+			product.getFluidInventory().setSku(product.getSku());
+			product.getFluidInventory().setProduct(product);
+			productService.merge(product);
+		}else{
+			product.setFluidInventory(null);
+			productService.create(product);
+		}
 		
 		return "redirect:/admin/listproduct";
 	}
 
 	@RequestMapping("editproduct")
 	public String editProduct(@ModelAttribute("sku") String sku, Model model) {
+		Product product = productService.retrieve(sku);
+		model.addAttribute("product", product);
 		
-		model.addAttribute("product", productService.retrieve(sku));
-		
-		return "editproduct";
+		if ("Each".compareTo(product.getUnit()) != 0 && "Pack".compareTo(product.getUnit()) != 0) {
+			return "editfluidproduct";
+		}else{
+			return "editeachproduct";
+		}
 	}
 
-	@RequestMapping("updateproduct")
-	public String updateProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
+	@RequestMapping("updatefluidproduct")
+	public String updateFluidProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
+		
+		productService.merge(product);
+		
+		return "redirect:/admin/listproduct";
+	}
+	
+	@RequestMapping("updateeachproduct")
+	public String updateEachProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
+		
+		product.setFluidInventory(null);
 		
 		productService.merge(product);
 		

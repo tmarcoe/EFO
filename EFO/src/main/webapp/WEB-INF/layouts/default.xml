@@ -292,10 +292,16 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/newproduct.jsp"></put-attribute>
 	</definition>
 		
-	<definition name="editproduct" extends="accounting.base">
+	<definition name="editeachproduct" extends="accounting.base">
 		<put-attribute name="title" value="Edit Product"></put-attribute>
 		<put-attribute name="heading_title" value="Edit Product"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/editproduct.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editeachproduct.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editfluidproduct" extends="accounting.base">
+		<put-attribute name="title" value="Edit Product"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Product"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editfluidproduct.jsp"></put-attribute>
 	</definition>
 		
 	<!-- Product Orders Controller -->

@@ -123,6 +123,7 @@ public class ProductOrdersController {
 			EachInventory inventory = new EachInventory();
 			inventory.setSku(product.getSku());
 			inventory.setOrdered(new Date());
+			inventory.setInvoice_num(productOrders.getInvoice_num());
 			inventory.setWholesale(productOrders.getWholesale()/ productOrders.getAmt_ordered());
 			int qty = (int) productOrders.getAmt_ordered();
 			inventoryService.stockShelf(inventory, qty);
@@ -165,11 +166,16 @@ public class ProductOrdersController {
 	@RequestMapping("stockorder")
 	public String stockOrder(@ModelAttribute("productOrder") ProductOrders order) throws RecognitionException, IOException, RuntimeException {
 		
+		Product product = productService.retrieve(order.getSku());
+		
 		if (order.getDelivery_date() == null) {
 			order.setDelivery_date(new Date());
 		}
 		
-		fetalService.orderDelivered(order);
+		fetalService.orderDelivered(order, product);
+		if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0 ) {
+			inventoryService.markAsDelivered(order, (new Double(order.getAmt_this_shipment())).intValue());
+		}
 		
 		return "redirect:/admin/listproductorders";
 	}

@@ -21,7 +21,7 @@ public class EachInventory implements Serializable {
 	private String sku;
 	private Date ordered;
 	private Date received;
-	private Date sold;
+	private Date sold; 
 	private String invoice_num;
 	private Date shipped;
 	private String warehouse;

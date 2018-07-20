@@ -9,10 +9,6 @@
 		<th>SKU</th>
 		<th>UPC</th>
 		<th>Name</th>
-		<th>In Stock</th>
-		<th>On Order</th>
-		<th>Committed</th>
-		<th>Min Amount</th>
 		<th>Price</th>
 		<th>Unit</th>
 		<th>On Sale?</th>
@@ -25,15 +21,11 @@
 			<td>${item.sku}</td>
 			<td>${item.upc}</td>
 			<td>${item.product_name}</td>
-			<td>${item.inventory.amt_in_stock}</td>
-			<td>${item.inventory.amt_ordered}</td>
-			<td>${item.inventory.amt_committed}</td>
-			<td>${item.inventory.min_amount}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.price}"/></td>
 			<td>${item.unit}</td>
 			<td>${item.on_sale}</td>
 			<td><button type="button"
-					onclick="window.location.href='/admin/editproduct?sku=${item.sku}'">Edit</button></td>
+					onclick="window.location.href='/admin/editproduct?sku=${item.sku}'">View/Edit</button></td>
 			<td><button type="button"
 					onclick="deleteProduct('${item.sku}', '${item.product_name}')">Delete</button></td>
 			<td><button type="button"
@@ -45,7 +37,7 @@
 			<td><button type="button"
 					onclick="window.location.href='/admin/listproductorders'">Product
 					Orders</button>
-			<td colspan="11"><button type="button"
+			<td colspan="7"><button type="button"
 					onclick="window.location.href='/admin/newproduct'">New
 					Product</button></td>
 			<td><button type="button"

@@ -28,6 +28,7 @@
 	</table>
 	<sf:hidden path="sku"/>
 	<sf:hidden path="product_name"/>
+	<sf:hidden path="invoice_num"/>
 	<sf:hidden path="reference"/>
 	<sf:hidden path="vendor"/>
 	<sf:hidden path="wholesale"/>

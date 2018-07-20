@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.efo.entity.EachInventory;
+import com.efo.entity.ProductOrders;
 import com.efo.interfaces.IEachInventory;
 
 @Transactional
@@ -79,6 +80,7 @@ public class EachInventoryDao implements IEachInventory {
 		for(int i=0; i < qty; i++) {
 			EachInventory inv = new EachInventory();
 			inv.setSku(inventory.getSku());
+			inv.setInvoice_num(inventory.getInvoice_num());
 			inv.setOrdered(new Date());
 			inv.setWholesale(inventory.getWholesale());
 			session.save(inv);
@@ -91,5 +93,49 @@ public class EachInventoryDao implements IEachInventory {
 		tx.commit();
 		session.disconnect();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void markAsDelivered(ProductOrders order, int qty) {
+		String upd = "UPDATE EachInventory SET received = :received WHERE id = :id";
+		String hql = "SELECT id FROM EachInventory WHERE invoice_num = :invoice_num AND sku = :sku AND received IS null";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		List<Long> rows = session.createQuery(hql).setString("invoice_num", order.getInvoice_num())
+											.setString("sku", order.getSku()).setMaxResults(qty).list();
+		for (Long id : rows) {
+			session.createQuery(upd).setDate("received", order.getDelivery_date()).setLong("id", id).executeUpdate();
+		}
+		
+		tx.commit();
+		session.disconnect();
+	}
+	
+	public double getAmountOrdered(String sku) {
+		String hql = "SELECT COUNT(*) FROM EachInventory WHERE sku = :sku AND ordered IS NOT null AND received IS null";
+		Session session = session();
+		long amount = (long) session.createQuery(hql).setString("sku", sku).uniqueResult();
+		session.disconnect();
+		
+		return new Long(amount).doubleValue();
+	}
+	
+	public double getAmountReceived(String sku) {
+		String hql = "SELECT COUNT(*) FROM EachInventory WHERE sku = :sku AND received IS NOT null AND sold IS null";
+		Session session = session();
+		long amount = (long) session.createQuery(hql).setString("sku", sku).uniqueResult();
+		session.disconnect();
+		
+		return new Long(amount).doubleValue();
+	}
+
+	public double getAmountCommitted(String sku) {
+		String hql = "SELECT COUNT(*) FROM EachInventory WHERE sku = :sku AND sold IS NOT null AND shipped IS null";
+		Session session = session();
+		long amount = (long) session.createQuery(hql).setString("sku", sku).uniqueResult();
+		session.disconnect();
+		
+		return new Long(amount).doubleValue();
+	}
+
 
 }

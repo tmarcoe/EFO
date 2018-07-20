@@ -15,6 +15,7 @@ import com.efo.entity.FluidInventory;
 import com.efo.entity.Product;
 import com.efo.entity.Vendor;
 import com.efo.service.CustomerService;
+import com.efo.service.EachInventoryService;
 import com.efo.service.ProductService;
 import com.efo.service.VendorService;
 
@@ -30,6 +31,9 @@ public class QueryController {
 	
 	@Autowired
 	private VendorService vendorService;
+	
+	@Autowired
+	private EachInventoryService inventoryService;
 
 	@RequestMapping("lookupname")
 	public String lookupName(@RequestParam(value = "name") String name) throws JSONException {
@@ -54,9 +58,19 @@ public class QueryController {
 	
 	@RequestMapping("checkstock")
 	public String checkStock(@RequestParam(value = "sku") String sku ) throws JSONException {
+		FluidInventory inventory = null;
 		Product product = productService.retrieve(sku);
+		if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0) {
+			inventory = new FluidInventory();
+			inventory.setSku(sku);
+			inventory.setAmt_committed(inventoryService.getAmountCommitted(sku));
+			inventory.setAmt_ordered(inventoryService.getAmountOrdered(sku));
+			inventory.setAmt_in_stock(inventoryService.getAmountReceived(sku));
+		}else{
+			inventory = product.getFluidInventory();
+		}
 		
-		return inventoryToJson(product.getFluidInventory());
+		return inventoryToJson(inventory);
 	}
 	
 	private String vendorToJson(List<Vendor> v) throws JSONException {
@@ -85,10 +99,10 @@ public class QueryController {
 		json.put("amt_in_stock", i.getAmt_in_stock());
 		json.put("amt_committed", i.getAmt_committed());
 		json.put("amt_ordered", i.getAmt_ordered());
-		json.put("min_amount", i.getMin_amount());
 
 		return json.toString();
 	}
+	
 	
 	private String productToJson(List<Product> p) throws JSONException {
 		JSONArray jsonArray = new JSONArray();
