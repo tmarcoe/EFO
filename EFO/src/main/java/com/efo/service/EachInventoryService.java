@@ -1,6 +1,7 @@
 package com.efo.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.efo.dao.EachInventoryDao;
 import com.efo.entity.EachInventory;
 import com.efo.entity.ProductOrders;
+import com.efo.entity.SalesItem;
 import com.efo.interfaces.IEachInventory;
 
 @Service
@@ -70,5 +72,7 @@ public class EachInventoryService implements IEachInventory {
 		return inventoryDao.getAmountCommitted(sku);
 	}
 
-
+	public void depleteStock(Set<SalesItem> items) {
+		inventoryDao.depleteStock(items);
+	}
 }

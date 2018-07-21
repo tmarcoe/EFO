@@ -6,43 +6,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
-import com.efo.dao.StocksDao;
-import com.efo.entity.Stocks;
-import com.efo.interfaces.IStocks;
+import com.efo.dao.EquityDao;
+import com.efo.entity.Equity;
+import com.efo.interfaces.IEquity;
 
 @Service
-public class StocksService implements IStocks {
+public class EquityService implements IEquity {
 	
 	@Autowired
-	private StocksDao stocksDao;
+	private EquityDao stocksDao;
 
 	@Override
-	public void create(Stocks stocks) {
+	public void create(Equity stocks) {
 		stocksDao.create(stocks);
 
 	}
 
 	@Override
-	public Stocks retrieve(Long id) {
+	public Equity retrieve(Long id) {
 		return stocksDao.retrieve(id);
 	}
 
 	@Override
-	public List<Stocks> retrieveRawList() {
+	public List<Equity> retrieveRawList() {
 		return stocksDao.retrieveRawList();
 	}
 	
-	public PagedListHolder<Stocks> retrieveList() {
-		return new PagedListHolder<Stocks>(stocksDao.retrieveRawList());
+	public PagedListHolder<Equity> retrieveList() {
+		return new PagedListHolder<Equity>(stocksDao.retrieveRawList());
 	}
 	
 	@Override
-	public void update(Stocks stocks) {
+	public void update(Equity stocks) {
 		stocksDao.update(stocks);
 	}
 
 	@Override
-	public void delete(Stocks stocks) {
+	public void delete(Equity stocks) {
 		stocksDao.delete(stocks);
 	}
 

@@ -22,12 +22,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.efo.component.ScheduleUtilities;
+import com.efo.entity.FluidInventory;
 import com.efo.entity.PaymentsReceived;
 import com.efo.entity.Product;
 import com.efo.entity.Receivables;
 import com.efo.entity.RetailSales;
 import com.efo.entity.SalesItem;
 import com.efo.entity.User;
+import com.efo.service.EachInventoryService;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.InvoiceNumService;
 import com.efo.service.PaymentsReceivedService;
@@ -61,6 +63,9 @@ public class RetailSalesController {
 	
 	@Autowired
 	private PaymentsReceivedService paymentsService;
+	
+	@Autowired
+	private EachInventoryService eachInventoryService;
 	
 	@Autowired
 	private SalesItemService salesItemService;
@@ -127,9 +132,17 @@ public class RetailSalesController {
 			item.setSold_for(product.getPrice());
 			sales.getSalesItem().add(item);
 		}else{
-			if ((item.getQty() + order_qty) > product.getFluidInventory().getAmt_in_stock()) {				
+			FluidInventory inventory = null;
+			if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0) {
+				inventory = new FluidInventory();
+				inventory.setAmt_in_stock(eachInventoryService.getAmountReceived(product.getSku())); 
+			}else{
+				inventory = product.getFluidInventory();
+			}
+			if ((item.getQty() + order_qty) > inventory.getAmt_in_stock()) {				
 				return "redirect:/admin/browseproducts";
 			}
+
 			salesItemService.addQuantity(item, order_qty);
 		}
 		sales.setChanged(true);
@@ -301,7 +314,7 @@ public class RetailSalesController {
 		sales.setSalesItem(new HashSet<SalesItem>(salesItemService.retrieveRawList(reference)));
 		
 		transactionService.shipSales(sales);
-		
+		eachInventoryService.depleteStock(sales.getSalesItem());
 		return "redirect:/admin/listsales";
 	}
 	

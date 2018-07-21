@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.entity.Stocks;
-import com.efo.service.StocksService;
+import com.efo.entity.Equity;
+import com.efo.service.EquityService;
 
 @Controller
 @RequestMapping("/accounting/")
-public class StocksController {
+public class EquityController {
 	private final String pageLink = "/accounting/stockspaging";
-	private PagedListHolder<Stocks> stocksList;
+	private PagedListHolder<Equity> stocksList;
 	
 	@Autowired
-	private StocksService stocksService;
+	private EquityService stocksService;
 	
 	private SimpleDateFormat dateFormat;
 

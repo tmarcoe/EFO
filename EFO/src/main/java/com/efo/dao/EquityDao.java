@@ -11,12 +11,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.Stocks;
-import com.efo.interfaces.IStocks;
+import com.efo.entity.Equity;
+import com.efo.interfaces.IEquity;
 
 @Transactional
 @Repository
-public class StocksDao implements IStocks {
+public class EquityDao implements IEquity {
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -27,7 +27,7 @@ public class StocksDao implements IStocks {
 
 
 	@Override
-	public void create(Stocks stocks) {
+	public void create(Equity stocks) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.save(stocks);
@@ -36,10 +36,10 @@ public class StocksDao implements IStocks {
 	}
 
 	@Override
-	public Stocks retrieve(Long id) {
+	public Equity retrieve(Long id) {
 		Session session = session();
 		
-		Stocks stock = (Stocks) session.createCriteria(Stocks.class).add(Restrictions.idEq(id)).uniqueResult();
+		Equity stock = (Equity) session.createCriteria(Equity.class).add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
 		
 		return stock;
@@ -47,16 +47,16 @@ public class StocksDao implements IStocks {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Stocks> retrieveRawList() {
+	public List<Equity> retrieveRawList() {
 		Session session = session();
-		List<Stocks> stocks = session.createCriteria(Stocks.class).list();
+		List<Equity> stocks = session.createCriteria(Equity.class).list();
 		session.disconnect();
 		
 		return stocks;
 	}
 
 	@Override
-	public void update(Stocks stocks) {
+	public void update(Equity stocks) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.update(stocks);
@@ -65,7 +65,7 @@ public class StocksDao implements IStocks {
 	}
 
 	@Override
-	public void delete(Stocks stocks) {
+	public void delete(Equity stocks) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.delete(stocks);

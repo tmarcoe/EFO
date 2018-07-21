@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Stocks implements Serializable {
+public class Equity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
