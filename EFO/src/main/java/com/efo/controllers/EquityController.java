@@ -1,7 +1,10 @@
 package com.efo.controllers;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -16,15 +19,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.Equity;
 import com.efo.service.EquityService;
+import com.efo.service.FetalTransactionService;
 
 @Controller
 @RequestMapping("/accounting/")
 public class EquityController {
-	private final String pageLink = "/accounting/stockspaging";
-	private PagedListHolder<Equity> stocksList;
+	private final String pageLink = "/accounting/equitypaging";
+	private PagedListHolder<Equity> equityList;
 	
 	@Autowired
-	private EquityService stocksService;
+	private EquityService equityService;
+	
+	@Autowired
+	private FetalTransactionService transactionService;
 	
 	private SimpleDateFormat dateFormat;
 
@@ -35,28 +42,63 @@ public class EquityController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
 	
-	@RequestMapping("stockholderlist")
-	public String stockholderList(Model model) {
+	@RequestMapping("equitylist")
+	public String equityList(Model model) {
 		
-		stocksList = stocksService.retrieveList();
+		equityList = equityService.retrieveList();
 		
-		return "stockholderlist";
+		model.addAttribute("objectList", equityList);
+		model.addAttribute("pagelink", pageLink);
+		
+		return "equitylist";
 	}
 	
-	@RequestMapping(value = "stockspaging", method = RequestMethod.GET)
-	public String handleAssetsRequest(@ModelAttribute("page") String page, Model model) throws Exception {
+	@RequestMapping("newequity")
+	public String newEquity(Model model) {
+		
+		model.addAttribute("equity", new Equity(new Date()));
+		
+		return "newequity";
+	}
+	
+	@RequestMapping("addequity")
+	public String addEquity(@Valid @ModelAttribute("equity") Equity equity) throws IOException {
+		transactionService.addEquity(equity);
+		
+		return "redirect:/accounting/equitylist";
+	}
+	
+	@RequestMapping("editequity")
+	public String editEquity(@ModelAttribute("id") Long id, Model model) {
+		
+		model.addAttribute("equity", equityService.retrieve(id));
+		
+		return "editequity";
+	}
+	
+	@RequestMapping("updateequity") 
+	public String updateEquity(@ModelAttribute("equity") Equity equity) {
+		
+		equityService.update(equity);
+		
+		return "redirect:/accounting/equitylist";
+	}
+	
+	
+	@RequestMapping(value = "equitypaging", method = RequestMethod.GET)
+	public String handleEquityRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;
 
 		pgNum = isInteger(page);
 
 		if ("next".equals(page)) {
-			stocksList.nextPage();
+			equityList.nextPage();
 		} else if ("prev".equals(page)) {
-			stocksList.previousPage();
+			equityList.previousPage();
 		} else if (pgNum != -1) {
-			stocksList.setPage(pgNum);
+			equityList.setPage(pgNum);
 		}
-		model.addAttribute("objectList", stocksList);
+		model.addAttribute("objectList", equityList);
 		model.addAttribute("pagelink", pageLink);
 
 		return "stockholderlist";

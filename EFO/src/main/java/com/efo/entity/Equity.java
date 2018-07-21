@@ -1,6 +1,7 @@
 package com.efo.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,54 +15,43 @@ public class Equity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private int holders_id;
-	private String holders_name;
-	private String date_purchased;
-	private double price;
-	private double valued_at;
-	private Long shares;
 	
+	private double amount;
+	private Date time_stamp;
+	private String comments;
+	
+	public Equity() {
+	}
+	
+	
+	public Equity(Date time_stamp) {
+		this.time_stamp = time_stamp;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getHolders_id() {
-		return holders_id;
+	public double getAmount() {
+		return amount;
 	}
-	public void setHolders_id(int holders_id) {
-		this.holders_id = holders_id;
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
-	public String getHolders_name() {
-		return holders_name;
+	public Date getTime_stamp() {
+		return time_stamp;
 	}
-	public void setHolders_name(String holders_name) {
-		this.holders_name = holders_name;
+	public void setTime_stamp(Date time_stamp) {
+		this.time_stamp = time_stamp;
 	}
-	public String getDate_purchased() {
-		return date_purchased;
+	public String getComments() {
+		return comments;
 	}
-	public void setDate_purchased(String date_purchased) {
-		this.date_purchased = date_purchased;
-	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	public double getValued_at() {
-		return valued_at;
-	}
-	public void setValued_at(double valued_at) {
-		this.valued_at = valued_at;
-	}
-	public Long getShares() {
-		return shares;
-	}
-	public void setShares(Long shares) {
-		this.shares = shares;
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 	
 }

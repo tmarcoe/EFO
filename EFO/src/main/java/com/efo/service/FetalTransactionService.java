@@ -22,6 +22,7 @@ import com.efo.entity.Receivables;
 import com.efo.entity.RetailSales;
 import com.efo.dao.FetalTransactionDao;
 import com.efo.entity.CapitalAssets;
+import com.efo.entity.Equity;
 import com.efo.entity.FluidInventory;
 import com.efo.entity.OverheadExpenses;
 import com.efo.entity.Payables;
@@ -46,6 +47,19 @@ public class FetalTransactionService extends FetalTransaction {
 
 	@Value("${fetal.properiesFile}")
 	private String filePath;
+	
+	public void addEquity(Equity equity) throws IOException {
+		try {
+			initTransaction(filePath);
+			setDescription("Add Equity");
+			publish("equity", VariableType.DAO, equity);
+			loadRule("equity/addequity.trans");
+		}
+		finally {
+			closeFetal();
+		}
+	
+	}
 	
 	public void payOverheadExpense(OverheadExpenses expense, PaymentHistory payment) throws IOException {
 		try {

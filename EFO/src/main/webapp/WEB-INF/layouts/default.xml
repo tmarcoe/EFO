@@ -442,11 +442,23 @@
 	</definition>
 	
 	<!-- Stocks Controller -->
-		<definition name="stockholderlist" extends="accounting.base">
-		<put-attribute name="title" value="Stockholder's List"></put-attribute>
-		<put-attribute name="heading_title" value="Stockholder's List"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/stockholderlist.jsp"></put-attribute>
+	<definition name="equitylist" extends="accounting.base">
+		<put-attribute name="title" value="Equity List"></put-attribute>
+		<put-attribute name="heading_title" value="Equity List"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/equitylist.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newequity" extends="accounting.base">
+		<put-attribute name="title" value="New Equity"></put-attribute>
+		<put-attribute name="heading_title" value="New Equity"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newequity.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editequity" extends="accounting.base">
+		<put-attribute name="title" value="Edit Equity"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Equity"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editequity.jsp"></put-attribute>
 	</definition>
 		
 </tiles-definitions>

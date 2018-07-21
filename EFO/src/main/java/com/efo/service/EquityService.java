@@ -14,36 +14,36 @@ import com.efo.interfaces.IEquity;
 public class EquityService implements IEquity {
 	
 	@Autowired
-	private EquityDao stocksDao;
+	private EquityDao equityDao;
 
 	@Override
 	public void create(Equity stocks) {
-		stocksDao.create(stocks);
+		equityDao.create(stocks);
 
 	}
 
 	@Override
 	public Equity retrieve(Long id) {
-		return stocksDao.retrieve(id);
+		return equityDao.retrieve(id);
 	}
 
 	@Override
 	public List<Equity> retrieveRawList() {
-		return stocksDao.retrieveRawList();
+		return equityDao.retrieveRawList();
 	}
 	
 	public PagedListHolder<Equity> retrieveList() {
-		return new PagedListHolder<Equity>(stocksDao.retrieveRawList());
+		return new PagedListHolder<Equity>(equityDao.retrieveRawList());
 	}
 	
 	@Override
 	public void update(Equity stocks) {
-		stocksDao.update(stocks);
+		equityDao.update(stocks);
 	}
 
 	@Override
 	public void delete(Equity stocks) {
-		stocksDao.delete(stocks);
+		equityDao.delete(stocks);
 	}
 
 }
