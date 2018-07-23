@@ -60,13 +60,14 @@ public class ProductOrdersController {
 	public void initBinder(WebDataBinder binder) {
 		dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 
 	@RequestMapping("listproductorders")
 	public String listProductOrders(Model model) {
 		prdOrderList = ordersService.retrieveOpenOrders();
-
+		prdOrderList.setPageSize(20);
+		
 		model.addAttribute("objectList", prdOrderList);
 		model.addAttribute("pagelink", pageLink);
 
@@ -86,7 +87,7 @@ public class ProductOrdersController {
 	public String addProductOrder(@Valid @ModelAttribute("productOrder") ProductOrders productOrders,
 			BindingResult result, Model model) throws IOException {
 
-		if (result.getErrorCount() > 1) {
+		if (result.hasErrors()) {
 			
  			return "newproductorder";
 

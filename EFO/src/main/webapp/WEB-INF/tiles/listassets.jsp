@@ -6,7 +6,7 @@
 
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
 
-<table class="tableview tableshadow tableborder rjfifth rjeighth">
+<table class="tableview tableshadow tableborder spread-out rjfifth rjeighth">
 	<thead>
 		<tr>
 			<th>Item Name</th>

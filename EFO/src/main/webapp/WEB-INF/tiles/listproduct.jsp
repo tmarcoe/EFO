@@ -4,7 +4,7 @@
 
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
 
-<table class="tableview tableshadow tableborder rjfourth rjfifth rjsixth rjseventh rjeighth">
+<table class="tableview tableshadow tableborder spread-out rjfourth rjfifth rjsixth rjseventh rjeighth">
 	<tr>
 		<th>SKU</th>
 		<th>UPC</th>

@@ -57,12 +57,13 @@ public class VendorController {
 	public void initBinder(WebDataBinder binder) {
 		dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 
 	@RequestMapping("vendorlist")
 	public String customerList(Model model) {
 		vendorList = vendorService.retrieveEditList();
+		vendorList.setPageSize(20);
 		
 		model.addAttribute("objectList", vendorList);
 		model.addAttribute("pagelink", pageLink);
@@ -155,7 +156,7 @@ public class VendorController {
 		model.addAttribute("objectList", vendorList);
 		model.addAttribute("pagelink", pageLink);
 
-		return "listcustomers";
+		return "vendorlist";
 	}
 
 	/**************************************************************************************************************************************

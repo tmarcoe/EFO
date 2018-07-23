@@ -11,35 +11,40 @@
 <sf:form method="post" action="/admin/addproductorder" modelAttribute="productOrder">
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>Invoice #: </b><br> <sf:input class="fancy" path="invoice_num" /></td>
-			<td><b>SKU: </b><br> <sf:input class="fancy" path="sku" readonly="true" /></td>
-			<td><b>Product Name: </b><br> <sf:input class="fancy" path="product_name" readonly="true" />
-			<td><b>Vendor: </b><br> <sf:input class="fancy" id="supplierInp" path="vendor" /></td>
+			<td colspan="3"><b>Product Name: </b><br> <sf:input class="fancy" path="product_name" readonly="true" size="70"/>
 		</tr>
 		<tr>
-			<td><sf:errors path="invoice_num" class="error" /></td>
-			<td><sf:errors path="sku" class="error" /></td>
-			<td>&nbsp;</td>
+			<td colspan="3"><b>Vendor: </b><br> <sf:input class="fancy" id="supplierInp" path="vendor" size = "70"/></td>
+		</tr>
+		<tr>
 			<td><sf:errors path="vendor" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Order Price: </b><br>
-			<sf:input id="total_due" class="fancy" type="number" step=".01" path="wholesale" /></td>
-			<td><b>Amount Ordered: </b><br>
-			<sf:input class="fancy" type="number" step=".01" path="amt_ordered" /></td>
+			<td><b>Invoice #: </b><br> <sf:input class="fancy" path="invoice_num" /></td>
+			<td><b>SKU: </b><br> <sf:input class="fancy" path="sku" readonly="true" /></td>
 			<td><b>Payment Type: </b><br>
 			<sf:select id="paymentType" class="fancy" path="payment_type" onchange="showReceivable()">
 					<sf:option value="">---Select---</sf:option>
 					<sf:option value="Cash">Cash</sf:option>
 					<sf:option value="Credit">Credit</sf:option>
 				</sf:select></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="invoice_num" class="error" /></td>
+			<td><sf:errors path="sku" class="error" /></td>
+			<td><sf:errors path="payment_type" class="error" /></td>
+		</tr>
+		<tr>
+			<td><b>Order Price: </b><br>
+			<sf:input id="total_due" class="fancy" type="number" step=".01" path="wholesale" /></td>
+			<td><b>Amount Ordered: </b><br>
+			<sf:input class="fancy" type="number" step=".01" path="amt_ordered" /></td>
 			<td><b>Date Ordered: </b><br>
 			<sf:input class="fancy" type="date" path="order_date" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="wholesale" class="error" /></td>
 			<td><sf:errors path="amt_ordered" class="error" /></td>
-			<td><sf:errors path="payment_type" class="error" /></td>
 			<td><sf:errors path="order_date" class="error" /></td>
 		</tr>
 		<tr>

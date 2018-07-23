@@ -36,11 +36,11 @@
 				</sf:select></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="salvage_value" class="error" /></td>
+			<td><sf:errors id="errorCost" path="item_cost" class="error" /></td>
 			<td><sf:errors path="lifetime" class="error" /></td>
+			<td><sf:errors path="salvage_value" class="error" /></td>
 			<td><sf:errors path="depreciation_method" class="error" /></td>
 			<td><sf:errors path="purchase_type" class="error" /></td>
-			<td><sf:errors id="errorCost" path="item_cost" class="error" /></td>
 		</tr>
 		<tr>
 			<td colspan="4"><b>Item Description: </b><br> <sf:textarea class="fancy-textarea" path="item_description"

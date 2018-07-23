@@ -48,7 +48,7 @@ public class CapitalAssetsController {
 	public void initBinder(WebDataBinder binder) {
 		dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
 	@RequestMapping("listassets")
@@ -71,23 +71,30 @@ public class CapitalAssetsController {
 	}
 	
 	@RequestMapping("addasset")
-	public String addAsset(@Valid @ModelAttribute("assets") CapitalAssets assets, BindingResult result) throws Exception {
-		PaymentsBilled payments = null;
-		Payables payables = assets.getPayables();
+	public String addAsset(@Valid @ModelAttribute("asset") CapitalAssets asset, BindingResult result) throws Exception {
 		
-		assets.setPayables(null);
-		capitalAssetsService.create(assets);
-		if (assets.getPurchase_type().compareTo("Cash") == 0) {
-			assets.setPayables(null);
-		}else{
-			payments = new PaymentsBilled();
-			assets.setPayables(payables);
-			Date lastPayment = billedService.lastestDate(assets.getReference());
-			if (lastPayment == null) lastPayment = assets.getDate_purchased();
-			payments.setDate_due(sched.nextPayment(assets.getDate_purchased(), lastPayment, assets.getPayables().getSchedule()));
+		if (asset.getPurchase_type().length() == 0) {
+			result.rejectValue("purchase_type", "NotBlank.asset.purchase_type");
+			
+			return "newasset";
 		}
 		
-		transactionService.purchaseCapital(assets, payments);
+		PaymentsBilled payments = null;
+		Payables payables = asset.getPayables();
+		
+		asset.setPayables(null);
+		capitalAssetsService.create(asset);
+		if (asset.getPurchase_type().compareTo("Cash") == 0) {
+			asset.setPayables(null);
+		}else{
+			payments = new PaymentsBilled();
+			asset.setPayables(payables);
+			Date lastPayment = billedService.lastestDate(asset.getReference());
+			if (lastPayment == null) lastPayment = asset.getDate_purchased();
+			payments.setDate_due(sched.nextPayment(asset.getDate_purchased(), lastPayment, asset.getPayables().getSchedule()));
+		}
+		
+		transactionService.purchaseCapital(asset, payments);
 		
 		return "redirect:/accounting/listassets";
 	}

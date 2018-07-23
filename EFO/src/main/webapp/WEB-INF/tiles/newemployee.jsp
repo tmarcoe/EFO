@@ -10,15 +10,93 @@
 <sf:hidden id="selectedRoles" path="roleString"/>
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>Email</b></td>
-			<td><b>Temporary Password</b></td>
-			<td><b>Confirm Password</b></td>
-			<td>&nbsp;</td>
+			<td colspan="4"><sf:select class="fancy" path="employee.salutation">
+				<sf:option value="Mr.">Mr.</sf:option>
+				<sf:option value="Mrs.">Mrs.</sf:option>
+				<sf:option value="Ms.">Ms.</sf:option>
+				<sf:option value="Miss.">Miss.</sf:option>
+				<sf:option value="Dr.">Dr.</sf:option>
+			</sf:select>
+			<sf:input class="fancy" path="employee.firstname" placeholder="First Name" />
+			<sf:input class="fancy" path="employee.lastname" placeholder="Last Name" />
+			<sf:select class="fancy" path="employee.maleFemale">
+					<sf:option value="M">Male</sf:option>
+					<sf:option value="F">Female</sf:option>
+				</sf:select></td>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="username" autocomplete="false" /></td>
-			<td><sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" /></td>
-			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass"
+			<td>&nbsp;</td>
+			<td><sf:errors path="employee.firstname" class="error" /></td>
+			<td><sf:errors path="employee.lastname" class="error" /></td>
+			<td><sf:errors path="employee.maleFemale" class="error" /></td>
+		</tr>
+		<tr>
+			<td><b>Position: </b><br><sf:input class="fancy" path="employee.position" /></td>
+			<td><b>Starting Date: </b><br><sf:input class="fancy" type="date" path="employee.start_date"/></td>
+			<td><b>Ending Date: </b><br><sf:input class="fancy" type="date" path="employee.end_date"/></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="employee.position" class="error"/></td>
+			<td><sf:errors path="employee.start_date" class="error" /></td>
+			<td><sf:errors path="employee.end_date" class="error" /></td>
+		</tr>
+		<tr>
+			<td><b>Company: </b><br><sf:input class="fancy" path="employee.company" /></td>
+			<td><b>Division: </b><br><sf:input class="fancy" path="employee.division" /></td>
+			<td><b>Supervisor: </b><br><sf:input class="fancy" path="employee.supervisor" /></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="employee.company" class="error"/>
+			<td><sf:errors path="employee.division" class="error"/>
+			<td><sf:errors path="employee.supervisor" class="error"/>
+		</tr>
+		<tr>
+			<td><b>Direct Line: </b><br><sf:input class="fancy" path="employee.extension" /></td>
+			<td><b>Office Location: </b><br><sf:input class="fancy" path="employee.office_loc" /></td>
+			<td><b>Home Ph</b><br><sf:input class="fancy" path="employee.home_phone"/></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="employee.extension" class="error"/>
+			<td><sf:errors path="employee.office_loc" class="error"/>
+			<td><sf:errors path="employee.home_phone" class="error"/></td>
+		</tr>
+		<tr>
+			<td><b>Address 1: </b><br><sf:input class="fancy" path="common.address1"/></td>
+			<td><b>Address 2: </b><br><sf:input class="fancy" path="common.address2"/></td>
+			<td><b>City: </b><br><sf:input class="fancy" path="common.city"/></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="common.address1" class="error"/></td>
+			<td><sf:errors path="common.address2" class="error"/></td>
+			<td><sf:errors path="common.city" class="error"/></td>
+		</tr>
+		<tr>
+			<td><b>Region: </b><br><sf:input class="fancy" path="common.region"/>
+			<td><b>Postal Code: </b><br><sf:input class="fancy" path="common.postalCode"/>
+			<td><b>Country Code: </b><br><sf:input class="fancy" path="common.country"/>
+		</tr>
+		<tr>
+			<td><sf:errors path="common.region" class="error"/></td>
+			<td><sf:errors path="common.postalCode" class="error"/></td>
+			<td><sf:errors path="common.country" class="error"/></td>
+		</tr>
+		<tr>
+			<td><b>Cell Phone</b><br><sf:input class="fancy" path="employee.cell_phone"/></td>
+			<td><b>Emergency Cont</b><br><sf:input class="fancy" path="employee.emer_contact"/></td>
+			<td><b>Contact Ph</b><br><sf:input class="fancy" path="employee.emer_ph"/></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="employee.cell_phone" class="error"/></td>
+			<td><sf:errors path="employee.emer_contact" class="error"/></td>
+			<td><sf:errors path="employee.emer_ph" class="error"/></td>
+		</tr>
+		<tr>
+			<td><b>Email</b><br>
+				<sf:input class="fancy" path="username" autocomplete="false" /></td>
+			<td><b>Temporary Password</b><br>
+				<sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" /></td>
+			<td><b>Confirm Password</b><br>
+				<input class="fancy" id="confirmpass" class="control" name="confirmpass"
 				type="password" /></td>
 			<td><b>Enable logins? </b><sf:checkbox id="enabled" path="enabled" onclick="disableInput()"/></td>
 		</tr>
@@ -32,103 +110,9 @@
 			<td>&nbsp;<sf:errors path="enabled" class="error" /></td>
 		</tr>
 		<tr>
-			<th>&nbsp;</th>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>M/F</th>
-			<th>Position</th>
-			<th>Starting Date</th>
-			<th>Ending Date</th>
-		</tr>
-		<tr>
-			<td><sf:select class="fancy" path="employee.salutation">
-				<sf:option value="Mr.">Mr.</sf:option>
-				<sf:option value="Mrs.">Mrs.</sf:option>
-				<sf:option value="Ms.">Ms.</sf:option>
-				<sf:option value="Miss.">Miss.</sf:option>
-				<sf:option value="Dr.">Dr.</sf:option>
-			</sf:select></td>
-			<td><sf:input class="fancy" path="employee.firstname" /></td>
-			<td><sf:input class="fancy" path="employee.lastname" /></td>
-			<td><sf:select class="fancy" path="employee.maleFemale">
-					<sf:option value="M">Male</sf:option>
-					<sf:option value="F">Female</sf:option>
-				</sf:select></td>
-			<td><sf:input class="fancy" path="employee.position" /></td>
-			<td><sf:input class="fancy" type="date" path="employee.start_date"/></td>
-			<td><sf:input class="fancy" type="date" path="employee.end_date"/></td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><sf:errors path="employee.firstname" class="error" /></td>
-			<td><sf:errors path="employee.lastname" class="error" /></td>
-			<td><sf:errors path="employee.maleFemale" class="error" /></td>
-			<td><sf:errors path="employee.position" class="error"/></td>
-			<td><sf:errors path="employee.start_date" class="error" /></td>
-			<td><sf:errors path="employee.end_date" class="error" /></td>
-		</tr>
-		<tr>
-			<th>Company</th>
-			<th>Division</th>
-			<th>Supervisor</th>
-			<th>Direct Line</th>
-			<th>Office Location</th>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="employee.company" /></td>
-			<td><sf:input class="fancy" path="employee.division" /></td>
-			<td><sf:input class="fancy" path="employee.supervisor" /></td>
-			<td><sf:input class="fancy" path="employee.extension" /></td>
-			<td><sf:input class="fancy" path="employee.office_loc" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="employee.company" class="error"/>
-			<td><sf:errors path="employee.division" class="error"/>
-			<td><sf:errors path="employee.supervisor" class="error"/>
-			<td><sf:errors path="employee.extension" class="error"/>
-			<td><sf:errors path="employee.office_loc" class="error"/>
-		</tr>
-		<tr>
-			<th>Address 1</th>
-			<th>Address 2</th>
-			<th>City</th>
-			<th>Region</th>
-			<th>Postal Code</th>
-			<th>Country Code</th>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="common.address1"/>
-			<td><sf:input class="fancy" path="common.address2"/>
-			<td><sf:input class="fancy" path="common.city"/>
-			<td><sf:input class="fancy" path="common.region"/>
-			<td><sf:input class="fancy" path="common.postalCode"/>
-			<td><sf:input class="fancy" path="common.country"/>
-		</tr>
-		<tr>
-			<td><sf:errors path="common.address1" class="error"/></td>
-			<td><sf:errors path="common.address2" class="error"/></td>
-			<td><sf:errors path="common.city" class="error"/></td>
-			<td><sf:errors path="common.region" class="error"/></td>
-			<td><sf:errors path="common.postalCode" class="error"/></td>
-			<td><sf:errors path="common.country" class="error"/></td>
-		</tr>
-		<tr>
-			<th>Home Ph</th>
-			<th>Cell Phone</th>
-			<th>Emergency Cont</th>
-			<th>Contact Ph</th>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="employee.home_phone"/></td>
-			<td><sf:input class="fancy" path="employee.cell_phone"/></td>
-			<td><sf:input class="fancy" path="employee.emer_contact"/></td>
-			<td><sf:input class="fancy" path="employee.emer_ph"/></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="employee.home_phone" class="error"/></td>
-			<td><sf:errors path="employee.cell_phone" class="error"/></td>
-			<td><sf:errors path="employee.emer_contact" class="error"/></td>
-			<td><sf:errors path="employee.emer_ph" class="error"/></td>
+			<td><button class="fancy-button" type="button" onclick="formSubmit()" ><b>Save</b></button></td>
+			<td><button class="fancy-button" type="button"  onclick="openPopup()"><b>Financial Information</b></button></td>
+			<td><button class="fancy-button" type="button" onclick="window.history.back()" ><b>Cancel</b></button></td>
 		</tr>
 		<tr>
 			<td><b>Do Not Rehire:</b> <sf:checkbox class="fancy" path="employee.dnr" /></td>
@@ -145,11 +129,6 @@
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
 			
-		</tr>
-		<tr>
-			<td><button class="fancy-button" type="button" onclick="formSubmit()" ><b>Save</b></button></td>
-			<td><button class="fancy-button" type="button"  onclick="openPopup()"><b>Financial Information</b></button></td>
-			<td><button class="fancy-button" type="button" onclick="window.history.back()" ><b>Cancel</b></button></td>
 		</tr>
 	</table>
 		<div class="modal" id="empFinancial">

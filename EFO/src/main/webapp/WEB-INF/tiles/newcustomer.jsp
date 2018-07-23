@@ -19,51 +19,16 @@
 			</tr>
 		</thead>
 		<tr>
-			<td><b>Email</b></td>
-			<td><b>Temporary Password</b></td>
-			<td><b>Comfirm Password</b></td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="username" autocomplete="false" /></td>
-			<td><sf:password id="password" class="fancy" path="password" autocomplete="false"
-					showPassword="true" /></td>
-			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass"
-				type="password" /></td>
-			<td><b>Enabled logins? </b><sf:checkbox id="enabled" class="fancy" path="enabled" onclick="disableInput()"/></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="username" class="error" /></td>
-			<td><sf:errors path="password" class="error" /></td>
-			<td>&nbsp;</td>
-			<td><sf:errors path="enabled" class="error" /></td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><div id="pbar">
-					<label id="pLabel"></label>
-					<div id="pStrength"></div>
-				</div>&nbsp;</td>
-			<td><div id="matchpass"></div>&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td><b>&nbsp;</b></td>
-			<td><b>First Name</b></td>
-			<td><b>Last Name</b></td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td><sf:select class="fancy" path="customer.salutation">
+			<td colspan="4"><b>Customer Name: </b><sf:select class="fancy" path="customer.salutation">
 				<sf:option value="Mr.">Mr.</sf:option>
 				<sf:option value="Mrs.">Mrs.</sf:option>
 				<sf:option value="Ms.">Ms.</sf:option>
 				<sf:option value="Miss.">Miss.</sf:option>
 				<sf:option value="Dr.">Dr.</sf:option>
-			</sf:select></td>
-			<td><sf:input class="fancy" path="customer.firstname" /></td>
-			<td><sf:input class="fancy" path="customer.lastname" /></td>
-			<td><sf:select class="fancy" path="customer.maleFemale">
+			</sf:select>
+			<sf:input class="fancy" path="customer.firstname" placeholder="First Name" />
+			<sf:input class="fancy" path="customer.lastname" placeholder="Last Name" />
+			<sf:select class="fancy" path="customer.maleFemale">
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
 				</sf:select></td>
@@ -103,6 +68,32 @@
 			<td><sf:errors path="common.region" class="error" /></td>
 			<td><sf:errors path="common.postalCode" class="error" /></td>
 			<td><sf:errors path="common.country" class="error" /></td>
+		</tr>
+		<tr>
+			<td><b>Email</b><br>
+				<sf:input class="fancy" path="username" autocomplete="false" /></td>
+			<td><b>Temporary Password</b><br>
+				<sf:password id="password" class="fancy" path="password" autocomplete="false"
+					showPassword="true" /></td>
+			<td><b>Comfirm Password</b><br>
+				<input class="fancy" id="confirmpass" class="control" name="confirmpass"
+				type="password" /></td>
+			<td><b>Enabled logins? </b><sf:checkbox id="enabled" class="fancy" path="enabled" onclick="disableInput()"/></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="username" class="error" /></td>
+			<td><sf:errors path="password" class="error" /></td>
+			<td>&nbsp;</td>
+			<td><sf:errors path="enabled" class="error" /></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><div id="pbar">
+					<label id="pLabel"></label>
+					<div id="pStrength"></div>
+				</div>&nbsp;</td>
+			<td><div id="matchpass"></div>&nbsp;</td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
 			<td><b>Start Date:</b><br><sf:input class="fancy" path="customer.since" type="date" /></td>

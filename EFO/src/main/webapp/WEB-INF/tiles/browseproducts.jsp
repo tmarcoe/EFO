@@ -11,7 +11,7 @@
 <sf:form id="orderProduct" method="post" action="/admin/processorder" modelAttribute="sales" autocomplete="off">
 	<table class="fancy-table tableshadow" style="position: fixed; top: 100px; right: 100px;">
 		<tr>
-			<td colspan="4"><input class="fancy" id="product_name" size="46" placeholder="Enter the Product Name" /></td>
+			<td colspan="4"><input class="fancy" id="product_name" size="60" placeholder="Enter the Product Name" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><b>SKU Code: <br></b> <input class="fancy" id="sku" readonly="true" /></td>
@@ -49,8 +49,7 @@
 				</sf:button></td>
 		</tr>
 		<tr>
-		
-			<td colspan="4"><button class="fancy-button" type="button" onclick="window.location.href='/admin/listsales'">
+			<td colspan="2"><button class="fancy-button" type="button" onclick="window.location.href='/admin/listsales'">
 							<b>View Processed Orders</b></button></td>
 		</tr>
 		<tfoot>

@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 public class ProductOrders implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,7 @@ public class ProductOrders implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long reference;
+	@NotBlank
 	private String invoice_num;
 	private String sku;
 	private String product_name;
@@ -29,10 +32,12 @@ public class ProductOrders implements Serializable {
 	
 	@DecimalMin("0.01")
 	private double wholesale;
+	@DecimalMin("0.01")
 	private double amt_ordered;
 	private double amt_received;
 	@Transient
 	private double amt_this_shipment;
+	@NotBlank
 	private String payment_type;
 	private Date order_date;
 	private Date delivery_date;

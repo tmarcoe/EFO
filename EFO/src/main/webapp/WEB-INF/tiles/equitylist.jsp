@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
-<table class="tableview tableshadow tableborder">
+<table class="tableview tableshadow tableborder spread-out">
 	<tr>
 		<th>Amount</th>
 		<th>Time Stamp</th>

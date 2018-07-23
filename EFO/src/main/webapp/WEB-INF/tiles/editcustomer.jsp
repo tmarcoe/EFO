@@ -11,30 +11,20 @@
 	<sf:hidden id="selectedRoles" path="roleString" />
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>Email: </b><sf:input class="fancy" path="username" readonly="true" /></td>
-			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled"/></td>
+			<td>&nbsp;</td>
+			<td><b>Customer Name</b></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="username" class="error" />
-			<td><sf:errors path="enabled" class="error" />
-		</tr>
-		<tr>
-			<td><b>&nbsp;</b></td>
-			<td><b>First Name</b></td>
-			<td><b>Last Name</b></td>
-			<td><b>&nbsp;</b></td>
-		</tr>
-		<tr>
-			<td><sf:select class="fancy" path="customer.salutation">
+			<td colspan="4"><sf:select class="fancy" path="customer.salutation">
 				<sf:option value="Mr.">Mr.</sf:option>
 				<sf:option value="Mrs.">Mrs.</sf:option>
 				<sf:option value="Ms.">Ms.</sf:option>
 				<sf:option value="Miss.">Miss.</sf:option>
 				<sf:option value="Dr.">Dr.</sf:option>
-			</sf:select></td>
-			<td><sf:input class="fancy" path="customer.firstname" /></td>
-			<td><sf:input class="fancy" path="customer.lastname" /></td>
-			<td><sf:select class="fancy" path="customer.maleFemale">
+			</sf:select>
+			<sf:input class="fancy" path="customer.firstname" placeholer="First Name" />
+			<sf:input class="fancy" path="customer.lastname" placeholer="Last Name" />
+			<sf:select class="fancy" path="customer.maleFemale">
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
 				</sf:select></td>
@@ -44,31 +34,34 @@
 			<td><sf:errors path="customer.firstname" class="error" /></td>
 			<td><sf:errors path="customer.lastname" class="error" /></td>
 			<td><sf:errors path="customer.maleFemale" class="error" /></td>
-			<td><sf:errors path="customer.since" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Address 1</b></td>
-			<td><b>Address 2</b></td>
-			<td><b>City</b></td>
-			<td><b>Region</b></td>
-			<td><b>Postal Code</b></td>
-			<td><b>Country Code</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="common.address1"/>
-			<td><sf:input class="fancy" path="common.address2"/>
-			<td><sf:input class="fancy" path="common.city"/>
-			<td><sf:input class="fancy" path="common.region"/>
-			<td><sf:input class="fancy" path="common.postalCode"/>
-			<td><sf:input class="fancy" path="common.country"/>
-		</tr>
+			<td><b>Address 1</b><br><sf:input class="fancy" path="common.address1"/>
+			<td><b>Address 2</b><br><sf:input class="fancy" path="common.address2"/>
+			<td><b>City</b><br><sf:input class="fancy" path="common.city"/>
+		</td>
 		<tr>
 			<td><sf:errors path="common.address1" class="error"/></td>
 			<td><sf:errors path="common.address2" class="error"/></td>
 			<td><sf:errors path="common.city" class="error"/></td>
+		</tr>
+		<tr>
+			<td><b>Region</b><br><sf:input class="fancy" path="common.region"/>
+			<td><b>Postal Code</b><br><sf:input class="fancy" path="common.postalCode"/>
+			<td><b>Postal Code</b><br><sf:input class="fancy" path="common.country"/>
+		</tr>
+		<tr>
 			<td><sf:errors path="common.region" class="error"/></td>
 			<td><sf:errors path="common.postalCode" class="error"/></td>
 			<td><sf:errors path="common.country" class="error"/></td>
+		</tr>
+		<tr>
+			<td><b>Email: </b><br><sf:input class="fancy" path="username" readonly="true" /></td>
+			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled"/></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="username" class="error" />
+			<td><sf:errors path="enabled" class="error" />
 		</tr>
 		<tr>
 			<td><b>Customer Since:<br></b><sf:input class="fancy" type="date" path="customer.since"/></td>
@@ -77,8 +70,8 @@
 				</sf:select></td>
 		</tr>
 		<tr>
-			<td ><button class="fancy-button" type="button" onclick="formSubmit()">Save</button></td>
-			<td ><button class="fancy-button" type="button"onclick="window.history.back()" >Cancel</button></td>
+			<td ><button class="fancy-button" type="button" onclick="formSubmit()"><b>Save</b></button></td>
+			<td ><button class="fancy-button" type="button"onclick="window.history.back()" ><b>Cancel</b></button></td>
 		</tr>
 	</table>
 	<sf:hidden path="user_id" />

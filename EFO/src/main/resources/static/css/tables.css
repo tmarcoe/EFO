@@ -56,6 +56,11 @@ tfoot.tablefooter td
 	text-align: right;
 }
 
+.spread-out td {
+	padding-right: 1em;
+	padding-left: 1em;
+}
+
 /***************************************************** 
  * Right justified
  *****************************************************/

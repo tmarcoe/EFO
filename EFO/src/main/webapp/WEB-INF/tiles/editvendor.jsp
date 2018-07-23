@@ -10,79 +10,78 @@
 	<sf:hidden id="selectedRoles" path="roleString" />
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>Email: </b><sf:input class="fancy" path="username"  readonly="true" /></td>
-			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled"/></td>
+			<td colspan="6"><b>Company Name</b><br>
+				<sf:input class="fancy" path="vendor.company_name" size="50" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="username" class="error" />
-			<td><sf:errors path="enabled" class="error" />
+			<td><sf:errors path="vendor.company_name" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Company Name</b></td>
-			<td><b>Salutation</b></td>
-			<td><b>First Name</b></td>
-			<td><b>Last Name</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="vendor.company_name" /></td>
-			<td><sf:select class="fancy" path="vendor.salutation">
+			<td colspan="6"><b>Contanct: </b><sf:select class="fancy" path="vendor.salutation">
 				<sf:option value="Mr.">Mr.</sf:option>
 				<sf:option value="Mrs.">Mrs.</sf:option>
 				<sf:option value="Ms.">Ms.</sf:option>
 				<sf:option value="Miss.">Miss.</sf:option>
 				<sf:option value="Dr.">Dr.</sf:option>
-			</sf:select></td>
-			<td><sf:input class="fancy" path="vendor.firstname" /></td>
-			<td><sf:input class="fancy" path="vendor.lastname"/></td>
+			</sf:select>
+			<sf:input class="fancy" path="vendor.firstname" />
+			<sf:input class="fancy" path="vendor.lastname"/></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="vendor.company_name" class="error" /></td>
 			<td><sf:errors path="vendor.salutation" class="error" /></td>			
 			<td><sf:errors path="vendor.firstname" class="error" /></td>
 			<td><sf:errors path="vendor.lastname" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Address 1</b></td>
-			<td><b>Address 2</b></td>
-			<td><b>City</b></td>
-			<td><b>Region</b></td>
-			<td><b>Postal Code</b></td>
-			<td><b>Country Code</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="common.address1" />
-			<td><sf:input class="fancy" path="common.address2" />
-			<td><sf:input class="fancy" path="common.city" /></td>
-			<td><sf:input class="fancy" path="common.region" /></td>
-			<td><sf:input class="fancy" path="common.postalCode" /></td>
-			<td><sf:input class="fancy" path="common.country" /></td>
+			<td><b>Address 1</b><br>
+				<sf:input class="fancy" path="common.address1" size="27"/>
+			<td><b>Address 2</b><br>
+				<sf:input class="fancy" path="common.address2" />
+			<td><b>City</b><br>
+				<sf:input class="fancy" path="common.city" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.address1" class="error" /></td>
 			<td><sf:errors path="common.address2" class="error" /></td>
 			<td><sf:errors path="common.city" class="error" /></td>
+		</tr>
+		<tr>
+			<td><b>Region</b><br>
+				<sf:input class="fancy" path="common.region"  size="27"/></td>
+			<td><b>Postal Code</b><br>
+				<sf:input class="fancy" path="common.postalCode" /></td>
+			<td><b>Country Code</b><br>
+				<sf:input class="fancy" path="common.country" /></td>
+		</tr>
+		<tr>
 			<td><sf:errors path="common.region" class="error" /></td>
 			<td><sf:errors path="common.postalCode" class="error" /></td>
 			<td><sf:errors path="common.country" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Capital or Revenue?</b></td>
-			<td><b>Type of Product</b></td>
-			<td colspan="2"><b>Keywords: (Separated by commas)</b></td>
-		</tr>
-		<tr>
-			<td><sf:select class="fancy" path="vendor.type">
-				<sf:option value="C">Capital</sf:option>
-				<sf:option value="R">Revenue</sf:option>
-				<sf:option value="O">Overhead</sf:option>
-			</sf:select></td>
-			<td><sf:input class="fancy" path="vendor.category" /></td>
-			<td colspan="2"><sf:textarea class="fancy-textarea" path="vendor.keywords" rows="4" cols="56"/></td>
+			<td><b>Capital, Revenue? <br>or Overhead</b><br>
+				<sf:select class="fancy" path="vendor.type">
+					<sf:option value="C">Capital</sf:option>
+					<sf:option value="R">Revenue</sf:option>
+					<sf:option value="O">Overhead</sf:option>
+				</sf:select></td>
+			<td><b>Type of Product</b><br>
+				<sf:input class="fancy" path="vendor.category" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="vendor.type" class="error" /></td>
 			<td><sf:errors path="vendor.category" class="error" /></td>
+		</tr>
+		<tr>	
+			<td colspan="3"><b>Keywords: (Separated by commas)</b><br>
+				<sf:textarea class="fancy-textarea" path="vendor.keywords" rows="4" cols="80"/></td>
+		</tr>
+		<tr>
 			<td><sf:errors path="vendor.keywords" class="error" /></td>
+		</tr>
+		<tr>
+			<td><b>Email: </b><sf:input class="fancy" path="username"  readonly="true" /></td>
+			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled"/></td>
 		</tr>
 		<tr>
 			<td><b>Role(s):</b><br><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
