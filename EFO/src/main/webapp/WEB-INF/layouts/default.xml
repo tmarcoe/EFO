@@ -460,5 +460,25 @@
 		<put-attribute name="heading_title" value="Edit Equity"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/editequity.jsp"></put-attribute>
 	</definition>
-		
+
+	<!-- Loans Controller -->		
+	<definition name="listloans" extends="accounting.base">
+		<put-attribute name="title" value="Loans"></put-attribute>
+		<put-attribute name="heading_title" value="Loans"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listloans.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newloan" extends="accounting.base">
+		<put-attribute name="title" value="New Loan"></put-attribute>
+		<put-attribute name="heading_title" value="New Loan"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newloan.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editloan" extends="accounting.base">
+		<put-attribute name="title" value="Edit Loan"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Loan"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editloan.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

@@ -18,10 +18,15 @@ public class Loans implements Serializable {
 	private Long user_id; // id for institution;
 	private String institution_name;
 	private Date approval;
+	private String reason;
+	private double loan_amount;
 	private double interest;
 	private double down_payment;
+	private double each_payment;
+	private String status; // A = active, C = complete
 	private Long num_payments;
 	private String schedule;
+	
 	public Long getTrans_id() {
 		return trans_id;
 	}
@@ -46,6 +51,18 @@ public class Loans implements Serializable {
 	public void setApproval(Date approval) {
 		this.approval = approval;
 	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	public double getLoan_amount() {
+		return loan_amount;
+	}
+	public void setLoan_amount(double loan_amount) {
+		this.loan_amount = loan_amount;
+	}
 	public double getInterest() {
 		return interest;
 	}
@@ -57,6 +74,18 @@ public class Loans implements Serializable {
 	}
 	public void setDown_payment(double down_payment) {
 		this.down_payment = down_payment;
+	}
+	public double getEach_payment() {
+		return each_payment;
+	}
+	public void setEach_payment(double each_payment) {
+		this.each_payment = each_payment;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public Long getNum_payments() {
 		return num_payments;

@@ -3,8 +3,8 @@ package com.efo.controllers;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.validation.Valid;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -17,26 +17,23 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.xml.sax.SAXException;
 
-import com.efo.entity.Payables;
+import com.efo.entity.Loans;
 import com.efo.service.FetalTransactionService;
-import com.efo.service.PayablesService;
-
+import com.efo.service.LoansService;
 
 @Controller
 @RequestMapping("/accounting/")
-public class AccountsPayableController {
+public class LoansController {
+	private final String pageLink = "/accounting/loanspaging";
 	
 	@Autowired
-	private PayablesService payablesService;
-	
-	private final String pageLink = "/accounting/appaging";
+	private LoansService loansService;
 	
 	@Autowired
 	private FetalTransactionService fetalService;	
 	
-	private PagedListHolder<Payables> apList;
+	private PagedListHolder<Loans> loansList;
 	
 	private SimpleDateFormat dateFormat;
 
@@ -46,64 +43,69 @@ public class AccountsPayableController {
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
-
-
-	@RequestMapping("ap")
-	public String showAccountsPayable(Model model) throws SAXException, IOException, ParserConfigurationException{
+	
+	@RequestMapping("listloans")
+	public String listLoans(Model model) {
 		
-		apList = payablesService.retrieveList();
-
-		model.addAttribute("objectList", apList);
+		loansList = loansService.retrieveList();
+		
+		model.addAttribute("objectList", loansList);
 		model.addAttribute("pagelink", pageLink);
 
-		return "ap";
-	}
-		
-	@RequestMapping("editpayable")
-	public String editPayable(@ModelAttribute("reference") Long reference, Model model) {
-		Payables p = payablesService.retreive(reference);
-		
-		model.addAttribute("payables", p);
-		
-		return "editpayable";
+		return "listloans";
 	}
 	
-	@RequestMapping("updatepayable")
-	public String updatePayable(@Valid @ModelAttribute("payables") Payables payables, BindingResult result) throws IOException {
+	@RequestMapping("newloan")
+	public String newLoan( Model model) {
+		Loans loan = new Loans();
+		loan.setApproval(new Date());
+		model.addAttribute("loan", loan);
 		
-		if (result.hasErrors() == true) {
-			return "editpayable";
-		}
+		return "newloan";
+	}
+
+	@RequestMapping("addloan")
+	public String addLoan(@ModelAttribute("loan") Loans loan, Model model) throws IOException {
+
+		loansService.create(loan);
+		fetalService.addLoans(loan);
 		
-		Payables oldPayables = payablesService.retreive(payables.getReference());
-		
-		if (payables.getTotal_due() != oldPayables.getTotal_due()) {
-			double adj = payables.getTotal_due() - oldPayables.getTotal_due();
-			fetalService.adjustAp(payables, adj);
-		}
-		
-		payablesService.update(payables);
-		
-		return "redirect:/accounting/ap";
+		return "redirect:/accounting/listloans";
 	}
 	
-	@RequestMapping(value = "appaging", method = RequestMethod.GET)
-	public String handleUserRequest(@ModelAttribute("page") String page, Model model) throws Exception {
+	@RequestMapping("editloan") 
+	public String editLoan(@ModelAttribute("trans_id") Long trans_id, Model model) {
+		
+		model.addAttribute("loan", loansService.retrieve(trans_id));
+		
+		return "editloan";
+	}
+	
+	@RequestMapping("updateloan") 
+	public String updateLoan(@Valid @ModelAttribute("loan") Loans loan, BindingResult result) {
+		
+		loansService.update(loan);
+		
+		return "redirect:/accounting/listloans";
+	}
+
+	@RequestMapping(value = "loanspaging", method = RequestMethod.GET)
+	public String handleLoansRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;
 
 		pgNum = isInteger(page);
 
 		if ("next".equals(page)) {
-			apList.nextPage();
+			loansList.nextPage();
 		} else if ("prev".equals(page)) {
-			apList.previousPage();
+			loansList.previousPage();
 		} else if (pgNum != -1) {
-			apList.setPage(pgNum);
+			loansList.setPage(pgNum);
 		}
-		model.addAttribute("objectList", apList);
+		model.addAttribute("objectList", loansList);
 		model.addAttribute("pagelink", pageLink);
 
-		return "ap";
+		return "listloans";
 	}
 
 	/**************************************************************************************************************************************
@@ -124,8 +126,6 @@ public class AccountsPayableController {
 		// only got here if we didn't return false
 		return retInt;
 	}
-
-
 
 
 }

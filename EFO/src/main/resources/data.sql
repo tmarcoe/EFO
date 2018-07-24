@@ -36,6 +36,7 @@ INSERT IGNORE INTO `chart_of_accounts` (`account_num`, `description`, `account_b
 ('1008', 'Common Stock Account', 0, 'Common Stock', 'Liability'),
 ('1009', 'Income through Sales', 0, 'Sales', 'Revenue'),
 ('1010', 'Tax Expense', 0, 'Tax Account', 'Liability'),
+('1011', 'Loan Liability', 0, 'Loan Liability', 'Liability'),
 ('1015', 'Investment Account', 0, 'Investments', 'Asset'),
 ('2001', 'Labor Expense', 0, 'Labor Expense', 'Liability'),
 ('3000', 'Petty Cash Account', 0, 'Petty Cash', 'Asset'),

@@ -73,7 +73,7 @@
 					<td><a href="/accounting/listassets"><img class="tile" alt="Capital Assets" src="<c:url value='/images/capitalassets.png'/>"></a></td>
 					<td><a href="/accounting/listoverhead"><img class="tile" alt="Regular Expenses" src="<c:url value='/images/regular-expenses.png'/>"></a></td>
 					<td><a href="/accounting/equitylist"><img class="tile" alt="Equity" src="<c:url value='/images/stock.png'/>"></a></td>
-					<td><a href="#"><img class="tile" alt="Obtain a Loan" src="<c:url value='/images/loan.png'/>"></a></td>
+					<td><a href="/accounting/listloans"><img class="tile" alt="Obtain a Loan" src="<c:url value='/images/loan.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>

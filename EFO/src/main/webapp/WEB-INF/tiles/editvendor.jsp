@@ -64,6 +64,7 @@
 					<sf:option value="C">Capital</sf:option>
 					<sf:option value="R">Revenue</sf:option>
 					<sf:option value="O">Overhead</sf:option>
+					<sf:option value="L">Lending Institution</sf:option>
 				</sf:select></td>
 			<td><b>Type of Product</b><br>
 				<sf:input class="fancy" path="vendor.category" /></td>

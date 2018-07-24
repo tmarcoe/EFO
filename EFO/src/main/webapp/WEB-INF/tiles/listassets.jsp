@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -23,19 +22,20 @@
 	<c:forEach var="item" items="${objectList.pageList}">
 		<tr>
 			<td>${item.item_name}</td>
-			<td><fmt:formatDate value="${item.date_purchased}"/></td>
+			<td><fmt:formatDate value="${item.date_purchased}" /></td>
 			<td>${item.purchase_type}</td>
 			<td>${item.vendor}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.item_cost}" /></td>
 			<td>${item.depreciation_method}</td>
-			<td>${item.lifetime} years</td>
+			<td>${item.lifetime}years</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.salvage_value}" /></td>
 			<td><button type="button" onclick="window.location.href='/accounting/editasset?reference=${item.reference}'">Edit</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="8"><button type="button" onclick="window.location.href='/accounting/newasset'" >Purchase Asset</button></td>
+			<td colspan="8"><button type="button" onclick="window.location.href='/accounting/newasset'">Purchase
+					Asset</button></td>
 			<td><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>
 		</tr>
 	</tfoot>
