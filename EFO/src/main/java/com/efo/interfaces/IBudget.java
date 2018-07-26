@@ -1,0 +1,15 @@
+package com.efo.interfaces;
+
+import java.util.List;
+
+import com.efo.entity.Budget;
+
+public interface IBudget {
+	
+	public void create(Budget budget);
+	public Budget retrieve(Long id);
+	public List<Budget> retrieveRawList(String parent, int user_id);
+	public void update(Budget budget);
+	public void delete(Budget budget);
+
+}

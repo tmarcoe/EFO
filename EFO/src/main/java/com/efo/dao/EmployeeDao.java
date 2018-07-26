@@ -73,4 +73,16 @@ public class EmployeeDao implements IEmployee {
 	return chooseList;
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Employee> queryEmployee(String name) {
+		String sql = "FROM Employee WHERE CONCAT(firstname, ' ', lastname) LIKE :name";
+		name = "%" + name + "%";
+		Session session = session();
+		List<Employee> employee = session.createQuery(sql).setString("name", name).list();
+		session.disconnect();
+		
+		return employee;
+	}
+
 }

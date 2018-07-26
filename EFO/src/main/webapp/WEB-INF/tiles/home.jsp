@@ -65,7 +65,7 @@
 				</tr>
 				<tr>
 					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash" src="<c:url value='/images/petty-cash.png'/>"></a></td>
-					<td><a href="#tabs-4"><img class="tile" alt="Budget" src="<c:url value='/images/budget.png'/>"></a></td>
+					<td><a href="/accounting/listbudget/ROOT"><img class="tile" alt="Budget" src="<c:url value='/images/budget.png'/>"></a></td>
 					<td><a href="/admin/listproduct"><img class="tile" alt="Products" src="<c:url value='/images/products.png'/>"></a></td>
 					<td><a href="/admin/browseproducts"><img class="tile" alt="Sales" src="<c:url value='/images/sales.png'/>"></a></td>
 				</tr>

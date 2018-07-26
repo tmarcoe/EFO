@@ -194,15 +194,18 @@ public class RetailSalesController {
 	
 	@RequestMapping("updorder")
 	public String updOrder(@Valid @ModelAttribute("sales") RetailSales sales, BindingResult result) throws IOException {
-		if (sales.getCustomer_name().length() == 0 ) {
-			result.rejectValue("customer_name", "NotBlank.sales.customer_name");
-			return "processorder";
-		}
 		
-		if (sales.getPayment_type().length() == 0 ) {
-			result.rejectValue("payment_type", "NotBlank.sales.payment_type");
+		
+		if (sales.getCustomer_name().length() == 0 || sales.getPayment_type().length() == 0) {
+			if (sales.getCustomer_name().length() == 0) {
+				result.rejectValue("customer_name", "NotBlank.sales.customer_name");
+			}
+			if (sales.getPayment_type().length() == 0) {
+				result.rejectValue("payment_type", "NotBlank.sales.payment_type");
+			}
 			return "processorder";
 		}
+				
 		sales.getReceivables().setInvoice_date(sales.getOrdered());
 		PaymentsReceived payment = null;
 		Date latest_date = null;

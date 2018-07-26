@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.efo.entity.Customer;
+import com.efo.entity.Employee;
 import com.efo.entity.FluidInventory;
 import com.efo.entity.Product;
 import com.efo.entity.Vendor;
 import com.efo.service.CustomerService;
 import com.efo.service.EachInventoryService;
+import com.efo.service.EmployeeService;
 import com.efo.service.ProductService;
 import com.efo.service.VendorService;
 
@@ -31,6 +33,9 @@ public class QueryController {
 	
 	@Autowired
 	private VendorService vendorService;
+	
+	@Autowired
+	private EmployeeService employeeService;
 	
 	@Autowired
 	private EachInventoryService inventoryService;
@@ -54,6 +59,14 @@ public class QueryController {
 		List<Vendor> vendorList = vendorService.queryVendow(name, type);
 		
 		return vendorToJson(vendorList);
+	}
+	
+	@RequestMapping("lookupemployee")
+	public String lookupEmployee(@RequestParam(value = "name") String name) throws JSONException {
+		
+		List<Employee> employeeList = employeeService.queryEmployee(name);
+		
+		return employeeToJson(employeeList);
 	}
 	
 	@RequestMapping("checkstock")
@@ -134,6 +147,18 @@ public class QueryController {
 			JSONObject suggestion = new JSONObject();
 			suggestion.put("value", item.getFirstname() + " " + item.getLastname());
 			suggestion.put("data", item.getUser_id());
+			jsonArray.put(suggestion);
+		}
+		
+		return jsonArray.toString();
+	}
+	
+	private String employeeToJson(List<Employee> e) throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		for (Employee item : e) {
+			JSONObject suggestion = new JSONObject();
+			suggestion.put("value", item.getFirstname() + " " + item.getLastname());
+			suggestion.put("data", item.getEmp_financial().getHourlyRate());
 			jsonArray.put(suggestion);
 		}
 		

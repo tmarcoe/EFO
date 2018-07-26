@@ -26,9 +26,10 @@ public class RetailSales implements Serializable {
 	private Date ordered;
 	private Date processed;
 	private Date shipped;
+
 	private String payment_type; // Cash or Credit
 	private int customer_id;
-	
+
 	private String customer_name;
 	private boolean changed; //Has the SalesItem list changed?
 	

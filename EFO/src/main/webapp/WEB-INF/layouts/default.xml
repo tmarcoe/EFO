@@ -481,4 +481,24 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editloan.jsp"></put-attribute>
 	</definition>
 	
+	<!-- Budget Controller -->
+	<definition name="listbudget" extends="accounting.base">
+		<put-attribute name="title" value="Budget Categories"></put-attribute>
+		<put-attribute name="heading_title" value="Budget Categories"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listbudget.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editbudgetitem" extends="accounting.base">
+		<put-attribute name="title" value="Edit Budget Item"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Budget Item"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editbudgetitem.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newbudgetitem" extends="accounting.base">
+		<put-attribute name="title" value="New Budget Item"></put-attribute>
+		<put-attribute name="heading_title" value="New Budget Item"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newbudgetitem.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

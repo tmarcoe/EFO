@@ -1,5 +1,7 @@
 package com.efo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
@@ -44,5 +46,7 @@ public class EmployeeService implements IEmployee {
 		return new PagedListHolder<User>(employeeDao.retrieveEditList());
 	}
 	
-
+	public List<Employee> queryEmployee(String name) {
+		return employeeDao.queryEmployee(name);
+	}
 }
