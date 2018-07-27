@@ -29,9 +29,10 @@
 		</c:forEach>
 		<tfoot class="tablefooter">
 			<tr>
-				<td colspan="5"><button type="button" onclick="window.location.href='/accounting/newbudgetitem/${parent}'">New Buget Item</button></td>
+				<td colspan="4"><button type="button" onclick="window.location.href='/accounting/newbudgetitem/${parent}'">New Buget Item</button></td>
 				<td><button type="button" onclick="window.location.href='/accounting/uponelevel/${parent}'">Up One Level</button></td>
-				<td><button type="button" onclick="window.location.href='/#tabs-4'">Back</button>
+				<td><button type="button" onclick="window.location.href='/accounting/submitbudget'">Submit</button></td>				
+				<td><button type="button" onclick="window.location.href='/#tabs-5'">Back</button>
 			</tr>
 		</tfoot>
 </table>

@@ -18,7 +18,9 @@
 			<li><a href="#tabs-1">Login and Security</a></li>
 			<li><a href="#tabs-2">Personel</a></li>
 			<li><a href="#tabs-3">Reports</a></li>
-			<li><a href="#tabs-4">Accounting and Operations</a></li>
+			<li><a href="#tabs-4">Accounting</a></li>
+			<li><a href="#tabs-5">Operations</a></li>
+			
 		</ul>
 		<div id="tabs-1">
 			<table class="menuTable menuTableSpace">
@@ -64,17 +66,23 @@
 					<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts" src="<c:url value='/images/accounts.png'/>"></a></td>
 				</tr>
 				<tr>
-					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash" src="<c:url value='/images/petty-cash.png'/>"></a></td>
-					<td><a href="/accounting/listbudget/ROOT"><img class="tile" alt="Budget" src="<c:url value='/images/budget.png'/>"></a></td>
-					<td><a href="/admin/listproduct"><img class="tile" alt="Products" src="<c:url value='/images/products.png'/>"></a></td>
-					<td><a href="/admin/browseproducts"><img class="tile" alt="Sales" src="<c:url value='/images/sales.png'/>"></a></td>
-				</tr>
-				<tr>
 					<td><a href="/accounting/listassets"><img class="tile" alt="Capital Assets" src="<c:url value='/images/capitalassets.png'/>"></a></td>
 					<td><a href="/accounting/listoverhead"><img class="tile" alt="Regular Expenses" src="<c:url value='/images/regular-expenses.png'/>"></a></td>
 					<td><a href="/accounting/equitylist"><img class="tile" alt="Equity" src="<c:url value='/images/stock.png'/>"></a></td>
 					<td><a href="/accounting/listloans"><img class="tile" alt="Obtain a Loan" src="<c:url value='/images/loan.png'/>"></a></td>
 				</tr>
+			</table>
+		</div>
+		<div id="tabs-5">
+			<table class="menuTable menuTableSpace">
+				<tr>
+					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash" src="<c:url value='/images/petty-cash.png'/>"></a></td>
+					<td><a href="/accounting/listbudget/ROOT"><img class="tile" alt="Budget" src="<c:url value='/images/budget.png'/>"></a></td>
+					<td><a href="/accounting/listapprove"><img class="tile" alt="Budget Approval" src="<c:url value='/images/approval.png'/>"></a></td>
+					<td><a href="/admin/listproduct"><img class="tile" alt="Products" src="<c:url value='/images/products.png'/>"></a></td>
+					<td><a href="/admin/browseproducts"><img class="tile" alt="Sales" src="<c:url value='/images/sales.png'/>"></a></td>
+				</tr>
+				<tr>
 			</table>
 		</div>
 	</div>

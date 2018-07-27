@@ -75,6 +75,7 @@ public class BudgetController {
 		Budget budget = new Budget();
 		budget.setParent(parent);
 		budget.setUser_id(user.getUser_id());
+		budget.setCreation_date(new Date());
 		budget.setDepartment(user.getEmployee().getDivision());
 
 		model.addAttribute("budget", budget);
@@ -113,6 +114,14 @@ public class BudgetController {
 		budgetService.update(budget);
 		
 		return "redirect:/accounting/listbudget/" + budget.getParent();
+	}
+	
+	@RequestMapping("submitbudget") 
+	public String submitBudget(Principal principal) {
+		User user = userService.retrieve(principal.getName());
+		budgetService.submitBudget(user.getEmployee().getDivision());
+		
+		return "redirect:/accounting/listbudget/ROOT";
 	}
 	
 	@RequestMapping(value = "budgetpaging/{parent}", method = RequestMethod.GET)

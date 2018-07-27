@@ -41,7 +41,7 @@
 					onclick="window.location.href='/admin/newproduct'">New
 					Product</button></td>
 			<td><button type="button"
-					onclick="window.location.href='/#tabs-4'">Back</button></td>
+					onclick="window.location.href='/#tabs-5'">Back</button></td>
 		</tr>
 	</tfoot>
 </table>

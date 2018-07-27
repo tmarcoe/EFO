@@ -45,7 +45,9 @@
 	<sf:hidden path="department"/>
 	<sf:hidden path="ceiling"/>
 	<sf:hidden path="creation_date"/>
-	<sf:hidden path="protect" value="true"/>
+	<sf:hidden path="submission_date"/>
+	<sf:hidden path="approval_date"/>
+	<sf:hidden path="protect" value="false"/>
 </sf:form>
 <script type="text/javascript">
 

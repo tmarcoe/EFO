@@ -36,7 +36,7 @@
 		<tr>
 			<td colspan="2"><button type="button" onclick="window.location.href='/accounting/replenish'">Replenish Petty Cash</button></td>
 			<td colspan="2"><button type="button" onclick="window.location.href='/accounting/newpettycash'">New Disbursement</button></td>
-			<td ><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>
+			<td ><button type="button" onclick="window.location.href='/#tabs-5'">Back</button></td>
 		</tr>
 	</tfoot>
 </table>

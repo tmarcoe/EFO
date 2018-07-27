@@ -32,7 +32,7 @@
 	<div id="laborCost" class="modal" >
 		<div class="modal-content small-modal fancy">
 			<h3>Employee Labor Calculator</h3>
-			<h4>(Please enter the number of hours firsst)</h4>
+			<h4>(Please enter the number of hours first)</h4>
 			<b>Number of Hours: </b><br><input class="fancy" id="hours" type="number" step=".25"/><br>
 			<b>Employee: </b><br><input class="fancy" id="lookupName" /><br>
 		
@@ -45,6 +45,8 @@
 	<sf:hidden path="department"/>
 	<sf:hidden path="ceiling"/>
 	<sf:hidden path="creation_date"/>
+	<sf:hidden path="submission_date"/>
+	<sf:hidden path="approval_date"/>
 	<sf:hidden path="protect" value="false"/>
 	<input id="getParent" type="hidden" value="${parent}"/>
 </sf:form>

@@ -501,4 +501,12 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/newbudgetitem.jsp"></put-attribute>
 	</definition>
 	
+	<!-- Budget Approval Controller -->
+	<definition name="listapprove" extends="accounting.base">
+		<put-attribute name="title" value="Budgets Ready For Approval"></put-attribute>
+		<put-attribute name="heading_title" value="Budgets Ready For Approval"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listapprove.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

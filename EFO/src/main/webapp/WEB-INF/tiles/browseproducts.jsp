@@ -44,7 +44,7 @@
 			<td><sf:button type="button" class="fancy-button" onclick="window.location.href='/admin/cancelsales'">
 					<b>Cancel Order</b>
 				</sf:button></td>
-			<td><sf:button type="button" class="fancy-button" onclick="window.location.href='/#tabs-4'">
+			<td><sf:button type="button" class="fancy-button" onclick="window.location.href='/#tabs-5'">
 					<b>Back</b>
 				</sf:button></td>
 		</tr>

@@ -78,4 +78,15 @@ public class BudgetService implements IBudget {
 	public Double sumChildren(int user_id, String parent) {
 		return budgetDao.sumChildren(user_id, parent);
 	}
+	public PagedListHolder<Budget> listBudgetsForApproval() {
+		return new PagedListHolder<Budget>(budgetDao.listBudgetsForApproval());
+	}
+	
+	public void approveBudget(String department){
+		budgetDao.approveBudget(department);
+	}
+	
+	public void submitBudget(String department) {
+		budgetDao.submitBudget(department);
+	}
 }
