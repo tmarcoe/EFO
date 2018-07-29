@@ -36,7 +36,7 @@ public class Payables implements Serializable {
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="REFERENCE")
-	private ProductOrders productOrders;
+	private OrderItems productOrders;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="REFERENCE")
@@ -146,11 +146,11 @@ public class Payables implements Serializable {
 		this.payments = payments;
 	}
 
-	public ProductOrders getProductOrders() {
+	public OrderItems getOrderItems() {
 		return productOrders;
 	}
 
-	public void setProductOrders(ProductOrders productOrders) {
+	public void setOrderItems(OrderItems productOrders) {
 		this.productOrders = productOrders;
 	}
 

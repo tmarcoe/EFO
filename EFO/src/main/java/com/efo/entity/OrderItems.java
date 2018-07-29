@@ -18,7 +18,7 @@ import javax.validation.constraints.DecimalMin;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-public class ProductOrders implements Serializable {
+public class OrderItems implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -51,10 +51,10 @@ public class ProductOrders implements Serializable {
 	(fetch=FetchType.LAZY, mappedBy = "productOrders", cascade = CascadeType.ALL)
 	private Payables payables;
 	
-	public ProductOrders() {
+	public OrderItems() {
 	}
 	
-	public ProductOrders(String sku, Date order_date, String product_name) {
+	public OrderItems(String sku, Date order_date, String product_name) {
 		this.sku = sku;
 		this.order_date = order_date;
 		this.product_name = product_name;

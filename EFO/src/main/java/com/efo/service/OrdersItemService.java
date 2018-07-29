@@ -7,37 +7,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
-import com.efo.dao.ProductOrdersDao;
-import com.efo.entity.ProductOrders;
-import com.efo.interfaces.IProductOrders;
+import com.efo.dao.OrderItemsDao;
+import com.efo.entity.OrderItems;
+import com.efo.interfaces.IOrdersItem;
 
 @Service
-public class ProductOrdersService implements IProductOrders {
+public class OrdersItemService implements IOrdersItem {
 	
 	@Autowired
-	ProductOrdersDao orderDao;
+	OrderItemsDao orderDao;
 
 	@Override
-	public void create(ProductOrders orders) {
+	public void create(OrderItems orders) {
 		orderDao.create(orders);
 	}
 
 	@Override
-	public ProductOrders retrieve(Long reference) {
+	public OrderItems retrieve(Long reference) {
 		return orderDao.retrieve(reference);
 	}
 
 	@Override
-	public List<ProductOrders> retrieveRawList() {
+	public List<OrderItems> retrieveRawList() {
 		return orderDao.retrieveRawList();
 	}
 
-	public PagedListHolder<ProductOrders> retrieveList() {
-		return new PagedListHolder<ProductOrders>(orderDao.retrieveRawList());
+	public PagedListHolder<OrderItems> retrieveList() {
+		return new PagedListHolder<OrderItems>(orderDao.retrieveRawList());
 	}
 	
-	public PagedListHolder<ProductOrders> retrieveOpenOrders() {
-		return new PagedListHolder<ProductOrders>(orderDao.retrieveOpenOrders());
+	public PagedListHolder<OrderItems> retrieveOpenOrders() {
+		return new PagedListHolder<OrderItems>(orderDao.retrieveOpenOrders());
 	}
 	
 	public void setStatus(Long reference, String status) {
@@ -45,25 +45,25 @@ public class ProductOrdersService implements IProductOrders {
 	}
 	
 	@Override
-	public void update(ProductOrders orders) {
+	public void update(OrderItems orders) {
 		orderDao.update(orders);
 	}
 	
-	public void merge(ProductOrders orders) {
+	public void merge(OrderItems orders) {
 		orderDao.merge(orders);
 	}
 
 	@Override
-	public void delete(ProductOrders orders) {
+	public void delete(OrderItems orders) {
 		orderDao.delete(orders);
 	}
 	
 	public void delete(Long reference) {
-		ProductOrders orders = retrieve(reference);
+		OrderItems orders = retrieve(reference);
 		orderDao.delete(orders);
 	}
 	
-	public List<ProductOrders> getPeriodOrders(Date begin, Date end) {
+	public List<OrderItems> getPeriodOrders(Date begin, Date end) {
 		return orderDao.getPeriodOrders(begin, end);
 	}
 	

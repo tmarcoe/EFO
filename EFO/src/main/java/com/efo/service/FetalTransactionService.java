@@ -10,6 +10,7 @@ import java.util.Set;
 import org.antlr.v4.runtime.RecognitionException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 import com.efo.entity.PaymentsReceived;
 import com.efo.entity.PettyCashVoucher;
 import com.efo.entity.Product;
-import com.efo.entity.ProductOrders;
+import com.efo.entity.OrderItems;
 import com.efo.entity.Receivables;
 import com.efo.entity.RetailSales;
 import com.efo.dao.FetalTransactionDao;
@@ -60,6 +61,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	
 	}
@@ -73,6 +80,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	
 	}
@@ -88,6 +101,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 		
 	}
@@ -101,6 +120,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	
 	}
@@ -114,6 +139,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
@@ -129,6 +160,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
@@ -144,6 +181,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
@@ -159,6 +202,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 		
 	}
@@ -178,6 +227,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 		
 	}
@@ -194,12 +249,18 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 		
 		return result;
 	}
 	
-	public void cancelOrder(ProductOrders order, FluidInventory inventory ) throws IOException {
+	public void cancelOrder(OrderItems order, FluidInventory inventory ) throws IOException {
 		
 		try {
 			initTransaction(filePath);
@@ -211,10 +272,16 @@ public class FetalTransactionService extends FetalTransaction {
 			}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
-	public void orderDelivered(ProductOrders order, Product product ) throws RecognitionException, IOException, RuntimeException {
+	public void orderDelivered(OrderItems order, Product product ) throws RecognitionException, IOException, RuntimeException {
 		
 		try {
 			initTransaction(filePath);
@@ -224,10 +291,16 @@ public class FetalTransactionService extends FetalTransaction {
 			}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 
-	public void purchaseInventory(Product product, ProductOrders order, Payables payables, PaymentsBilled payments) throws IOException {
+	public void purchaseInventory(Product product, OrderItems order, Payables payables, PaymentsBilled payments) throws IOException {
 		try {
 			initTransaction(filePath);
 			setDescription("Purchase of Inventory (SKU: " + order.getSku() + ")");
@@ -239,6 +312,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
@@ -250,6 +329,12 @@ public class FetalTransactionService extends FetalTransaction {
 			}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 
@@ -262,6 +347,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 		
 	}
@@ -276,6 +367,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
@@ -289,6 +386,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally{
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 
@@ -304,6 +407,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 
 	}
@@ -320,6 +429,12 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 		finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 
 	}
@@ -335,6 +450,12 @@ public class FetalTransactionService extends FetalTransaction {
 			
 		} finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
@@ -349,6 +470,12 @@ public class FetalTransactionService extends FetalTransaction {
 			
 		} finally{
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
@@ -365,6 +492,12 @@ public class FetalTransactionService extends FetalTransaction {
 			
 		} finally{
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
@@ -380,6 +513,12 @@ public class FetalTransactionService extends FetalTransaction {
 			
 		} finally {
 			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
 		}
 	}
 	
@@ -429,27 +568,28 @@ public class FetalTransactionService extends FetalTransaction {
 	@Override
 	public void rollback() {
 		transDao.rollback(session);
+		session = null;
 	}
 
 	@Override
 	public Object lookup(String sql, Object... args) {
 		String sqlWithArgs = String.format(sql, args);
 
-		return transDao.lookup(sqlWithArgs);
+		return transDao.lookup(sqlWithArgs, session);
 	}
 
 	@Override
-	public Set<Object> list(String sql, Object... args) {
+	public Set<Object> list(String sql, int limit, Object... args) {
 		String sqlWithArgs = String.format(sql, args);
-		List<Object> l = transDao.list(sqlWithArgs);
+		List<Object> l = transDao.list(sqlWithArgs, limit, session);
 
 		return new HashSet<Object>(l);
 	}
 
 	@Override
-	public void update(String sql, Object... args) {
+	public void update(String sql,int limit, Object... args) {
 		String sqlWithArgs = String.format(sql, args);
-		transDao.update(sqlWithArgs);
+		transDao.update(sqlWithArgs, limit, session);
 	}
 
 	
@@ -466,7 +606,7 @@ public class FetalTransactionService extends FetalTransaction {
 	}
 
 	@Override
-	public void delete(String sql, Object record) {
+	public void delete(Object record) {
 		transDao.delete(record, session);
 	}
 

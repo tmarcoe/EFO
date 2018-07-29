@@ -317,7 +317,7 @@ public class RetailSalesController {
 		sales.setSalesItem(new HashSet<SalesItem>(salesItemService.retrieveRawList(reference)));
 		
 		transactionService.shipSales(sales);
-		eachInventoryService.depleteStock(sales.getSalesItem());
+		
 		return "redirect:/admin/listsales";
 	}
 	

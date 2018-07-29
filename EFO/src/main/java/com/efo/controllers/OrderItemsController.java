@@ -27,22 +27,22 @@ import com.efo.entity.Payables;
 import com.efo.entity.PaymentsBilled;
 import com.efo.entity.EachInventory;
 import com.efo.entity.Product;
-import com.efo.entity.ProductOrders;
+import com.efo.entity.OrderItems;
 import com.efo.service.FetalTransactionService;
 import com.efo.service.EachInventoryService;
-import com.efo.service.ProductOrdersService;
+import com.efo.service.OrdersItemService;
 import com.efo.service.ProductService;
 
 @Controller
 @RequestMapping("/admin/")
-public class ProductOrdersController {
+public class OrderItemsController {
 	private final String pageLink = "/admin/prdorderpaging";
 
 	private SimpleDateFormat dateFormat;
-	private PagedListHolder<ProductOrders> prdOrderList;
+	private PagedListHolder<OrderItems> prdOrderList;
 
 	@Autowired
-	private ProductOrdersService ordersService;
+	private OrdersItemService ordersService;
 
 	@Autowired
 	private ProductService productService;
@@ -64,7 +64,7 @@ public class ProductOrdersController {
 	}
 
 	@RequestMapping("listproductorders")
-	public String listProductOrders(Model model) {
+	public String listOrderItems(Model model) {
 		prdOrderList = ordersService.retrieveOpenOrders();
 		prdOrderList.setPageSize(20);
 		
@@ -78,13 +78,13 @@ public class ProductOrdersController {
 	public String newOrder(@ModelAttribute("sku") String sku, Model model) {
 
 		Product product = productService.retrieve(sku);
-		model.addAttribute("productOrder", new ProductOrders(sku, new Date(), product.getProduct_name()));
+		model.addAttribute("productOrder", new OrderItems(sku, new Date(), product.getProduct_name()));
 
 		return "newproductorder";
 	}
 
 	@RequestMapping("addproductorder")
-	public String addProductOrder(@Valid @ModelAttribute("productOrder") ProductOrders productOrders,
+	public String addProductOrder(@Valid @ModelAttribute("productOrder") OrderItems productOrders,
 			BindingResult result, Model model) throws IOException {
 
 		if (result.hasErrors()) {
@@ -103,7 +103,7 @@ public class ProductOrdersController {
 		productOrders.setProduct(product);
 		if (productOrders.getPayment_type().compareTo("Credit") == 0) {
 			productOrders.setPayables(payables);
-			payables.setProductOrders(productOrders);
+			payables.setOrderItems(productOrders);
 			payables.setReference(productOrders.getReference());
 			payments = new PaymentsBilled();
 			payments.setReference(productOrders.getReference());
@@ -137,7 +137,7 @@ public class ProductOrdersController {
 	@RequestMapping("editproductorder")
 	public String editProductOrder(@ModelAttribute("reference") Long reference, Model model) {
 		
-		ProductOrders orders =  ordersService.retrieve(reference);
+		OrderItems orders =  ordersService.retrieve(reference);
 		
 		model.addAttribute("product", productService.retrieve(orders.getSku()));
 		model.addAttribute("productOrder", orders);
@@ -146,7 +146,7 @@ public class ProductOrdersController {
 	}
 
 	@RequestMapping("updproductorder")
-	public String updProductOrder(@Valid @ModelAttribute("productOrder") ProductOrders order, BindingResult result) {
+	public String updProductOrder(@Valid @ModelAttribute("productOrder") OrderItems order, BindingResult result) {
 
 		ordersService.update(order);
 
@@ -155,7 +155,7 @@ public class ProductOrdersController {
 	
 	@RequestMapping("receiveorder")
 	public String receiveOrder(@ModelAttribute("reference") Long reference, Model model) {
-		ProductOrders order = ordersService.retrieve(reference);
+		OrderItems order = ordersService.retrieve(reference);
 		
 		order.setDelivery_date(new Date());
 		
@@ -165,7 +165,7 @@ public class ProductOrdersController {
 	}
 	
 	@RequestMapping("stockorder")
-	public String stockOrder(@ModelAttribute("productOrder") ProductOrders order) throws RecognitionException, IOException, RuntimeException {
+	public String stockOrder(@ModelAttribute("productOrder") OrderItems order) throws RecognitionException, IOException, RuntimeException {
 		
 		Product product = productService.retrieve(order.getSku());
 		
@@ -184,7 +184,7 @@ public class ProductOrdersController {
 	@RequestMapping("cancelorder")
 	public String cancelOrder(@ModelAttribute("reference") Long reference) throws IOException {
 		
-		ProductOrders orders = ordersService.retrieve(reference);
+		OrderItems orders = ordersService.retrieve(reference);
 		if (orders.getAmt_received() > 0) {
 			return "/admin/listproductorders?error=true";
 		}

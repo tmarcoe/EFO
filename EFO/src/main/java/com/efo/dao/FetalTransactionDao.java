@@ -43,7 +43,7 @@ public class FetalTransactionDao {
 	public Transaction getTrans() {
 		return trans;
 	}
-
+	
 	Session session() {
 		return sessionFactory.getCurrentSession();
 	}
@@ -56,8 +56,11 @@ public class FetalTransactionDao {
 	}
 
 	public void commitTrans(Session session) {
+		
 		trans.commit();
 		trans = null;
+		session.disconnect();
+		session = null;
 	}
 
 	public void credit(Double amount, String account, Session session) {
@@ -111,8 +114,8 @@ public class FetalTransactionDao {
 	}
 
 
-	public Object lookup(String sql) {
-		Session session = session();
+	public Object lookup(String sql, Session session) {
+
 		Object obj = session.createQuery(sql).uniqueResult();
 		
 		session.disconnect();
@@ -120,21 +123,27 @@ public class FetalTransactionDao {
 		return obj;
 	}
 
-	public void update(String sqlWithArgs) {
-		Session session = session();
-		Transaction tx = session.beginTransaction();
-		session.createQuery(sqlWithArgs).executeUpdate();
-		tx.commit();
+	public void update(String sqlWithArgs, int limit, Session session) {
+		if (limit == 0) {
+			session.createQuery(sqlWithArgs).executeUpdate();
+		}else{
+			session.createQuery(sqlWithArgs).setMaxResults(limit).executeUpdate();
+		}
 	}
 
 	public void rollback(Session session) {
-		session.getTransaction().rollback();
+		trans.rollback();
+		trans = null;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object> list(String sqlWithArgs) {
-		Session session = session();
-		List<Object> l = session.createQuery(sqlWithArgs).list();
+	public List<Object> list(String sqlWithArgs, int limit, Session session) {
+		List<Object> l = null;
+		if (limit == 0) {
+			l = session.createQuery(sqlWithArgs).list();
+		}else{
+			l = session.createQuery(sqlWithArgs).setMaxResults(limit).list();
+		}
 		session.disconnect();
 		
 		return l;

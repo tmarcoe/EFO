@@ -17,7 +17,7 @@
 			<td><sf:errors path="vendor" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Accounte #: </b><br>
+			<td><b>Account #: </b><br>
 				<sf:input class="fancy" path="account"/></td>
 			<td><b>Type of Expense: </b><br>
 				<sf:input class="fancy" path="reason"/></td>

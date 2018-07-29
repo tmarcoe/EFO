@@ -39,7 +39,7 @@ public class Product implements Serializable {
 	private Set<EachInventory> eachInventory = new HashSet<EachInventory>(0);
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
-	private Set<ProductOrders> orders = new HashSet<ProductOrders>(0);
+	private Set<OrderItems> orders = new HashSet<OrderItems>(0);
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
 	private Set<SalesItem> sales = new HashSet<SalesItem>(0);
@@ -140,10 +140,10 @@ public class Product implements Serializable {
 	public void setEachInventory(Set<EachInventory> eachInventory) {
 		this.eachInventory = eachInventory;
 	}
-	public Set<ProductOrders> getOrders() {
+	public Set<OrderItems> getOrders() {
 		return orders;
 	}
-	public void setOrders(Set<ProductOrders> orders) {
+	public void setOrders(Set<OrderItems> orders) {
 		this.orders = orders;
 	}
 	public Set<SalesItem> getSales() {

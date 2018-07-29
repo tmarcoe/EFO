@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.efo.entity.EachInventory;
 import com.efo.entity.Product;
-import com.efo.entity.ProductOrders;
+import com.efo.entity.OrderItems;
 import com.efo.entity.SalesItem;
 import com.efo.interfaces.IEachInventory;
 
@@ -102,7 +102,7 @@ public class EachInventoryDao implements IEachInventory {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void markAsDelivered(ProductOrders order, int qty) {
+	public void markAsDelivered(OrderItems order, int qty) {
 		String upd = "UPDATE EachInventory SET received = :received WHERE id = :id";
 		String hql = "SELECT id FROM EachInventory WHERE invoice_num = :invoice_num AND sku = :sku AND received IS null";
 		Session session = session();

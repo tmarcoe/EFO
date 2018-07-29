@@ -13,12 +13,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.ProductOrders;
-import com.efo.interfaces.IProductOrders;
+import com.efo.entity.OrderItems;
+import com.efo.interfaces.IOrdersItem;
 
 @Transactional
 @Repository
-public class ProductOrdersDao implements IProductOrders {
+public class OrderItemsDao implements IOrdersItem {
 
 	@Autowired
 	SessionFactory sessionFactory;
@@ -28,7 +28,7 @@ public class ProductOrdersDao implements IProductOrders {
 	}
 	
 	@Override
-	public void create(ProductOrders orders) {
+	public void create(OrderItems orders) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.save(orders);
@@ -37,9 +37,9 @@ public class ProductOrdersDao implements IProductOrders {
 	}
 
 	@Override
-	public ProductOrders retrieve(Long reference) {
+	public OrderItems retrieve(Long reference) {
 		Session session = session();
-		ProductOrders orders = (ProductOrders) session.createCriteria(ProductOrders.class).add(Restrictions.idEq(reference)).uniqueResult();
+		OrderItems orders = (OrderItems) session.createCriteria(OrderItems.class).add(Restrictions.idEq(reference)).uniqueResult();
 		session.disconnect();
 		
 		return orders;
@@ -47,27 +47,27 @@ public class ProductOrdersDao implements IProductOrders {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductOrders> retrieveRawList() {
+	public List<OrderItems> retrieveRawList() {
 		Session session = session();
-		List<ProductOrders> orderList = session.createCriteria(ProductOrders.class).list();
+		List<OrderItems> orderList = session.createCriteria(OrderItems.class).list();
 		session.disconnect();
 		
 		return orderList;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ProductOrders> retrieveOpenOrders() {
+	public List<OrderItems> retrieveOpenOrders() {
 		Session session = session();
 		Criterion delivered = Restrictions.ne("status", "D");
 		Criterion canceled = Restrictions.ne("status", "C");
-		List<ProductOrders> orderList = session.createCriteria(ProductOrders.class).add(Restrictions.and(delivered, canceled)).list();
+		List<OrderItems> orderList = session.createCriteria(OrderItems.class).add(Restrictions.and(delivered, canceled)).list();
 		session.disconnect();
 		
 		return orderList;
 	}
 	
 	public void setStatus(Long reference, String status) {
-		String hql = "UPDATE ProductOrders SET status = :status WHERE id = :id";
+		String hql = "UPDATE OrderItems SET status = :status WHERE id = :id";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setString("status", status).setLong("reference", reference).executeUpdate();
@@ -76,7 +76,7 @@ public class ProductOrdersDao implements IProductOrders {
 	}
 
 	@Override
-	public void update(ProductOrders orders) {
+	public void update(OrderItems orders) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.update(orders);
@@ -84,7 +84,7 @@ public class ProductOrdersDao implements IProductOrders {
 		session.disconnect();
 	}
 	
-	public void merge(ProductOrders orders) {
+	public void merge(OrderItems orders) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.merge(orders);
@@ -93,7 +93,7 @@ public class ProductOrdersDao implements IProductOrders {
 	}
 
 	@Override
-	public void delete(ProductOrders orders) {
+	public void delete(OrderItems orders) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.delete(orders);
@@ -102,10 +102,10 @@ public class ProductOrdersDao implements IProductOrders {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ProductOrders> getPeriodOrders(Date begin, Date end) {
-		String hql ="FROM ProductOrders WHERE order_date BETWEEN DATE(:begin) AND DATE(:end)";
+	public List<OrderItems> getPeriodOrders(Date begin, Date end) {
+		String hql ="FROM OrderItems WHERE order_date BETWEEN DATE(:begin) AND DATE(:end)";
 		Session session = session();
-		 List<ProductOrders> orderList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		 List<OrderItems> orderList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
 		 session.disconnect();
 		 
 		 return orderList;
@@ -113,7 +113,7 @@ public class ProductOrdersDao implements IProductOrders {
 	
 	@SuppressWarnings("unchecked")
 	public List<Object[]> getTotalWholesaleByPeriod(Date begin, Date end) {
-		String hql = "SELECT MONTH(order_date), SUM(wholesale) FROM ProductOrders "
+		String hql = "SELECT MONTH(order_date), SUM(wholesale) FROM OrderItems "
 				   + "WHERE order_date BETWEEN DATE(:begin) AND DATE(:end) AND payment_type = 'Cash' ORDER BY MONTH(order_date)";
 		Session session = session();
 		List<Object[]> totalOrders = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();

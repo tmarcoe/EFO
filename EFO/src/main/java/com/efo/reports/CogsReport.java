@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.efo.service.PaymentHistoryService;
 import com.efo.service.PaymentsBilledService;
-import com.efo.service.ProductOrdersService;
+import com.efo.service.OrdersItemService;
 
 @Component
 public class CogsReport {
@@ -30,7 +30,7 @@ public class CogsReport {
 	private PaymentHistoryService overheadPaymentService;
 	
 	@Autowired
-	private ProductOrdersService ordersService;
+	private OrdersItemService ordersService;
 		
 	public String calculateCogs(Date begin, Date end) throws JSONException {
 		
@@ -49,12 +49,12 @@ public class CogsReport {
 		
 		Iterator<Double> iOverhead = overhead.iterator();
 		Iterator<Double> iAccountsPayable = accountsPayable.iterator();
-		Iterator<Double> iProductOrders = productOrders.iterator();
+		Iterator<Double> iOrderItems = productOrders.iterator();
 		
 		while (iOverhead.hasNext()) {
 			Double ovr = iOverhead.next();
 			Double ap = iAccountsPayable.next();
-			Double orders = iProductOrders.next();
+			Double orders = iOrderItems.next();
 			
 			expense.add(ovr + ap + orders);
 		}

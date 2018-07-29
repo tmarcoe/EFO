@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.efo.dao.EachInventoryDao;
 import com.efo.entity.EachInventory;
-import com.efo.entity.ProductOrders;
+import com.efo.entity.OrderItems;
 import com.efo.entity.SalesItem;
 import com.efo.interfaces.IEachInventory;
 
@@ -54,7 +54,7 @@ public class EachInventoryService implements IEachInventory {
 	public void stockShelf(EachInventory inventory, Integer qty) {
 		inventoryDao.stockShelf(inventory, qty);
 	}
-	public void markAsDelivered(ProductOrders order, int qty) {
+	public void markAsDelivered(OrderItems order, int qty) {
 		inventoryDao.markAsDelivered(order, qty);
 	}
 	
