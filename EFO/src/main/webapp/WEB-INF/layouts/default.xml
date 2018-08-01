@@ -312,6 +312,12 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 		
+	<definition name="processproductorder" extends="accounting.base">
+		<put-attribute name="title" value="Receive Order"></put-attribute>
+		<put-attribute name="heading_title" value="Receive Order"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/processproductorder.jsp"></put-attribute>
+	</definition>
+	
 	<definition name="newproductorder" extends="accounting.base">
 		<put-attribute name="title" value="New Order"></put-attribute>
 		<put-attribute name="heading_title" value="New Order"></put-attribute>

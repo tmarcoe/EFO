@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 
@@ -23,12 +22,11 @@ public class OrderItems implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private Long reference;
 	@NotBlank
-	private String invoice_num;
 	private String sku;
 	private String product_name;
-	private String vendor;
 	
 	@DecimalMin("0.01")
 	private double wholesale;
@@ -37,29 +35,36 @@ public class OrderItems implements Serializable {
 	private double amt_received;
 	@Transient
 	private double amt_this_shipment;
-	@NotBlank
-	private String payment_type;
-	private Date order_date;
 	private Date delivery_date;
-	private String status; //O = Ordered, D = Delivered, C = Canceled, X = Dispute
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="SKU", nullable = false, insertable=false, updatable=false )
-	private Product product;
-	
-	@OneToOne
-	(fetch=FetchType.LAZY, mappedBy = "productOrders", cascade = CascadeType.ALL)
-	private Payables payables;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="REFERENCE", referencedColumnName ="REFERENCE", nullable = false, insertable=false, updatable=false )
+	private ProductOrders productOrders;
 	
 	public OrderItems() {
 	}
 	
-	public OrderItems(String sku, Date order_date, String product_name) {
+	public OrderItems(String sku, String product_name) {
 		this.sku = sku;
-		this.order_date = order_date;
 		this.product_name = product_name;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getReference() {
+		return reference;
+	}
+
+	public void setReference(Long reference) {
+		this.reference = reference;
+	}
+
 	public String getSku() {
 		return sku;
 	}
@@ -74,28 +79,6 @@ public class OrderItems implements Serializable {
 		this.product_name = product_name;
 	}
 
-	public Long getReference() {
-		return reference;
-	}
-
-	public void setReference(Long reference) {
-		this.reference = reference;
-	}
-
-	public String getInvoice_num() {
-		return invoice_num;
-	}
-
-	public void setInvoice_num(String invoice_num) {
-		this.invoice_num = invoice_num;
-	}
-
-	public String getVendor() {
-		return vendor;
-	}
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
 	public double getWholesale() {
 		return wholesale;
 	}
@@ -127,47 +110,21 @@ public class OrderItems implements Serializable {
 	public void setAmt_this_shipment(double amt_this_shipment) {
 		this.amt_this_shipment = amt_this_shipment;
 	}
-
-	public String getPayment_type() {
-		return payment_type;
-	}
-	public void setPayment_type(String payment_type) {
-		this.payment_type = payment_type;
-	}
-	public Date getOrder_date() {
-		return order_date;
-	}
-	public void setOrder_date(Date order_date) {
-		this.order_date = order_date;
-	}
+	
 	public Date getDelivery_date() {
 		return delivery_date;
 	}
+
 	public void setDelivery_date(Date delivery_date) {
 		this.delivery_date = delivery_date;
 	}
-	public String getStatus() {
-		return status;
+
+	public ProductOrders getProductOrders() {
+		return productOrders;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setProductOrders(ProductOrders productOrders) {
+		this.productOrders = productOrders;
 	}
 
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public Payables getPayables() {
-		return payables;
-	}
-
-	public void setPayables(Payables payables) {
-		this.payables = payables;
-	}
-	
 }

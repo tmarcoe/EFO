@@ -39,9 +39,6 @@ public class Product implements Serializable {
 	private Set<EachInventory> eachInventory = new HashSet<EachInventory>(0);
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
-	private Set<OrderItems> orders = new HashSet<OrderItems>(0);
-	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
 	private Set<SalesItem> sales = new HashSet<SalesItem>(0);
 	
 	public String getSku() {
@@ -139,12 +136,6 @@ public class Product implements Serializable {
 	}
 	public void setEachInventory(Set<EachInventory> eachInventory) {
 		this.eachInventory = eachInventory;
-	}
-	public Set<OrderItems> getOrders() {
-		return orders;
-	}
-	public void setOrders(Set<OrderItems> orders) {
-		this.orders = orders;
 	}
 	public Set<SalesItem> getSales() {
 		return sales;

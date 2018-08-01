@@ -2,7 +2,6 @@ package com.efo.dao;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -53,6 +52,15 @@ public class OrderItemsDao implements IOrdersItem {
 		session.disconnect();
 		
 		return orderList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<OrderItems> retrieveChildItems(Long reference) {
+		Session session = session();
+		List<OrderItems> items = session.createCriteria(OrderItems.class).add(Restrictions.eq("reference", reference)).list();
+		session.disconnect();
+		
+		return items;
 	}
 	
 	@SuppressWarnings("unchecked")

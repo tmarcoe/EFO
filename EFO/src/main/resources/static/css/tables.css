@@ -44,7 +44,8 @@ table.fieldTable th
 }
 
 .fieldTable td {
-	padding-right: 5em;
+	padding-right: 1em;
+	padding-left: 1em;
 }
 
 tfoot.tablefooter td 
@@ -64,7 +65,11 @@ tfoot.tablefooter td
 /***************************************************** 
  * Right justified
  *****************************************************/
-.rjSecond td:nth-child(2) {
+ .rjfirst td:nth-child(1) {
+	text-align: right;		
+}
+ 
+.rjsecond td:nth-child(2) {
 	text-align: right;	
 }
 .rjthird td:nth-child(3) {

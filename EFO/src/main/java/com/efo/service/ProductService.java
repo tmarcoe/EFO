@@ -33,6 +33,10 @@ public class ProductService implements IProduct {
 		return new PagedListHolder<Product>(productDao.retrieveList());
 	}
 	
+	public List<Product> retrieveRawList() {
+		return productDao.retrieveList();
+	}
+	
 	@Override
 	public void update(Product product) {
 		productDao.update(product);

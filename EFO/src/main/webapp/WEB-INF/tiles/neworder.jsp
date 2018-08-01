@@ -9,97 +9,65 @@
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
 <sf:form method="post" action="/admin/addproductorder" modelAttribute="productOrder">
-	<table class="fancy-table tableshadow">
+	<table class="fancy-table tableshadow" style="position: fixed; top: 100px; right: 100px;">
 		<tr>
-			<td colspan="3"><b>Product Name: </b><br> <sf:input class="fancy" path="product_name" readonly="true" size="70"/>
+			<td colspan="4"><input class="fancy" id="product_name" size="50" onchange="clearAll()" placeholder="Enter the product name"/> </td>
 		</tr>
 		<tr>
-			<td colspan="3"><b>Vendor: </b><br> <sf:input class="fancy" id="supplierInp" path="vendor" size = "70"/></td>
+			<td colspan="2"><b>SKU Code: <br></b> <input class="fancy" id="sku" readonly="true" /></td>
+			<td colspan="2"><b>UPC Code: <br></b> <input class="fancy" id="upc" readonly="true" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="vendor" class="error" /></td>
+			<td colspan="2"><b>Quantity: <br></b> <input class="fancy" id="order_qty" type="number" step="1"
+				value="1.0" /></td>
+			<td colspan="2"><b>Total Price for this Item: <br></b><input class="fancy" id="price" type="number" step=".01" /></td>
 		</tr>
 		<tr>
-			<td><b>Invoice #: </b><br> <sf:input class="fancy" path="invoice_num" /></td>
-			<td><b>SKU: </b><br> <sf:input class="fancy" path="sku" readonly="true" /></td>
-			<td><b>Payment Type: </b><br>
-			<sf:select id="paymentType" class="fancy" path="payment_type" onchange="showReceivable()">
-					<sf:option value="">---Select---</sf:option>
-					<sf:option value="Cash">Cash</sf:option>
-					<sf:option value="Credit">Credit</sf:option>
-				</sf:select></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="invoice_num" class="error" /></td>
-			<td><sf:errors path="sku" class="error" /></td>
-			<td><sf:errors path="payment_type" class="error" /></td>
-		</tr>
-		<tr>
-			<td><b>Order Price: </b><br>
-			<sf:input id="total_due" class="fancy" type="number" step=".01" path="wholesale" /></td>
-			<td><b>Amount Ordered: </b><br>
-			<sf:input class="fancy" type="number" step=".01" path="amt_ordered" /></td>
-			<td><b>Date Ordered: </b><br>
-			<sf:input class="fancy" type="date" path="order_date" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="wholesale" class="error" /></td>
-			<td><sf:errors path="amt_ordered" class="error" /></td>
-			<td><sf:errors path="order_date" class="error" /></td>
-		</tr>
-		<tr>
-			<td><sf:button class="fancy-button" type="submit">
-					<b>Process</b>
-				</sf:button></td>
-			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()">
-					<b>Cancel</b>
-				</sf:button></td>
+			<td><button class="fancy-button" type="button" onclick="addItem()"><b>Order Item</b></button>
+			<td><button class="fancy-button" type="button" onclick="window.location.href='/admin/processproductorder'"><b>Process Order</b></button>
 		</tr>
 	</table>
-	<div id="setReceivable" class="modal">
-		<div class="modal-content medium-modal fancy">
-			<h2>Accounts Payable</h2>
-			<table style="margin-left: auto; margin-right: auto;">
-				<tr>
-					<td><b>Amount Due: </b><br>
-						<div id="popupTotal" class="fancy"></div></td>
-					<td><b>Down Payment: </b><br> <sf:input id="down_payment" class="fancy" type="number" step=".01"
-							path="payables.down_payment" onchange="eachPayment()" /></td>
-					<td><b>Interest: </b><br> <sf:input id="interest" class="fancy" type="number" step=".01"
-							path="payables.interest" onchange="eachPayment()" />%</td>
-				</tr>
-				<tr>
-					<td><b>Number of Payments: </b><br> <sf:input id="num_payments" class="fancy" type="number" step="1"
-							path="payables.num_payments" onchange="eachPayment()" /></td>
-					<td><b>Payment Schedule: </b><br> <sf:select class="fancy" path="payables.schedule">
-							<sf:option value="Annually">Annually</sf:option>
-							<sf:option value="Bi-Annually">Bi-Annually</sf:option>
-							<sf:option value="Quarterly">Quarterly</sf:option>
-							<sf:option value="Monthly">Monthly</sf:option>
-							<sf:option value="Bi-Monthly">Bi-Monthly</sf:option>
-							<sf:option value="Weekly">Weekly</sf:option>
-							<sf:option value="Daily">Daily</sf:option>
-						</sf:select></td>
-					<td><b>Amount Per Payment: </b><br> <sf:input id="each_payment" class="fancy" type="number" step=".01"
-							path="payables.each_payment" /></td>
-				</tr>
-				<tr>
-					<td><sf:button class="fancy-button" type="button" onclick="receiveClose()">
-							<b>Save</b>
-						</sf:button></td>
-					<td><sf:button class="fancy-button" type="button" onclick="receiveCancel()">
-							<b>Cancel</b>
-						</sf:button></td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<sf:hidden path="reference"/>
-	<sf:hidden path="amt_received" />
-	<sf:hidden path="amt_this_shipment" />
+	<sf:hidden id="reference" path="reference" />
+	<sf:hidden path="invoice_num"/>
+	<sf:hidden path="vendor" />
+	<sf:hidden path="user_id" />
+	<sf:hidden path="payment_type" value="Cash"/>
+	<sf:hidden path="order_date" />
+	<sf:hidden path="process_date" />
 	<sf:hidden path="delivery_date" />
-	<sf:hidden path="status" value="O" />
-	<sf:hidden id="hiddenTotalDue" path="payables.total_due" />
+	<sf:hidden path="total_price" />
+	<sf:hidden path="status" value="O"/>
+	
+	<div class="scrollPanel">
+		<c:if test="${productOrder.orderItems.size() > 0}">
+			<table class="fieldTable tableborder tableshadow rjfirst rjsecond rjfourth">
+				<tr>
+					<th colspan="6">Product Order</th>
+				</tr>
+				<tr>
+					<th>Amount Ordered</th>
+					<th>Amount Received</th>
+					<th>Product Name</th>
+					<th>Total Item Amount</th>
+					<th>&nbsp;</th>
+					<th>&nbsp;</th>
+				</tr>
+				<c:forEach var="item" items="${productOrder.orderItems}">
+					<tr>
+						<td>${item.amt_ordered}</td>
+						<td>${item.amt_received}</td>
+						<td>${item.product_name}</td>
+						<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.wholesale}" /></td>
+						<td>
+							<button type="button" onclick="window.location.href='/admin/editsalesitem?item_id=${item.id}'">Edit</button></td>
+						<td>
+							<button type="button" onclick="window.location.href='/admin/deletesalesitem?item_id=${item.id}'">Delete</button>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
+	</div>
 </sf:form>
 
 <script type="text/javascript">
@@ -145,11 +113,11 @@
 		}
 	}
 
-	$('#supplierInp').devbridgeAutocomplete(
+	$('#product_name').devbridgeAutocomplete(
 			{
 				lookup : function(query, done) {
-					var name = $("#supplierInp").val();
-					$.getJSON("/rest/lookupvendor?name=" + name + "&type=R",
+					var name = $("#product_name").val();
+					$.getJSON("/rest/lookupname?name=" + name,
 							function(result) {
 								var data = {
 									suggestions : result
@@ -165,7 +133,33 @@
 
 				},
 				onSelect : function(data) {
-					$("#supplierInp").val(data.data.company_name);
+					$("#sku").val(data.data.sku);
+					$("#upc").val(data.data.upc);
+					$("#product_name").val(data.data.product_name);
 				}
 			});
+	function clearAll() {
+		if ($("#product_name").val() == "") {
+			$("#product_name").val("");
+			$("#sku").val("");
+			$("#upc").val("");
+			$("#order_qty").val("1.0");
+		}
+	}
+	function addItem() {
+
+		var sku = $("#sku").val();
+		var reference = $("#reference").val();
+		var order_qty = $("#order_qty").val();
+		var price = $("#price").val();
+		if (order_qty == 0.0) {
+			$("#errorMsg").text("Order quantity cannot be 0.")
+		} else {
+			if (sku.length > 0 && reference > 0) {
+				window.location.href = "/admin/addorderitem?reference=" + reference
+						+ "&sku=" + sku + "&order_qty=" + order_qty + "&price=" + price;
+			}
+		}
+	}
+
 </script>

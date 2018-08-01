@@ -54,8 +54,8 @@ public class EachInventoryService implements IEachInventory {
 	public void stockShelf(EachInventory inventory, Integer qty) {
 		inventoryDao.stockShelf(inventory, qty);
 	}
-	public void markAsDelivered(OrderItems order, int qty) {
-		inventoryDao.markAsDelivered(order, qty);
+	public void markAsDelivered(OrderItems order, int qty, Long reference) {
+		inventoryDao.markAsDelivered(order, qty, reference);
 	}
 	
 	public double getAmountOrdered(String sku) {

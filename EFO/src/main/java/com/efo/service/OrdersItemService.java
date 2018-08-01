@@ -1,7 +1,9 @@
 package com.efo.service;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -39,7 +41,9 @@ public class OrdersItemService implements IOrdersItem {
 	public PagedListHolder<OrderItems> retrieveOpenOrders() {
 		return new PagedListHolder<OrderItems>(orderDao.retrieveOpenOrders());
 	}
-	
+	public Set<OrderItems> retrieveChildItems(Long reference) {
+		return new HashSet<OrderItems>(orderDao.retrieveChildItems(reference));
+	}
 	public void setStatus(Long reference, String status) {
 		orderDao.setStatus(reference, status);
 	}

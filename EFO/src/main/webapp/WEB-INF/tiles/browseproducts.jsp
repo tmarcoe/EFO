@@ -50,7 +50,8 @@
 		</tr>
 		<tr>
 			<td colspan="2"><button class="fancy-button" type="button" onclick="window.location.href='/admin/listsales'">
-							<b>View Processed Orders</b></button></td>
+					<b>View Processed Orders</b>
+				</button></td>
 		</tr>
 		<tfoot>
 			<tr>
@@ -65,7 +66,7 @@
 			<tr>
 				<td colspan="4"><div id="grandTotal" class="totalsDiv"></div></td>
 			</tr>
-			
+
 		</tfoot>
 	</table>
 	<div id="errMsg" class="modal">
@@ -131,7 +132,6 @@
 <script type="text/javascript">
 	$('#product_name').devbridgeAutocomplete(
 			{
-
 				lookup : function(query, done) {
 					var name = $("#product_name").val();
 					$.getJSON("/rest/lookupname?name=" + name,
@@ -172,9 +172,8 @@
 			$("#errorMsg").text("Order quantity cannot be 0.")
 		} else {
 			if (sku.length > 0 && reference > 0) {
-				window.location.href = "/admin/additem?reference="
-						+ reference + "&sku=" + sku + "&order_qty="
-						+ order_qty;
+				window.location.href = "/admin/additem?reference=" + reference
+						+ "&sku=" + sku + "&order_qty=" + order_qty;
 			}
 		}
 	}
@@ -215,9 +214,18 @@
 		$("#order_qty").val("1.0");
 		$("#discontinue").val("false");
 	}
-	var subttl = ${subtotal};
-	var ttltax = ${totalTax};
-	var grandttl = ${grandTotal};
+	var subttl = $
+	{
+		subtotal
+	};
+	var ttltax = $
+	{
+		totalTax
+	};
+	var grandttl = $
+	{
+		grandTotal
+	};
 	function totals() {
 		$("#subtotal").text("Subtotal: " + subttl + "    ");
 		$("#totalTax").text("Tax: " + ttltax + "    ");

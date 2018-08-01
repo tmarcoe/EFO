@@ -14,7 +14,6 @@
 		<th>On Sale?</th>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
-		<th>&nbsp;</th>
 	</tr>
 	<c:forEach var="item" items="${objectList.pageList}">
 		<tr>
@@ -28,8 +27,6 @@
 					onclick="window.location.href='/admin/editproduct?sku=${item.sku}'">View/Edit</button></td>
 			<td><button type="button"
 					onclick="deleteProduct('${item.sku}', '${item.product_name}')">Delete</button></td>
-			<td><button type="button"
-					onclick="window.location.href='/admin/newproductorder?sku=${item.sku}'">order</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter">
@@ -37,9 +34,11 @@
 			<td><button type="button"
 					onclick="window.location.href='/admin/listproductorders'">Product
 					Orders</button>
-			<td colspan="7"><button type="button"
+			<td colspan="5"><button type="button"
 					onclick="window.location.href='/admin/newproduct'">New
 					Product</button></td>
+			<td><button type="button"
+					onclick="window.location.href='/admin/newproductorder'">Order Products</button></td>
 			<td><button type="button"
 					onclick="window.location.href='/#tabs-5'">Back</button></td>
 		</tr>

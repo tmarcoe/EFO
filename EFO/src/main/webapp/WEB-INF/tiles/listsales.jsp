@@ -6,7 +6,7 @@
 
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
 
-<table class="tableview tableshadow tableborder rjSecond">
+<table class="tableview tableshadow tableborder rjsecond">
 	<tr>
 		<th>Invoice Number</th>
 		<th>Total Price</th>
