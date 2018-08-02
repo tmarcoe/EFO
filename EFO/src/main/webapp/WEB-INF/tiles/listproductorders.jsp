@@ -11,27 +11,21 @@
 <table class="tableview tableshadow tableborder" >
 	<tr>
 		<th>Invoice #</th>
-		<th>Product</th>
 		<th>Vendor</th>
-		<th>Order Price</th>
-		<th>Quantity Ordered</th>
-		<th>Quantity Received</th>
+		<th>Total Price</th>
 		<th>Order Date</th>
-		<th>Delivery Date</th>
+		<th>Process Date</th>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 	</tr>
 	<c:forEach var="item" items="${objectList.pageList}">
 		<tr>
-			<td>${item.reference}</td>
-			<td>${item.product_name}</td>
+			<td>${item.invoice_num}</td>
 			<td>${item.vendor}</td>
-			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.wholesale}" /></td>
-			<td>${item.amt_ordered}</td>
-			<td>${item.amt_received}</td>
+			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_price}" /></td>
 			<td><fmt:formatDate value="${item.order_date}"/></td>
-			<td><fmt:formatDate value="${item.delivery_date}" /></td>
+			<td><fmt:formatDate value="${item.process_date}"/></td>
 			<td><button type="button" onclick="window.location.href='/admin/receiveorder?reference=${item.reference}'">Receive Order</button></td>
 			<td><button type="button" onclick="window.location.href='/admin/editproductorder?reference=${item.reference}'">Edit Order</button></td>
 			<td><button type="button" onclick="window.location.href='/admin/cancelorder?reference=${item.reference}'">CancelOrder</button></td>
@@ -39,7 +33,8 @@
 	</c:forEach>
 	<tfoot  class="tablefooter">
 		<tr>
-			<td colspan="11"><button type="button" onclick="window.location.href='/admin/listproduct'">Back</button></td>
+			<td colspan="7"><button type="button" onclick="window.location.href='/admin/newproductordert'">New Order</button></td>
+			<td><button type="button" onclick="window.location.href='/admin/listproduct'">Back</button></td>
 		</tr>
 	</tfoot>
 

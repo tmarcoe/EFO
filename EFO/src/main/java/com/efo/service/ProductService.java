@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.efo.dao.FluidInventoryDao;
 import com.efo.dao.ProductDao;
 import com.efo.entity.Product;
+import com.efo.entity.ProductOrders;
 import com.efo.interfaces.IProduct;
 
 @Service

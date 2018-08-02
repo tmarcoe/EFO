@@ -21,7 +21,7 @@ public class ProductOrders implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long Reference;
+	private Long reference;
 	private String invoice_num;
 	private String vendor;
 	private int user_id;
@@ -42,11 +42,11 @@ public class ProductOrders implements Serializable{
 	private Payables payables;
 
 	public Long getReference() {
-		return Reference;
+		return reference;
 	}
 
 	public void setReference(Long reference) {
-		Reference = reference;
+		this.reference = reference;
 	}
 
 	public String getInvoice_num() {

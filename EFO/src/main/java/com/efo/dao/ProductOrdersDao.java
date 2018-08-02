@@ -62,6 +62,16 @@ public class ProductOrdersDao implements IProductOrders {
 		
 		return orders;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ProductOrders> retrieveProcessedOrders(int user_id) {
+		String hql = "FROM ProductOrders WHERE process_date IS NOT null AND delivery_date IS null AND user_id = :user_id";
+		Session session = session();
+		List<ProductOrders> orderList = session.createQuery(hql).setInteger("user_id", user_id).list();
+		session.disconnect();
+		
+		return orderList;
+	}
 
 	@Override
 	public void update(ProductOrders productOrders) {

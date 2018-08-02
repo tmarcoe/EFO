@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.efo.entity.PaymentsReceived;
 import com.efo.entity.PettyCashVoucher;
 import com.efo.entity.Product;
+import com.efo.entity.ProductOrders;
 import com.efo.entity.OrderItems;
 import com.efo.entity.Receivables;
 import com.efo.entity.RetailSales;
@@ -300,11 +301,10 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 
-	public void purchaseInventory(Product product, OrderItems order, Payables payables, PaymentsBilled payments) throws IOException {
+	public void purchaseInventory(ProductOrders order, Payables payables, PaymentsBilled payments) throws IOException {
 		try {
 			initTransaction(filePath);
-			setDescription("Purchase of Inventory (SKU: " + order.getSku() + ")");
-			publish("product", VariableType.DAO, product);
+			setDescription("Purchase of Inventory (Invoice #" + order.getInvoice_num() + ")");
 			publish("order", VariableType.DAO, order);
 			publish("payables", VariableType.DAO, payables);
 			publish("payment", VariableType.DAO, payments);

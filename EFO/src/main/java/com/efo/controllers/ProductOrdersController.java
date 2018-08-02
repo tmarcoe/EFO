@@ -22,8 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.efo.entity.Product;
 import com.efo.entity.ProductOrders;
 import com.efo.entity.User;
+import com.efo.entity.EachInventory;
+import com.efo.entity.FluidInventory;
 import com.efo.entity.OrderItems;
+import com.efo.entity.Payables;
+import com.efo.entity.PaymentsBilled;
+import com.efo.service.EachInventoryService;
 import com.efo.service.FetalTransactionService;
+import com.efo.service.FluidInventoryService;
 import com.efo.service.OrdersItemService;
 import com.efo.service.ProductOrdersService;
 import com.efo.service.ProductService;
@@ -35,7 +41,7 @@ public class ProductOrdersController {
 	private final String pageLink = "/admin/prdorderpaging";
 
 	private SimpleDateFormat dateFormat;
-	private PagedListHolder<OrderItems> prdOrderList;
+	private PagedListHolder<ProductOrders> prdOrderList;
 
 	@Autowired
 	private OrdersItemService ordersItemsService;
@@ -48,6 +54,12 @@ public class ProductOrdersController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EachInventoryService eachInventoryService;
+	
+	@Autowired
+	private FluidInventoryService fluidInventoryService;
 
 	@Autowired
 	private FetalTransactionService fetalService;
@@ -60,8 +72,10 @@ public class ProductOrdersController {
 	}
 
 	@RequestMapping("listproductorders")
-	public String listOrderItems(Model model) {
-		prdOrderList = ordersItemsService.retrieveOpenOrders();
+	public String listOrderItems(Model model, Principal principal) {
+		User user = userService.retrieve(principal.getName());
+		
+		prdOrderList = ordersService.retrieveProcessedOrders(user.getUser_id());
 		prdOrderList.setPageSize(20);
 
 		model.addAttribute("objectList", prdOrderList);
@@ -126,7 +140,16 @@ public class ProductOrdersController {
 									  BindingResult result, Model model) {
 		productOrder.setProcess_date(new Date());
 		productOrder.setPayment_type("");
-		productOrder.setOrderItems(ordersItemsService.retrieveChildItems(productOrder.getReference()));
+		Long reference = productOrder.getReference();
+		productOrder.setOrderItems(ordersItemsService.retrieveChildItems(reference));
+		Payables payables = new Payables();
+		payables.setDown_payment(0);
+		payables.setInterest(0);
+		payables.setReference(productOrder.getReference());
+		payables.setNum_payments((long) 1);
+		payables.setSchedule("Monthly");
+		productOrder.setPayables(payables);
+		productOrder.setTotal_price(totalProductOrder(productOrder));
 		
 		model.addAttribute("productOrder", productOrder);
 		
@@ -134,15 +157,34 @@ public class ProductOrdersController {
 	}
 	
 	@RequestMapping("markasordered")
-	public String markAsOrdered(@Valid @ModelAttribute("productOrder") ProductOrders productOrder, BindingResult result, Model model) {
+	public String markAsOrdered(@Valid @ModelAttribute("productOrder") ProductOrders productOrder, BindingResult result, Model model) throws IOException {
+		productOrder.setOrderItems(ordersItemsService.retrieveChildItems(productOrder.getReference()));
 		
+		if ("Cash".compareTo(productOrder.getPayment_type()) == 0) {
+			productOrder.setPayables(null);
+		}
+		fetalService.purchaseInventory(productOrder, productOrder.getPayables(), new PaymentsBilled());
+		for (OrderItems item : productOrder.getOrderItems()) {
+			Product product = productService.retrieve(item.getSku());
+			if ("Pack".compareTo(product.getUnit()) == 0 || "Each".compareTo(product.getUnit()) == 0) {
+				EachInventory inventory = new EachInventory();
+				inventory.setInvoice_num(productOrder.getInvoice_num());
+				inventory.setSku(product.getSku());
+				inventory.setWholesale(item.getWholesale() / item.getAmt_ordered() );
+				eachInventoryService.stockShelf(inventory, new Double(item.getAmt_ordered()).intValue() );
+			}else{
+				FluidInventory inventory = product.getFluidInventory();
+				inventory.setAmt_ordered(inventory.getAmt_ordered() + item.getAmt_ordered());
+				fluidInventoryService.update(inventory);
+			}
+		}
 		
-		
-		return "redirect:/admin/listproducts";
+		return "redirect:/admin/listproduct";
 	}
 	
 	@RequestMapping("updproductorder")
 	public String updProductOrder(@Valid @ModelAttribute("productOrder") OrderItems order, BindingResult result) {
+		
 
 		ordersItemsService.update(order);
 
@@ -236,5 +278,12 @@ public class ProductOrdersController {
 		// only got here if we didn't return false
 		return retInt;
 	}
-
+	private double totalProductOrder(ProductOrders orders) {
+		double total = 0.0;
+		for (OrderItems item : orders.getOrderItems()) {
+			total += item.getWholesale();
+		}
+		
+		return total;
+	}
 }

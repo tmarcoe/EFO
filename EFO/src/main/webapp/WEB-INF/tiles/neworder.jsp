@@ -8,7 +8,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form method="post" action="/admin/addproductorder" modelAttribute="productOrder">
+<sf:form method="post" action="/admin/processproductorder" modelAttribute="productOrder">
 	<table class="fancy-table tableshadow" style="position: fixed; top: 100px; right: 100px;">
 		<tr>
 			<td colspan="4"><input class="fancy" id="product_name" size="50" onchange="clearAll()" placeholder="Enter the product name"/> </td>
@@ -24,20 +24,9 @@
 		</tr>
 		<tr>
 			<td><button class="fancy-button" type="button" onclick="addItem()"><b>Order Item</b></button>
-			<td><button class="fancy-button" type="button" onclick="window.location.href='/admin/processproductorder'"><b>Process Order</b></button>
+			<td><button class="fancy-button" type="submit" ><b>Process Order</b></button>
 		</tr>
 	</table>
-	<sf:hidden id="reference" path="reference" />
-	<sf:hidden path="invoice_num"/>
-	<sf:hidden path="vendor" />
-	<sf:hidden path="user_id" />
-	<sf:hidden path="payment_type" value="Cash"/>
-	<sf:hidden path="order_date" />
-	<sf:hidden path="process_date" />
-	<sf:hidden path="delivery_date" />
-	<sf:hidden path="total_price" />
-	<sf:hidden path="status" value="O"/>
-	
 	<div class="scrollPanel">
 		<c:if test="${productOrder.orderItems.size() > 0}">
 			<table class="fieldTable tableborder tableshadow rjfirst rjsecond rjfourth">
@@ -68,50 +57,20 @@
 			</table>
 		</c:if>
 	</div>
+	<sf:hidden id="reference" path="reference" />
+	<sf:hidden path="invoice_num"/>
+	<sf:hidden path="vendor" />
+	<sf:hidden path="user_id" />
+	<sf:hidden path="payment_type" value="Cash"/>
+	<sf:hidden path="order_date" />
+	<sf:hidden path="process_date" />
+	<sf:hidden path="delivery_date" />
+	<sf:hidden path="total_price" />
+	<sf:hidden path="status" value="O"/>
+	
 </sf:form>
 
 <script type="text/javascript">
-	function receiveCancel() {
-		$("#paymentType").val("Cash").change();
-		var modal = document.getElementById('setReceivable');
-		modal.style.display = "none";
-	}
-	
-	function receiveClose() {
-		var modal = document.getElementById('setReceivable');
-		modal.style.display = "none";		
-	}
-
-	function showReceivable() {
-		if ($("#paymentType option:selected").text() == "Credit") {
-			var newVal = Number($("#total_due").val());
-			$("#popupTotal").text(newVal.toFixed(2));
-			$("#hiddenTotalDue").val(newVal);
-			var modal = document.getElementById('setReceivable');
-			modal.style.display = "block";
-			eachPayment();
-		}
-	}
-
-	function eachPayment() {
-		var total_due = $("#total_due").val();
-		var down_payment = $("#down_payment").val();
-		var interest = $("#interest").val();
-		var num_payments = $("#num_payments").val();
-
-		if (total_due > 0 && num_payments > 0) {
-			$.getJSON(
-					"/rest/calculatepayments?total=" + total_due + "&down="
-							+ down_payment + "&interest=" + interest
-							+ "&num_payments=" + num_payments, function(data) {
-						$("#each_payment").val(data.each_payment);
-					}).fail(
-					function(jqXHR, textStatus, errorThrown) {
-						alert("error " + textStatus + "\n" + "incoming Text "
-								+ jqXHR.responseText);
-					});
-		}
-	}
 
 	$('#product_name').devbridgeAutocomplete(
 			{
