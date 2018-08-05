@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -57,28 +56,42 @@ public class OrderItemsDao implements IOrdersItem {
 	@SuppressWarnings("unchecked")
 	public List<OrderItems> retrieveChildItems(Long reference) {
 		Session session = session();
-		List<OrderItems> items = session.createCriteria(OrderItems.class).add(Restrictions.eq("reference", reference)).list();
+		List<OrderItems> items = session.createCriteria(OrderItems.class)
+										.add(Restrictions.eq("reference", reference))
+										.add(Restrictions.ne("status", "D"))
+										.list();
 		session.disconnect();
 		
 		return items;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<OrderItems> retrieveOpenOrders() {
+	public OrderItems retrieveItemBySku(Long reference, String sku) {
+		String hql = "FROM OrderItems WHERE reference = :reference AND sku = :sku";
 		Session session = session();
-		Criterion delivered = Restrictions.ne("status", "D");
-		Criterion canceled = Restrictions.ne("status", "C");
-		List<OrderItems> orderList = session.createCriteria(OrderItems.class).add(Restrictions.and(delivered, canceled)).list();
+		OrderItems item = (OrderItems) session.createQuery(hql).setLong("reference", reference).setString("sku", sku).setMaxResults(1).uniqueResult();
+		session.disconnect();
+		
+		return item;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<OrderItems> retrieveOpenItems(Long reference) {
+		String hql = "FROM OrderItems WHERE reference = :reference AND amt_ordered > amt_received";
+		Session session = session();
+		List<OrderItems> orderList = session.createQuery(hql).setLong("reference", reference).list();
 		session.disconnect();
 		
 		return orderList;
 	}
 	
-	public void setStatus(Long reference, String status) {
-		String hql = "UPDATE OrderItems SET status = :status WHERE id = :id";
+	public void addItems(double amt_ordered, double price, Long reference, String sku ) {
+		String hql = "UPDATE OrderItems SET amt_ordered = amt_ordered + :amt_ordered, wholesale = wholesale + :price "
+				   + "WHERE reference = :reference AND sku = :sku";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.createQuery(hql).setString("status", status).setLong("reference", reference).executeUpdate();
+		session.createQuery(hql).setDouble("amt_ordered", amt_ordered)
+								.setDouble("price", price).setLong("reference", reference)
+								.setString("sku", sku).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}
@@ -128,6 +141,16 @@ public class OrderItemsDao implements IOrdersItem {
 		session.disconnect();
 		
 		return totalOrders;
+	}
+	
+	public void receiveOrder(Long id, double qty) {
+		String hql = "UPDATE OrderItems SET amt_received = amt_received + :qty, delivery_date = current_date() "
+				   + "WHERE id = :id";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setDouble("qty", qty).setLong("id", id).executeUpdate();
+		tx.commit();
+		session.disconnect();
 	}
 	
 }

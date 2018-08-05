@@ -29,6 +29,10 @@ public class OrdersItemService implements IOrdersItem {
 		return orderDao.retrieve(reference);
 	}
 
+	public OrderItems retrieveItemBySku(Long reference, String sku) {
+		return orderDao.retrieveItemBySku(reference, sku);
+	}
+	
 	@Override
 	public List<OrderItems> retrieveRawList() {
 		return orderDao.retrieveRawList();
@@ -38,14 +42,14 @@ public class OrdersItemService implements IOrdersItem {
 		return new PagedListHolder<OrderItems>(orderDao.retrieveRawList());
 	}
 	
-	public PagedListHolder<OrderItems> retrieveOpenOrders() {
-		return new PagedListHolder<OrderItems>(orderDao.retrieveOpenOrders());
+	public PagedListHolder<OrderItems> retrieveOpenItems(Long reference) {
+		return new PagedListHolder<OrderItems>(orderDao.retrieveOpenItems(reference));
 	}
 	public Set<OrderItems> retrieveChildItems(Long reference) {
 		return new HashSet<OrderItems>(orderDao.retrieveChildItems(reference));
 	}
-	public void setStatus(Long reference, String status) {
-		orderDao.setStatus(reference, status);
+	public PagedListHolder<OrderItems> retrievePagedChildItems(Long reference) {
+		return new PagedListHolder<OrderItems>(orderDao.retrieveChildItems(reference));
 	}
 	
 	@Override
@@ -55,6 +59,10 @@ public class OrdersItemService implements IOrdersItem {
 	
 	public void merge(OrderItems orders) {
 		orderDao.merge(orders);
+	}
+	
+	public void addItems(double amt_ordered, double price, Long reference, String sku ) {
+		orderDao.addItems(amt_ordered, price, reference, sku);
 	}
 
 	@Override
@@ -73,5 +81,9 @@ public class OrdersItemService implements IOrdersItem {
 	
 	public List<Object[]> getTotalWholesaleByPeriod(Date begin, Date end) {
 		return orderDao.getTotalWholesaleByPeriod(begin, end);
+	}
+	
+	public void receiveOrder(Long id, double qty) {
+		orderDao.receiveOrder(id, qty);
 	}
 }

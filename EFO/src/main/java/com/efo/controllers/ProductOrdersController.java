@@ -45,19 +45,19 @@ public class ProductOrdersController {
 
 	@Autowired
 	private OrdersItemService ordersItemsService;
-	
+
 	@Autowired
 	private ProductOrdersService ordersService;
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private EachInventoryService eachInventoryService;
-	
+
 	@Autowired
 	private FluidInventoryService fluidInventoryService;
 
@@ -74,7 +74,7 @@ public class ProductOrdersController {
 	@RequestMapping("listproductorders")
 	public String listOrderItems(Model model, Principal principal) {
 		User user = userService.retrieve(principal.getName());
-		
+
 		prdOrderList = ordersService.retrieveProcessedOrders(user.getUser_id());
 		prdOrderList.setPageSize(20);
 
@@ -87,22 +87,23 @@ public class ProductOrdersController {
 	@RequestMapping("editproductorder")
 	public String editProductOrder(@ModelAttribute("reference") Long reference, Model model) {
 
-		OrderItems orders = ordersItemsService.retrieve(reference);
+		ProductOrders orders = ordersService.retrieve(reference);
+		orders.setOrderItems(ordersItemsService.retrieveChildItems(reference));
 
-		model.addAttribute("product", productService.retrieve(orders.getSku()));
 		model.addAttribute("productOrder", orders);
 
 		return "editproductorder";
 	}
-	
+
 	@RequestMapping("newproductorder")
 	public String newProductOrder(Model model, Principal principal) {
 		User user = userService.retrieve(principal.getName());
-		
+
 		ProductOrders productOrder = ordersService.findOpenOrder(user.getUser_id());
 		if (productOrder == null) {
 			productOrder = new ProductOrders();
 			productOrder.setPayment_type("Cash");
+			productOrder.setOrder_date(new Date());
 			productOrder.setUser_id(user.getUser_id());
 			ordersService.create(productOrder);
 		}
@@ -112,32 +113,34 @@ public class ProductOrdersController {
 	}
 
 	@RequestMapping("addorderitem")
-	public String addOrderItem(@ModelAttribute("sku") String sku, 
-							   @ModelAttribute("reference") Long reference,
-							   @ModelAttribute("order_qty") Double order_qty,
-							   @ModelAttribute("price") Double price) {
+	public String addOrderItem(@ModelAttribute("sku") String sku, @ModelAttribute("reference") Long reference, @ModelAttribute("order_qty") Double order_qty,
+			@ModelAttribute("price") Double price) {
 		ProductOrders order = ordersService.retrieve(reference);
 		Product product = productService.retrieve(sku);
-		
-		OrderItems item = new OrderItems();
-		item.setSku(sku);
-		item.setReference(reference);
-		item.setAmt_ordered(order_qty);
-		item.setWholesale(price);
-		item.setProduct_name(product.getProduct_name());
-		
-		item.setProductOrders(order);
-		order.getOrderItems().add(item);
-		
+
+		OrderItems item = ordersItemsService.retrieveItemBySku(reference, sku);
+
+		if (item == null) {
+			item = new OrderItems();
+			item.setSku(sku);
+			item.setReference(reference);
+			item.setAmt_ordered(order_qty);
+			item.setWholesale(price);
+			item.setProduct_name(product.getProduct_name());
+
+			item.setProductOrders(order);
+			order.getOrderItems().add(item);
+		}else{
+			ordersItemsService.addItems(order_qty, price, reference, sku);
+		}
+
 		ordersService.merge(order);
-		
-		
+
 		return "redirect:/admin/newproductorder";
 	}
 
 	@RequestMapping("processproductorder")
-	public String processProductOrder(@Valid @ModelAttribute("productOrder") ProductOrders productOrder, 
-									  BindingResult result, Model model) {
+	public String processProductOrder(@Valid @ModelAttribute("productOrder") ProductOrders productOrder, BindingResult result, Model model) {
 		productOrder.setProcess_date(new Date());
 		productOrder.setPayment_type("");
 		Long reference = productOrder.getReference();
@@ -150,16 +153,16 @@ public class ProductOrdersController {
 		payables.setSchedule("Monthly");
 		productOrder.setPayables(payables);
 		productOrder.setTotal_price(totalProductOrder(productOrder));
-		
+
 		model.addAttribute("productOrder", productOrder);
-		
+
 		return "processproductorder";
 	}
-	
+
 	@RequestMapping("markasordered")
 	public String markAsOrdered(@Valid @ModelAttribute("productOrder") ProductOrders productOrder, BindingResult result, Model model) throws IOException {
 		productOrder.setOrderItems(ordersItemsService.retrieveChildItems(productOrder.getReference()));
-		
+
 		if ("Cash".compareTo(productOrder.getPayment_type()) == 0) {
 			productOrder.setPayables(null);
 		}
@@ -170,37 +173,26 @@ public class ProductOrdersController {
 				EachInventory inventory = new EachInventory();
 				inventory.setInvoice_num(productOrder.getInvoice_num());
 				inventory.setSku(product.getSku());
-				inventory.setWholesale(item.getWholesale() / item.getAmt_ordered() );
-				eachInventoryService.stockShelf(inventory, new Double(item.getAmt_ordered()).intValue() );
-			}else{
+				inventory.setWholesale(item.getWholesale() / item.getAmt_ordered());
+				eachInventoryService.stockShelf(inventory, new Double(item.getAmt_ordered()).intValue());
+			} else {
 				FluidInventory inventory = product.getFluidInventory();
 				inventory.setAmt_ordered(inventory.getAmt_ordered() + item.getAmt_ordered());
 				fluidInventoryService.update(inventory);
 			}
 		}
-		
+
 		return "redirect:/admin/listproduct";
 	}
-	
+
 	@RequestMapping("updproductorder")
 	public String updProductOrder(@Valid @ModelAttribute("productOrder") OrderItems order, BindingResult result) {
-		
 
 		ordersItemsService.update(order);
 
 		return "redirect:/admin/listproductorders";
 	}
 
-	@RequestMapping("receiveorder")
-	public String receiveOrder(@ModelAttribute("reference") Long reference, Model model) {
-		OrderItems order = ordersItemsService.retrieve(reference);
-
-		order.setDelivery_date(new Date());
-
-		model.addAttribute("order", order);
-
-		return "receiveorder";
-	}
 
 	@RequestMapping("stockorder")
 	public String stockOrder(@ModelAttribute("productOrder") OrderItems order) throws RecognitionException, IOException, RuntimeException {
@@ -258,8 +250,6 @@ public class ProductOrdersController {
 		return "listproductorders";
 	}
 
-	
-
 	/**************************************************************************************************************************************
 	 * Used for both detecting a number, and converting to a number. If this
 	 * routine returns a -1, the input parameter was not a number.
@@ -283,7 +273,7 @@ public class ProductOrdersController {
 		for (OrderItems item : orders.getOrderItems()) {
 			total += item.getWholesale();
 		}
-		
+
 		return total;
 	}
 }

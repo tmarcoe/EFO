@@ -33,7 +33,7 @@
 	</c:forEach>
 	<tfoot  class="tablefooter">
 		<tr>
-			<td colspan="7"><button type="button" onclick="window.location.href='/admin/newproductordert'">New Order</button></td>
+			<td colspan="7"><button type="button" onclick="window.location.href='/admin/newproductorder'">New Order</button></td>
 			<td><button type="button" onclick="window.location.href='/admin/listproduct'">Back</button></td>
 		</tr>
 	</tfoot>
