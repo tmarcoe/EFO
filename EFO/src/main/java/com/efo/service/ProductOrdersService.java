@@ -57,5 +57,8 @@ public class ProductOrdersService implements IProductOrders {
 		productOrdersDao.delete(productOrders);
 
 	}
-
+	
+	public void setStatus(String status, Long reference) {
+		productOrdersDao.setStatus(status, reference);
+	}
 }

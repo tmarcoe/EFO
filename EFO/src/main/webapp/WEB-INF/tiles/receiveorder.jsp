@@ -26,6 +26,11 @@
 		<td><button type="button" onclick="receive('${item.id}', '${item.reference}')">Receive</button></td>
 	</tr>
 	</c:forEach>
+	<tfoot class="tablefooter">
+		<tr>
+			<td colspan="7"><button type="button" onclick="window.location.href='/admin/listproductorders'">Back</button>
+		</tr>
+	</tfoot>
 </table>
 <script type="text/javascript" >
 	function receive(id, reference) {

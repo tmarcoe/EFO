@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.OrderItems;
 import com.efo.service.OrdersItemService;
+import com.efo.service.ProductOrdersService;
 
 @Controller
 @RequestMapping("/admin/")
@@ -27,6 +28,9 @@ public class OrderItemsController {
 	
 	@Autowired
 	private OrdersItemService ordersItemsService;
+	
+	@Autowired
+	private ProductOrdersService productOrdersService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -51,6 +55,9 @@ public class OrderItemsController {
 								  @ModelAttribute("reference") Long reference) {
 		
 		ordersItemsService.receiveOrder(id, qty);
+		if (ordersItemsService.hasOutstandingDeliveries(reference) == false) {
+			productOrdersService.setStatus("D", reference);
+		}
 		
 		return "redirect:/admin/receiveorder?reference=" + reference;
 	}

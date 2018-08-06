@@ -65,7 +65,8 @@ public class ProductOrdersDao implements IProductOrders {
 	
 	@SuppressWarnings("unchecked")
 	public List<ProductOrders> retrieveProcessedOrders(int user_id) {
-		String hql = "FROM ProductOrders WHERE process_date IS NOT null AND delivery_date IS null AND user_id = :user_id";
+		String hql = "FROM ProductOrders WHERE process_date IS NOT null "
+				   + "AND delivery_date IS null AND user_id = :user_id AND status != 'D'";
 		Session session = session();
 		List<ProductOrders> orderList = session.createQuery(hql).setInteger("user_id", user_id).list();
 		session.disconnect();
@@ -78,6 +79,15 @@ public class ProductOrdersDao implements IProductOrders {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.update(productOrders);
+		tx.commit();
+		session.disconnect();
+	}
+	
+	public void setStatus(String status, Long reference) {
+		String hql = "Update ProductOrders SET status = :status WHERE reference = :reference";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setString("status", status).setLong("reference", reference).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}

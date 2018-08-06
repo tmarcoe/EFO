@@ -153,4 +153,12 @@ public class OrderItemsDao implements IOrdersItem {
 		session.disconnect();
 	}
 	
+	public boolean hasOutstandingDeliveries(Long reference) {
+		String hql = "SELECT COUNT(*) FROM OrderItems WHERE amt_received < amt_ordered AND reference = :reference";
+		Session session = session();
+		Long count = (Long) session.createQuery(hql).setLong("reference", reference).uniqueResult();
+		
+		return count > 0;
+	}
+	
 }

@@ -86,4 +86,8 @@ public class OrdersItemService implements IOrdersItem {
 	public void receiveOrder(Long id, double qty) {
 		orderDao.receiveOrder(id, qty);
 	}
+	
+	public boolean hasOutstandingDeliveries(Long reference) {
+		return orderDao.hasOutstandingDeliveries(reference);
+	}
 }
