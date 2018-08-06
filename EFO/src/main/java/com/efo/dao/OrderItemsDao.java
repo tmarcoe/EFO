@@ -58,7 +58,6 @@ public class OrderItemsDao implements IOrdersItem {
 		Session session = session();
 		List<OrderItems> items = session.createCriteria(OrderItems.class)
 										.add(Restrictions.eq("reference", reference))
-										.add(Restrictions.ne("status", "D"))
 										.list();
 		session.disconnect();
 		

@@ -54,6 +54,7 @@ public class OrderItemsController {
 								  @ModelAttribute("qty") double qty, 
 								  @ModelAttribute("reference") Long reference) {
 		
+		//TODO Mark as received in inventory
 		ordersItemsService.receiveOrder(id, qty);
 		if (ordersItemsService.hasOutstandingDeliveries(reference) == false) {
 			productOrdersService.setStatus("D", reference);
