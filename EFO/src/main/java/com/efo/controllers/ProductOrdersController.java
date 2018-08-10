@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.validation.Valid;
 
-import org.antlr.v4.runtime.RecognitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
@@ -161,6 +160,20 @@ public class ProductOrdersController {
 
 	@RequestMapping("markasordered")
 	public String markAsOrdered(@Valid @ModelAttribute("productOrder") ProductOrders productOrder, BindingResult result, Model model) throws IOException {
+		
+		if (result.hasErrors() || productOrder.getInvoice_num().length() == 0 || productOrder.getVendor().length() == 0) {
+			
+			if ( productOrder.getInvoice_num().length() == 0 ) {
+				result.rejectValue("invoice_num", "NotBlank.productOrder.invoice_num");
+			}
+			
+			if (productOrder.getVendor().length() == 0) {
+				result.rejectValue("vendor", "NotBlank.productOrder.vendor");
+			}
+			
+			return "processproductorder";
+		}
+		
 		productOrder.setOrderItems(ordersItemsService.retrieveChildItems(productOrder.getReference()));
 
 		if ("Cash".compareTo(productOrder.getPayment_type()) == 0) {
@@ -182,32 +195,13 @@ public class ProductOrdersController {
 			}
 		}
 
-		return "redirect:/admin/listproduct";
+		return "redirect:/admin/listproductorders";
 	}
 
 	@RequestMapping("updproductorder")
 	public String updProductOrder(@Valid @ModelAttribute("productOrder") OrderItems order, BindingResult result) {
 
 		ordersItemsService.update(order);
-
-		return "redirect:/admin/listproductorders";
-	}
-
-
-	@RequestMapping("stockorder")
-	public String stockOrder(@ModelAttribute("productOrder") OrderItems order) throws RecognitionException, IOException, RuntimeException {
-
-		Product product = productService.retrieve(order.getSku());
-
-		if (order.getDelivery_date() == null) {
-			order.setDelivery_date(new Date());
-		}
-
-		fetalService.orderDelivered(order, product);
-		if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0) {
-			// inventoryService.markAsDelivered(order, (new
-			// Double(order.getAmt_this_shipment())).intValue());
-		}
 
 		return "redirect:/admin/listproductorders";
 	}
@@ -228,7 +222,7 @@ public class ProductOrdersController {
 	@RequestMapping("addproductorder")
 	public String addProductOrder(@Valid @ModelAttribute("productOrder") ProductOrders productOrder, BindingResult result) {
 
-		return "redirect:/admin/listproduct";
+		return "redirect:/admin/listproductorders";
 	}
 
 	@RequestMapping(value = "prdorderpaging", method = RequestMethod.GET)

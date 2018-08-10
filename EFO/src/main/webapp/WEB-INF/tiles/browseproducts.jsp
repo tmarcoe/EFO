@@ -128,6 +128,9 @@
 			</table>
 		</c:if>
 	</div>
+	<input id="subttl" type="hidden" value="${subtotal}"/>
+	<input id="ttltax" type="hidden" value="${totalTax}"/>
+	<input id="grandttl" type="hidden" value="${grandTotal}"/>
 </sf:form>
 <script type="text/javascript">
 	$('#product_name').devbridgeAutocomplete(
@@ -214,19 +217,10 @@
 		$("#order_qty").val("1.0");
 		$("#discontinue").val("false");
 	}
-	var subttl = $
-	{
-		subtotal
-	};
-	var ttltax = $
-	{
-		totalTax
-	};
-	var grandttl = $
-	{
-		grandTotal
-	};
 	function totals() {
+		var subttl = $("#subttl").val();
+		var ttltax = $("#ttltax").val();
+		var grandttl = $("#grandttl").val();
 		$("#subtotal").text("Subtotal: " + subttl + "    ");
 		$("#totalTax").text("Tax: " + ttltax + "    ");
 		$("#grandTotal").text("Grand Total: " + grandttl + "    ");

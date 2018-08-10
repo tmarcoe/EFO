@@ -275,10 +275,18 @@ public class RetailSalesController {
 		
 		SalesItem oldItem = salesItemService.retrieve(salesItem.getItem_id());
 		Product product = productService.retrieve(salesItem.getSku());
-		if (salesItem.getQty() > product.getFluidInventory().getAmt_in_stock()) {
-			result.rejectValue("qty", "Quantity.salesItem.qty");
+		if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0) {
+			if ( salesItem.getQty() > eachInventoryService.getAmountReceived(salesItem.getSku())) {
+				result.rejectValue("qty", "Quantity.salesItem.qty");
+				
+				return "editsalesitem";
+			}
+		}else{
+			if (salesItem.getQty() > product.getFluidInventory().getAmt_in_stock()) {
+				result.rejectValue("qty", "Quantity.salesItem.qty");
 			
-			return "editsalesitem";
+				return "editsalesitem";
+			}
 		}
 		if(oldItem.getQty() != salesItem.getQty()) {
 			salesItemService.update(salesItem);

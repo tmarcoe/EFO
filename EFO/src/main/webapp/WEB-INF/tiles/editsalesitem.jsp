@@ -19,7 +19,7 @@
 			<td colspan="2"><b>Product Name: <br></b><sf:input path="product_name" class="fancy" readonly="true"/></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Quantity: <br></b><sf:input path="qty" class="fancy" type="number" step=".01"/></td>
+			<td colspan="2"><b>Quantity: <br></b><sf:input path="qty" class="fancy" type="number" step="1"/></td>
 		</tr>
 		<tr>
 			<td colspan="2"><sf:errors path="qty" class="error"/>

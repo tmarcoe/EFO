@@ -8,7 +8,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form method="post" action="/admin/processproductorder" modelAttribute="productOrder">
+<sf:form id="newOrder" method="post" action="/admin/processproductorder" modelAttribute="productOrder">
 	<table class="fancy-table tableshadow" style="position: fixed; top: 100px; right: 100px;">
 		<tr>
 			<td colspan="4"><input class="fancy" id="product_name" size="50" onchange="clearAll()" placeholder="Enter the product name"/> </td>
@@ -24,7 +24,9 @@
 		</tr>
 		<tr>
 			<td><button class="fancy-button" type="button" onclick="addItem()"><b>Order Item</b></button>
-			<td><button class="fancy-button" type="submit" ><b>Process Order</b></button>
+			<td><button class="fancy-button" type="button" onclick="checkSubmit('${productOrder.orderItems.size()}')" ><b>Process Order</b></button>
+			<td><button class="fancy-button" type="button" onclick="window.location.href='/admin/listproductorders'" ><b>Back</b></button>
+			
 		</tr>
 	</table>
 	<div class="scrollPanel">
@@ -72,6 +74,7 @@
 
 <script type="text/javascript">
 
+
 	$('#product_name').devbridgeAutocomplete(
 			{
 				lookup : function(query, done) {
@@ -118,6 +121,12 @@
 				window.location.href = "/admin/addorderitem?reference=" + reference
 						+ "&sku=" + sku + "&order_qty=" + order_qty + "&price=" + price;
 			}
+		}
+	}
+	
+	function checkSubmit(size) {
+		if (Number(size) > 0) {
+			$("#newOrder").submit();
 		}
 	}
 

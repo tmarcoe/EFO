@@ -103,14 +103,13 @@ public class EachInventoryDao implements IEachInventory {
 	
 	@SuppressWarnings("unchecked")
 	public void markAsDelivered(OrderItems order, int qty, Long reference) {
-		String upd = "UPDATE EachInventory SET received = :received WHERE id = :id";
-		String hql = "SELECT id FROM EachInventory WHERE reference = :reference AND sku = :sku AND received IS null";
+		String upd = "UPDATE EachInventory SET received = current_date() WHERE id = :id";
+		String hql = "SELECT id FROM EachInventory WHERE sku = :sku AND received IS null";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		List<Long> rows = session.createQuery(hql).setLong("reference", order.getReference())
-											.setString("sku", order.getSku()).setMaxResults(qty).list();
+		List<Long> rows = session.createQuery(hql).setString("sku", order.getSku()).setMaxResults(qty).list();
 		for (Long id : rows) {
-			session.createQuery(upd).setDate("received", order.getDelivery_date()).setLong("id", id).executeUpdate();
+			session.createQuery(upd).setLong("id", id).executeUpdate();
 		}
 		
 		tx.commit();

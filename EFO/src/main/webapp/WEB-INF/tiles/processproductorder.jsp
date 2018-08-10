@@ -15,6 +15,9 @@
 			<td colspan="3"><b>Vendor:</b><br><sf:input id="vendor" class="fancy" path="vendor" size="70"/></td>
 		</tr>
 		<tr>
+			<td><sf:errors path="vendor" class="error" /></td>
+		</tr>
+		<tr>
 			<td><b>Invoice Number:</b><br><sf:input class="fancy" path="invoice_num"/></td>
 			<td><b>Process Date:</b><br><sf:input class="fancy" path="process_date" type="date"/></td>
 			<td><b>Payment Type</b><br>
@@ -23,6 +26,11 @@
 					<sf:option value="Cash">Cash</sf:option>
 					<sf:option value="Credit">Vendor Account</sf:option>
 				</sf:select></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="invoice_num" class="error" /></td>
+			<td><sf:errors path="process_date" class="error" /></td>
+			<td><sf:errors path="payment_type" class="error" /></td>
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="submit" ><b>Order Product</b></sf:button></td>
