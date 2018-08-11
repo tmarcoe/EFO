@@ -18,7 +18,7 @@
 				</div></td>
 			<td><b>Total Price: </b><br>
 				<div class="fancy">
-					<fmt:formatNumber type="currency" currencySymbol="" value="${sales.total_price}" />
+					<fmt:formatNumber type="currency" currencySymbol="" value="${sales.total_price * 1.08}" />
 				</div></td>
 		</tr>
 		<tr>

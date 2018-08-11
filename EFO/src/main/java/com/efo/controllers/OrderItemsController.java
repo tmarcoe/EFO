@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.efo.entity.OrderItems;
 import com.efo.entity.Product;
 import com.efo.service.EachInventoryService;
-import com.efo.service.FluidInventoryService;
 import com.efo.service.OrdersItemService;
 import com.efo.service.ProductOrdersService;
 import com.efo.service.ProductService;
@@ -38,9 +37,6 @@ public class OrderItemsController {
 	
 	@Autowired
 	private EachInventoryService eachInventoryService;
-	
-	@Autowired
-	private FluidInventoryService fluidInventoryService;
 	
 	@Autowired
 	private ProductService productService;
@@ -67,10 +63,10 @@ public class OrderItemsController {
 								  @ModelAttribute("qty") double qty, 
 								  @ModelAttribute("reference") Long reference) {
 		
-		OrderItems orderItems = ordersItemsService.retrieve(reference);
+		OrderItems orderItems = ordersItemsService.retrieve(id);
 		Product product = productService.retrieve(orderItems.getSku());
 		if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0) {
-			eachInventoryService.markAsDelivered(orderItems, new Double(qty).intValue(), reference);
+			eachInventoryService.markAsDelivered(orderItems.getSku(), new Double(qty).intValue());
 		}else{
 			product.getFluidInventory().setAmt_in_stock(product.getFluidInventory().getAmt_in_stock() + qty);
 			productService.merge(product);

@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import com.efo.entity.EachInventory;
 import com.efo.entity.Product;
-import com.efo.entity.OrderItems;
 import com.efo.entity.SalesItem;
 import com.efo.interfaces.IEachInventory;
 
@@ -101,14 +100,17 @@ public class EachInventoryDao implements IEachInventory {
 		session.disconnect();
 	}
 	
+
 	@SuppressWarnings("unchecked")
-	public void markAsDelivered(OrderItems order, int qty, Long reference) {
+	public void markAsDelivered(String sku, int qty) {
 		String upd = "UPDATE EachInventory SET received = current_date() WHERE id = :id";
-		String hql = "SELECT id FROM EachInventory WHERE sku = :sku AND received IS null";
+		String hql = "SELECT id FROM EachInventory WHERE received IS null AND sku = :sku";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		List<Long> rows = session.createQuery(hql).setString("sku", order.getSku()).setMaxResults(qty).list();
-		for (Long id : rows) {
+		
+		List<Long> lst = session.createQuery(hql).setString("sku", sku).setMaxResults(qty).list();
+		
+		for (Long id : lst) {
 			session.createQuery(upd).setLong("id", id).executeUpdate();
 		}
 		
