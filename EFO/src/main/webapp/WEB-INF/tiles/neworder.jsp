@@ -28,6 +28,21 @@
 			<td><button class="fancy-button" type="button" onclick="window.location.href='/admin/listproductorders'" ><b>Back</b></button>
 			
 		</tr>
+		<tfoot>
+			<tr>
+				<td colspan="4"><div id="errorMsg" class="bigError"></div></td>
+			</tr>
+			<tr>
+				<td colspan="4"><div id="subtotal" class="totalsDiv"></div></td>
+			</tr>
+			<tr>
+				<td colspan="4"><div id="totalTax" class="totalsDiv"></div></td>
+			</tr>
+			<tr>
+				<td colspan="4"><div id="grandTotal" class="totalsDiv"></div></td>
+			</tr>
+
+		</tfoot>
 	</table>
 	<div class="scrollPanel">
 		<c:if test="${productOrder.orderItems.size() > 0}">
@@ -55,6 +70,7 @@
 							<button type="button" onclick="window.location.href='/admin/deletesalesitem?item_id=${item.id}'">Delete</button>
 						</td>
 					</tr>
+					<c:set var="subtotal" value="${subtotal + (item.wholesale)}" />
 				</c:forEach>
 			</table>
 		</c:if>
@@ -70,6 +86,7 @@
 	<sf:hidden path="total_price" />
 	<sf:hidden path="status" value="O"/>
 	
+	<input id="subttl" type="hidden" value="${subtotal}"/>	
 </sf:form>
 
 <script type="text/javascript">
@@ -129,5 +146,17 @@
 			$("#newOrder").submit();
 		}
 	}
+	
+	function totals() {
+		var subttl = $("#subttl").val();
+		$("#subtotal").text("Total: " + subttl + "    ");
+	}
 
 </script>
+
+<c:if test="${productOrder.orderItems.size() > 0}">
+	<script>
+		totals();
+	</script>
+</c:if>
+

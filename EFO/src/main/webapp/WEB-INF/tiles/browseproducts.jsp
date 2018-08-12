@@ -94,7 +94,7 @@
 		<c:set var="totalTax" value="0" />
 		<c:set var="grandTotal" value="0" />
 		<c:if test="${sales.salesItem.size() > 0}">
-			<table class="fieldTable tableborder tableshadow rjthird">
+			<table class="fieldTable tableborder tableshadow rjthird rjfourth rjfifth">
 				<tr>
 					<th colspan="7">Invoice</th>
 				</tr>

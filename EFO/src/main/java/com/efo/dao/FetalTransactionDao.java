@@ -216,15 +216,18 @@ public class FetalTransactionDao {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "unused"})
 	private void depleteEach(SalesItem item, Session session) {
 		String hql = "FROM EachInventory WHERE sku = :sku AND sold IS NOT null AND shipped IS null";
 		String upd = "UPDATE EachInventory SET shipped = current_date() WHERE id = :id";
+		String del = "DELETE FROM EachInventory WHERE id = :id";
 
 		int qty = new Double(item.getQty()).intValue();
 		List<EachInventory> updateList = session.createQuery(hql).setString("sku", item.getSku()).setMaxResults(qty).list();
 		for (EachInventory each : updateList) {
-			session.createQuery(upd).setLong("id", each.getId()).executeUpdate();
+			// session.createQuery(upd).setLong("id", each.getId()).executeUpdate();
+			session.createQuery(del).setLong("id", each.getId()).executeUpdate();
+	
 		}
 	}
 

@@ -20,7 +20,7 @@
 		<tr>
 			<td><b>Invoice Number:</b><br><sf:input class="fancy" path="invoice_num"/></td>
 			<td><b>Process Date:</b><br><sf:input class="fancy" path="process_date" type="date"/></td>
-			<td><b>Payment Type</b><br>
+			<td><b>Payment Type:</b><br>
 				<sf:select class="fancy" id="paymentType" path="payment_type" onchange="showPayable()">
 					<sf:option value="">---Select Payment type---</sf:option>
 					<sf:option value="Cash">Cash</sf:option>

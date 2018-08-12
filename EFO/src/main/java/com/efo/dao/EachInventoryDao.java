@@ -100,19 +100,20 @@ public class EachInventoryDao implements IEachInventory {
 		session.disconnect();
 	}
 	
-
 	@SuppressWarnings("unchecked")
 	public void markAsDelivered(String sku, int qty) {
+
 		String upd = "UPDATE EachInventory SET received = current_date() WHERE id = :id";
 		String hql = "SELECT id FROM EachInventory WHERE received IS null AND sku = :sku";
+
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		
 		List<Long> lst = session.createQuery(hql).setString("sku", sku).setMaxResults(qty).list();
 		
 		for (Long id : lst) {
 			session.createQuery(upd).setLong("id", id).executeUpdate();
 		}
+
 		
 		tx.commit();
 		session.disconnect();
