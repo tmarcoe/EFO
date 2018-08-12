@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.entity.Budget;
-import com.efo.service.BudgetService;
+import com.efo.entity.BudgetItems;
+import com.efo.service.BudgetItemsService;
 
 @Controller
 @RequestMapping("/accounting/")
 public class BudgetApprovalController {
 	
 	@Autowired
-	private BudgetService budgetService;
+	private BudgetItemsService budgetService;
 	
 	private final String pageLink = "/accounting/approvepaging";
-	private PagedListHolder<Budget> approveList;
+	private PagedListHolder<BudgetItems> approveList;
 	private SimpleDateFormat dateFormat;
 
 	@InitBinder

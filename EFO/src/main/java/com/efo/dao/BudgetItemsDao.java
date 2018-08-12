@@ -13,12 +13,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.efo.entity.Budget;
-import com.efo.interfaces.IBudget;
+import com.efo.entity.BudgetItems;
+import com.efo.interfaces.IBudgetItems;
 
 @Transactional
 @Repository
-public class BudgetDao implements IBudget {
+public class BudgetItemsDao implements IBudgetItems {
 
 	@Autowired
 	SessionFactory sessionFactory;
@@ -28,37 +28,37 @@ public class BudgetDao implements IBudget {
 	}
 	
 	@Override
-	public void create(Budget budget) {
+	public void create(BudgetItems budgetItems) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.save(budget);
+		session.save(budgetItems);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public Budget retrieve(Long id) {
+	public BudgetItems retrieve(Long id) {
 		Session session = session();
-		Budget budget = (Budget) session.createCriteria(Budget.class).add(Restrictions.idEq(id)).uniqueResult();
+		BudgetItems budgetItems = (BudgetItems) session.createCriteria(BudgetItems.class).add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
 		
-		return budget;
+		return budgetItems;
 	}
 	
-	public Budget retrieveByCategory(String category) {
+	public BudgetItems retrieveByCategory(String category) {
 		Session session = session();
-		Budget budget = (Budget) session.createCriteria(Budget.class)
+		BudgetItems budgetItems = (BudgetItems) session.createCriteria(BudgetItems.class)
 									    .add(Restrictions.eq("category", category))
 										 .add(Restrictions.isNull("submission_date"))
 									    .setMaxResults(1).uniqueResult();
 		session.disconnect();
 		
-		return budget;
+		return budgetItems;
 	}
 	
 	public boolean categoryExists(String category) {
 		Session session = session();
-		Long rowCount = (Long) session.createCriteria(Budget.class)
+		Long rowCount = (Long) session.createCriteria(BudgetItems.class)
 									  .add(Restrictions.eq("category", category))
 									  .add(Restrictions.isNull("submission_date"))
 									  .setProjection(Projections.rowCount())
@@ -70,9 +70,9 @@ public class BudgetDao implements IBudget {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Budget> retrieveRawList(String parent, int user_id) {
+	public List<BudgetItems> retrieveRawList(String parent, int user_id) {
 		Session session = session();
-		List<Budget> bgList = session.createCriteria(Budget.class)
+		List<BudgetItems> bgList = session.createCriteria(BudgetItems.class)
 									 .add(Restrictions.eq("parent", parent))
 									 .add(Restrictions.isNull("submission_date")).list();
 		session.disconnect();
@@ -81,25 +81,25 @@ public class BudgetDao implements IBudget {
 	}
 
 	@Override
-	public void update(Budget budget) {
+	public void update(BudgetItems budgetItems) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.update(budget);
+		session.update(budgetItems);
 		tx.commit();
 		session.disconnect();
 	}
 
 	@Override
-	public void delete(Budget budget) {
+	public void delete(BudgetItems budgetItems) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.update(budget);
+		session.update(budgetItems);
 		tx.commit();
 		session.disconnect();
 	}
 	
 	public Double sumChildren(int user_id, String parent) {
-		String hql = "SELECT SUM(amount) FROM Budget WHERE user_id = :user_id AND parent = :parent AND submission_date IS null";
+		String hql = "SELECT SUM(amount) FROM BudgetItems WHERE user_id = :user_id AND parent = :parent AND submission_date IS null";
 		Session session = session();
 		Double sum = (Double) session.createQuery(hql).setInteger("user_id", user_id).setString("parent", parent).uniqueResult();
 		
@@ -107,18 +107,18 @@ public class BudgetDao implements IBudget {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Budget> listBudgetsForApproval() {
-		String hql = "FROM Budget WHERE submission_date IS NOT null AND approval_date IS null GROUP BY department";
+	public List<BudgetItems> listBudgetsForApproval() {
+		String hql = "FROM BudgetItems WHERE submission_date IS NOT null AND approval_date IS null GROUP BY department";
 		Session session = session();
-		List<Budget> budgetList = session.createQuery(hql).list();
+		List<BudgetItems> budgetList = session.createQuery(hql).list();
 		session.disconnect();
 		
 		return budgetList;
 	}
 
 	public void submitBudget(String department) {
-		String hql = "SELECT MIN(creation_date) FROM Budget WHERE submission_date IS null and department = :department";
-		String upd = "UPDATE Budget SET creation_date = :creation_date, submission_date = current_date() "
+		String hql = "SELECT MIN(creation_date) FROM BudgetItems WHERE submission_date IS null and department = :department";
+		String upd = "UPDATE BudgetItems SET creation_date = :creation_date, submission_date = current_date() "
 				   + "WHERE submission_date IS null and department = :department";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
@@ -130,7 +130,7 @@ public class BudgetDao implements IBudget {
 	}
 	
 	public void approveBudget(String department) {
-		String hql = "UPDATE Budget SET approval_date = current_date() WHERE department = :department AND approval_date IS null";
+		String hql = "UPDATE BudgetItems SET approval_date = current_date() WHERE department = :department AND approval_date IS null";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setString("department", department).executeUpdate();

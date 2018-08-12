@@ -19,22 +19,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.entity.Budget;
+import com.efo.entity.BudgetItems;
 import com.efo.entity.User;
-import com.efo.service.BudgetService;
+import com.efo.service.BudgetItemsService;
 import com.efo.service.UserService;
 
 @Controller
 @RequestMapping("/accounting/")
 public class BudgetController {
 	@Autowired
-	private BudgetService budgetService;
+	private BudgetItemsService budgetService;
 	
 	@Autowired
 	private UserService userService;
 	
 	private final String pageLink = "/accounting/budgetpaging/%s";
-	private PagedListHolder<Budget> budgetList;
+	private PagedListHolder<BudgetItems> budgetList;
 	private SimpleDateFormat dateFormat;
 
 	@InitBinder
@@ -61,7 +61,7 @@ public class BudgetController {
 	@RequestMapping("uponelevel/{parent}")
 	public String upOneLevel(@PathVariable("parent") String parent, Model model) {
 		if ("ROOT".compareTo(parent) != 0) {
-			Budget budget = budgetService.retrieveByCategory(parent);
+			BudgetItems budget = budgetService.retrieveByCategory(parent);
 			parent = budget.getParent();
 		}
 		
@@ -72,7 +72,7 @@ public class BudgetController {
 	public String newBudgetItem(@PathVariable("parent") String parent, Model model, Principal principal) {
 		User user = userService.retrieve(principal.getName());
 		
-		Budget budget = new Budget();
+		BudgetItems budget = new BudgetItems();
 		budget.setParent(parent);
 		budget.setUser_id(user.getUser_id());
 		budget.setCreation_date(new Date());
@@ -84,7 +84,7 @@ public class BudgetController {
 	}
 	
 	@RequestMapping("addbudgetitem")
-	public String addBudget(@Valid @ModelAttribute("budget") Budget budget, BindingResult result) {
+	public String addBudget(@Valid @ModelAttribute("budget") BudgetItems budget, BindingResult result) {
 		if (result.hasErrors()) {
 			return "newbudgetitem";
 		}
@@ -109,7 +109,7 @@ public class BudgetController {
 	}
 	
 	@RequestMapping("updatebudgetitem")
-	public String updateBudgetItem(@Valid @ModelAttribute("budget") Budget budget, BindingResult result) {
+	public String updateBudgetItem(@Valid @ModelAttribute("budget") BudgetItems budget, BindingResult result) {
 		
 		budgetService.update(budget);
 		

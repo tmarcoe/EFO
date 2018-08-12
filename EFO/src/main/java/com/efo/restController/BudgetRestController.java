@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.efo.service.BudgetService;
+import com.efo.service.BudgetItemsService;
 
 
 @RestController
@@ -15,7 +15,7 @@ import com.efo.service.BudgetService;
 public class BudgetRestController {
 	
 	@Autowired
-	private BudgetService budgetService;
+	private BudgetItemsService budgetService;
 	
 	@RequestMapping("sumchildren")
 	public String sumChildren(@RequestParam(value = "user_id") Integer user_id, 
