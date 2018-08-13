@@ -45,21 +45,23 @@ public class BudgetItemsDao implements IBudgetItems {
 		return budgetItems;
 	}
 	
-	public BudgetItems retrieveByCategory(String category) {
+	public BudgetItems retrieveByCategory(Long reference, String category) {
 		Session session = session();
 		BudgetItems budgetItems = (BudgetItems) session.createCriteria(BudgetItems.class)
 									    .add(Restrictions.eq("category", category))
-										 .add(Restrictions.isNull("submission_date"))
+									    .add(Restrictions.eq("reference", reference))
+										.add(Restrictions.isNull("submission_date"))
 									    .setMaxResults(1).uniqueResult();
 		session.disconnect();
 		
 		return budgetItems;
 	}
 	
-	public boolean categoryExists(String category) {
+	public boolean categoryExists(Long reference, String category) {
 		Session session = session();
 		Long rowCount = (Long) session.createCriteria(BudgetItems.class)
 									  .add(Restrictions.eq("category", category))
+									  .add(Restrictions.eq("reference", reference))
 									  .add(Restrictions.isNull("submission_date"))
 									  .setProjection(Projections.rowCount())
         .uniqueResult();
@@ -70,10 +72,11 @@ public class BudgetItemsDao implements IBudgetItems {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BudgetItems> retrieveRawList(String parent, int user_id) {
+	public List<BudgetItems> retrieveRawList(Long reference, String parent, int user_id) {
 		Session session = session();
 		List<BudgetItems> bgList = session.createCriteria(BudgetItems.class)
 									 .add(Restrictions.eq("parent", parent))
+									 .add(Restrictions.eq("reference", reference))
 									 .add(Restrictions.isNull("submission_date")).list();
 		session.disconnect();
 		
@@ -98,10 +101,10 @@ public class BudgetItemsDao implements IBudgetItems {
 		session.disconnect();
 	}
 	
-	public Double sumChildren(int user_id, String parent) {
-		String hql = "SELECT SUM(amount) FROM BudgetItems WHERE user_id = :user_id AND parent = :parent AND submission_date IS null";
+	public Double sumChildren(Long reference, String parent) {
+		String hql = "SELECT SUM(amount) FROM BudgetItems WHERE reference = :reference AND parent = :parent AND submission_date IS null";
 		Session session = session();
-		Double sum = (Double) session.createQuery(hql).setInteger("user_id", user_id).setString("parent", parent).uniqueResult();
+		Double sum = (Double) session.createQuery(hql).setLong("reference", reference).setString("parent", parent).uniqueResult();
 		
 		return sum;
 	}

@@ -28,12 +28,12 @@ public class BudgetItemsService implements IBudgetItems {
 	}
 
 	@Override
-	public List<BudgetItems> retrieveRawList(String parent, int user_id) {
-		return budgetItemsDao.retrieveRawList(parent, user_id);
+	public List<BudgetItems> retrieveRawList(Long reference, String parent, int user_id) {
+		return budgetItemsDao.retrieveRawList(reference, parent, user_id);
 	}
 	
-	public PagedListHolder<BudgetItems> retrieveList(String parent, int user_id) {
-		return new PagedListHolder<BudgetItems>(budgetItemsDao.retrieveRawList(parent, user_id));
+	public PagedListHolder<BudgetItems> retrieveList(Long reference, String parent, int user_id) {
+		return new PagedListHolder<BudgetItems>(budgetItemsDao.retrieveRawList(reference, parent, user_id));
 	}
 
 	@Override
@@ -67,16 +67,16 @@ public class BudgetItemsService implements IBudgetItems {
 		budgetItemsDao.create(child);
 	}
 	
-	public boolean categoryExists(String category) {
-		return budgetItemsDao.categoryExists(category);
+	public boolean categoryExists(Long reference, String category) {
+		return budgetItemsDao.categoryExists(reference, category);
 	}
 	
-	public BudgetItems retrieveByCategory(String category) {
-		return budgetItemsDao.retrieveByCategory(category);
+	public BudgetItems retrieveByCategory(Long reference, String category) {
+		return budgetItemsDao.retrieveByCategory(reference, category);
 	}
 	
-	public Double sumChildren(int user_id, String parent) {
-		return budgetItemsDao.sumChildren(user_id, parent);
+	public Double sumChildren(Long reference, String parent) {
+		return budgetItemsDao.sumChildren(reference, parent);
 	}
 	public PagedListHolder<BudgetItems> listBudgetsForApproval() {
 		return new PagedListHolder<BudgetItems>(budgetItemsDao.listBudgetsForApproval());

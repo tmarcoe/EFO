@@ -3,10 +3,14 @@ package com.efo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class BudgetItems implements Serializable {
@@ -14,6 +18,7 @@ public class BudgetItems implements Serializable {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	private Long reference;
 	private int user_id;
 	private Long level;
 	private String category;
@@ -27,12 +32,22 @@ public class BudgetItems implements Serializable {
 	private Date approval_date;
 	private boolean protect;
 	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="REFERENCE", referencedColumnName ="REFERENCE", nullable = false, insertable=false, updatable=false )
+	private Budget budget;
+	
 	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Long getReference() {
+		return reference;
+	}
+	public void setReference(Long reference) {
+		this.reference = reference;
 	}
 	public int getUser_id() {
 		return user_id;
@@ -105,6 +120,12 @@ public class BudgetItems implements Serializable {
 	}
 	public void setProtect(boolean protect) {
 		this.protect = protect;
+	}
+	public Budget getBudget() {
+		return budget;
+	}
+	public void setBudget(Budget budget) {
+		this.budget = budget;
 	}
 
 }

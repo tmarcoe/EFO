@@ -491,9 +491,29 @@
 	
 	<!-- Budget Controller -->
 	<definition name="listbudget" extends="accounting.base">
+		<put-attribute name="title" value="Budget List"></put-attribute>
+		<put-attribute name="heading_title" value="Budget List"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listbudget.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="newbudget" extends="accounting.base">
+		<put-attribute name="title" value="New Budget"></put-attribute>
+		<put-attribute name="heading_title" value="New Budget"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newbudget.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editbudget" extends="accounting.base">
+		<put-attribute name="title" value="Edit Budget"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Budget"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editbudget.jsp"></put-attribute>
+	</definition>
+		
+	<!-- Budget Item Controller -->
+	<definition name="listbudgetitems" extends="accounting.base">
 		<put-attribute name="title" value="Budget Categories"></put-attribute>
 		<put-attribute name="heading_title" value="Budget Categories"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/listbudget.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listbudgetitems.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 	

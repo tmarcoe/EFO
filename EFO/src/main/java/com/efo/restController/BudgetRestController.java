@@ -18,10 +18,10 @@ public class BudgetRestController {
 	private BudgetItemsService budgetService;
 	
 	@RequestMapping("sumchildren")
-	public String sumChildren(@RequestParam(value = "user_id") Integer user_id, 
+	public String sumChildren(@RequestParam(value = "reference") Long reference, 
 							  @RequestParam(value = "parent") String parent) throws JSONException {
 		
-		Double sum = budgetService.sumChildren(user_id, parent);
+		Double sum = budgetService.sumChildren(reference, parent);
 		if (sum == null) sum = 0.0;
 		
 		JSONObject json = new JSONObject();
