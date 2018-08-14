@@ -10,7 +10,7 @@
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td><b>Budget Title:</b><br><sf:input path="title" class="fancy" /></td>
-			<td><b>Department:</b><br><sf:input path="department" class="fancy" /></td>
+			<td><b>Department:</b><br><sf:input path="department" class="fancy" readonly="true"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="title" class="error"/></td>

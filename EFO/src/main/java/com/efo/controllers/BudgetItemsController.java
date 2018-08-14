@@ -1,6 +1,5 @@
 package com.efo.controllers;
 
-import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,18 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.BudgetItems;
-import com.efo.entity.User;
 import com.efo.service.BudgetItemsService;
-import com.efo.service.UserService;
 
 @Controller
 @RequestMapping("/accounting/")
 public class BudgetItemsController {
 	@Autowired
 	private BudgetItemsService budgetItemsService;
-	
-	@Autowired
-	private UserService userService;
 	
 	private final String pageLink = "/accounting/budgetitempaging/%d/%s";
 	private PagedListHolder<BudgetItems> budgetItemList;
@@ -46,9 +40,9 @@ public class BudgetItemsController {
 
 	
 	@RequestMapping("listbudgetitems/{reference}/{parent}")
-	public String listBudgetItems(@PathVariable("reference") Long reference, @PathVariable("parent") String parent, Model model, Principal principal) {
-		User user = userService.retrieve(principal.getName());
-		budgetItemList = budgetItemsService.retrieveList(reference, parent, user.getUser_id());
+	public String listBudgetItems(@PathVariable("reference") Long reference, @PathVariable("parent") String parent, Model model) {
+		
+		budgetItemList = budgetItemsService.retrieveList(reference, parent);
 		
 		budgetItemList.setPageSize(20);
 		
@@ -71,35 +65,32 @@ public class BudgetItemsController {
 	}
 	
 	@RequestMapping("newbudgetitem/{reference}/{parent}")
-	public String newBudgetItem(@PathVariable("parent") String parent, Model model, Principal principal) {
-		User user = userService.retrieve(principal.getName());
+	public String newBudgetItem(@PathVariable("reference") Long reference, @PathVariable("parent") String parent, Model model) {
 		
-		BudgetItems budget = new BudgetItems();
-		budget.setParent(parent);
-		budget.setUser_id(user.getUser_id());
-		budget.setCreation_date(new Date());
-		budget.setDepartment(user.getEmployee().getDivision());
+		BudgetItems budgetItem = new BudgetItems();
+		budgetItem.setParent(parent);
+		budgetItem.setReference(reference);
 
-		model.addAttribute("budget", budget);
+		model.addAttribute("budgetItem", budgetItem);
 		
 		return "newbudgetitem";
 	}
 	
 	@RequestMapping("addbudgetitem")
-	public String addBudget(@Valid @ModelAttribute("budget") BudgetItems budgetItems, BindingResult result) {
+	public String addBudget(@Valid @ModelAttribute("budgetItem") BudgetItems budgetItem, BindingResult result) {
 		if (result.hasErrors()) {
 			return "newbudgetitem";
 		}
 		
-		if (budgetItemsService.categoryExists(budgetItems.getReference(), budgetItems.getCategory())) {
+		if (budgetItemsService.categoryExists(budgetItem.getReference(), budgetItem.getCategory())) {
 			
 			result.reject("category", "Exists.budget.category");
 			
 			return "newbudgetitem";
 		}
-		budgetItemsService.create(budgetItems);
+		budgetItemsService.create(budgetItem);
 		
-		return "redirect:/accounting/listbudgetitems/" + budgetItems.getReference() + "/"+ budgetItems.getParent();
+		return "redirect:/accounting/listbudgetitems/" + budgetItem.getReference() + "/"+ budgetItem.getParent();
 	}
 
 	@RequestMapping("editbudgetitem")
@@ -111,19 +102,24 @@ public class BudgetItemsController {
 	}
 	
 	@RequestMapping("updatebudgetitem")
-	public String updateBudgetItem(@Valid @ModelAttribute("budget") BudgetItems budget, BindingResult result) {
+	public String updateBudgetItem(@Valid @ModelAttribute("budget") BudgetItems budgetItem, BindingResult result) {
 		
-		budgetItemsService.update(budget);
+		budgetItemsService.update(budgetItem);
 		
-		return "redirect:/accounting/listbudgetitems/" + budget.getReference() + "/" + budget.getParent();
+		return "redirect:/accounting/listbudgetitems/" + budgetItem.getReference() + "/" + budgetItem.getParent();
 	}
 	
-	@RequestMapping("submitbudget/{reference}") 
-	public String submitBudget(@PathVariable("reference") Long reference, Principal principal) {
-		User user = userService.retrieve(principal.getName());
-		budgetItemsService.submitBudget(user.getEmployee().getDivision());
+	@RequestMapping("deletebudgetitem/{reference}/{parent}/{id}")
+	public String deleteBudgetItem(@PathVariable("reference") Long reference, 
+								   @PathVariable("parent") String parent, 
+								   @PathVariable("id") Long id) {
 		
-		return "redirect:/accounting/listbudgetitems/" + reference + "/ROOT";
+		BudgetItems budgetItem = budgetItemsService.retrieve(id);
+		if (budgetItemsService.hasChildren(reference, parent) == false) {
+			budgetItemsService.delete(id);
+		}
+		
+		return "redirect:/accounting/listbudgetitems/" + reference + "/" + budgetItem.getParent();
 	}
 	
 	@RequestMapping(value = "budgetitempaging/{reference}/{parent}", method = RequestMethod.GET)

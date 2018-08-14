@@ -8,7 +8,7 @@ public interface IBudgetItems {
 	
 	public void create(BudgetItems budgetItems);
 	public BudgetItems retrieve(Long id);
-	public List<BudgetItems> retrieveRawList(Long reference, String parent, int user_id);
+	public List<BudgetItems> retrieveRawList(Long reference, String parent);
 	public void update(BudgetItems budgetItems);
 	public void delete(BudgetItems budgetItems);
 

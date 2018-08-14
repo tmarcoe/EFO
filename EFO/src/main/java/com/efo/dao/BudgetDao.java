@@ -47,7 +47,22 @@ public class BudgetDao implements IBudget {
 	@Override
 	public List<Budget> retrieveRawList(String department) {
 		Session session = session();
-		List<Budget> bList = session.createCriteria(Budget.class).add(Restrictions.eq("department", department)).list();
+		List<Budget> bList = session.createCriteria(Budget.class)
+								    .add(Restrictions.eq("department", department))
+								    .add(Restrictions.isNull("submitted"))
+								    .list();
+		session.disconnect();
+		
+		return bList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Budget> listBudgetsForApproval() {
+		Session session = session();
+		List<Budget> bList = session.createCriteria(Budget.class)
+								    .add(Restrictions.isNull("approved"))
+								    .add(Restrictions.isNotNull("submitted"))
+								    .list();
 		session.disconnect();
 		
 		return bList;
@@ -58,6 +73,24 @@ public class BudgetDao implements IBudget {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.update(budget);
+		tx.commit();
+		session.disconnect();
+	}
+	
+	public void approveBudget(Long reference) {
+		String hql = "UPDATE Budget SET approved = current_date() WHERE reference = :reference";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setLong("reference", reference).executeUpdate();
+		tx.commit();
+		session.disconnect();
+	}
+	
+	public void submitBudget(Long reference) {
+		String hql = "UPDATE Budget SET submitted = current_date() WHERE reference = :reference";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setLong("reference", reference).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}

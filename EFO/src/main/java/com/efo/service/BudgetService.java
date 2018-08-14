@@ -34,6 +34,10 @@ public class BudgetService implements IBudget {
 	public PagedListHolder<Budget> retrieveList(String department) {
 		return new PagedListHolder<Budget>(budgetDao.retrieveRawList(department));
 	}
+	
+	public PagedListHolder<Budget> listBudgetsForApproval() {
+		return new PagedListHolder<Budget>(budgetDao.listBudgetsForApproval());
+	}
 
 	@Override
 	public void update(Budget budget) {
@@ -53,6 +57,13 @@ public class BudgetService implements IBudget {
 	public void delete(Long reference) {
 		Budget budget = budgetDao.retrieve(reference);
 		budgetDao.delete(budget);
+	}
+	public void approveBudget(Long reference) {
+		budgetDao.approveBudget(reference);
+	}
+	
+	public void submitBudget(Long reference) {
+		budgetDao.submitBudget(reference);
 	}
 
 }

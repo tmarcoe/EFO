@@ -14,6 +14,7 @@
 		<th>Created On</th>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
+		<th>&nbsp;</th>
 	</tr>
 		<c:forEach var="item" items="${objectList.pageList}">
 			<tr>
@@ -23,12 +24,15 @@
 				<td>${item.department}</td>
 				<td><fmt:formatDate value="${item.creation}"/> </td>
 				<td><button type="button" onclick="window.location.href='/accounting/editbudget?reference=${item.reference}'">Edit</button></td>
-				<td><button type="button">Budget Items</button>
+				<td><button type="button" onclick="window.location.href='/accounting/listbudgetitems/${item.reference}/ROOT'">Budget Items</button>
+				<td><button type="button" onclick="window.location.href='/accounting/submitbudget/${item.reference}'">Submit Budget</button>
+				
 			</tr>
 		</c:forEach>
 		<tfoot class="tablefooter">
 			<tr>
 				<td colspan="7"><button type="button" onclick="window.location.href='/accounting/newbudget'">New Budget</button></td>
+				<td ><button type="button" onclick="window.location.href='/#tabs-5'">Back</button></td>
 			</tr>
 		</tfoot>
 </table>

@@ -39,24 +39,19 @@
 		</div>
 	</div>
 	<sf:hidden path="id"/>
-	<sf:hidden id="user_id" path="user_id"/>
+	<sf:hidden id="reference" path="reference"/>
 	<sf:hidden path="level"/>
 	<sf:hidden path="parent"/>
-	<sf:hidden path="department"/>
-	<sf:hidden path="ceiling"/>
-	<sf:hidden path="creation_date"/>
-	<sf:hidden path="submission_date"/>
-	<sf:hidden path="approval_date"/>
 	<sf:hidden path="protect" value="false"/>
 </sf:form>
 <script type="text/javascript">
 
 function sumChildren() {
-	var usr = $("#user_id").val();
 	var cat = $("#category").val();
+	var ref = $("#reference").val();
 	
 		$.getJSON(
-				"/rest/sumchildren?user_id=" + usr + "&parent=" + cat, function(data) {
+				"/rest/sumchildren?reference=" + ref + "&parent=" + cat, function(data) {
 					if (data.sum > 0.0 ) {
 						$("#amount").val(data.sum);
 					}else{

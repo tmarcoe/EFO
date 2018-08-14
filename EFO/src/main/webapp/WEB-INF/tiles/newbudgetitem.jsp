@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form method="post" action="/accounting/addbudgetitem" modelAttribute="budget">
+<sf:form method="post" action="/accounting/addbudgetitem" modelAttribute="budgetItem">
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td colspan="3"><b>Budget Item: </b><br><sf:input id="category" class="fancy" path="category" size="47"/></td>
@@ -39,14 +39,9 @@
 		</div>
 	</div>
 	<sf:hidden path="id"/>
-	<sf:hidden id="user_id" path="user_id"/>
+	<sf:hidden path="reference"/>
 	<sf:hidden path="level"/>
 	<sf:hidden path="parent"/>
-	<sf:hidden path="department"/>
-	<sf:hidden path="ceiling"/>
-	<sf:hidden path="creation_date"/>
-	<sf:hidden path="submission_date"/>
-	<sf:hidden path="approval_date"/>
 	<sf:hidden path="protect" value="false"/>
 	<input id="getParent" type="hidden" value="${parent}"/>
 </sf:form>

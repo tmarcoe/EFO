@@ -10,7 +10,6 @@
 	<tr>
 		<th>Item</th>
 		<th>Parent</th>
-		<th>Department</th>
 		<th>Amount</th>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
@@ -20,18 +19,17 @@
 			<tr>
 				<td>${item.category}</td>
 				<td>${item.parent}</td>
-				<td>${item.department}</td>
 				<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.amount}" /></td>
-				<td><button type="button" onclick="window.location.href='/accounting/listbudgetitems/${item.category}'">SubCategories</button></td>
+				<td><button type="button" onclick="window.location.href='/accounting/listbudgetitems/${reference}/${item.category}'">SubCategories</button></td>
 				<td><button type="button" onclick="window.location.href='/accounting/editbudgetitem?id=${item.id}'">Edit</button></td>
-				<td><button type="button" onclick="window.location.href='/accounting/deletebudget?id=${item.id}'">Delete</button>				
+				<td><button type="button" onclick="window.location.href='/accounting/deletebudgetitem/${reference}/${item.category}/${item.id}'">Delete</button>				
 			</tr>
 		</c:forEach>
 		<tfoot class="tablefooter">
 			<tr>
-				<td colspan="4"><button type="button" onclick="window.location.href='/accounting/newbudgetitem/${parent}'">New Buget Item</button></td>
-				<td><button type="button" onclick="window.location.href='/accounting/uponelevel/${parent}'">Up One Level</button></td>
-				<td><button type="button" onclick="window.location.href='/accounting/submitbudget'">Submit</button></td>				
+				<td colspan="3"><button type="button" onclick="window.location.href='/accounting/newbudgetitem/${reference}/${parent}'">New Buget Item</button></td>
+				<td><button type="button" onclick="window.location.href='/accounting/uponelevel/${reference}/${parent}'">Up One Level</button></td>
+				<td><button type="button" onclick="window.location.href='/accounting/submitbudget/${reference}'">Submit</button></td>				
 				<td><button type="button" onclick="window.location.href='/#tabs-5'">Back</button>
 			</tr>
 		</tfoot>

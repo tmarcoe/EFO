@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -59,6 +60,7 @@ public class BudgetController {
 		
 		Budget budget = new Budget();
 		budget.setCreation(new Date());
+		budget.setDepartment(user.getEmployee().getDivision());
 		budget.setAuthor(user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());		
 		model.addAttribute("budget", budget);
 		
@@ -88,6 +90,15 @@ public class BudgetController {
 	
 		return "redirect:/accounting/listbudget";
 	}
+	
+	@RequestMapping("submitbudget/{reference}") 
+	public String submitBudget(@PathVariable("reference") Long reference) {
+		budgetService.submitBudget(reference);
+		
+		return "redirect:/accounting/listbudget";
+	}
+	
+
 
 	@RequestMapping(value = "budgepaging/{parent}", method = RequestMethod.GET)
 	public String handleBudgeItemtRequest(@ModelAttribute("page") String page, Model model) throws Exception {

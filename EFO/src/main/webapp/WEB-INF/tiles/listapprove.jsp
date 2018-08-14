@@ -8,20 +8,24 @@
 		<th>Department</th>
 		<th>Created On</th>
 		<th>Submitted On</th>
+		<th>Approved</th>
+		<th>Rejected</th>
 		<th>&nbsp;</th>
 	</tr>
 	<c:forEach var="item" items="${objectList.pageList}">
 		<tr>
 			<td>${item.department}</td>
-			<td><fmt:formatDate value="${item.creation_date}" /></td>
-			<td><fmt:formatDate value="${item.submission_date}" /></td>
+			<td><fmt:formatDate value="${item.creation}" /></td>
+			<td><fmt:formatDate value="${item.submitted}" /></td>
+			<td><fmt:formatDate value="${item.approved}" /></td>
+			<td><fmt:formatDate value="${item.rejected}" /></td>
 			<td><button type="button"
-					onclick="window.location.href='/accounting/approvebudget?department=${item.department}'">Approve</button>
+					onclick="window.location.href='/accounting/approvebudget?reference=${item.reference}'">Approve</button>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="4"><button type="button" onclick="window.location.href='/#tabs-5'">Back</button></td>
+			<td colspan="6"><button type="button" onclick="window.location.href='/#tabs-5'">Back</button></td>
 		</tr>
 	</tfoot>
 </table>

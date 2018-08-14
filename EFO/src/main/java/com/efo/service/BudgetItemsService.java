@@ -28,12 +28,12 @@ public class BudgetItemsService implements IBudgetItems {
 	}
 
 	@Override
-	public List<BudgetItems> retrieveRawList(Long reference, String parent, int user_id) {
-		return budgetItemsDao.retrieveRawList(reference, parent, user_id);
+	public List<BudgetItems> retrieveRawList(Long reference, String parent) {
+		return budgetItemsDao.retrieveRawList(reference, parent);
 	}
 	
-	public PagedListHolder<BudgetItems> retrieveList(Long reference, String parent, int user_id) {
-		return new PagedListHolder<BudgetItems>(budgetItemsDao.retrieveRawList(reference, parent, user_id));
+	public PagedListHolder<BudgetItems> retrieveList(Long reference, String parent) {
+		return new PagedListHolder<BudgetItems>(budgetItemsDao.retrieveRawList(reference, parent));
 	}
 
 	@Override
@@ -49,22 +49,21 @@ public class BudgetItemsService implements IBudgetItems {
 	}
 	
 	public void delete(Long id) {
-		BudgetItems budget = budgetItemsDao.retrieve(id);
-		budgetItemsDao.delete(budget);
+		budgetItemsDao.deleteById(id);
 	}
 	
 	public void createChild(BudgetItems budget, String category) {
 		BudgetItems child = new BudgetItems();
 		
-		child.setUser_id(budget.getUser_id());
 		child.setLevel(budget.getLevel() + 1);
 		child.setCategory(category);
 		child.setParent(budget.getCategory());
-		child.setDepartment(budget.getDepartment());
-		child.setCreation_date(budget.getCreation_date());
 		child.setProtect(false);
 		
 		budgetItemsDao.create(child);
+	}
+	public boolean hasChildren(Long reference, String parent) {
+		return budgetItemsDao.hasChildren(reference, parent);
 	}
 	
 	public boolean categoryExists(Long reference, String category) {
@@ -77,16 +76,5 @@ public class BudgetItemsService implements IBudgetItems {
 	
 	public Double sumChildren(Long reference, String parent) {
 		return budgetItemsDao.sumChildren(reference, parent);
-	}
-	public PagedListHolder<BudgetItems> listBudgetsForApproval() {
-		return new PagedListHolder<BudgetItems>(budgetItemsDao.listBudgetsForApproval());
-	}
-	
-	public void approveBudget(String department){
-		budgetItemsDao.approveBudget(department);
-	}
-	
-	public void submitBudget(String department) {
-		budgetItemsDao.submitBudget(department);
 	}
 }
