@@ -33,4 +33,8 @@
 			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()"><b>Cancel</b></sf:button>
 		</tr>
 	</table>
+	<sf:hidden path="user_id"/>
+	<sf:hidden path="username"/>
+	<sf:hidden path="password"/>
+	<sf:hidden path="temp_pw"/>
 </sf:form>

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.efo.component.ScheduleUtilities;
+import com.efo.component.SendEmail;
+import com.efo.emailForms.SalesReceipt;
 import com.efo.entity.FluidInventory;
 import com.efo.entity.PaymentsReceived;
 import com.efo.entity.Product;
@@ -71,16 +73,19 @@ public class RetailSalesController {
 	private SalesItemService salesItemService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	FetalTransactionService transactionService;
+	private FetalTransactionService transactionService;
 	
 	@Autowired
-	ScheduleUtilities sched;
+	private InvoiceNumService invoiceNumService;
 	
 	@Autowired
-	InvoiceNumService invoiceNumService;
+	private SalesReceipt salesReceipt;
+	
+	@Autowired
+	private SendEmail sendEmail;
 	
 	PagedListHolder<RetailSales> salesList;
 	
@@ -320,11 +325,15 @@ public class RetailSalesController {
 	}
 	
 	@RequestMapping("shipsales")
-	public String shipSales(@ModelAttribute("reference") Long reference) throws IOException {
+	public String shipSales(@ModelAttribute("reference") Long reference) throws IOException, MessagingException {
 		RetailSales sales = retailSalesService.retrieve(reference);
 		sales.setSalesItem(new HashSet<SalesItem>(salesItemService.retrieveRawList(reference)));
-		
+		User user = userService.retrieve(sales.getCustomer_id());
 		transactionService.shipSales(sales);
+		
+		String content = salesReceipt.createSalesReceipt(sales);
+		
+		sendEmail.sendHtmlMail("tmtmarcoe80@gmail.com", user.getUsername(), user.getCustomer().getFirstname(), "Sales Receipt", content);
 		
 		return "redirect:/admin/listsales";
 	}

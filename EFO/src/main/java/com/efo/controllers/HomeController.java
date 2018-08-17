@@ -4,22 +4,31 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.efo.component.SendEmail;
 import com.efo.entity.User;
 import com.efo.service.UserService;
 
 @Controller
 public class HomeController {
 
-	@Autowired
-	UserService userService;
-
-	@Autowired
-	BCryptPasswordEncoder encoder;
+	@Value("${efo.admim.name}")
+	private String adminName;
 	
+	@Value("${efo.admin.email}")
+	private String adminEmail;
+	
+	@Autowired
+	private SendEmail sendEmail;
+
+	private final String format = "Dear %s,%n Please reset the password for email <b>%s</b> %n";
+	@Autowired
+	private UserService userService;
+
 	@Value("${efo.formsPath}")
 	private String formsPath;
 
@@ -56,5 +65,17 @@ public class HomeController {
 
 		return "login";
 	}
+	
+	@RequestMapping("/resetpassword")
+	public String resetPassword(@ModelAttribute("username") String username) throws Exception {
+		
+		String content = String.format(format, adminName, username);
+		
+		sendEmail.sendMail(username, adminEmail, adminName, "Reset Password", content);
+		
+		return "redirect:/";		
+	}
+
+
 
 }

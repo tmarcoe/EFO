@@ -30,6 +30,7 @@ public class Budget implements Serializable {
 	private Date rejected;
 	private String reason;
 	private Date approved;
+	private double total;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "budget", cascade = CascadeType.ALL)
 	private Set<BudgetItems> budgetItems = new HashSet<BudgetItems>(0);
@@ -100,6 +101,12 @@ public class Budget implements Serializable {
 	}
 	public void setApproved(Date approved) {
 		this.approved = approved;
+	}
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
 	}
 	public Set<BudgetItems> getBudgetItems() {
 		return budgetItems;

@@ -5,7 +5,7 @@
 
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
 
-<table class="tableview tableshadow tableborder">
+<table class="tableview tableshadow tableborder rjthird">
 
 	<tr>
 		<th>Item</th>
@@ -30,7 +30,7 @@
 				<td colspan="3"><button type="button" onclick="window.location.href='/accounting/newbudgetitem/${reference}/${parent}'">New Buget Item</button></td>
 				<td><button type="button" onclick="window.location.href='/accounting/uponelevel/${reference}/${parent}'">Up One Level</button></td>
 				<td><button type="button" onclick="window.location.href='/accounting/submitbudget/${reference}'">Submit</button></td>				
-				<td><button type="button" onclick="window.location.href='/#tabs-5'">Back</button>
+				<td><button type="button" onclick="window.location.href='/accounting/listbudget'">Back</button>
 			</tr>
 		</tfoot>
 </table>

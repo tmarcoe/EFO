@@ -7,6 +7,7 @@ import java.util.HashSet;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.component.RoleUtilities;
+import com.efo.component.SendEmail;
 import com.efo.entity.CommonFields;
 import com.efo.entity.EmpFinancial;
 import com.efo.entity.Employee;
@@ -33,8 +35,15 @@ import com.efo.service.UserService;
 @RequestMapping("/admin/")
 public class EmployeeController {
 	
+	@Value("${spring.mail.username}")
+	private String userName;
+
+	
 	@Autowired
 	EmployeeService employeeService;
+	
+	@Autowired
+	private SendEmail sendEmail;
 	
 	@Autowired
 	UserService userService;
@@ -46,6 +55,9 @@ public class EmployeeController {
 	RoleUtilities roleUtils;
 
 	private final String pageLink = "/admin/empolyeepaging";
+	
+	private final String format = "Dear %s,%n Your new, temporary password is %s.%n"
+								+ "Please change it as soon as possible to avoid any sercurity breaches.";
 
 	private PagedListHolder<User> employeeList;
 
@@ -97,7 +109,7 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("addemployee")
-	public String addEmployee(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+	public String addEmployee(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) throws Exception {
 		
 		if (userService.exists(user.getUsername())) {
 			result.rejectValue("username", "DuplicateKey.user.username");
@@ -114,11 +126,13 @@ public class EmployeeController {
 	
 		user.setTemp_pw(true);
 		user.setRoles(roleUtils.stringToRole(user.getRoleString()));
-		
 		user.getEmployee().setUser(user);
 		user.getEmployee().getEmp_financial().setEmployee(user.getEmployee());
 		user.getCommon().setUser(user);
 		
+		String content = String.format(format, user.getEmployee().getFirstname(), user.getPassword());
+		sendEmail.sendMail(userName, user.getUsername(), user.getEmployee().getFirstname(), "New Password", content);
+	
 		userService.create(user);
 		
 		return "redirect:/admin/employeelist";

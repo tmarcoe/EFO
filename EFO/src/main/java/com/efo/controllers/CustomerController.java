@@ -7,6 +7,7 @@ import java.util.HashSet;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.component.RoleUtilities;
+import com.efo.component.SendEmail;
 import com.efo.entity.CommonFields;
 import com.efo.entity.Customer;
 import com.efo.entity.Role;
@@ -33,8 +35,17 @@ import com.efo.service.UserService;
 @RequestMapping("/admin/")
 public class CustomerController {
 	
+	@Value("${spring.mail.username}")
+	private String userName;
+	
+	private final String format = "Dear %s,%n Your new, temporary password is %s.%n"
+			+ "Please change it as soon as possible to avoid any sercurity breaches.";
+
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	private SendEmail sendEmail;
 	
 	@Autowired 
 	UserService userService;
@@ -120,7 +131,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("addcustomer")
-	public String addCustomer(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+	public String addCustomer(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) throws Exception {
 		
 		if (userService.exists(user.getUsername())) {
 			result.rejectValue("username", "DuplicateKey.user.username");
@@ -139,6 +150,10 @@ public class CustomerController {
 		user.setTemp_pw(true);
 		user.getCustomer().setUser(user);
 		user.getCommon().setUser(user);
+		
+		String content = String.format(format, user.getCustomer().getFirstname(), user.getPassword());
+		sendEmail.sendMail(userName, user.getUsername(), user.getCustomer().getFirstname(), "New Password", content);
+		
 		userService.create(user);
 		
 		return "redirect:/admin/customerlist";

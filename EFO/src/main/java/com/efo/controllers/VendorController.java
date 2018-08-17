@@ -7,9 +7,9 @@ import java.util.HashSet;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.component.RoleUtilities;
+import com.efo.component.SendEmail;
 import com.efo.entity.CommonFields;
 import com.efo.entity.Role;
 import com.efo.entity.User;
@@ -31,6 +32,15 @@ import com.efo.service.VendorService;
 @Controller
 @RequestMapping("/admin/")
 public class VendorController {
+	
+	@Value("${spring.mail.username}")
+	private String userName;
+	
+	private final String format = "Dear %s,%n Your new, temporary password is %s.%n"
+			+ "Please change it as soon as possible to avoid any sercurity breaches.";
+
+	@Autowired
+	private SendEmail sendEmail;
 	
 	@Autowired 
 	UserService userService;
@@ -44,8 +54,6 @@ public class VendorController {
 	@Autowired
 	RoleService roleService;
 	
-	@Autowired
-	BCryptPasswordEncoder encoder;
 
 	private final String pageLink = "/admin/vendorpaging";
 
@@ -116,7 +124,7 @@ public class VendorController {
 	}
 	
 	@RequestMapping("addvendor")
-	public String addVendor(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+	public String addVendor(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) throws Exception {
 		
 		if (userService.exists(user.getUsername())) {
 			result.rejectValue("username", "DuplicateKey.user.username");
@@ -135,6 +143,10 @@ public class VendorController {
 		user.getCommon().setUser(user);
 		user.getVendor().setUser(user);
 		user.setTemp_pw(true);
+		
+		String content = String.format(format, user.getVendor().getFirstname(), user.getPassword());
+		
+		sendEmail.sendMail(userName, user.getUsername(), user.getVendor().getFirstname(), "New Password", content);
 		userService.create(user);
 		
 		return "redirect:/admin/vendorlist";
