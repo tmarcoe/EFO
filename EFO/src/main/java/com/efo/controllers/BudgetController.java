@@ -1,10 +1,14 @@
 package com.efo.controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
@@ -16,8 +20,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.efo.component.SendEmail;
+import com.efo.emailForms.BudgetReport;
 import com.efo.entity.Budget;
 import com.efo.entity.User;
+import com.efo.service.BudgetItemsService;
 import com.efo.service.BudgetService;
 import com.efo.service.UserService;
 
@@ -29,7 +36,22 @@ public class BudgetController {
 	private BudgetService budgetService;
 	
 	@Autowired
+	private BudgetItemsService budgetItemsService;
+	
+	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SendEmail sendEmail;
+	
+	@Autowired
+	private BudgetReport budgetReport;
+	
+	@Value("${efo.director.name}")
+	private String directorName;
+	
+	@Value("${efo.director.email}")
+	private String directorEmail;
 	
 	private final String pageLink = "/accounting/budgetpaging/";
 	private PagedListHolder<Budget> budgetList;
@@ -92,8 +114,16 @@ public class BudgetController {
 	}
 	
 	@RequestMapping("submitbudget/{reference}") 
-	public String submitBudget(@PathVariable("reference") Long reference) {
+	public String submitBudget(@PathVariable("reference") Long reference, Principal principal) throws UnsupportedEncodingException, MessagingException {
+		User user = userService.retrieve(principal.getName());
 		budgetService.submitBudget(reference);
+		
+		Budget budget = budgetService.retrieve(reference);
+		budget.setBudgetItems(budgetItemsService.retrieveSet(reference, "ROOT"));
+		
+		String content = budgetReport.creatBudgetReport(budget);
+		
+		sendEmail.sendHtmlMail(user.getUsername(), directorEmail, directorName, "Budget Submission", content);
 		
 		return "redirect:/accounting/listbudget";
 	}

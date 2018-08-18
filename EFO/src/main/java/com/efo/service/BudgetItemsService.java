@@ -1,6 +1,8 @@
 package com.efo.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -30,6 +32,11 @@ public class BudgetItemsService implements IBudgetItems {
 	@Override
 	public List<BudgetItems> retrieveRawList(Long reference, String parent) {
 		return budgetItemsDao.retrieveRawList(reference, parent);
+	}
+	
+	public Set<BudgetItems> retrieveSet(Long reference, String parent) {
+		
+		return new HashSet<BudgetItems>(budgetItemsDao.retrieveRawList(reference, parent));
 	}
 	
 	public PagedListHolder<BudgetItems> retrieveList(Long reference, String parent) {
