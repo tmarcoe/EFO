@@ -57,6 +57,9 @@ public class RetailSalesController {
 	@Value("${efo.creditTerms.schedule}")
 	private String schedule;
 	
+	@Value("${efo.csr.email}")
+	private String csrEmail;
+	
 	@Autowired
 	private ProductService productService;
 	
@@ -331,9 +334,11 @@ public class RetailSalesController {
 		User user = userService.retrieve(sales.getCustomer_id());
 		transactionService.shipSales(sales);
 		
-		String content = salesReceipt.createSalesReceipt(sales);
-		
-		sendEmail.sendHtmlMail("tmtmarcoe80@gmail.com", user.getUsername(), user.getCustomer().getFirstname(), "Sales Receipt", content);
+		//TODO: This is for testing only remove for production
+		if("timothymarcoe@gmail.com".compareTo(user.getUsername()) == 0 ) {
+			String content = salesReceipt.createSalesReceipt(sales);
+			sendEmail.sendHtmlMail(csrEmail , user.getUsername(), user.getCustomer().getFirstname(), "Sales Receipt", content);
+		}
 		
 		return "redirect:/admin/listsales";
 	}

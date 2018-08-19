@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
@@ -66,6 +67,7 @@ public class VendorController {
 		dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+		binder.registerCustomEditor(HashSet.class, new CustomCollectionEditor(HashSet.class));
 	}
 
 	@RequestMapping("vendorlist")
@@ -134,7 +136,7 @@ public class VendorController {
 			return "newvendor";
 		}
 		
-		if (result.getFieldErrorCount() > 2) {
+		if (result.hasErrors()) {
 			
 			return "newvendor";
 		}
@@ -142,11 +144,12 @@ public class VendorController {
 		user.setRoles(roleUtils.stringToRole(user.getRoleString()));
 		user.getCommon().setUser(user);
 		user.getVendor().setUser(user);
-		user.setTemp_pw(true);
 		
-		String content = String.format(format, user.getVendor().getFirstname(), user.getPassword());
-		
-		sendEmail.sendMail(userName, user.getUsername(), user.getVendor().getFirstname(), "New Password", content);
+		if (user.isEnabled() == true) {
+			user.setTemp_pw(true);
+			String content = String.format(format, user.getVendor().getFirstname(), user.getPassword());
+			sendEmail.sendMail(userName, user.getUsername(), user.getVendor().getFirstname(), "New Password", content);
+		}
 		userService.create(user);
 		
 		return "redirect:/admin/vendorlist";

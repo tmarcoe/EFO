@@ -97,7 +97,7 @@
 			<td><b>Enable Logins? </b> <sf:checkbox id="enabled" path="enabled" onclick="disableInput()" /></td>
 		</tr>
 		<tr>
-			<td>&nbsp;</td>
+			<td><sf:errors path="username" class="error"/></td>
 			<td><div id="pbar">
 					<label id="pLabel"></label>
 					<div id="pStrength"></div>

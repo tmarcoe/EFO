@@ -54,7 +54,7 @@ public class EmployeeController {
 	@Autowired
 	RoleUtilities roleUtils;
 
-	private final String pageLink = "/admin/empolyeepaging";
+	private final String pageLink = "/admin/employeepaging";
 	
 	private final String format = "Dear %s,%n Your new, temporary password is %s.%n"
 								+ "Please change it as soon as possible to avoid any sercurity breaches.";
@@ -76,6 +76,8 @@ public class EmployeeController {
 		
 		employeeList = employeeService.retrieveEditList();
 		
+		employeeList.setPageSize(20);
+		employeeList.setPage(0);
 		
 		model.addAttribute("objectList", employeeList);
 		model.addAttribute("pagelink", pageLink);
@@ -119,20 +121,22 @@ public class EmployeeController {
 			return "newemployee";
 		}
 		
-		if (result.getFieldErrorCount() > 2) {
+		if (result.hasErrors()) {
 
 			return "newemployee";
 		}
 	
-		user.setTemp_pw(true);
+
 		user.setRoles(roleUtils.stringToRole(user.getRoleString()));
 		user.getEmployee().setUser(user);
 		user.getEmployee().getEmp_financial().setEmployee(user.getEmployee());
 		user.getCommon().setUser(user);
 		
-		String content = String.format(format, user.getEmployee().getFirstname(), user.getPassword());
-		sendEmail.sendMail(userName, user.getUsername(), user.getEmployee().getFirstname(), "New Password", content);
-	
+		if (user.isEnabled() == true) {
+			user.setTemp_pw(true);
+			String content = String.format(format, user.getEmployee().getFirstname(), user.getPassword());
+			sendEmail.sendMail(userName, user.getUsername(), user.getEmployee().getFirstname(), "New Password", content);
+		}
 		userService.create(user);
 		
 		return "redirect:/admin/employeelist";
@@ -185,7 +189,7 @@ public class EmployeeController {
 		model.addAttribute("objectList", employeeList);
 		model.addAttribute("pagelink", pageLink);
 
-		return "listemployees";
+		return "employeelist";
 	}
 
 	/**************************************************************************************************************************************

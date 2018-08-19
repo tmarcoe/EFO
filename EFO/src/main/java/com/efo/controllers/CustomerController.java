@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -70,6 +71,7 @@ public class CustomerController {
 		dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+		binder.registerCustomEditor(HashSet.class, new CustomCollectionEditor(HashSet.class));
 	}
 	
 	@RequestMapping("customerlist")
@@ -141,19 +143,20 @@ public class CustomerController {
 			return "newcustomer";
 		}
 		
-		if (result.getFieldErrorCount() > 2) {
+		if (result.hasErrors()) {
 			
 			return "newcustomer";
 		}
 		user.setRoles(roleUtils.stringToRole(user.getRoleString()));
 
-		user.setTemp_pw(true);
 		user.getCustomer().setUser(user);
 		user.getCommon().setUser(user);
 		
-		String content = String.format(format, user.getCustomer().getFirstname(), user.getPassword());
-		sendEmail.sendMail(userName, user.getUsername(), user.getCustomer().getFirstname(), "New Password", content);
-		
+		if (user.isEnabled() == true) {
+			user.setTemp_pw(true);
+			String content = String.format(format, user.getCustomer().getFirstname(), user.getPassword());
+			sendEmail.sendMail(userName, user.getUsername(), user.getCustomer().getFirstname(), "New Password", content);
+		}
 		userService.create(user);
 		
 		return "redirect:/admin/customerlist";
