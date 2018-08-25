@@ -60,6 +60,9 @@ public class RetailSalesController {
 	@Value("${efo.csr.email}")
 	private String csrEmail;
 	
+	@Value("${efo.federal.taxRate}")
+	private String taxRate;
+	
 	@Autowired
 	private ProductService productService;
 	
@@ -190,6 +193,7 @@ public class RetailSalesController {
 		sales.getReceivables().setReference(sales.getReference());
 		sales.getReceivables().setInvoice_date(sales.getProcessed());
 		sales.getReceivables().setTotal_due(sales.getTotal_price());
+		sales.getReceivables().setTotal_tax(sales.getTotal_price() * Double.valueOf(taxRate));
 		sales.getReceivables().setDown_payment(Double.valueOf(downPayment));
 		sales.getReceivables().setInterest(Double.valueOf(interest));
 		sales.getReceivables().setNum_payments(Long.valueOf(numberOfPayments));
@@ -240,8 +244,6 @@ public class RetailSalesController {
 
 		transactionService.retailSalesOrder(sales, payment, latest_date);
 		
-		
-		
 		return "redirect:/admin/browseproducts";
 	}
 	
@@ -257,7 +259,7 @@ public class RetailSalesController {
 	}
 	
 	@RequestMapping("deletesalesitem")
-	public String deleteSalesItem(@ModelAttribute("item_id") int item_id, Principal principal) {
+	public String deleteSalesItem(@ModelAttribute("item_id") Long item_id, Principal principal) {
 		salesItemService.deleteSalesItem(item_id);
 		User user = userService.retrieve(principal.getName());
 		RetailSales sales = retailSalesService.getOpenInvoice(user.getUser_id());
@@ -271,7 +273,7 @@ public class RetailSalesController {
 		return "redirect:/admin/browseproducts";
 	}
 	@RequestMapping("editsalesitem")
-	public String editSalesItem(@ModelAttribute("item_id") int item_id, Model model) {
+	public String editSalesItem(@ModelAttribute("item_id") Long item_id, Model model) {
 		
 		model.addAttribute("salesItem", salesItemService.retrieve(item_id));
 		
@@ -384,9 +386,12 @@ public class RetailSalesController {
 	private double totalOrder(RetailSales sales) {
 		
 		double total = 0.0;
+		double tax = Double.valueOf(taxRate);
+		
 		for (SalesItem item : sales.getSalesItem()) {
 			total += (item.getSold_for() * item.getQty());
 		}
+		sales.setTotal_tax(total * tax);
 		sales.setChanged(false);
 		return total;
 	}

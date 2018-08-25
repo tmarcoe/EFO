@@ -18,7 +18,7 @@ public class Coupon implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id  @GeneratedValue(strategy = GenerationType.AUTO)
-	private int coupon_id;
+	private Long coupon_id;
 	private String name;
 	private String description;
 	private String code_word;
@@ -31,10 +31,10 @@ public class Coupon implements Serializable {
 	private Set<UsedCoupons> usedCoupons = new HashSet<UsedCoupons>(0);
 
 	
-	public int getCoupon_id() {
+	public Long getCoupon_id() {
 		return coupon_id;
 	}
-	public void setCoupon_id(int id) {
+	public void setCoupon_id(Long id) {
 		coupon_id = id;
 	}
 	public String getName() {

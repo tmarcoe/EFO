@@ -65,9 +65,9 @@
 						<td>${item.product_name}</td>
 						<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.wholesale}" /></td>
 						<td>
-							<button type="button" onclick="window.location.href='/admin/editsalesitem?item_id=${item.id}'">Edit</button></td>
+							<button type="button" onclick="window.location.href='/admin/editorderitem?id=${item.id}'">Edit</button></td>
 						<td>
-							<button type="button" onclick="window.location.href='/admin/deletesalesitem?item_id=${item.id}'">Delete</button>
+							<button type="button" onclick="window.location.href='/admin/deleteorderitem?id=${item.id}'">Delete</button>
 						</td>
 					</tr>
 					<c:set var="subtotal" value="${subtotal + (item.wholesale)}" />
@@ -131,8 +131,12 @@
 		var reference = $("#reference").val();
 		var order_qty = $("#order_qty").val();
 		var price = $("#price").val();
-		if (order_qty == 0.0) {
-			$("#errorMsg").text("Order quantity cannot be 0.")
+		if (order_qty == 0.0 || price == 0.0) {
+			if (order_qty == 0.0 ) {
+				$("#errorMsg").text("Order quantity cannot be 0.")
+			}else if (price == 0.0) {
+				$("#errorMsg").text("Price cannot be 0.")
+			}
 		} else {
 			if (sku.length > 0 && reference > 0) {
 				window.location.href = "/admin/addorderitem?reference=" + reference

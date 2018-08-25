@@ -25,8 +25,8 @@ public class OrdersItemService implements IOrdersItem {
 	}
 
 	@Override
-	public OrderItems retrieve(Long reference) {
-		return orderDao.retrieve(reference);
+	public OrderItems retrieve(Long id) {
+		return orderDao.retrieve(id);
 	}
 
 	public OrderItems retrieveItemBySku(Long reference, String sku) {
@@ -70,9 +70,9 @@ public class OrdersItemService implements IOrdersItem {
 		orderDao.delete(orders);
 	}
 	
-	public void delete(Long reference) {
-		OrderItems orders = retrieve(reference);
-		orderDao.delete(orders);
+	public void deleteById(Long id) {
+		
+		orderDao.deleteById(id);
 	}
 	
 	public List<OrderItems> getPeriodOrders(Date begin, Date end) {

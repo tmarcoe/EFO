@@ -41,6 +41,9 @@ public class FetalTransactionService extends FetalTransaction {
 	
 	@Value("${logging.file}")
 	private String logFile;
+	
+	@Value("${efo.federal.taxRate}")
+	private String federalTaxRate;
 
 	@Autowired
 	private FetalTransactionDao transDao;
@@ -149,27 +152,6 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 	
-	public void receivePaymentFromReceivable(PaymentsReceived payment, Receivables receivables) throws IOException {
-		
-		try {
-			initTransaction(filePath);
-			setDescription("Payment received (ID #" + payment.getId() + ")");
-			publish("payment", VariableType.DAO, payment);
-			publish("receivables", VariableType.DAO, receivables);
-			publish("nextPayment", VariableType.DAO, new PaymentsReceived() );
-			loadRule("accounts_receiveable/receivepayment.trans");
-		}
-		finally {
-			closeFetal();
-			Transaction tx = transDao.getTrans();
-			if (tx != null) {
-				tx.rollback();
-				session.clear();
-				session.disconnect();
-			}
-		}
-	}
-	
 	public void retailSalesOrder(RetailSales sales, PaymentsReceived payment, Date latest_date) throws IOException {
 		try {
 			initTransaction(filePath);
@@ -178,6 +160,7 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("receivables", VariableType.DAO, sales.getReceivables());
 			publish("payment", VariableType.DAO, payment);
 			publish("latest_date", VariableType.DATE, latest_date);
+			publish("taxRate", VariableType.DECIMAL, Double.valueOf(federalTaxRate));
 			loadRule("retail_sales/retailpurchase.trans");
 		}
 		finally {
@@ -223,8 +206,9 @@ public class FetalTransactionService extends FetalTransaction {
 			}
 			publish("billed", VariableType.DAO, billed);
 			publish("payables", VariableType.DAO, payables);
+			publish("nextBill", VariableType.DAO, new PaymentsBilled());
 			publish("num_of_payments", VariableType.DECIMAL, num_of_payments);
-			loadRule("accounts_payable/paymentmade.trans");
+			loadRule("accounts_payable/makepayment.trans");
 		}
 		finally {
 			closeFetal();
@@ -438,26 +422,6 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 
 	}
-	public void disbursePayment(PaymentsBilled payments, Payables payables) throws IOException {
-		try {
-			initTransaction(filePath);
-			publish("payables", VariableType.DAO, payables);
-			publish("payment", VariableType.DAO, payments);
-			loadRule("accounts_payable/paymentpaid.trans");
-			if (hasErrors()) {
-				throw new RuntimeException();
-			}
-			
-		} finally {
-			closeFetal();
-			Transaction tx = transDao.getTrans();
-			if (tx != null) {
-				tx.rollback();
-				session.clear();
-				session.disconnect();
-			}
-		}
-	}
 	
 	public void addAr(Receivables receivables) throws IOException {
 		try {
@@ -491,6 +455,27 @@ public class FetalTransactionService extends FetalTransaction {
 			}
 			
 		} finally{
+			closeFetal();
+			Transaction tx = transDao.getTrans();
+			if (tx != null) {
+				tx.rollback();
+				session.clear();
+				session.disconnect();
+			}
+		}
+	}
+	
+	public void receivePaymentFromReceivable(PaymentsReceived payment, Receivables receivables) throws IOException {
+		
+		try {
+			initTransaction(filePath);
+			setDescription("Payment received (ID #" + payment.getId() + ")");
+			publish("payment", VariableType.DAO, payment);
+			publish("receivables", VariableType.DAO, receivables);
+			publish("nextPayment", VariableType.DAO, new PaymentsReceived() );
+			loadRule("accounts_receiveable/receivepayment.trans");
+		}
+		finally {
 			closeFetal();
 			Transaction tx = transDao.getTrans();
 			if (tx != null) {

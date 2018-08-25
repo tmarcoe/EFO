@@ -330,6 +330,12 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editorder.jsp"></put-attribute>
 	</definition>
 		
+	<definition name="editorderitem" extends="accounting.base">
+		<put-attribute name="title" value="Edit Order"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Order"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editorderitem.jsp"></put-attribute>
+	</definition>
+		
 	<!-- Order Items Controller -->
 	<definition name="receiveorder" extends="accounting.base">
 		<put-attribute name="title" value="Receive Order"></put-attribute>

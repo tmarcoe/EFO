@@ -25,10 +25,10 @@
 			<td><fmt:formatNumber type="number" pattern="00000000" value="${item.reference}"/></td>
 			<td><fmt:formatDate value="${item.invoice_date}"/></td>
 			<td>${item.customer}</td>
-			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_due}"/></td>
+			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_due + item.total_tax}"/></td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.down_payment}"/></td>
 			<td><fmt:formatNumber type="percent" value="${item.interest / 100}"/></td>
-			<td>${item.each_payment}</td>
+			<td>${item.num_payments}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.each_payment}"/></td>
 			<td>${item.schedule}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_balance}"/></td>

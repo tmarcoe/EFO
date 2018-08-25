@@ -67,7 +67,9 @@ public class PaymentsReceivedDao implements IPaymentsReceived {
 		Session session = session();
 		
 		@SuppressWarnings("unchecked")
-		List<PaymentsReceived> rList = session.createCriteria(PaymentsReceived.class).add(Restrictions.eq("reference", reference)).list();
+		List<PaymentsReceived> rList = session.createCriteria(PaymentsReceived.class)
+											  .add(Restrictions.eq("reference", reference))
+											  .list();
 		
 		session.disconnect();
 		

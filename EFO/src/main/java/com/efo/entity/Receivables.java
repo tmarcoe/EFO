@@ -25,6 +25,7 @@ public class Receivables implements Serializable{
 	private String customer;
 	private int	user_id;
 	private double total_due;
+	private double total_tax;
 	private double down_payment;
 	private double interest;
 	private double each_payment;
@@ -79,7 +80,14 @@ public class Receivables implements Serializable{
 	public void setTotal_due(double total_due) {
 		this.total_due = total_due;
 	}
+	
+	public double getTotal_tax() {
+		return total_tax;
+	}
 
+	public void setTotal_tax(double total_tax) {
+		this.total_tax = total_tax;
+	}
 
 	public double getDown_payment() {
 		return down_payment;

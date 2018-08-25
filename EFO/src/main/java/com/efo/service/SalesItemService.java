@@ -23,7 +23,7 @@ public class SalesItemService implements ISalesItem {
 	}
 
 	@Override
-	public SalesItem retrieve(int item_id) {
+	public SalesItem retrieve(Long item_id) {
 		return salesItemDao.retrieve(item_id);
 	}
 
@@ -50,12 +50,12 @@ public class SalesItemService implements ISalesItem {
 		salesItemDao.delete(salesItem);
 	}
 	
-	public void delete(int item_id) {
+	public void delete(Long item_id) {
 		SalesItem salesItem = salesItemDao.retrieve(item_id);
 		salesItemDao.delete(salesItem);
 	}
 	
-	public void deleteSalesItem(int item_id) {
+	public void deleteSalesItem(Long item_id) {
 		salesItemDao.deleteSalesItem(item_id);
 	}
 	

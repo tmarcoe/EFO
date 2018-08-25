@@ -80,6 +80,29 @@ public class OrderItemsController {
 		return "redirect:/admin/receiveorder?reference=" + reference;
 	}
 	
+	@RequestMapping("editorderitem")
+	public String editOrderItems(@ModelAttribute("id") Long id, Model model) {
+		
+		model.addAttribute("orderItem", ordersItemsService.retrieve(id) );
+		
+		return "editorderitem";
+	}
+	
+	@RequestMapping("updorderitem")
+	public String updateOrderItem(@ModelAttribute("orderItem") OrderItems orderItem, Model model) {
+		
+		ordersItemsService.merge(orderItem);
+		
+		return "redirect:/admin/newproductorder";
+	}
+	
+	@RequestMapping("deleteorderitem")
+	public String deleteOrderItem(@ModelAttribute("id") Long id) {
+		ordersItemsService.deleteById(id);
+		
+		return "redirect:/admin/listproductorders";
+	}
+	
 	@RequestMapping(value = "orderitemspaging", method = RequestMethod.GET)
 	public String handleOrderItemsRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;

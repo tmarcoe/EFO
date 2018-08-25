@@ -37,7 +37,7 @@ public class SalesItemDao implements ISalesItem {
 	}
 
 	@Override
-	public SalesItem retrieve(int item_id) {
+	public SalesItem retrieve(Long item_id) {
 		Session session = session();
 		SalesItem salesItem = (SalesItem) session.createCriteria(SalesItem.class).add(Restrictions.idEq(item_id)).uniqueResult();
 		session.disconnect();
@@ -89,16 +89,16 @@ public class SalesItemDao implements ISalesItem {
 		String hql = "UPDATE SalesItem SET qty = qty + :qty WHERE item_id = :item_id";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.createQuery(hql).setDouble("qty", qty).setInteger("item_id", salesItem.getItem_id()).executeUpdate();
+		session.createQuery(hql).setDouble("qty", qty).setLong("item_id", salesItem.getItem_id()).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}
 	
-	public void deleteSalesItem(int item_id) {
+	public void deleteSalesItem(Long item_id) {
 		String hql = "DELETE FROM SalesItem WHERE item_id = :item_id";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.createQuery(hql).setInteger("item_id", item_id).executeUpdate();
+		session.createQuery(hql).setLong("item_id", item_id).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}

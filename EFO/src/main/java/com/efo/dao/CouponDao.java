@@ -35,7 +35,7 @@ public class CouponDao implements ICoupon {
 	}
 
 	@Override
-	public Coupon retrieve(int id) {
+	public Coupon retrieve(Long id) {
 		Session session = session();
 		Coupon coupon = (Coupon) session.createCriteria(Coupon.class).add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();

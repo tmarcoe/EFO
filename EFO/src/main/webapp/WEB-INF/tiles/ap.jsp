@@ -8,7 +8,6 @@
 		<tr>
 			<th>Invoice Number</th>
 			<th>Begin Payments</th>
-			<th>Supplier</th>
 			<th>Type</th>
 			<th>Total Principal</th>
 			<th>Interest</th>
@@ -23,7 +22,6 @@
 		<tr>
 			<td>${item.reference}</td>
 			<td><fmt:formatDate value="${item.date_begin}"/></td>
-			<td>${item.supplier}</td>
 			<td>${item.type}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.total_due}"/></td>
 			<td><fmt:formatNumber type="percent" value="${item.interest / 100}"/></td>

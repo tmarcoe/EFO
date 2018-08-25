@@ -22,7 +22,7 @@ public class UsedCoupons implements Serializable {
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "salesItem"))
 	@Id
 	@GeneratedValue(generator = "generator")
-	private int item_id;
+	private Long item_id;
 	private String sku;
 	private int user_id;
 	private int coupon_id;
@@ -38,10 +38,10 @@ public class UsedCoupons implements Serializable {
 	@JoinColumn(name="COUPON_ID", nullable = false, insertable=false, updatable=false )
 	private Coupon coupon;
 	
-	public int getItem_id() {
+	public Long getItem_id() {
 		return item_id;
 	}
-	public void setItem_id(int item_id) {
+	public void setItem_id(Long item_id) {
 		this.item_id = item_id;
 	}
 	public String getSku() {

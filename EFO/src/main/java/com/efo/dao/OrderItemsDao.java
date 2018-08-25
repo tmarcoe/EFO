@@ -35,9 +35,9 @@ public class OrderItemsDao implements IOrdersItem {
 	}
 
 	@Override
-	public OrderItems retrieve(Long reference) {
+	public OrderItems retrieve(Long id) {
 		Session session = session();
-		OrderItems orders = (OrderItems) session.createCriteria(OrderItems.class).add(Restrictions.idEq(reference)).uniqueResult();
+		OrderItems orders = (OrderItems) session.createCriteria(OrderItems.class).add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
 		
 		return orders;
@@ -117,6 +117,15 @@ public class OrderItemsDao implements IOrdersItem {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.delete(orders);
+		tx.commit();
+		session.disconnect();
+	}
+	
+	public void deleteById(Long id) {
+		String hql = "DELETE FROM OrderItems WHERE id = :id";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setLong("id", id).executeUpdate();
 		tx.commit();
 		session.disconnect();
 	}

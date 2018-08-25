@@ -36,7 +36,7 @@ public class PaymentsBilledDao implements IPaymentsBilled {
 	}
 
 	@Override
-	public PaymentsBilled retreive(int id) {
+	public PaymentsBilled retreive(Long id) {
 		Session session = session();
 		PaymentsBilled p = (PaymentsBilled) session.createCriteria(PaymentsBilled.class).add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
@@ -53,7 +53,7 @@ public class PaymentsBilledDao implements IPaymentsBilled {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Long id) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		PaymentsBilled p = retreive(id);

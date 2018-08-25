@@ -7,25 +7,19 @@
 <sf:form method="post" action="/accounting/updatereceive" modelAttribute="payment" >
 	<table class="fancy-table tableshadow">
 		<tr>
-			<td><b>Invoice Number</b></td>
-			<td><b>Date Paid</b></td>
-			<td><b>Payment Made</b></td>
-			<td><b>Penalties</b></td>
+			<td><b>Reference: </b><br><sf:input class="fancy" path="reference" readonly="true" /></td>
+			<td><b>Date Paid:</b><br><sf:input class="fancy" type="date" path="payment_date" /></td>
+			<td><b>Payment Made:</b><br><sf:input class="fancy" type="number" step=".01" path="payment"/>
+			<td><b>Penalties</b><br><sf:input class="fancy" type="number" step=".01" path="penalties"/>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="invoice_num" readonly="true" /></td>
-			<td><sf:input class="fancy" type="date" path="payment_date" /></td>
-			<td><sf:input class="fancy" type="number" step=".01" path="payment"/>
-			<td><sf:input class="fancy" type="number" step=".01" path="penalties"/>
-		</tr>
-		<tr>
-			<sf:errors path="invoice_num" class="error" />
+			<sf:errors path="reference" class="error" />
 			<sf:errors path="payment_date" class="error" />
 			<sf:errors path="payment" class="error" />
 			<sf:errors path="penalties" class="error" />
 		</tr>
 		<tr>
-			<td colspan="3">Comments:<br>
+			<td colspan="3"><b>Comments:</b><br>
 				<sf:textarea class="fancy-textarea" path="comments" rows="4" cols="75"/>
 			</td>
 		</tr>

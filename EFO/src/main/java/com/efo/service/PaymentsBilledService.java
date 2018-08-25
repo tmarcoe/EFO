@@ -23,7 +23,7 @@ public class PaymentsBilledService implements IPaymentsBilled {
 	}
 
 	@Override
-	public PaymentsBilled retreive(int id) {
+	public PaymentsBilled retreive(Long id) {
 		return paymentsPaidDao.retreive(id);
 	}
 
@@ -33,7 +33,7 @@ public class PaymentsBilledService implements IPaymentsBilled {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Long id) {
 		paymentsPaidDao.delete(id);
 	}
 	

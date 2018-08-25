@@ -24,7 +24,7 @@ public class SalesReceipt {
 		double grandTotal = 0.0;
 		
 		for(SalesItem item : sales.getSalesItem()) {
-			subtotal += item.getRegular_price();
+			subtotal += (item.getRegular_price() * item.getQty());
 		}
 		tax = subtotal * 0.08;
 		grandTotal = subtotal + tax;

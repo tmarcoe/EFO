@@ -18,7 +18,7 @@
 				</div></td>
 			<td><b>Total Price: </b><br>
 				<div class="fancy">
-					<fmt:formatNumber type="currency" currencySymbol="" value="${sales.total_price * 1.08}" />
+					<fmt:formatNumber type="currency" currencySymbol="" value="${sales.total_price + sales.receivables.total_tax}" />
 				</div></td>
 		</tr>
 		<tr>
@@ -58,7 +58,7 @@
 				<tr>
 					<td><b>Amount Due: </b><br>
 						<div class="fancy">
-							<fmt:formatNumber type="currency" currencySymbol="" value="${sales.receivables.total_due}" />
+							<fmt:formatNumber type="currency" currencySymbol="" value="${sales.receivables.total_due + sales.receivables.total_tax}" />
 						</div></td>
 					<td><b>Down Payment: </b><br> <sf:input id="down_payment" class="fancy" type="number" step=".01"
 							path="receivables.down_payment" onchange="eachPayment()" /></td>
@@ -95,6 +95,7 @@
 	<sf:hidden path="invoice_num"/>
 	<sf:hidden path="user_id" />
 	<sf:hidden id="total_due" path="total_price" />
+	<sf:hidden id="total_tax" path="total_tax"/>
 	<sf:hidden path="processed" />
 	<sf:hidden path="shipped" />
 	<sf:hidden path="changed" />
@@ -105,6 +106,7 @@
 	<sf:hidden path="receivables.customer" />
 	<sf:hidden path="receivables.status" value="O" />
 	<sf:hidden path="receivables.total_due" />
+	<sf:hidden path="receivables.total_tax"/>
 </sf:form>
 <script type="text/javascript">
 	function showReceivable() {
@@ -127,13 +129,15 @@
 
 	function eachPayment() {
 		var total_due = $("#total_due").val();
+		var total_tax = $("#total_tax").val();
 		var down_payment = $("#down_payment").val();
 		var interest = $("#interest").val();
 		var num_payments = $("#num_payments").val();
 
 		if (total_due > 0 && num_payments > 0) {
+			var ttl = parseFloat(total_due) + parseFloat(total_tax);
 			$.getJSON(
-					"/rest/calculatepayments?total=" + total_due + "&down="
+					"/rest/calculatepayments?total=" + ttl + "&down="
 							+ down_payment + "&interest=" + interest
 							+ "&num_payments=" + num_payments, function(data) {
 						$("#each_payment").val(data.each_payment);
@@ -147,7 +151,6 @@
 
 	$('#autocomplete').devbridgeAutocomplete(
 			{
-
 				lookup : function(query, done) {
 					var name = $("#autocomplete").val();
 					$.getJSON("/rest/lookupcustomer?name=" + name,
@@ -163,7 +166,6 @@
 												+ "incoming Text "
 												+ jqXHR.responseText);
 									});
-
 				},
 				onSelect : function(data) {
 					$("#customer_id").val(data.data);

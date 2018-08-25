@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.component.ScheduleUtilities;
-import com.efo.component.ScheduleUtilities.ScheduleType;
 import com.efo.entity.Payables;
 import com.efo.entity.PaymentsBilled;
 import com.efo.service.FetalTransactionService;
@@ -73,7 +72,7 @@ public class APPaymentsController {
 		return "appaymentlist";
 	}
 	@RequestMapping("payamount")
-	public String payAmount(@ModelAttribute("id") int id, Model model) {
+	public String payAmount(@ModelAttribute("id") Long id, Model model) {
 		
 		PaymentsBilled billed = paymentsService.retreive(id);
 		billed.setPayment_date(new Date());
@@ -89,17 +88,6 @@ public class APPaymentsController {
 		paymentsService.update(billed);
 		fetalService.makePayment(payables, billed);
 		
-		billed.setId(0);
-		billed.setReference(payables.getReference());
-		billed.setPayment_date(null);
-		billed.setPayment(0);
-		ScheduleType type = sched.stringToEnum(payables.getSchedule());
-		Date nextPayment = sched.nextPayment(payables.getDate_begin(), billed.getDate_due(), type);
-		billed.setDate_due(nextPayment);
-		
-		paymentsService.create(billed);
-
-		
 		return "redirect:/accounting/appaymentlist?reference=" + billed.getReference();
 	}
 	
@@ -114,7 +102,7 @@ public class APPaymentsController {
 	}
 	
 	@RequestMapping("editppayment")
-	public String editPPayment(@ModelAttribute("id") int id, Model model) {
+	public String editPPayment(@ModelAttribute("id") Long id, Model model) {
 		
 		PaymentsBilled paid = paymentsService.retreive(id);
 		

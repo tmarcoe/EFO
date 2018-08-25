@@ -17,7 +17,7 @@ public class SalesItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id  @GeneratedValue(strategy = GenerationType.AUTO)
-	private int item_id;
+	private Long item_id;
 	
 	private Long reference;
 	private String sku;
@@ -39,10 +39,10 @@ public class SalesItem implements Serializable {
 	private UsedCoupons usedCoupons;
 
 	
-	public int getItem_id() {
+	public Long getItem_id() {
 		return item_id;
 	}
-	public void setItem_id(int item_id) {
+	public void setItem_id(Long item_id) {
 		this.item_id = item_id;
 	}
 	

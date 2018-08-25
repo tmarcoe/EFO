@@ -86,12 +86,17 @@ public class ARPaymentsController {
 	
 	@RequestMapping("receivepayment")
 	public String receivePayment(@ModelAttribute("id") int id, Model model) {
-		
+		double payment = 0.0;
 		PaymentsReceived rec = paymentsService.retreive(id);
 		Receivables receivables = receivablesService.retreive(rec.getReference());
 		
 		rec.setPayment_date(new Date());
-		rec.setPayment(receivables.getEach_payment());
+		if (receivables.getEach_payment() <= receivables.getTotal_balance()) {
+			payment = receivables.getEach_payment();
+		}else{
+			payment = receivables.getTotal_balance();
+		}
+		rec.setPayment(payment);
 		
 		model.addAttribute("payment", rec);
 		
@@ -99,7 +104,7 @@ public class ARPaymentsController {
 	}
 	
 	@RequestMapping("updatereceive")
-	public String updateReceivePayment(@ModelAttribute("payment")PaymentsReceived payment) throws IOException {
+	public String updateReceivePayment(@ModelAttribute("payment") PaymentsReceived payment) throws IOException {
 		
 		Receivables receivables = receivablesService.retreive(payment.getReference());
 		fetalService.receivePaymentFromReceivable(payment, receivables);

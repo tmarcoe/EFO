@@ -6,7 +6,7 @@ import com.efo.entity.Coupon;
 
 public interface ICoupon {
 	public void create(Coupon coupon);
-	public Coupon retrieve(int id);
+	public Coupon retrieve(Long id);
 	public List<Coupon> retrieveRawList();
 	public void update(Coupon coupon);
 	public void delete(Coupon coupon);

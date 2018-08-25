@@ -45,7 +45,9 @@ public class ReceivablesDao implements IReceivables {
 	public List<Receivables> retreiveList() {
 		Session session = session();
 		@SuppressWarnings("unchecked")
-		List<Receivables> rList = session.createCriteria(Receivables.class).list();
+		List<Receivables> rList = session.createCriteria(Receivables.class)
+										 .add(Restrictions.ne("status", "C"))
+										 .list();
 		return rList;
 	}
 

@@ -50,7 +50,7 @@
 		</tr>
 		<tr>
 			<td colspan="2"><button class="fancy-button" type="button" onclick="window.location.href='/admin/listsales'">
-					<b>View Processed Orders</b>
+					<b>View/Ship Processed Orders</b>
 				</button></td>
 		</tr>
 		<tfoot>

@@ -22,7 +22,7 @@ public class CouponService implements ICoupon {
 	}
 
 	@Override
-	public Coupon retrieve(int id) {
+	public Coupon retrieve(Long id) {
 		return couponDao.retrieve(id);
 	}
 
