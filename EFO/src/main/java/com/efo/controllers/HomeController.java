@@ -2,6 +2,7 @@ package com.efo.controllers;
 
 import java.security.Principal;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String showHome(Model model, Principal principal){
-
+		LocalDate today = new LocalDate();
 		User user = null;
 		if (principal != null) {
 			user = userService.retrieve(principal.getName());
@@ -49,6 +50,8 @@ public class HomeController {
 			user = new User();
 			user.setUser_id(0);
 		}
+		model.addAttribute("calMonth", today.getMonthOfYear());
+		model.addAttribute("calYear", today.getYear());
 		model.addAttribute("user", user);
 
 		return "home";
