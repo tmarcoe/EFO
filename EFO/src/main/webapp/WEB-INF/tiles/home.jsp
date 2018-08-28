@@ -106,13 +106,13 @@
 			</table>
 		</div>
 		<div id="tabs-6">
-				<table  class="calendarTitle">
-					<tr>
-						<td><a href="#" onclick="reverse()" >&lt;&lt;</a></td>
-						<td><div id="month"></div></td>
-						<td><a href="#" onclick="forward()" >&gt;&gt;</a></td>
-					</tr>
-				</table>
+			<table class="calendarTitle">
+				<tr>
+					<td><a href="#" onclick="reverse()">&lt;&lt;</a></td>
+					<td><div id="month"></div></td>
+					<td><a href="#" onclick="forward()">&gt;&gt;</a></td>
+				</tr>
+			</table>
 			<table class="calendarTable">
 				<thead>
 					<tr>
@@ -126,7 +126,8 @@
 					</tr>
 				</thead>
 				<c:forEach var="i" begin="1" end="42">
-					<td><div id="cal${i}" class="calendarContent"></div></td>
+					<td><input id="d${i}" type="hidden" /><input id="m${i}" type="hidden" /><input id="y${i}" type="hidden" />
+					<div id="div${i}" class="calendarContent" onclick="getEvents('#y${i}', '#m${i}', '#d${i}')"></div></td>
 					<c:if test="${i % 7 == 0}">
 						<tr></tr>
 					</c:if>
@@ -184,55 +185,118 @@
 			</table>
 		</div>
 	</div>
+	<div id="showEvents" class="modal">
+		<div id="eventList" class="modal-content small-modal fancy" onclick="closeShowEvents()"></div>
+	</div>
 	<input id="destination" type="hidden" />
 	<input id="calMonth" type="hidden" value="${calMonth}" />
 	<input id="calYear" type="hidden" value="${calYear}" />
-	
-	
+
+
 </sf:form>
 <script type="text/javascript">
-$(document).ready(function(){
-	getCalendar();
-});
+	$(document).ready(function() {
+		getCalendar();
+	});
 
 	function getCalendar() {
 		var mnth = $("#calMonth").val();
 		var yr = $("#calYear").val();
-		$.getJSON("/rest/getcalendar?month=" + mnth + "&year=" + yr,
-				function(data) {
-					$("#calMonth").val(data.calMonth);
-					$("#calYear").val(data.calYear);
-					populateCalendar(data.calendar, data.calMonth, data.calYear);
-				}).fail( function(jqXHR, textStatus, errorThrown) {
+		$
+				.getJSON(
+						"/rest/getcalendar?month=" + mnth + "&year=" + yr,
+						function(data) {
+							$("#calMonth").val(data.calMonth);
+							$("#calYear").val(data.calYear);
+							populateCalendar(data.calendar, data.calMonth,
+									data.calYear);
+						}).fail(
+						function(jqXHR, textStatus, errorThrown) {
 							alert("error " + textStatus + "\n"
-									+ "incoming Text "
-									+ jqXHR.responseText);
+									+ "incoming Text " + jqXHR.responseText);
 						});
 
 	}
+
+	function getEvents(yearInput, monthInput, dayInput) {
+		var yr = $(yearInput).val();
+		var mnth = $(monthInput).val();
+		var day = $(dayInput).val();
+
+		$.getJSON( "/rest/getevents?year=" + yr + "&month=" + mnth + "&day=" + day, function(data) {
+					if (data.length > 0) {
+								eventPopup(data);
+							}
+						}).fail(
+						function(jqXHR, textStatus, errorThrown) {
+							alert("error " + textStatus + "\n"
+									+ "incoming Text " + jqXHR.responseText);
+						});
+	}
+
+	function eventPopup(data) {
+		$("#showEvents").show()
+		var content = "";
+
+		for (i = 0; i < data.length; i++) {
+			content = content + data[i].name + "<br>";
+		}
+		$("#eventList").html(content);
+	}
+
+	function closeShowEvents() {
+		$("#showEvents").hide();
+	}
+
 	function populateCalendar(calArray, month, year) {
-		for (i=0; i < calArray.length; i++) {
-			var cell = "#cal" + (i + 1);
-			if (calArray[i].isToday == true) {
+		for (i = 0; i < calArray.length; i++) {
+			var cell = "#div" + (i + 1);
+			var cellId = "div" + (i + 1);
+			var yearStore = "#y" + (i + 1);
+			var monthStore = "#m" + (i + 1);
+			var dayStore = "#d" + (i + 1);
+			var content = calArray[i].day;
+			var yr = calArray[i].year;
+			var mn = calArray[i].month;
+			var dy = calArray[i].day;
+			$(cell).removeClass("today thisMonth otherMonth");
+			var thisMonth = false;
+			if (calArray[i].isToday == true && calArray[i].month == month) {
 				$(cell).addClass("today");
-			}else{
-				$(cell).removeClass("today");
-				if (calArray[i].month == month && calArray[i].year == year) {
-					$(cell).addClass("thisMonth").removeClass("otherMonth");				
-				}else{
-					$(cell).addClass("otherMonth").removeClass("thisMonth");
-				}
+				thisMonth = true;
+			} else if (calArray[i].month == month && calArray[i].year == year) {
+				thisMonth = true;
+				$(cell).addClass("thisMonth");
+			} else {
+				thisMonth = false;
+				$(cell).addClass("otherMonth");
 			}
-			$(cell).html(calArray[i].day);
+			if (thisMonth == true && parseInt(calArray[i].num_events) > 0) {
+				var evn = "";
+				if (parseInt(calArray[i].num_events) == 1) {
+					evn = "Event"
+				} else {
+					evn = "Events"
+				}
+				content = content + "<br><b>" + calArray[i].num_events + " "
+						+ evn + "</b>";
+			}
+			$(cell).html(content);
+			$(yearStore).val(yr);
+			$(monthStore).val(mn);
+			$(dayStore).val(dy);
 		}
 		displayMonthYear();
 	}
+
 	function displayMonthYear() {
-		
+
 		var m = $("#calMonth").val();
 		var y = $("#calYear").val();
-		var mnth = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		
+		var mnth = [ "January", "February", "March", "April", "May", "June",
+				"July", "August", "September", "October", "November",
+				"December" ];
+
 		$("#month").text(mnth[m - 1] + ", " + y);
 	}
 	function disableButton(id) {
@@ -271,11 +335,14 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
+	function dummyFunction() {
+
+	}
+
 	function forward() {
 		var m = parseInt($("#calMonth").val());
 		var y = parseInt($("#calYear").val());
-		
+
 		m = m + 1;
 		if (m == 13) {
 			m = 1;
@@ -285,11 +352,11 @@ $(document).ready(function(){
 		$("#calYear").val(y);
 		getCalendar();
 	}
-	
+
 	function reverse() {
 		var m = parseInt($("#calMonth").val());
 		var y = parseInt($("#calYear").val());
-		
+
 		m = m - 1;
 		if (m == 0) {
 			m = 12;
@@ -299,7 +366,6 @@ $(document).ready(function(){
 		$("#calYear").val(y);
 		getCalendar();
 	}
-	
 </script>
 <c:if test="${user.isTemp_pw() == true}">
 	<script>

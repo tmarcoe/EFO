@@ -1,5 +1,6 @@
 package com.efo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,11 @@ public class EventsService implements IEvents {
 		eventsDao.deleteById(id);
 
 	}
-
+	public Long getEventCount(Date date) {
+		return eventsDao.getEventCount(date);
+	}
+	
+	public List<Events> getEvents(Date date) {
+		return eventsDao.getEvents(date);
+	}
 }

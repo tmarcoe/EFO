@@ -8,22 +8,28 @@ import org.joda.time.LocalDate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.efo.component.EventCalendar;
+import com.efo.entity.Events;
+import com.efo.service.EventsService;
 
 @RestController
 @RequestMapping("/rest/")
 public class CalendarController {
+	
+	@Autowired
+	private EventsService eventsService;
 	
 	@RequestMapping("getcalendar")
 	public String getCalendar(@RequestParam(value = "month") int month,
 							  @RequestParam(value = "year") int year) throws JSONException {
 		LocalDate calDate = new LocalDate();
 		LocalDate today = new LocalDate();
-		calDate = calDate.withMonthOfYear(month).withDayOfMonth(1);
+		calDate = calDate.withYear(year).withMonthOfYear(month).withDayOfMonth(1);
 		int dow = calDate.getDayOfWeek();
 		calDate = calDate.minusDays(dow);
 		List<EventCalendar> calArray = new ArrayList<EventCalendar>();
@@ -38,6 +44,9 @@ public class CalendarController {
 			}else{
 				event.setToday(false);
 			}
+			int count = new Long(eventsService.getEventCount(calDate.toDate())).intValue();
+			event.setNum_events(count);
+			
 			calArray.add(event);
 			calDate = calDate.plusDays(1);
 		}
@@ -63,5 +72,30 @@ public class CalendarController {
 		json.put("calendar", jArray);
 		
 		return json.toString();
+	}
+	
+	@RequestMapping("getevents")
+	public String getEvents(@RequestParam(value = "year") int year,
+							@RequestParam(value = "month") int month,
+							@RequestParam(value = "day") int day) throws JSONException {
+		LocalDate dt = new LocalDate();
+		dt = dt.withYear(year).withMonthOfYear(month).withDayOfMonth(day);
+		
+		
+		return eventListToJSON(eventsService.getEvents(dt.toDate()));
+	}
+	
+	private String eventListToJSON(List<Events> events) throws JSONException {
+		JSONArray jArray = new JSONArray();
+		
+		for (Events event : events) {
+			JSONObject json = new JSONObject();
+			json.put("id", event.getId());
+			json.put("date", event.getDate());
+			json.put("name", event.getName());
+			jArray.put(json);
+		}
+		
+		return jArray.toString();
 	}
 }

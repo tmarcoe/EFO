@@ -1,5 +1,6 @@
 package com.efo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -94,5 +95,21 @@ public class EventsDao implements IEvents {
 		
 		session.disconnect();
 	}
-
+	
+	public Long getEventCount(Date date) {
+		String hql = "SELECT COUNT(*) FROM Events WHERE date = :date";
+		Session session = session();
+		Long count = (Long) session.createQuery(hql).setDate("date", date).uniqueResult();
+		
+		return count;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Events> getEvents(Date date) {
+		Session session = session();
+		List<Events> eventList = session.createCriteria(Events.class).add(Restrictions.eq("date", date)).list();
+		session.disconnect();
+		
+		return eventList;
+	}
 }
