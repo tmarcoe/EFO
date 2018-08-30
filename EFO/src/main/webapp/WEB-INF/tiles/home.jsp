@@ -108,9 +108,9 @@
 		<div id="tabs-6">
 			<table class="calendarTitle">
 				<tr>
-					<td><a href="#" onclick="reverse()">&lt;&lt;</a></td>
+					<td><button class="fancy-button" type="button" onclick="reverse()" style="font-size: 14px;"><b>&lt;&lt;</b></button></td>
 					<td><div id="month"></div></td>
-					<td><a href="#" onclick="forward()">&gt;&gt;</a></td>
+					<td><button class="fancy-button" type="button" onclick="forward()" style="font-size: 14px;"><b>&gt;&gt;</b></button></td>
 				</tr>
 			</table>
 			<table class="calendarTable">
@@ -186,7 +186,7 @@
 		</div>
 	</div>
 	<div id="showEvents" class="modal">
-		<div id="eventList" class="modal-content small-modal fancy" onclick="closeShowEvents()"></div>
+		<div id="eventList" class="modal-content small-modal fancy" onclick="closeShowEvents()" style="text-align: left;"></div>
 	</div>
 	<input id="destination" type="hidden" />
 	<input id="calMonth" type="hidden" value="${calMonth}" />
@@ -236,11 +236,12 @@
 
 	function eventPopup(data) {
 		$("#showEvents").show()
-		var content = "";
+		var content = "<ul>";
 
 		for (i = 0; i < data.length; i++) {
-			content = content + data[i].name + "<br>";
+			content = content + "<li>" + data[i].name + "</li>";
 		}
+		content = content + "<br><b>Click here to close</b></ul>";
 		$("#eventList").html(content);
 	}
 

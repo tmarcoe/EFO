@@ -25,6 +25,7 @@ import com.efo.entity.RetailSales;
 import com.efo.dao.FetalTransactionDao;
 import com.efo.entity.CapitalAssets;
 import com.efo.entity.Equity;
+import com.efo.entity.Events;
 import com.efo.entity.FluidInventory;
 import com.efo.entity.Loans;
 import com.efo.entity.OverheadExpenses;
@@ -61,6 +62,7 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("loan", VariableType.DAO, loan);
 			publish("payable", VariableType.DAO, new Payables());
 			publish("payment", VariableType.DAO, new PaymentsBilled());
+			publish("event", VariableType.DAO, new Events());
 			loadRule("accounts_payable/newloan.trans");
 		}
 		finally {
@@ -101,6 +103,7 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("expense", VariableType.DAO, expense);
 			publish("payment", VariableType.DAO, payment);
 			publish("newPayment", VariableType.DAO, new PaymentHistory());
+			publish("event", VariableType.DAO, new Events());
 			loadRule("overhead_expense/payoverhead.trans");
 		}
 		finally {
@@ -120,6 +123,7 @@ public class FetalTransactionService extends FetalTransaction {
 			initTransaction(filePath);
 			publish("expense", VariableType.DAO, expense);
 			publish("payment", VariableType.DAO, new PaymentHistory());
+			publish("event", VariableType.DAO, new Events());
 			loadRule("overhead_expense/newoverhead.trans");
 		}
 		finally {
@@ -161,6 +165,7 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("payment", VariableType.DAO, payment);
 			publish("latest_date", VariableType.DATE, latest_date);
 			publish("taxRate", VariableType.DECIMAL, Double.valueOf(federalTaxRate));
+			publish("event", VariableType.DAO, new Events());
 			loadRule("retail_sales/retailpurchase.trans");
 		}
 		finally {
@@ -182,6 +187,7 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("asset", VariableType.DAO, asset);
 			publish("payables", VariableType.DAO, asset.getPayables());
 			publish("billed", VariableType.DAO, payments);
+			publish("event", VariableType.DAO, new Events());
 			loadRule("captial_assets/purchasecapital.trans");
 		}
 		finally {
@@ -208,6 +214,7 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("payables", VariableType.DAO, payables);
 			publish("nextBill", VariableType.DAO, new PaymentsBilled());
 			publish("num_of_payments", VariableType.DECIMAL, num_of_payments);
+			publish("event", VariableType.DAO, new Events());
 			loadRule("accounts_payable/makepayment.trans");
 		}
 		finally {
@@ -292,6 +299,7 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("order", VariableType.DAO, order);
 			publish("payables", VariableType.DAO, payables);
 			publish("payment", VariableType.DAO, payments);
+			publish("event", VariableType.DAO, new Events());
 			loadRule("order_inventory/orderinventory.trans");
 		}
 		finally {
@@ -379,28 +387,6 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 
-	public void addAp(Payables payables, PaymentsBilled billed) throws IOException {
-		try {
-			initTransaction(filePath);
-			publish("payables", VariableType.DAO, payables);
-			publish("billed", VariableType.DAO, billed);
-			loadRule("accounts_payable/ap.trans");
-			if (hasErrors()) {
-				throw new RuntimeException();
-			}
-		}
-		finally {
-			closeFetal();
-			Transaction tx = transDao.getTrans();
-			if (tx != null) {
-				tx.rollback();
-				session.clear();
-				session.disconnect();
-			}
-		}
-
-	}
-	
 	public void adjustAp(Payables payables, double amount) throws IOException {
 		try {
 			initTransaction(filePath);
@@ -421,26 +407,6 @@ public class FetalTransactionService extends FetalTransaction {
 			}
 		}
 
-	}
-	
-	public void addAr(Receivables receivables) throws IOException {
-		try {
-			initTransaction(filePath);
-			publish("receivables", VariableType.DAO, receivables);
-			loadRule("accounts_receiveable/ar.trans");
-			if (hasErrors()) {
-				throw new RuntimeException();
-			}
-			
-		} finally{
-			closeFetal();
-			Transaction tx = transDao.getTrans();
-			if (tx != null) {
-				tx.rollback();
-				session.clear();
-				session.disconnect();
-			}
-		}
 	}
 	
 	public void adjustAr(Receivables receivables, double amount) throws IOException {
@@ -473,6 +439,7 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("payment", VariableType.DAO, payment);
 			publish("receivables", VariableType.DAO, receivables);
 			publish("nextPayment", VariableType.DAO, new PaymentsReceived() );
+			publish("event", VariableType.DAO, new Events());
 			loadRule("accounts_receiveable/receivepayment.trans");
 		}
 		finally {
@@ -491,6 +458,7 @@ public class FetalTransactionService extends FetalTransaction {
 			initTransaction(filePath);
 			publish("payment", VariableType.DAO, payments);
 			publish("receivable", VariableType.DAO, receivables);
+			publish("event", VariableType.DAO, new Events());
 			loadRule("accounts_receiveable/paymentreceived.trans");
 			if (hasErrors()) {
 				throw new RuntimeException();

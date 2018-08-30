@@ -74,9 +74,9 @@ public class LoansController {
 	}
 	
 	@RequestMapping("editloan") 
-	public String editLoan(@ModelAttribute("trans_id") Long trans_id, Model model) {
+	public String editLoan(@ModelAttribute("reference") Long reference, Model model) {
 		
-		model.addAttribute("loan", loansService.retrieve(trans_id));
+		model.addAttribute("loan", loansService.retrieve(reference));
 		
 		return "editloan";
 	}

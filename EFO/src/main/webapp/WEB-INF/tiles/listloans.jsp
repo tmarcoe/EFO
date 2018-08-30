@@ -26,7 +26,7 @@
 			<td>${item.num_payments}</td>
 			<td>${item.schedule}</td>
 			<td>${item.status}</td>
-			<td><button type="button" onclick="window.location.href='/accounting/editloan?trans_id=${item.trans_id}'">Edit</button></td>
+			<td><button type="button" onclick="window.location.href='/accounting/editloan?reference=${item.reference}'">Edit</button></td>
 		</tr>
 	</c:forEach>
 	<tfoot class="tablefooter">

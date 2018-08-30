@@ -61,7 +61,7 @@
 				</sf:button>
 		</tr>
 	</table>
-	<sf:hidden path="trans_id" />
+	<sf:hidden path="reference" />
 	<sf:hidden id="user_id" path="user_id" />
 	<sf:hidden path="status" value="O" />
 </sf:form>

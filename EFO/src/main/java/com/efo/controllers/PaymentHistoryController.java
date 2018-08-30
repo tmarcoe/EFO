@@ -82,7 +82,15 @@ public class PaymentHistoryController {
 		transactionService.payOverheadExpense(expense, payment);
 		
 		return "redirect:/accounting/listpayments?reference=" + payment.getReference();
-	}	
+	}
+	
+	@RequestMapping("editopayment")
+	public String editOverheadPayment(@ModelAttribute("id") Long id, Model model) {
+		PaymentHistory payment = paymentService.retrieve(id);
+		
+		model.addAttribute("payment", payment);
+		return "editopayment";
+	}
 	
 	@RequestMapping(value = "paymentpaging", method = RequestMethod.GET)
 	public String handleUserRequest(@ModelAttribute("page") String page, Model model) throws Exception {

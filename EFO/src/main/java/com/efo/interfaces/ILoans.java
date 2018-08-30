@@ -6,7 +6,7 @@ import com.efo.entity.Loans;
 
 public interface ILoans {
 	public void create(Loans loans);
-	public Loans retrieve(Long trans_id);
+	public Loans retrieve(Long reference);
 	public List<Loans> retrieveRawList();
 	public void update(Loans loans);
 	public void delete(Loans loans);

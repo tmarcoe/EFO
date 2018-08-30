@@ -3,10 +3,13 @@ package com.efo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Loans implements Serializable {
@@ -14,7 +17,7 @@ public class Loans implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long trans_id;
+	private Long reference;
 	private Long user_id; // id for institution;
 	private String institution_name;
 	private Date approval;
@@ -27,11 +30,15 @@ public class Loans implements Serializable {
 	private Long num_payments;
 	private String schedule;
 	
-	public Long getTrans_id() {
-		return trans_id;
+	@OneToOne
+	(fetch=FetchType.LAZY, mappedBy = "productOrders", cascade = CascadeType.ALL)
+	private Payables payables;
+
+	public Long getReference() {
+		return reference;
 	}
-	public void setTrans_id(Long trans_id) {
-		this.trans_id = trans_id;
+	public void setReference(Long reference) {
+		this.reference = reference;
 	}
 	public Long getUser_id() {
 		return user_id;
@@ -100,6 +107,12 @@ public class Loans implements Serializable {
 		this.schedule = schedule;
 	}
 	
+	public Payables getPayables() {
+		return payables;
+	}
+	public void setPayables(Payables payables) {
+		this.payables = payables;
+	}
 	
 	
 }

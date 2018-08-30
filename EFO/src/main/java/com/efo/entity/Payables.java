@@ -41,7 +41,10 @@ public class Payables implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="REFERENCE")
 	private CapitalAssets capitalAssets;
-
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="REFERENCE")
+	private Loans loans;
 
 	public Long getReference() {
 		return reference;
@@ -162,6 +165,14 @@ public class Payables implements Serializable {
 		this.capitalAssets = capitalAssets;
 	}
 	
+	public Loans getLoans() {
+		return loans;
+	}
+
+	public void setLoans(Loans loans) {
+		this.loans = loans;
+	}
+
 	public void addPayment(PaymentsBilled payment) {
 		payments.add(payment);
 	}

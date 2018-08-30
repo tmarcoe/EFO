@@ -23,8 +23,8 @@ public class LoansService implements ILoans {
 	}
 
 	@Override
-	public Loans retrieve(Long trans_id) {
-		return loansDao.retrieve(trans_id);
+	public Loans retrieve(Long reference) {
+		return loansDao.retrieve(reference);
 	}
 
 	@Override
@@ -48,8 +48,8 @@ public class LoansService implements ILoans {
 
 	}
 	
-	public void delete(Long trans_id) {
-		Loans loans = loansDao.retrieve(trans_id);
+	public void delete(Long reference) {
+		Loans loans = loansDao.retrieve(reference);
 		loansDao.delete(loans);
 	}
 

@@ -35,9 +35,9 @@ public class LoansDao implements ILoans {
 	}
 
 	@Override
-	public Loans retrieve(Long trans_id) {
+	public Loans retrieve(Long reference) {
 		Session session = session();
-		Loans loans = (Loans) session.createCriteria(Loans.class).add(Restrictions.idEq(trans_id)).uniqueResult();
+		Loans loans = (Loans) session.createCriteria(Loans.class).add(Restrictions.idEq(reference)).uniqueResult();
 		session.disconnect();
 		
 		return loans;
