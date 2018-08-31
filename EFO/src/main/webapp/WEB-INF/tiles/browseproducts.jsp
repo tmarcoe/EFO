@@ -9,9 +9,9 @@
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
 <sf:form id="orderProduct" method="post" action="/admin/processorder" modelAttribute="sales" autocomplete="off">
-	<table class="fancy-table tableshadow" style="position: fixed; top: 100px; right: 100px;">
+	<table class="fancy-table tableshadow" style="position: fixed; top: 100px; right: 100px;padding: .5em .5em .5em .5em;">
 		<tr>
-			<td colspan="4"><input class="fancy" id="product_name" size="60" placeholder="Enter the Product Name" /></td>
+			<td colspan="4"><input class="fancy" id="product_name" size="50" placeholder="Enter the Product Name" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><b>SKU Code: <br></b> <input class="fancy" id="sku" readonly="true" /></td>

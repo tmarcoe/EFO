@@ -92,6 +92,14 @@ public class PaymentHistoryController {
 		return "editopayment";
 	}
 	
+	@RequestMapping("updopayment")
+	public String updateOverheadPayment(@ModelAttribute("payment") PaymentHistory payment) {
+		
+		paymentService.update(payment);
+		
+		return "redirect:/accounting/listpayments?reference=" + payment.getReference();
+	}
+	
 	@RequestMapping(value = "paymentpaging", method = RequestMethod.GET)
 	public String handleUserRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;

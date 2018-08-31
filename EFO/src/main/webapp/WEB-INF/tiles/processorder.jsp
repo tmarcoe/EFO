@@ -10,7 +10,7 @@
 
 
 <sf:form id="details" method="post" action="/admin/updorder" modelAttribute="sales">
-	<table class="fancy-table tableshadow">
+	<table class="fancy-table tableshadow" style="padding: .5em .5em .5em .5em;">
 		<tr>
 			<td><b>Invoice: </b><br>
 				<div class="fancy">

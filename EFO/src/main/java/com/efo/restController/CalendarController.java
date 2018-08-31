@@ -31,7 +31,9 @@ public class CalendarController {
 		LocalDate today = new LocalDate();
 		calDate = calDate.withYear(year).withMonthOfYear(month).withDayOfMonth(1);
 		int dow = calDate.getDayOfWeek();
-		calDate = calDate.minusDays(dow);
+		if (dow != 7) {
+			calDate = calDate.minusDays(dow);
+		}
 		List<EventCalendar> calArray = new ArrayList<EventCalendar>();
 		
 		for(int i=0;i < 42; i++) {

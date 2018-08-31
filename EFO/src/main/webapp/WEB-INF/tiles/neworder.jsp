@@ -9,7 +9,7 @@
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
 <sf:form id="newOrder" method="post" action="/admin/processproductorder" modelAttribute="productOrder">
-	<table class="fancy-table tableshadow" style="position: fixed; top: 100px; right: 100px;">
+	<table class="fancy-table tableshadow" style="position: fixed; top: 100px; right: 100px; padding: .5em .5em .5em .5em">
 		<tr>
 			<td colspan="4"><input class="fancy" id="product_name" size="50" onchange="clearAll()" placeholder="Enter the product name"/> </td>
 		</tr>
@@ -33,15 +33,8 @@
 				<td colspan="4"><div id="errorMsg" class="bigError"></div></td>
 			</tr>
 			<tr>
-				<td colspan="4"><div id="subtotal" class="totalsDiv"></div></td>
+				<td colspan="4" class="fancy"><div id="subtotal" class="totalsDiv"></div></td>
 			</tr>
-			<tr>
-				<td colspan="4"><div id="totalTax" class="totalsDiv"></div></td>
-			</tr>
-			<tr>
-				<td colspan="4"><div id="grandTotal" class="totalsDiv"></div></td>
-			</tr>
-
 		</tfoot>
 	</table>
 	<div class="scrollPanel">

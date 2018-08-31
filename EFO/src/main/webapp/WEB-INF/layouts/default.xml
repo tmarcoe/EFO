@@ -416,7 +416,7 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/editexpense.jsp"></put-attribute>
 	</definition>
 	
-	<!-- makepayment -->
+	<!-- Payment History Controller -->
 	<definition name="listpayments" extends="accounting.base">
 		<put-attribute name="title" value="Overhead Payments"></put-attribute>
 		<put-attribute name="heading_title" value="Overhead Payments"></put-attribute>
@@ -425,9 +425,15 @@
 	</definition>
 	
 	<definition name="makepayment" extends="accounting.base">
-		<put-attribute name="title" value="Edit Overhead Expense"></put-attribute>
-		<put-attribute name="heading_title" value="Edit Overhead Expense"></put-attribute>
+		<put-attribute name="title" value="Make a Payment"></put-attribute>
+		<put-attribute name="heading_title" value="Make a Payment"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/makepayment.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editopayment" extends="accounting.base">
+		<put-attribute name="title" value="Edit Overhead Payment"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Overhead Payment"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editopayment.jsp"></put-attribute>
 	</definition>
 	
 	<!-- Report Controller -->

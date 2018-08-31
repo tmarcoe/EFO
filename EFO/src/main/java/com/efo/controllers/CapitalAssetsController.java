@@ -109,7 +109,9 @@ public class CapitalAssetsController {
 	
 	@RequestMapping("updateasset")
 	public String updateAsset(@ModelAttribute("asset") CapitalAssets asset) {
-		
+		if ("Cash".compareTo(asset.getPurchase_type()) == 0) {
+			asset.setPayables(null);
+		}
 		capitalAssetsService.update(asset);
 		
 		return "redirect:/accounting/listassets";		

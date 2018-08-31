@@ -54,7 +54,7 @@ Special fonts
 }
 
 .calendarTable {
-	width: 30%;
+	width: 40%;
 	margin-left: auto;
 	margin-right: auto;
 	padding-top: 1em;
@@ -64,14 +64,20 @@ Special fonts
 .calendarTitle {
 	margin: auto;
 	margin: auto;
-	margin-top: 20px;
+	margin-top: 10px;
 	margin-bottom: 0;
 	text-align: center;
-	font-size: 48px;
+	font-size: 40px;
+	font-family: JosefinSans-BoldItalic;
+}
+
+.calendarTitle td {
+	padding-right: .5em;
+	padding-left: .5em;
 }
 
 .calendarTable td {
-	width: 5%;
+	width: 10%;
 	position: relative;
 }
 
