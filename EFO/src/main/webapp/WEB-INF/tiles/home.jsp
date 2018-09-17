@@ -72,16 +72,20 @@
 							src="<c:url value='/images/receivable.png'/>"></a></td>
 					<td><a href="/accounting/ap"><img class="tile" alt="Accounts Payable"
 							src="<c:url value='/images/payable.png'/>"></a></td>
+					<td><a href="/accounting/listoverhead"><img class="tile" alt="Regular Expenses"
+							src="<c:url value='/images/regular-expenses.png'/>"></a></td>
+				</tr>
+				<tr>
 					<td><a href="#" onclick="inputDate('/accounting/ledgerlist')"><img class="tile" alt="General Ledger"
 							src="<c:url value='/images/general.png'/>"></a></td>
+					<td><a href="#" onclick="inputDate('/accounting/inventoryledgerlist')"><img class="tile" alt="Inventory Ledger"
+							src="<c:url value='/images/inventorygeneral.png'/>"></a></td>
 					<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts"
 							src="<c:url value='/images/accounts.png'/>"></a></td>
 				</tr>
 				<tr>
 					<td><a href="/accounting/listassets"><img class="tile" alt="Capital Assets"
 							src="<c:url value='/images/capitalassets.png'/>"></a></td>
-					<td><a href="/accounting/listoverhead"><img class="tile" alt="Regular Expenses"
-							src="<c:url value='/images/regular-expenses.png'/>"></a></td>
 					<td><a href="/accounting/equitylist"><img class="tile" alt="Equity"
 							src="<c:url value='/images/stock.png'/>"></a></td>
 					<td><a href="/accounting/listloans"><img class="tile" alt="Obtain a Loan"

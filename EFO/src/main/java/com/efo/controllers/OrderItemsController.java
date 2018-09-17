@@ -1,8 +1,10 @@
 package com.efo.controllers;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.antlr.v4.runtime.RecognitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.efo.entity.OrderItems;
 import com.efo.entity.Product;
+import com.efo.entity.ProductOrders;
 import com.efo.service.EachInventoryService;
+import com.efo.service.FetalTransactionService;
 import com.efo.service.OrdersItemService;
 import com.efo.service.ProductOrdersService;
 import com.efo.service.ProductService;
@@ -40,6 +44,9 @@ public class OrderItemsController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private FetalTransactionService fetalService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -61,9 +68,10 @@ public class OrderItemsController {
 	@RequestMapping("updreceiveorder")
 	public String updReceiveOrder(@ModelAttribute("id") Long id, 
 								  @ModelAttribute("qty") double qty, 
-								  @ModelAttribute("reference") Long reference) {
+								  @ModelAttribute("reference") Long reference) throws RecognitionException, IOException, RuntimeException {
 		
 		OrderItems orderItems = ordersItemsService.retrieve(id);
+		ProductOrders productOrder = productOrdersService.retrieve(reference);
 		Product product = productService.retrieve(orderItems.getSku());
 		if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0) {
 			eachInventoryService.markAsDelivered(orderItems.getSku(), new Double(qty).intValue());
@@ -76,6 +84,8 @@ public class OrderItemsController {
 		if (ordersItemsService.hasOutstandingDeliveries(reference) == false) {
 			productOrdersService.setStatus("D", reference);
 		}
+		
+		fetalService.orderDelivered(productOrder, orderItems, product, qty);
 		
 		return "redirect:/admin/receiveorder?reference=" + reference;
 	}

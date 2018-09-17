@@ -24,6 +24,7 @@ public class RetailSales implements Serializable {
 	private int user_id;
 	private double total_price;
 	private double total_tax;
+	private double total_qty;
 	private Date ordered;
 	private Date processed;
 	private Date shipped;
@@ -71,6 +72,12 @@ public class RetailSales implements Serializable {
 	}
 	public void setTotal_tax(double total_tax) {
 		this.total_tax = total_tax;
+	}
+	public double getTotal_qty() {
+		return total_qty;
+	}
+	public void setTotal_qty(double total_qty) {
+		this.total_qty = total_qty;
 	}
 	public Date getOrdered() {
 		return ordered;

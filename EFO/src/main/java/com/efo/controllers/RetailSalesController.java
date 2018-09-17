@@ -386,12 +386,15 @@ public class RetailSalesController {
 	private double totalOrder(RetailSales sales) {
 		
 		double total = 0.0;
+		double total_qty = 0.0;
 		double tax = Double.valueOf(taxRate);
 		
 		for (SalesItem item : sales.getSalesItem()) {
 			total += (item.getSold_for() * item.getQty());
+			total_qty += item.getQty();
 		}
 		sales.setTotal_tax(total * tax);
+		sales.setTotal_qty(total_qty);
 		sales.setChanged(false);
 		return total;
 	}

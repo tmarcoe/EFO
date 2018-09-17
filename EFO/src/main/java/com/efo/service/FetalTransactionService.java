@@ -205,7 +205,6 @@ public class FetalTransactionService extends FetalTransaction {
 	
 	public void makePayment(Payables payables, PaymentsBilled billed) throws IOException {
 		try {
-			Double num_of_payments = Double.valueOf(String.valueOf(payables.getNum_payments()));
 			initTransaction(filePath);
 			if (billed.getPayables() == null) {
 				billed.setPayables(payables);
@@ -213,7 +212,6 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("billed", VariableType.DAO, billed);
 			publish("payables", VariableType.DAO, payables);
 			publish("nextBill", VariableType.DAO, new PaymentsBilled());
-			publish("num_of_payments", VariableType.DECIMAL, num_of_payments);
 			publish("event", VariableType.DAO, new Events());
 			loadRule("accounts_payable/makepayment.trans");
 		}
@@ -235,7 +233,7 @@ public class FetalTransactionService extends FetalTransaction {
 			publish("total", VariableType.DECIMAL, total);
 			publish("down", VariableType.DECIMAL, down);
 			publish("interest", VariableType.DECIMAL, interest);
-			publish("payments", VariableType.DECIMAL, Double.valueOf(String.valueOf(payments)));
+			publish("payments", VariableType.NUMBER, payments);
 			loadRule("calculators/calcpayment.trans");
 			result = (Double) getValue("eachPayment");
 		}
@@ -273,12 +271,13 @@ public class FetalTransactionService extends FetalTransaction {
 		}
 	}
 	
-	public void orderDelivered(OrderItems order, Product product ) throws RecognitionException, IOException, RuntimeException {
-		
+	public void orderDelivered(ProductOrders productOrder, OrderItems order, Product product, double qty ) throws RecognitionException, IOException, RuntimeException {
+			String description = String.format("Order Received: (Invoice - %s, SKU - %s)", productOrder.getInvoice_num(), product.getSku());
 		try {
 			initTransaction(filePath);
+			setDescription(description);
 			publish("order", VariableType.DAO, order);
-			publish("product", VariableType.DAO, product);
+			publish("received", VariableType.DECIMAL, qty);
 			loadRule("order_inventory/orderdelivered.trans");
 			}
 		finally {
@@ -576,6 +575,11 @@ public class FetalTransactionService extends FetalTransaction {
 	@Override
 	public void depleteStock(Set<?> items) {
 		transDao.depleteStock(items, session);
+	}
+
+	@Override
+	public void inventoryLedger(char type, Double qty, Double amount, String description) {
+		transDao.inventoryLedger(type, qty, amount, description, session);
 	}
 
 }

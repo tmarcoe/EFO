@@ -3,6 +3,7 @@ package com.efo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,7 +38,8 @@ public class PaymentsReceived implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
+	@Column(name="REFERENCE")
 	public Long getReference() {
 		return reference;
 	}

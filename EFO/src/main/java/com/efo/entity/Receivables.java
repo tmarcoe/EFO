@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -40,7 +41,8 @@ public class Receivables implements Serializable{
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="REFERENCE")
 	private RetailSales retailSales = new RetailSales();
-
+	
+	@Column(name="REFERENCE")
 	public Long getReference() {
 		return reference;
 	}

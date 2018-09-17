@@ -71,4 +71,8 @@ public class SalesItemService implements ISalesItem {
 		return salesItemDao.rowCount(reference);
 	}
 	
+	public Double totalItems(Long reference) {
+		return salesItemDao.totalItems(reference);
+	}
+	
 }

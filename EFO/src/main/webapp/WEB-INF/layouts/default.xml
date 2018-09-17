@@ -160,6 +160,15 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 	
+	<!-- Inventory Ledger Controllee -->
+	<definition name="inventoryledgerlist" extends="accounting.base">
+		<put-attribute name="title" value="Inventory Ledger"></put-attribute>
+		<put-attribute name="heading_title" value="Inventory Ledger"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/inventoryledgerlist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	
 	<!-- Customer Controller -->
 	<definition name="choosecustomer" extends="accounting.base">
 		<put-attribute name="title" value="New Customer"></put-attribute>

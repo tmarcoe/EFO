@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import com.efo.entity.ChartOfAccounts;
 import com.efo.entity.EachInventory;
 import com.efo.entity.GeneralLedger;
+import com.efo.entity.InventoryLedger;
 import com.efo.entity.Product;
 import com.efo.entity.SalesItem;
 
@@ -107,6 +108,26 @@ public class FetalTransactionDao {
 		}
 	}
 
+	public void inventoryLedger(char type, Double qty, Double amount, String description, Session session) {
+		
+		if (amount != 0 ) {
+			String hql = "SELECT balance, MAX(id) FROM InventoryLedger";
+			Object[] obj = (Object[]) session.createQuery(hql).uniqueResult();
+			double balance = 0.0;
+			if (obj[1] != null) {
+				balance = Double.valueOf(obj[0].toString());
+			}
+			InventoryLedger ledger = null;
+			if (type == 'C') {
+				ledger = new InventoryLedger(new Date(), qty, 0.0, amount, balance - amount, description);
+				session.save(ledger);
+			}else if (type == 'D') {
+				ledger = new InventoryLedger(new Date(), qty, amount, 0.0, balance + amount, description);				
+				session.save(ledger);
+			}
+		}
+	}
+	
 	public double getBalance(String account, Session session) {
 		String hql = "FROM ChartOfAccounts WHERE account_num = :account";
 		ChartOfAccounts cofa = (ChartOfAccounts) session.createQuery(hql).setString("account", account).uniqueResult();

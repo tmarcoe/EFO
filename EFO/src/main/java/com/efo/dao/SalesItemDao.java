@@ -121,5 +121,15 @@ public class SalesItemDao implements ISalesItem {
 		
 		return count;
 	}
+	
+	public Double totalItems(Long reference) {
+		Session session = session();
+		Double result = 0.0;
+		String hql = "SELECT SUM(qty) FROM SalesItem WHERE reference = :reference";
+		result = (Double) session.createQuery(hql).setLong("reference", reference).uniqueResult();
+		session.disconnect();
+		
+		return result;
+	}
 
 }
