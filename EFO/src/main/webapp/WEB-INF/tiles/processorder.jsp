@@ -99,6 +99,7 @@
 	<sf:hidden path="processed" />
 	<sf:hidden path="shipped" />
 	<sf:hidden path="changed" />
+	<sf:hidden path="total_qty" />
 	<sf:hidden id="customer_id" path="customer_id" />
 	<sf:hidden path="receivables.reference" />
 	<sf:hidden path="receivables.invoice_date" />

@@ -33,7 +33,7 @@ public class InventoryLedgerService implements IInventoryLedger{
 	}
 	
 	public PagedListHolder<InventoryLedger> retrieveList(Date begin, Date end) {
-		return new PagedListHolder<InventoryLedger>(inventoryLedgerDao.retrieveRawList(begin, begin));
+		return new PagedListHolder<InventoryLedger>(inventoryLedgerDao.retrieveRawList(begin, end));
 	}
 
 	@Override

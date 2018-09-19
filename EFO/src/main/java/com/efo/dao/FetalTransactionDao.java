@@ -111,11 +111,11 @@ public class FetalTransactionDao {
 	public void inventoryLedger(char type, Double qty, Double amount, String description, Session session) {
 		
 		if (amount != 0 ) {
-			String hql = "SELECT balance, MAX(id) FROM InventoryLedger";
-			Object[] obj = (Object[]) session.createQuery(hql).uniqueResult();
+			String hql = "FROM InventoryLedger ORDER BY id DESC";
+			InventoryLedger l = (InventoryLedger) session.createQuery(hql).setMaxResults(1).uniqueResult();
 			double balance = 0.0;
-			if (obj[1] != null) {
-				balance = Double.valueOf(obj[0].toString());
+			if (l != null) {
+				balance = l.getBalance();
 			}
 			InventoryLedger ledger = null;
 			if (type == 'C') {
