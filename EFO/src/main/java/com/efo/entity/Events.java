@@ -17,6 +17,7 @@ public class Events implements Serializable {
 	private Long id;
 	private Date date;
 	private String name;
+	private boolean completed;
 	
 	
 	public Long getId() {
@@ -37,7 +38,12 @@ public class Events implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	public boolean isCompleted() {
+		return completed;
+	}
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
 	@Override
 	public String toString() {
 		return getDate().toString();

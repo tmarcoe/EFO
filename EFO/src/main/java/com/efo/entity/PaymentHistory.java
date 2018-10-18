@@ -24,6 +24,7 @@ public class PaymentHistory implements Serializable {
 	private Date date_paid;
 	private double amount_due;
 	private double amount_paid;
+	private Long event;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="REFERENCE", nullable = false, insertable=false, updatable=false )
@@ -83,6 +84,14 @@ public class PaymentHistory implements Serializable {
 
 	public void setAmount_paid(double amount_paid) {
 		this.amount_paid = amount_paid;
+	}
+
+	public Long getEvent() {
+		return event;
+	}
+
+	public void setEvent(Long event) {
+		this.event = event;
 	}
 
 	public OverheadExpenses getOverheadExpenses() {

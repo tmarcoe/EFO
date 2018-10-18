@@ -31,6 +31,7 @@
 	<sf:hidden path="id" />
 	<sf:hidden path="date_due"/>
 	<sf:hidden path="payment_due"/>
+	<sf:hidden path="event"/>
 </sf:form>
 
 

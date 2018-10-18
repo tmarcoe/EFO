@@ -24,6 +24,7 @@ public class PaymentsBilled implements Serializable {
 	private double payment;
 	private double penalties;
 	private String comments;
+	private Long event;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="REFERENCE", nullable = false, insertable=false, updatable=false )
@@ -92,6 +93,14 @@ public class PaymentsBilled implements Serializable {
 
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+
+	public Long getEvent() {
+		return event;
+	}
+
+	public void setEvent(Long event) {
+		this.event = event;
 	}
 
 	public Payables getPayables() {

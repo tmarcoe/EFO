@@ -29,4 +29,5 @@
 	</table>
 	<sf:hidden path="id"/>
 	<sf:hidden path="reference"/>
+	<sf:hidden path="event"/>
 </sf:form>

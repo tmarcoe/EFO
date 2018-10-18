@@ -130,7 +130,9 @@
 					</tr>
 				</thead>
 				<c:forEach var="i" begin="1" end="42">
-					<td><input id="d${i}" type="hidden" /><input id="m${i}" type="hidden" /><input id="y${i}" type="hidden" />
+					<td><input id="d${i}" type="hidden" />
+						<input id="m${i}" type="hidden" />
+						<input id="y${i}" type="hidden" />
 					<div id="div${i}" class="calendarContent" onclick="getEvents('#y${i}', '#m${i}', '#d${i}')"></div></td>
 					<c:if test="${i % 7 == 0}">
 						<tr></tr>
@@ -243,7 +245,11 @@
 		var content = "<ul>";
 
 		for (i = 0; i < data.length; i++) {
-			content = content + "<li>" + data[i].name + "</li>";
+			if (data[i].completed == false) {
+				content = content + "<li>" + data[i].name + "</li>";
+			}else{
+				content = content + "<li><del>" + data[i].name + "</del></li>";
+			}
 		}
 		content = content + "<br><b>Click here to close</b></ul>";
 		$("#eventList").html(content);
