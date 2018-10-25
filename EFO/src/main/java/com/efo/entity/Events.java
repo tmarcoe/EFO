@@ -17,6 +17,7 @@ public class Events implements Serializable {
 	private Long id;
 	private Date date;
 	private String name;
+	private String link;
 	private boolean completed;
 	
 	
@@ -37,6 +38,12 @@ public class Events implements Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
 	}
 	public boolean isCompleted() {
 		return completed;

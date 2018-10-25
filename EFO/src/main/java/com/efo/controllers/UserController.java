@@ -25,7 +25,7 @@ public class UserController {
 	@Value("${spring.mail.username}")
 	private String userName;
 	
-	private final String format = "Dear %s,%n Your new, temporary password is %s.%n"
+	private final String format = "Dear %s,%n Your new, temporary password is <b>%s</b>.%n"
 			+ "Please change it as soon as possible to avoid any sercurity breaches.";
 
 	@Autowired
@@ -75,7 +75,7 @@ public class UserController {
 			name = user.getVendor().getFirstname();
 		}
 		String content = String.format(format, name, user.getPassword());
-		sendEmail.sendMail(userName, user.getUsername(), name, "Password Change", content);
+		sendEmail.sendHtmlMail(userName, user.getUsername(), name, "Password Change", content);
 		
 		user.setPassword(encoder.encode(user.getPassword()));
 		userService.updatePassword(user);

@@ -35,6 +35,5 @@
 	</table>
 	<sf:hidden path="user_id"/>
 	<sf:hidden path="username"/>
-	<sf:hidden path="password"/>
 	<sf:hidden path="temp_pw"/>
 </sf:form>
