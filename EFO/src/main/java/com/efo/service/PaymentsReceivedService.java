@@ -23,7 +23,7 @@ public class PaymentsReceivedService implements IPaymentsReceived {
 	}
 
 	@Override
-	public PaymentsReceived retreive(int id) {
+	public PaymentsReceived retreive(Long id) {
 		return receivedDao.retreive(id);
 	}
 
@@ -34,7 +34,7 @@ public class PaymentsReceivedService implements IPaymentsReceived {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Long id) {
 		receivedDao.delete(id);
 	}
 	

@@ -239,14 +239,14 @@
 									+ "incoming Text " + jqXHR.responseText);
 						});
 	}
-
 	function eventPopup(data) {
 		$("#showEvents").show()
 		var content = "<ul>";
 
 		for (i = 0; i < data.length; i++) {
 			if (data[i].completed == false) {
-				content = content + "<li>" + data[i].name + "</li>";
+				
+				content = content + "<li><a href='" + data[i].link + "'>" + data[i].name + "</a></li>";
 			}else{
 				content = content + "<li><del>" + data[i].name + "</del></li>";
 			}
@@ -254,6 +254,7 @@
 		content = content + "<br><b>Click here to close</b></ul>";
 		$("#eventList").html(content);
 	}
+
 
 	function closeShowEvents() {
 		$("#showEvents").hide();

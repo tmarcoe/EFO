@@ -95,6 +95,7 @@ public class CalendarController {
 			json.put("id", event.getId());
 			json.put("date", event.getDate());
 			json.put("name", event.getName());
+			json.put("link", event.getLink());
 			json.put("completed", event.isCompleted());
 			jArray.put(json);
 		}

@@ -37,7 +37,7 @@ public class PaymentsReceivedDao implements IPaymentsReceived {
 	}
 
 	@Override
-	public PaymentsReceived retreive(int id) {
+	public PaymentsReceived retreive(Long id) {
 		Session session = session();
 		PaymentsReceived p = (PaymentsReceived) session.createCriteria(PaymentsReceived.class).add(Restrictions.idEq(id)).uniqueResult();
 		session.disconnect();
@@ -54,7 +54,7 @@ public class PaymentsReceivedDao implements IPaymentsReceived {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Long id) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		PaymentsReceived p = retreive(id);

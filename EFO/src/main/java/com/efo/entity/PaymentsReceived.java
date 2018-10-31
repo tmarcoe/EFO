@@ -17,7 +17,7 @@ public class PaymentsReceived implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	private Long reference;
 	private String invoice_num;
 	private Date payment_date;
@@ -32,11 +32,11 @@ public class PaymentsReceived implements Serializable{
 	@JoinColumn(name="REFERENCE", referencedColumnName="REFERENCE", nullable = false, insertable=false, updatable=false )
 	private Receivables receivables;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

@@ -75,7 +75,7 @@ public class ARPaymentsController {
 	}
 	
 	@RequestMapping("editrpayment")
-	public String editPayment(@ModelAttribute("id") int id, Model model) {
+	public String editPayment(@ModelAttribute("id") Long id, Model model) {
 		
 		PaymentsReceived rec = paymentsService.retreive(id);
 		
@@ -85,7 +85,7 @@ public class ARPaymentsController {
 	}
 	
 	@RequestMapping("receivepayment")
-	public String receivePayment(@ModelAttribute("id") int id, Model model) {
+	public String receivePayment(@ModelAttribute("id") Long id, Model model) {
 		double payment = 0.0;
 		PaymentsReceived rec = paymentsService.retreive(id);
 		Receivables receivables = receivablesService.retreive(rec.getReference());

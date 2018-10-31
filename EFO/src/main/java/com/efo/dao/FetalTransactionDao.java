@@ -137,7 +137,7 @@ public class FetalTransactionDao {
 
 	public Object lookup(String sql, Session session) {
 
-		Object obj = session.createQuery(sql).uniqueResult();
+		Object obj = session.createQuery(sql).setMaxResults(1).uniqueResult();
 		
 		session.disconnect();
 		
