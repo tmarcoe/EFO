@@ -1,0 +1,7 @@
+/***********************************************
+ * For calculating loan payments
+ ***********************************************/
+ begin
+ 	decimal eachPayment = ((total - down) * ( 1.0 + (interest / 100.00))) / toDecimal(payments);
+ 	eachPayment = roundTo(eachPayment, 2);
+ end

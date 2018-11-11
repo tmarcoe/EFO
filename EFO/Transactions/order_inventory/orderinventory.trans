@@ -1,0 +1,73 @@
+/******************************************
+ * Order Inventory
+ ******************************************/
+
+ begin
+ 	 mapFile: "accounts.xml";
+
+ 	string cashAccount = "Cash";
+ 	string inventoryAccount = "Inventory Expense";
+ 	string accountsPayable = "Accounts Payable";
+
+	if (order.getPayment_type() == "Cash" )  {
+		debit(order.getTotal_price(), inventoryAccount);
+		ledger(D, order.getTotal_price(), inventoryAccount, getDescription());
+		credit(order.getTotal_price(), cashAccount);
+		ledger(C, order.getTotal_price(), cashAccount, getDescription());
+	}else{
+		debit(order.getTotal_price() - payables.getDown_payment(), inventoryAccount);
+		ledger(D, order.getTotal_price()  - payables.getDown_payment(), inventoryAccount, getDescription());
+		credit(order.getTotal_price(), accountsPayable);
+		ledger(C, order.getTotal_price(), accountsPayable, getDescription());
+		if (payables.getDown_payment() > 0.0) {
+			debit(payables.getDown_payment(), inventoryAccount);
+			ledger(D, payables.getDown_payment(), inventoryAccount, getDescription() + "(Down payment)");
+			credit(payables.getDown_payment(), cashAccount);
+			ledger(C, payables.getDown_payment(), cashAccount, getDescription() + "(Down payment)");
+		}
+		decimal total = order.getTotal_price() - payables.getDown_payment();
+		
+		payables.setTotal_due(total);
+		payables.setStatus("O");
+		payables.setTotal_balance(order.getTotal_price());
+		payables.setSupplier(order.getVendor());
+		payment.setReference(order.getReference());
+		payables.setDate_begin(today());
+		number count = lookup("SELECT COUNT(*) FROM PaymentsBilled WHERE reference = {d}", order.getReference());
+		if (count > 0 ) {
+			date due_date = lookup("SELECT MAX(date_due) FROM PaymentsBilled WHERE reference = {d}", order.getReference());
+		}else{ 
+			date due_date = today();
+		}
+		payment.setDate_due(nextDate(today(), due_date, payables.getSchedule()));
+		payment.setPayment_due(payables.getEach_payment());
+		payment.setPayables(payables);
+		
+		number id = 1;
+
+		if (lookup("SELECT COUNT(*) FROM PaymentsBilled",id) > 0) {
+			id = lookup("SELECT id FROM PaymentsBilled ORDER BY id DESC", id);
+			id = id + 1;
+		}
+
+		payment.setId(id);
+		
+		payables.addPayment(payment);
+		payables.setProductOrders(order);
+		order.setPayables(payables);
+
+ 		string eventName = "Pay " + payables.getEach_payment() + " to " + payables.getSupplier();
+		event.setDate(nextDate(today(), due_date, payables.getSchedule()));
+		event.setName(eventName);
+		event.setCompleted(false);
+
+		string link = "/accounting/payamount?id=" + payment.getId();
+		event.setLink(link);
+		
+		insert(event);
+		payment.setEvent(event.getId());
+
+	}
+	merge(order);
+
+ end

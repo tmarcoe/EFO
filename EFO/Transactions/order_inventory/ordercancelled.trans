@@ -1,0 +1,24 @@
+begin
+ 	mapFile: "accounts.xml";
+
+ 	string inventoryAccount = "Inventory Expense";
+
+ 	if ( order.getPayment_type() == "Cash" ) {
+ 		string destinationAccount = "Cash";
+ 	}else{
+ 		string destinationAccount = "Accounts Payable";
+ 	}
+
+ 	debit(order.getWholesale(), destinationAccount);
+ 	ledger(D, order.getWholesale(), destinationAccount, getDescription());
+
+ 	credit(order.getWholesale(), inventoryAccount);
+ 	ledger(C, order.getWholesale(), inventoryAccount, getDescription());
+
+ 	update("DELETE FROM EachInventory WHERE invoice_num = {s}", order.getInvoice_num());
+
+	update("UPDATE OrderItems SET status = 'C' WHERE invoice_num = {s}", order.getInvoice_num());
+
+ 	update("UPDATE FluidInventory SET amt_ordered = {f} WHERE sku = {s}", 0.00, order.getSku());
+
+end

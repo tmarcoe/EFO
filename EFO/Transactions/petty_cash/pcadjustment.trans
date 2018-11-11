@@ -1,0 +1,24 @@
+/*****************************************************
+ * Petty Cash Adjustment
+ *****************************************************/
+
+ begin
+ 	mapFile: "accounts.xml";
+ 	string pc = "Petty Cash";
+ 	string pcAdj = "Petty Cash (Short and Over)";
+
+	if (adjustAmount > 0.0) {
+ 		debit(adjustAmount, pcAdj);
+		ledger(D, adjustAmount, pcAdj, getDescription() );
+		credit(adjustAmount, pc);
+		ledger(C, adjustAmount, pc, getDescription() );
+	}else {
+		adjustAmount = absDecimal(adjustAmount);			//If it's negative, make it positive
+		
+		debit(adjustAmount, pc);
+		ledger(D, adjustAmount, pc, getDescription() );
+ 		credit(adjustAmount, pcAdj);
+		ledger(C, adjustAmount, pcAdj, getDescription() );
+	}
+
+ end

@@ -1,0 +1,15 @@
+/*****************************************************
+ * Petty Cash Disbursement
+ *****************************************************/
+
+ begin
+ 	mapFile: "accounts.xml";
+ 	string pc = "Petty Cash";
+
+	debit(pettyCashVoucher.getAmount(), pettyCashVoucher.getFromAccount());
+	ledger(D, pettyCashVoucher.getAmount(), pettyCashVoucher.getFromAccount(), getDescription() );
+ 	credit(pettyCashVoucher.getAmount(), pc);
+	ledger(C, pettyCashVoucher.getAmount(), pc, getDescription() );
+	
+	insert(pettyCashVoucher);
+ end

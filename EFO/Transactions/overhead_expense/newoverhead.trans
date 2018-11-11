@@ -1,0 +1,45 @@
+/**********************************************************
+ * Create New Overhead Expense
+ *********************************************************/
+ begin
+	string eventName = "Pay bill to " + expense.getVendor() + " (amount pending)";
+ 
+  	number count = lookup("SELECT COUNT(*) FROM PaymentHistory WHERE reference = {d}", expense.getReference());
+  	date latest = today();
+  	decimal average = 0.0;
+  	
+  	if (count > 0 ) {
+  		latest = lookup("SELECT MAX(date_due) FROM PaymentHistory WHERE reference = {d}", expense.getReference());
+  		average = lookup("SELECT AVG(amount_due) FROM PaymentHistory WHERE reference = {d}", expense.getReference());
+  	}else{
+  		latest = expense.getBegin_date();
+  	}
+  	
+	payment.setReference(expense.getReference());
+	payment.setDate_due(nextDate(expense.getBegin_date(), latest, expense.getSchedule()));
+	payment.setAmount_paid(average);
+	payment.setOverheadExpenses(expense);
+	number id = 1;
+
+	if (lookup("SELECT COUNT(*) FROM PaymentHistory",id) > 0) {
+		id = lookup("SELECT id FROM PaymentHistory ORDER BY id DESC", id);
+		id = id + 1;
+	}
+	payment.setId(id);
+
+	event.setDate(payment.getDate_due());
+	event.setName(eventName);
+	event.setCompleted(false);
+
+	string link = "/accounting/makeopayment?id=" + payment.getId();
+	
+	event.setLink(link);
+
+	insert(event);
+	payment.setEvent(event.getId());
+
+	expense.addPaymentHistory(payment);
+
+	merge(expense);
+
+ end

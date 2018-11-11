@@ -1,0 +1,12 @@
+/***********************************************************************
+ *  Transfer the petty cash from one account to another as a correction
+ ***********************************************************************/
+
+ begin
+ 	mapFile: "accounts.xml";
+ 	
+ 	debit(pettyCash.getAmount(), pettyCash.getFromAccount());					//Transfer from the old account
+ 	ledger(D, pettyCash.getAmount(), pettyCash.getFromAccount(), getDescription());
+	credit(pettyCash.getAmount(), toAccount);								//Transfer to the new account
+	ledger(C, pettyCash.getAmount(), toAccount, getDescription());
+end

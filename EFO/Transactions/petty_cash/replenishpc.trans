@@ -1,0 +1,19 @@
+/****************************************************************
+ * Replenish Petty Cash
+ ***************************************************************/
+ begin
+ 	mapFile: "accounts.xml";
+ 	
+ 	string cashAccount = "Cash";
+ 	string pettyCashAccount = "Petty Cash";
+ 	
+ 	string description = "Replensih Petty Cash";
+
+ 	decimal amount = getBalance("Petty Cash");
+ 	amount = (pettyCashCeiling - amount);
+ 	debit(amount, pettyCashAccount);
+ 	ledger(D, amount, pettyCashAccount, description);
+ 	credit(amount, cashAccount);
+ 	ledger(C, amount, cashAccount, description);
+ 	
+ end

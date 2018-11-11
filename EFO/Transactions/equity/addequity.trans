@@ -1,0 +1,17 @@
+/***********************************************
+ * Add equity to the company
+ ***********************************************/
+
+begin
+	 mapFile: "accounts.xml";
+
+	 string cashAccount = "Cash";
+	 string equityAccount = "Common Stock";
+
+	 debit(equity.getAmount(), cashAccount);
+	 ledger(D, equity.getAmount(), cashAccount, getDescription());
+	 credit(equity.getAmount(), equityAccount);
+	 ledger(C, equity.getAmount(), equityAccount, getDescription());
+
+	 insert(equity);
+end

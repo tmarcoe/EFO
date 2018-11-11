@@ -1,0 +1,10 @@
+/**********************************************
+ * Accept the delivery of an order and 
+ * change the inventory status to  'in stock'
+ **********************************************/
+
+begin
+	decimal percentReceived = received / order.getAmt_ordered();
+	decimal amt = order.getWholesale() * percentReceived;
+	inventoryLedger(C, received, amt, getDescription());
+end

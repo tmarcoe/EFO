@@ -1,0 +1,43 @@
+/*********************************************************
+ * Accounts Payable
+ *********************************************************/
+ begin
+ 	mapFile: "accounts.xml";
+ 	string apAccount = "Accounts Payable"; 
+ 	string account = "Cash";
+	string category = payables.getType();
+
+	string description = "Accounts Payable adjustment";
+	
+	
+	if (category == "R") {
+		account = "Inventory Expense";
+		description = "Adjustment for purchase inventory loan - invoice #" + payables.getInvoice_num();
+	}
+	
+	if (category == "C") {
+		account = "Owners Equity";
+		description = "Adjustment for business expansion loan - invoice #" + payables.getInvoice_num();
+	}
+
+
+	if (adjustment > 0.0) {
+ 		debit(adjustment, account);
+ 		ledger(D, adjustment, account, description);
+
+ 		credit(adjustment, apAccount);
+ 		ledger(C, adjustment, apAccount, description);
+	}
+ 	
+	if (adjustment < 0.0) {
+		
+		adjustment *= -1.0;				// Make the adjustment positive. 
+		
+ 		debit(adjustment, apAccount);
+ 		ledger(D, adjustment, apAccount, description);
+
+ 		credit(adjustment, account);
+ 		ledger(C, adjustment, account, description);
+	}
+ 	
+ end

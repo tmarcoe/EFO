@@ -1,0 +1,50 @@
+/********************************************************
+ * Receive Payment from receivables
+ ********************************************************/
+
+begin
+	mapFile: "accounts.xml";
+	string cashAccount = "Cash";
+	string accountsReceivable = "Accounts Receivable";
+	decimal pmnt = 0.0;
+
+	debit(payment.getPayment(), cashAccount);
+	ledger(D, payment.getPayment(), cashAccount, getDescription());
+	credit(payment.getPayment(), accountsReceivable);
+	ledger(C, payment.getPayment(), accountsReceivable, getDescription());
+
+	merge(payment);
+	nextPayment.setReference(receivables.getReference());
+	date dateDue = nextDate(receivables.getInvoice_date(), payment.getDate_due(), receivables.getSchedule());
+	nextPayment.setDate_due(dateDue);
+	receivables.setTotal_balance(receivables.getTotal_balance() - payment.getPayment());
+	
+	if (receivables.getEach_payment() <= receivables.getTotal_balance()) {
+		pmnt = receivables.getEach_payment();
+	}else{
+		pmnt = receivables.getTotal_balance();
+	}
+	
+	update("UPDATE Events SET completed = true WHERE id = {d}", payment.getEvent());
+
+	if (receivables.getTotal_balance() > 0.0) {
+		nextPayment.setPayment_due(pmnt);
+		nextPayment.setReceivables(receivables);
+		insert(nextPayment);
+		string eventName = "Receive " + pmnt + " from " + receivables.getCustomer();
+		event.setDate(dateDue);
+		event.setName(eventName);
+		event.setCompleted(false);
+
+		string link = "/accounting/receivepayment?id=" + nextPayment.getId();
+		event.setLink(link);
+		
+		insert(event);
+
+		nextPayment.setEvent(event.getId());
+	}else{
+		receivables.setStatus("C");
+	}
+
+	merge(receivables);
+end

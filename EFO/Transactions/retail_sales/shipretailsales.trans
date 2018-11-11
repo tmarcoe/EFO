@@ -1,0 +1,9 @@
+/********************************************************
+ * Ship Retail order
+ *******************************************************/
+begin
+	
+	update("UPDATE RetailSales SET shipped = {F} WHERE reference = {d}", today(), sales.getReference());
+	depleteStock(sales.getSalesItem());
+end
+

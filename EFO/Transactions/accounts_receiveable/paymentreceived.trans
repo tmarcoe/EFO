@@ -1,0 +1,27 @@
+/****************************************
+ * New Accounts Receivale
+ ***************************************/
+
+ begin
+ 
+ 	mapFile: "accounts.xml";
+ 
+ 	string cashAccount = "Cash";						//Cash account			
+ 	string arAccount = "Accounts Receivable";			//Accounts Receivable account
+
+ 	string description = "Payment received against invoice: " + receivable.getReference();
+ 	decimal balance = receivable.getTotal_balance() - payment.getPayment();
+
+ 	update("UPDATE Receivables set total_balance = {f} WHERE reference = {s}", balance, receivable.getReference());
+
+	insert(payment);
+	
+ 	debit(payment.getPayment(), cashAccount);
+ 	ledger(D, payment.getPayment(), cashAccount, description);
+
+ 	credit(payment.getPayment(), arAccount);
+ 	ledger(C, payment.getPayment(), arAccount, description);
+ 	
+ end
+
+ 	

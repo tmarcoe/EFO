@@ -1,0 +1,44 @@
+/*************************************************************
+ * Pay an overhead bill
+ *************************************************************/
+
+begin
+	mapFile: "accounts.xml";
+
+	string cashAccount = "Cash";
+	string apAccount = "Accounts Payable";
+	string eventName = "Overhead expense to " + expense.getVendor() + " (amount pending)";
+
+	debit(payment.getAmount_paid(), apAccount);
+	ledger(D, payment.getAmount_paid(), apAccount, getDescription());
+
+	credit(payment.getAmount_paid(), cashAccount);
+	ledger(C, payment.getAmount_paid(), cashAccount, getDescription());
+
+	payment.setReference(expense.getReference());
+	payment.setOverheadExpenses(expense);
+	expense.addPaymentHistory(payment);
+
+
+	merge(payment);
+
+	update("UPDATE Events SET completed = true WHERE id = {d}", payment.getEvent());
+
+	newPayment.setReference(expense.getReference());
+	newPayment.setDate_due(nextDate(expense.getBegin_date(), payment.getDate_due(), expense.getSchedule()));
+
+	event.setDate(newPayment.getDate_due());
+	event.setName(eventName);
+	event.setCompleted(false);
+
+	insert(event);
+
+	newPayment.setEvent(event.getId());
+
+	insert(newPayment);
+	
+	string link = "/accounting/makeopayment?id=" + newPayment.getId();
+	
+	update("UPDATE Events SET link = {s} WHERE id = {d}", link, event.getId());
+
+end

@@ -1,0 +1,32 @@
+/*****************************************************
+ * Accounts Receivable Adjustment
+ *****************************************************/
+ begin
+ 	mapFile: "accounts.xml";
+ 	
+  	string arAccount = "Accounts Receivable";			//Accounts Receivable account
+ 	string salesAccount = "Sales";					//Sales Account
+
+ 	string description = "AR adjustment ";
+
+ 	if ( adjustment > 0.0 ) {
+ 		
+  		debit(adjustment, arAccount);
+ 		ledger(D, adjustment, arAccount, description);
+
+ 		credit(adjustment, salesAccount);
+ 		ledger(C, adjustment, salesAccount, description);
+	}
+	
+	if ( adjustment < 0.0 ) {
+		
+		adjustment *= -1.0;
+		
+		debit(adjustment, salesAccount);
+		ledger(D, adjustment, salesAccount, description);
+
+		credit(adjustment, arAccount);
+		ledger(C, adjustment, arAccount, description);
+	}
+	
+end
