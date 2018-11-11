@@ -7,12 +7,14 @@
 <link type="text/css" href="/css/tables.css" rel="stylesheet" />
 <table class="tableview tableshadow tableborder spread-out">
 	<tr>
+		<th>Investor</th>
 		<th>Amount</th>
 		<th>Time Stamp</th>
 		<th>&nbsp;</th>
 	</tr>
 	<c:forEach var="item" items="${objectList.pageList}">
 		<tr>
+			<td>${item.name}</td>
 			<td><fmt:formatNumber type="currency" currencySymbol="" value="${item.amount}"/></td>
 			<td><fmt:formatDate value="${item.time_stamp}"/></td>
 			<td><button type="button" onclick="window.location.href='/accounting/editequity?id=${item.id}'" >Edit</button>
@@ -20,7 +22,7 @@
 	</c:forEach>
 	<tfoot class="tablefooter">
 		<tr>
-			<td colspan="2"><button type="button" onclick="window.location.href='/accounting/newequity'">New Equity</button></td>
+			<td colspan="3"><button type="button" onclick="window.location.href='/accounting/newequity'">New Equity</button></td>
 			<td><button type="button" onclick="window.location.href='/#tabs-4'">Back</button></td>			
 		</tr>
 	</tfoot>

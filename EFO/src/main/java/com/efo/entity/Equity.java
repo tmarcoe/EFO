@@ -16,6 +16,7 @@ public class Equity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	private String name;
 	private double amount;
 	private Date time_stamp;
 	private String comments;
@@ -28,25 +29,34 @@ public class Equity implements Serializable {
 		this.time_stamp = time_stamp;
 	}
 
-
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public double getAmount() {
 		return amount;
 	}
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+	
 	public Date getTime_stamp() {
 		return time_stamp;
 	}
 	public void setTime_stamp(Date time_stamp) {
 		this.time_stamp = time_stamp;
 	}
+	
 	public String getComments() {
 		return comments;
 	}

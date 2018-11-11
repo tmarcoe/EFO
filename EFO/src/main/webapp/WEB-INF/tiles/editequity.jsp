@@ -6,7 +6,12 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
 <sf:form method="post" action="/accounting/updateequity" modelAttribute="equity">
-	<table class="fancy-table tableshadow">
+	<table class="fancy-table tableshadow" style="padding: .5em .5em .5em .5em;">
+		<tr>
+			<td colspan="2"><b>Investor: </b><br>
+				<sf:input path="name" class="fancy" size="50"/>
+			</td>
+		</tr>
 		<tr>
 			<td><b>Amount Of Equity: </b><br>
 				<sf:input class="fancy" type="number" step=".01" path="amount" readonly="true"/>
