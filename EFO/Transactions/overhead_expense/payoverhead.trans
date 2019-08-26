@@ -1,0 +1,61 @@
+/**********************************************************
+ * Pay Overhead Expense
+ *********************************************************/
+ begin
+
+ 	mapFile: "accounts.xml";
+ 	
+	// Accounts
+	string overheadAccount = "Overhead Expense";
+	string cashAccount = "Cash";
+
+	number paymentRef = transactions.getPayment_ref();
+
+	debit(transactions.getAmount(), overheadAccount);
+	ledger(D, transactions.getAmount(), overheadAccount, transactions.getDescr());
+	credit(transactions.getAmount(), cashAccount);
+	ledger(C, transactions.getAmount(), cashAccount, transactions.getDescr());
+
+	dao oldPayments = lookup("FROM ExpensePayments WHERE id = {d}", paymentRef);
+	dao expenseTerms = lookup("FROM ExpenseTerms WHERE reference = {d}", oldPayments.getReference());
+	dao expenses = lookup("FROM Expenses WHERE reference = {d}", oldPayments.getReference());
+
+	number evnt = oldPayments.getEvent();
+
+	update("UPDATE Events SET completed = true WHERE id = {d}", evnt);
+
+	date base = transactions.getStart();
+	date last = oldPayments.getDue();
+	string sched = expenseTerms.getSchedule();
+
+	date nextPaymnt = nextDate(base, last, sched);
+
+	newPayment.setReference(oldPayments.getReference());
+	newPayment.setDue(nextPaymnt);
+	newPayment.setPayment_date(today());
+	newPayment.setAmount_due(transactions.getAmount());
+	newPayment.setPayment_made(transactions.getAmount());
+	newPayment.setPenalties(0.00);
+	expenseTerms.add(newPayment);
+	newPayment.setExpenseTerms(expenseTerms);
+
+	merge(expenses);
+
+	number paymentId = lookup("SELECT id FROM ExpensePayments ORDER BY id DESC");
+
+	string frm = transactions.getPayment_name();
+	string descr = transactions.getDescr();
+
+	
+	string name = "Remit to " + frm + " for " + descr;
+
+	newEvent.setDate(nextDate(base, nextPaymnt, sched));
+	newEvent.setLink("/basic/payment?id=" + paymentId + "&payment_name=" + frm + "&profilename=Pay Overhead&amount=" + transactions.getAmount());
+	newEvent.setName(name);
+	newEvent.setCompleted(false);
+
+	insert(newEvent);
+
+	update("UPDATE ExpensePayments SET event = {d} WHERE id = {d}", newEvent.getId(), paymentId);
+	
+ end

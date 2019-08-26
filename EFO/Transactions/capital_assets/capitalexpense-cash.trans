@@ -1,0 +1,37 @@
+/************************************
+ * Retail Sales cash
+ ***********************************/
+ begin
+
+ 	mapFile: "accounts.xml";
+ 	
+ 	// Accounts to be debited or credited
+ 	string capitalAccount = "Capital";
+	string cashAccount = "Cash";
+ 
+ 	decimal amount = transactions.getAmount(); 
+ 	
+	// Set accounting housekeeping first
+  	debit(amount , capitalAccount);
+ 	ledger(D, amount, capitalAccount, transactions.getDescr());
+	credit(amount, cashAccount);
+ 	ledger(C,amount , cashAccount, transactions.getDescr());
+ 
+
+	// Construct the expense record
+	expenses.setPaid(today());
+	expenses.setPayee(transactions.getPayment_name());
+	expenses.setAmount(amount);
+	expenses.setDescr(transactions.getDescr());
+	
+	insert(expenses);
+
+	// Event record (to put it on the calendar)
+	events.setDate(transactions.getStart());
+	events.setName("Purchased Capital Asset from " + transactions.getPayment_name() + " for the amount of " + amount);
+	events.setLink("#");
+	events.setCompleted(true);
+
+	insert(events);
+			
+ end

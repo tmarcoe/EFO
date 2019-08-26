@@ -1,0 +1,155 @@
+/***********************************************************
+ * List tables 
+ * These are the specifications for list tables
+ ***********************************************************/
+.tableview
+{
+	margin-left:auto; 
+    margin-right:auto;
+    margin-top: 2em;
+	border-collapse: collapse;
+	font-size: 12px;
+}
+table.tableview tr:nth-child(odd)
+{
+	background: var(--odd-rows);
+}
+table.tableview tr:nth-child(even)
+{
+	background: var(--even-rows);
+}
+table.tableview th
+{
+	background: var(--heading-row);
+}
+
+.fieldTable {
+	margin-left:auto; 
+    margin-right:auto;
+	border-collapse: collapse;
+	font-size: 12px;	
+}
+
+table.fieldTable tr:nth-child(odd)
+{
+	background: var(--odd-rows);
+}
+table.fieldTable tr:nth-child(even)
+{
+	background: var(--even-rows);
+}
+table.fieldTable th
+{
+	background: var(--heading-row);
+}
+
+.fieldTable td {
+	padding-right: 1em;
+	padding-left: 1em;
+}
+
+tfoot.tablefooter td 
+{
+	background: var(--footer-background);
+	color: #000000;
+	font-size: 12px;
+	font-weight: 900;
+	text-align: right;
+}
+
+.spread-out td {
+	padding-right: 1em;
+	padding-left: 1em;
+}
+
+.padding td {
+	padding-right: .25em;
+}
+
+/***************************************************** 
+ * Right justified
+ *****************************************************/
+ .rjfirst td:nth-child(1) {
+	text-align: right;		
+}
+ 
+.rjsecond td:nth-child(2) {
+	text-align: right;	
+}
+.rjthird td:nth-child(3) {
+	text-align: right;
+}
+
+.rjfourth td:nth-child(4) {
+	text-align: right;
+}
+
+.rjfifth td:nth-child(5) {
+	text-align: right;
+}
+
+.rjsixth td:nth-child(6) {
+	text-align: right;
+}
+
+.rjseventh td:nth-child(7) {
+	text-align: right;
+}
+
+.rjeighth td:nth-child(8) {
+	text-align: right;
+}
+
+.rjnineth td:nth-child(9) {
+	text-align: right;
+}
+
+.rjtenth td:nth-child(10) {
+	text-align: right;
+}
+
+/******************************************************
+ * Center justified
+ ******************************************************/
+ .cjfirst td:nth-child(1) {
+ 	text-align: center;	
+}
+ .cjsecond td:nth-child(2) {
+ 	text-align: center;
+ }
+ 
+  .cjfourth td:nth-child(4) {
+ 	text-align: center;
+ }
+ 
+ .cjseventh td:nth-child(7) {
+ 	text-align: center;
+ }
+ 
+ .cjeighth td:nth-child(8) {
+ 	text-align: center;
+	
+}
+ 
+ .cjnineth td:nth-child(9) {
+ 	text-align: center;
+ }
+ .cjeleventh td:nth-child(11) {
+ 	text-align: center;
+ }
+ /*********************************************************
+  * Table options
+  *********************************************************/
+.tableborder td {
+	border: 1px solid black;
+}
+
+.tableshadow {
+	box-shadow: 0px 8px 16px 0px var(--light-shadow);
+	height: 5px;
+}
+
+.tableSpacing th {
+	padding-right: 1em;
+	padding-left: 1em;
+}

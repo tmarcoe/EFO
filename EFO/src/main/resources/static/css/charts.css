@@ -1,0 +1,27 @@
+@CHARSET "ISO-8859-1";
+
+.pieChart {
+	margin: auto;
+	height: 600px;
+	width: 1200px;	
+}
+.lineChart {
+	margin: auto;
+	height: 720px;
+	width: 1260px;	
+	background-color: none;
+}
+.barChart {
+	height: 500px;
+	width: 1000px		
+}
+.reportCharts {
+	margin: auto;
+	width: 90%;
+	background-color: white;
+	border: 1px solid black;
+}
+
+.divshadow {
+	box-shadow: 0px 8px 16px 0px var(--light-shadow);
+}

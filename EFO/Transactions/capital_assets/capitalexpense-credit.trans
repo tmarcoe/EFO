@@ -1,0 +1,59 @@
+/************************************
+ * Retail Sales Credit
+ ***********************************/
+ begin
+
+ 	mapFile: "accounts.xml";
+ 	
+ 	// Accounts to be debited or credited
+ 	string accountsPayable = "Accounts Payable";
+ 	string capitalAccount = "Capital";
+
+ 	decimal amount = transactions.getAmount();
+
+	// Set accounting housekeeping first
+  	debit(amount , capitalAccount);
+ 	ledger(D, amount, capitalAccount, transactions.getDescr());
+	credit(amount, accountsPayable);
+ 	ledger(C,amount , accountsPayable, transactions.getDescr());
+
+	// Construct the revenue record
+	expenses.setPayee(transactions.getPayment_name());
+	expenses.setAmount(amount);
+	expenses.setDescr(transactions.getDescr());
+	expenses.setExpenseTerms(expenseTerms);
+
+	// Construct the RevenueTerms record
+	expenseTerms.setDown(transactions.getDown());
+	expenseTerms.setInterest(transactions.getInterest());
+	expenseTerms.setNum_payments(transactions.getNum_payments());
+	expenseTerms.setRemaining(transactions.getNum_payments());
+	expenseTerms.setEach_payment(transactions.getEach_payment());
+	expenseTerms.setLoan_balance(amount);
+	expenseTerms.setStart(transactions.getStart());
+	expenseTerms.setSchedule(transactions.getSchedule());
+	expenseTerms.setExpenses(expenses);
+	expenseTerms.add(expensePayments);
+
+	// Construct the RevenuePayments record
+	expensePayments.setDue(transactions.getStart());
+	expensePayments.setAmount_due(transactions.getEach_payment());
+	expensePayments.setPayment_made(0.00);
+	expensePayments.setPenalties(0.00);
+	expensePayments.setExpenseTerms(expenseTerms);
+	
+	insert(expenses);
+	
+	number nextId = lookup("SELECT id FROM ExpensePayments ORDER BY id DESC");
+	
+	events.setDate(transactions.getStart());
+	events.setName("Pay credit note to " + transactions.getPayment_name() + " for " + transactions.getDescr());
+	events.setLink("/basic/payment?id=" + nextId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Pay Credit Note&amount=" + transactions.getEach_payment());
+	events.setCompleted(false);
+
+	insert(events);
+
+	update("UPDATE ExpensePayments SET reference = {d}, event = {d} WHERE id = {d}", expenseTerms.getReference(), events.getId(), expensePayments.getId());
+
+			
+ end

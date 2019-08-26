@@ -1,0 +1,343 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="accounting.base" template="/WEB-INF/templates/default.jsp">
+		<put-attribute name="includes" value=""></put-attribute>
+		<put-attribute name="heading_title" value=""></put-attribute>
+		<put-attribute name="toolbar" value="/WEB-INF/tiles/static/toolbar.jsp"></put-attribute>
+		<put-attribute name="title" value="Coffee - Peachy's Coffee"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/tiles/static/header.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/content.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/footer.jsp"></put-attribute>
+	</definition>
+	
+	<!-- House Keeping pages (ie login, error etc) -->
+
+	<definition name="login" extends="accounting.base">
+		<put-attribute name="title" value="Login"></put-attribute>
+		<put-attribute name="heading_title" value="Please Log in"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/login.jsp"></put-attribute>
+	</definition>
+
+	<definition name="access-denied" extends="accounting.base">
+		<put-attribute name="title" value="Access Denied"></put-attribute>
+		<put-attribute name="heading_title" value="Access Denied"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/static/access-denied.jsp"></put-attribute>
+	</definition>
+
+	<definition name="error" extends="accounting.base">
+		<put-attribute name="title" value="Error"></put-attribute>
+		<put-attribute name="heading_title" value="Error"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/static/error.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Home controller -->
+	
+	<definition name="home" extends="accounting.base">
+		<put-attribute name="title" value="EFO"></put-attribute>
+		<put-attribute name="heading_title" value="EFO"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/home.jsp"></put-attribute>
+		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
+	</definition>
+	
+    <!-- User Controller -->
+    
+	<definition name="assignpassword" extends="accounting.base">
+		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
+		<put-attribute name="title" value="Assign Temporary Password"></put-attribute>
+		<put-attribute name="heading_title" value="Assign Temporary Password"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/assignpassword.jsp"></put-attribute>
+	</definition>
+
+		
+	<!-- Chart Of Accounts Controller -->
+	<definition name="accountslist" extends="accounting.base">
+		<put-attribute name="title" value="Chart Of Accounts"></put-attribute>
+		<put-attribute name="heading_title" value="Chart Of Accounts"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/accountslist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newaccount" extends="accounting.base">
+		<put-attribute name="title" value="New Account"></put-attribute>
+		<put-attribute name="heading_title" value="New Account"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newaccount.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editaccount" extends="accounting.base">
+		<put-attribute name="title" value="Edit Account"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Account"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editaccount.jsp"></put-attribute>
+	</definition>
+		
+	<!-- General Ledger Controller -->
+	<definition name="ledgerlist" extends="accounting.base">
+		<put-attribute name="title" value="General Ledger"></put-attribute>
+		<put-attribute name="heading_title" value="General Ledger"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/ledgerlist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Customer Controller -->
+	<definition name="choosecustomer" extends="accounting.base">
+		<put-attribute name="title" value="New Customer"></put-attribute>
+		<put-attribute name="heading_title" value="New Customer"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/choosecustomer.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newcustomer" extends="accounting.base">
+		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
+		<put-attribute name="title" value="New Customer"></put-attribute>
+		<put-attribute name="heading_title" value="New Customer"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newcustomer.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="customerlist" extends="accounting.base">
+		<put-attribute name="title" value="Customers"></put-attribute>
+		<put-attribute name="heading_title" value="Customers"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/customerlist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+
+	<definition name="editcustomer" extends="accounting.base">
+		<put-attribute name="title" value="Edit Customer"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Customer"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editcustomer.jsp"></put-attribute>
+	</definition>
+		
+	<!-- Employee Controller -->		
+	<definition name="chooseemployee" extends="accounting.base">
+		<put-attribute name="title" value="New Employee"></put-attribute>
+		<put-attribute name="heading_title" value="New Employee"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/chooseemployee.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newemployee" extends="accounting.base">
+		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
+		<put-attribute name="title" value="New Employee"></put-attribute>
+		<put-attribute name="heading_title" value="New Employee"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newemployee.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editemployee" extends="accounting.base">
+		<put-attribute name="title" value="Edit Employee"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Employee"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editemployee.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="employeelist" extends="accounting.base">
+		<put-attribute name="title" value="Employees"></put-attribute>
+		<put-attribute name="heading_title" value="Employees"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/employeelist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+
+	<!-- Vendor Controller -->
+	<definition name="choosevendor" extends="accounting.base">
+		<put-attribute name="title" value="Choose Vendor"></put-attribute>
+		<put-attribute name="heading_title" value="Choose Vendor"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/choosevendor.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newvendor" extends="accounting.base">
+		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
+		<put-attribute name="title" value="New Vendor"></put-attribute>
+		<put-attribute name="heading_title" value="New Vendor"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newvendor.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editvendor" extends="accounting.base">
+		<put-attribute name="title" value="Edit Vendor"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Vendor"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editvendor.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="vendorlist" extends="accounting.base">
+		<put-attribute name="title" value="Vendors"></put-attribute>
+		<put-attribute name="heading_title" value="Vendors"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/vendorlist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Investor Controller -->
+	<definition name="investorlist" extends="accounting.base">
+		<put-attribute name="title" value="Investors"></put-attribute>
+		<put-attribute name="heading_title" value="Investors"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/investorlist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newinvestor" extends="accounting.base">
+		<put-attribute name="includes" value="/WEB-INF/tiles/static/signupscript.jsp"></put-attribute>
+		<put-attribute name="title" value="New Investor"></put-attribute>
+		<put-attribute name="heading_title" value="New Investor"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newinvestor.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editinvestor" extends="accounting.base">
+		<put-attribute name="title" value="Edit Investor"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Investor"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editinvestor.jsp"></put-attribute>
+	</definition>
+		
+	<!-- Role Controller -->	
+	<definition name="listroles" extends="accounting.base">
+		<put-attribute name="title" value="Roles"></put-attribute>
+		<put-attribute name="heading_title" value="Roles"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listroles.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+
+	<!-- Transactions Controller -->
+	<definition name="transactionslist" extends="accounting.base">
+		<put-attribute name="title" value="Transactions"></put-attribute>
+		<put-attribute name="heading_title" value="Transactions"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/transactionslist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newreceiveretailtransaction" extends="accounting.base">
+		<put-attribute name="title" value="Receive Retail Revenue"></put-attribute>
+		<put-attribute name="heading_title" value="Receive Retail Revenue"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newreceiveretailtransaction.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newoverheadtransaction" extends="accounting.base">
+		<put-attribute name="title" value="Overhead Expense"></put-attribute>
+		<put-attribute name="heading_title" value="Overhead Expense"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newoverheadtransaction.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newretailexpensetransaction" extends="accounting.base">
+		<put-attribute name="title" value="Retail Expense"></put-attribute>
+		<put-attribute name="heading_title" value="Retail Expense"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newretailexpensetransaction.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newcapitalexpensetransaction" extends="accounting.base">
+		<put-attribute name="title" value="Capital Expense"></put-attribute>
+		<put-attribute name="heading_title" value="Capital Expense"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newcapitalexpensetransaction.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newloantransaction" extends="accounting.base">
+		<put-attribute name="title" value="Loan"></put-attribute>
+		<put-attribute name="heading_title" value="Loan"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newloantransaction.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newinvestortransaction" extends="accounting.base">
+		<put-attribute name="title" value="Investor"></put-attribute>
+		<put-attribute name="heading_title" value="Investor"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newinvestortransaction.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="viewtransaction" extends="accounting.base">
+		<put-attribute name="title" value="View Transaction"></put-attribute>
+		<put-attribute name="heading_title" value="View Transaction"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/viewtransaction.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="payment" extends="accounting.base">
+		<put-attribute name="title" value="Payment"></put-attribute>
+		<put-attribute name="heading_title" value="Payment"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/payment.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Profiles Controller -->
+	<definition name="profileslist" extends="accounting.base">
+		<put-attribute name="title" value="Profiles"></put-attribute>
+		<put-attribute name="heading_title" value="Profiles"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/profileslist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newprofile" extends="accounting.base">
+		<put-attribute name="title" value="New Profile"></put-attribute>
+		<put-attribute name="heading_title" value="New Profile"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newprofile.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editprofile" extends="accounting.base">
+		<put-attribute name="title" value="Edit Profile"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Profile"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editprofile.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Reports Controller -->
+	<definition name="revenuereport" extends="accounting.base">
+		<put-attribute name="title" value="Report"></put-attribute>
+		<put-attribute name="heading_title" value="Report"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/linechart.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="malefemale" extends="accounting.base">
+		<put-attribute name="title" value="Demographics"></put-attribute>
+		<put-attribute name="heading_title" value="Demographics"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/piechart.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Budget Controller -->
+	<definition name="listbudget" extends="accounting.base">
+		<put-attribute name="title" value="Budget List"></put-attribute>
+		<put-attribute name="heading_title" value="Budget List"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listbudget.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="newbudget" extends="accounting.base">
+		<put-attribute name="title" value="New Budget"></put-attribute>
+		<put-attribute name="heading_title" value="New Budget"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newbudget.jsp"></put-attribute>
+	</definition>
+		
+	<definition name="editbudget" extends="accounting.base">
+		<put-attribute name="title" value="Edit Budget"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Budget"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editbudget.jsp"></put-attribute>
+	</definition>
+		
+	<!-- Budget Item Controller -->
+	<definition name="listbudgetitems" extends="accounting.base">
+		<put-attribute name="title" value="Budget Categories"></put-attribute>
+		<put-attribute name="heading_title" value="Budget Categories"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listbudgetitems.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="editbudgetitem" extends="accounting.base">
+		<put-attribute name="title" value="Edit Budget Item"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Budget Item"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editbudgetitem.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newbudgetitem" extends="accounting.base">
+		<put-attribute name="title" value="New Budget Item"></put-attribute>
+		<put-attribute name="heading_title" value="New Budget Item"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newbudgetitem.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Budget Approval Controller -->
+	<definition name="listapprove" extends="accounting.base">
+		<put-attribute name="title" value="Budgets Ready For Approval"></put-attribute>
+		<put-attribute name="heading_title" value="Budgets Ready For Approval"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listapprove.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="viewbudget" extends="accounting.base">
+		<put-attribute name="title" value="View Approval Candidate"></put-attribute>
+		<put-attribute name="heading_title" value="View Approval Candidate"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/viewbudget.jsp"></put-attribute>
+	</definition>
+
+	<!-- Time Sheet Controller -->
+	<definition name="timesheet" extends="accounting.base">
+		<put-attribute name="title" value="Time Sheet"></put-attribute>
+		<put-attribute name="heading_title" value="Time Sheet"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/timesheet.jsp"></put-attribute>
+	</definition>
+	
+</tiles-definitions>

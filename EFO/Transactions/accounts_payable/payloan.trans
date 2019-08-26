@@ -1,0 +1,76 @@
+/********************************************
+ * Payment Paid
+ ********************************************/
+begin
+	mapFile: "accounts.xml";
+
+ 	string loanAccount = "Loan Liability";
+ 	string cashAccount = "Cash";
+ 	string interestAccount = "Interest Expense";
+
+ 	decimal payAmount = 0.00;
+
+ 	string descr = transactions.getDescr();
+
+ 	dao oldPayment = lookup("FROM LoanPayments WHERE id = {d}", transactions.getPayment_ref());
+	dao loanTerms = lookup("FROM LoanTerms WHERE reference = {d}", oldPayment.getReference());
+	dao loans = lookup("FROM Loans  WHERE reference = {d}", oldPayment.getReference());
+
+
+	if (loanTerms.getLoan_balance() <= transactions.getAmount()) {
+		payAmount = loanTerms.getLoan_balance();
+	}else{
+		payAmount = transactions.getAmount();
+	}
+	
+	oldPayment.setPayment_date(today());
+	oldPayment.setPayment_made(payAmount);
+
+ 	debit(payAmount, loanAccount);
+	ledger(D, payAmount, loanAccount, descr);
+	credit(payAmount, cashAccount);
+	ledger(C, payAmount, cashAccount, descr);
+
+	loanTerms.setLoan_balance(loanTerms.getLoan_balance() - payAmount);
+
+	date base = transactions.getStart();
+	date last = oldPayment.getDue();
+	string sched = loanTerms.getSchedule();
+	
+	if ( loanTerms.getLoan_balance() > 0.00 ) {
+		
+		if (loanTerms.getLoan_balance() <= loanTerms.getEach_payment()) {
+			payAmount = loanTerms.getLoan_balance();
+		}else{
+			payAmount = loanTerms.getEach_payment();
+		}
+
+		newPayment.setReference(loanTerms.getReference());
+		newPayment.setDue(nextDate(base, last, sched));
+		newPayment.setAmount_due(payAmount);
+		newPayment.setPayment_made(0.00);
+		newPayment.setPenalties(0.00);
+		newPayment.setLoanTerms(loanTerms);
+		loanTerms.add(newPayment);
+	}
+
+
+	merge(loans);
+
+	if ( loanTerms.getLoan_balance() > 0.00 ) {
+		
+		number newId = lookup("SELECT id FROM LoanPayments ORDER BY id DESC");
+
+		newEvent.setDate(nextDate(base, last, sched));
+		newEvent.setName("Pay " + payAmount + " to " + transactions.getPayment_name() + " for " + transactions.getDescr());
+		newEvent.setLink("/basic/payment?id=" + newId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Loan Payment&amount=" + payAmount);
+		newEvent.setCompleted(false);
+
+		insert(newEvent);
+
+		update("UPDATE LoanPayments SET event = {d} WHERE id = {d}", newEvent.getId(), newId);
+	}
+	
+	update("UPDATE Events SET completed = true WHERE id = {d}", oldPayment.getEvent());
+
+end

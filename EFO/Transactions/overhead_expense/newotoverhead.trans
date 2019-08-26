@@ -1,0 +1,34 @@
+/**********************************************************
+ * Create New Overhead Expense
+ *********************************************************/
+ begin
+
+ 	mapFile: "accounts.xml";
+ 	
+	// Accounts
+	string overheadAccount = "Overhead Expense";
+	string cashAccount = "Cash";
+
+	debit(transactions.getAmount(), overheadAccount);
+	ledger(D, transactions.getAmount(), overheadAccount, transactions.getDescr());
+	credit(transactions.getAmount(), cashAccount);
+	ledger(C, transactions.getAmount(), cashAccount, transactions.getDescr());
+
+	expenses.setPaid(transactions.getStart());
+	expenses.setPayee(transactions.getPayment_name());
+	expenses.setAmount(transactions.getAmount());
+	expenses.setDescr(transactions.getDescr());
+		
+	insert(expenses);	
+
+	string name = "Remited " + transactions.getAmount() + " to " + transactions.getPayment_name();
+	
+
+	events.setDate(transactions.getStart());
+	events.setName(name);
+	events.setLink("#");
+	events.setCompleted(true);
+
+	insert(events);
+	
+ end

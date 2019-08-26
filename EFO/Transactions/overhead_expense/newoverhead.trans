@@ -1,0 +1,64 @@
+/**********************************************************
+ * Create New Overhead Expense
+ *********************************************************/
+ begin
+
+ 	mapFile: "accounts.xml";
+ 	
+	// Accounts
+	string overheadAccount = "Overhead Expense";
+	string cashAccount = "Cash";
+
+	debit(transactions.getAmount(), overheadAccount);
+	ledger(D, transactions.getAmount(), overheadAccount, transactions.getDescr());
+	credit(transactions.getAmount(), cashAccount);
+	ledger(C, transactions.getAmount(), cashAccount, transactions.getDescr());
+
+	expenses.setPaid(transactions.getStart());
+	expenses.setPayee(transactions.getPayment_name());
+	expenses.setAmount(transactions.getAmount());
+	expenses.setDescr(transactions.getDescr());
+	expenses.setExpenseTerms(expenseTerms);
+	
+	expenseTerms.setDown(0.00);
+	expenseTerms.setInterest(0.00);
+	expenseTerms.setNum_payments(0);
+	expenseTerms.setRemaining(0);
+	expenseTerms.setEach_payment(0.00);
+	expenseTerms.setLoan_balance(0.00);
+	expenseTerms.setStart(transactions.getStart());
+	expenseTerms.setSchedule(transactions.getSchedule());
+	expenseTerms.setExpenses(expenses);
+	expenseTerms.add(expensePayments);
+	
+	expensePayments.setDue(transactions.getStart());
+	expensePayments.setAmount_due(transactions.getAmount());
+	expensePayments.setPayment_date(transactions.getStart());
+	expensePayments.setPayment_made(transactions.getAmount());
+	expensePayments.setPenalties(0.00);
+	expensePayments.setExpenseTerms(expenseTerms);
+	
+	insert(expenses);	
+
+	string name = "Remited " + transactions.getAmount() + " to " + transactions.getPayment_name();
+	
+
+	events.setDate(transactions.getStart());
+	events.setName(name);
+	events.setLink("#");
+	events.setCompleted(true);
+
+	insert(events);
+
+	name = "Remit to " + transactions.getPayment_name() + " for " + transactions.getDescr();
+
+	newEvent.setDate(nextDate(transactions.getStart(), expensePayments.getDue(), transactions.getSchedule()));
+	newEvent.setLink("/basic/payment?id=" + expensePayments.getId() + "&payment_name=" + transactions.getPayment_name() + "&profilename=Pay Overhead&amount=" + transactions.getAmount());
+	newEvent.setName(name);
+	newEvent.setCompleted(false);
+
+	insert(newEvent);
+
+	update("UPDATE ExpensePayments SET reference = {d}, event = {d} WHERE id = {d}", expenseTerms.getReference(), newEvent.getId(), expensePayments.getId());
+	
+ end

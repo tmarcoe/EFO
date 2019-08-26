@@ -1,0 +1,25 @@
+/*******************************************************
+ * New Budget Appropriation 
+ *******************************************************/
+begin
+	mapFile: "accounts.xml";
+
+	string cashAccount = "Cash";
+	string budgetAccount = "Budget Appropriations";
+
+	debit(transactions.getAmount(), budgetAccount);
+	ledger(D, transactions.getAmount(), budgetAccount, transactions.getDescr());
+
+	credit(transactions.getAmount(), cashAccount);
+	ledger(C, transactions.getAmount(), cashAccount, transactions.getDescr());
+
+	events.setDate(transactions.getStart());
+	events.setName(transactions.getDescr());
+	events.setLink("#");
+	events.setCompleted(true);
+
+	insert(events);
+
+
+	
+end

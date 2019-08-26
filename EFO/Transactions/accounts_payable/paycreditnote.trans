@@ -1,0 +1,74 @@
+/********************************************
+ * Payment on credit note
+ ********************************************/
+begin
+	mapFile: "accounts.xml";
+
+ 	string accountsPayable = "Accounts Payable";
+ 	string cashAccount = "Cash";
+ 	string interestAccount = "Interest Expense";
+
+ 	decimal payAmount = 0.00;
+
+ 	string descr = transactions.getDescr();
+
+ 	dao oldPayment = lookup("FROM ExpensePayments WHERE id = {d}", transactions.getPayment_ref());
+	dao expenseTerms = lookup("FROM ExpenseTerms WHERE reference = {d}", oldPayment.getReference());
+	dao expenses = lookup("FROM Expenses  WHERE reference = {d}", oldPayment.getReference());
+
+
+	if (expenseTerms.getLoan_balance() <= transactions.getAmount()) {
+		payAmount = expenseTerms.getLoan_balance();
+	}else{
+		payAmount = transactions.getAmount();
+	}
+	oldPayment.setPayment_date(today());
+	oldPayment.setPayment_made(transactions.getAmount());
+
+ 	debit(payAmount, accountsPayable);
+	ledger(D, payAmount, accountsPayable, descr);
+	credit(payAmount, cashAccount);
+	ledger(C, payAmount, cashAccount, descr);
+
+	expenseTerms.setLoan_balance(expenseTerms.getLoan_balance() - payAmount);
+
+	date base = transactions.getStart();
+	date last = oldPayment.getDue();
+	string sched = expenseTerms.getSchedule();
+	
+	if ( expenseTerms.getLoan_balance() > 0.00 ) {
+		
+		if (expenseTerms.getLoan_balance() <= expenseTerms.getEach_payment()) {
+			payAmount = expenseTerms.getLoan_balance();
+		}else{
+			payAmount = expenseTerms.getEach_payment();
+		}
+
+		newPayment.setReference(expenseTerms.getReference());
+		newPayment.setDue(nextDate(base, last, sched));
+		newPayment.setAmount_due(payAmount);
+		newPayment.setPayment_made(0.00);
+		newPayment.setPenalties(0.00);
+		newPayment.setExpenseTerms(expenseTerms);
+		expenseTerms.add(newPayment);
+	}
+
+
+	merge(expenses);
+
+	if ( expenseTerms.getLoan_balance() > 0.00 ) {	
+		number newId = lookup("SELECT id FROM ExpensePayments ORDER BY id DESC");
+
+		newEvent.setDate(nextDate(base, last, sched));
+		newEvent.setName("Pay " + payAmount + " to " + transactions.getPayment_name() + " for " + transactions.getDescr());
+		newEvent.setLink("/basic/payment?id=" + newId + "&payment_name=" + transactions.getPayment_name() + "&profilename=Pay Credit Note&amount=" + payAmount);
+		newEvent.setCompleted(false);
+
+		insert(newEvent);
+
+		update("UPDATE ExpensePayments SET event = {d} WHERE id = {d}", newEvent.getId(), newId);	
+	}
+	
+	update("UPDATE Events SET completed = true WHERE id = {d}", oldPayment.getEvent());
+
+end
