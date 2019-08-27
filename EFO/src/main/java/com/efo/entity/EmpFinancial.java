@@ -19,180 +19,231 @@ public class EmpFinancial implements Serializable {
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "employee"))
 	@Id
 	@GeneratedValue(generator = "generator")
-	private Integer user_id;
-	private String tax_id;
-	private int	st_exempt;
-	private int fd_exempt;
-	private double hourlyRate;
-	private double fTaxPrcnt;
-	private double sTaxPrcnt;
-	private double fUnPrcnt;
-	private double sUnPrcnt;
-	private double medPrcnt;
-	private double ssiPrcnt;
-	private double retirePrcnt;
-	private double garnishment;
-	private double other;
-	private String otherExpl;
-	private String payMethod;
-	private String accountNum;
-	private String routingNum;
+	private Long user_id;
+	@Column(length = 20)
+	private String ein;
+	@Column(length = 20)
+	private String ssn;
+	private Long exemptions;
+	@Column(length = 2)
+	private String status;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	private Double pay_rate;			// Salary - pay rate per year ; Hourly - pay rate per hour
+	private Double fed;					// Federal tax
+	private Double state;				// State tax
+	private Double city;				// City tax
+	private Double fed_unemployment;	// Federal unemployement
+	private Double st_unemployment;	// State unemployement
+	private Double ss_tax;
+	private Double fica;
+	private Double medical;				// Company medical plan
+	private Double retirement;			// Company retirement plan
+	private Double union_dues;
+	private Double garnishment;
+	@Column(length = 1)
+	private String pay_method;
+	@Column(length = 24)
+	private String account_num; // Direct deposit account
+	@Column(length = 24)
+	private String routing_num;
+	private String fed_trans;	// Federal transaction file for adding employee;
+	private String st_trans;	// State transaction file for adding employee;
+	private String city_trans;	// City transaction file for adding employee;
+
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private Employee employee;
-	
-	@Column(name="USER_ID")
-	public Integer getUser_id() {
+
+	public Long getUser_id() {
 		return user_id;
 	}
-	public void setUser_id(Integer user_id) {
+
+	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
-	
-	@Column(name="TAX_ID")
-	public String getTax_id() {
-		return tax_id;
+
+	public String getEin() {
+		return ein;
 	}
-	public void setTax_id(String taxId) {
-		this.tax_id = taxId;
+
+	public void setEin(String ein) {
+		this.ein = ein;
 	}
-	
-	@Column(name="ST_EXEMPT")
-	public int getSt_exempt() {
-		return st_exempt;
+
+	public String getSsn() {
+		return ssn;
 	}
-	public void setSt_exempt(int st_exempt) {
-		this.st_exempt = st_exempt;
+
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
 	}
-	
-	@Column(name="FD_EXEMPT")
-	public int getFd_exempt() {
-		return fd_exempt;
+
+	public Long getExemptions() {
+		return exemptions;
 	}
-	public void setFd_exempt(int fd_exempt) {
-		this.fd_exempt = fd_exempt;
+
+	public void setExemptions(Long exemptions) {
+		this.exemptions = exemptions;
 	}
-	@Column(name="HOURLY_RATE")
-	public double getHourlyRate() {
-		return hourlyRate;
+
+	public String getStatus() {
+		return status;
 	}
-	public void setHourlyRate(double hourlyRate) {
-		this.hourlyRate = hourlyRate;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	
-	@Column(name="F_TAX_PRCNT")
-	public double getfTaxPrcnt() {
-		return fTaxPrcnt;
+
+	public Double getPay_rate() {
+		return pay_rate;
 	}
-	public void setfTaxPrcnt(double fTaxPrcnt) {
-		this.fTaxPrcnt = fTaxPrcnt;
+
+	public void setPay_rate(Double pay_rate) {
+		this.pay_rate = pay_rate;
 	}
-	
-	@Column(name="S_TAX_PRCNT")
-	public double getsTaxPrcnt() {
-		return sTaxPrcnt;
+
+	public Double getFed() {
+		return fed;
 	}
-	public void setsTaxPrcnt(double sTaxPrcnt) {
-		this.sTaxPrcnt = sTaxPrcnt;
+
+	public void setFed(Double fed) {
+		this.fed = fed;
 	}
-	
-	@Column(name="F_UN_PRCNT")
-	public double getfUnPrcnt() {
-		return fUnPrcnt;
+
+	public Double getState() {
+		return state;
 	}
-	public void setfUnPrcnt(double fUnPrcnt) {
-		this.fUnPrcnt = fUnPrcnt;
+
+	public void setState(Double state) {
+		this.state = state;
 	}
-	
-	@Column(name="S_UN_PRCNT")
-	public double getsUnPrcnt() {
-		return sUnPrcnt;
+
+	public Double getCity() {
+		return city;
 	}
-	public void setsUnPrcnt(double sUnPrcnt) {
-		this.sUnPrcnt = sUnPrcnt;
+
+	public void setCity(Double city) {
+		this.city = city;
 	}
-	
-	@Column(name="MED_PRCNT")
-	public double getMedPrcnt() {
-		return medPrcnt;
+
+	public Double getFed_unemployment() {
+		return fed_unemployment;
 	}
-	public void setMedPrcnt(double medPrcnt) {
-		this.medPrcnt = medPrcnt;
+
+	public void setFed_unemployment(Double fed_unemployment) {
+		this.fed_unemployment = fed_unemployment;
 	}
-	
-	@Column(name="SSI_PRCNT")
-	public double getSsiPrcnt() {
-		return ssiPrcnt;
+
+	public Double getSt_unemployment() {
+		return st_unemployment;
 	}
-	public void setSsiPrcnt(double ssiPrcnt) {
-		this.ssiPrcnt = ssiPrcnt;
+
+	public void setSt_unemployment(Double st_unemployment) {
+		this.st_unemployment = st_unemployment;
 	}
-	
-	@Column(name="RETIRE_PRCNT")
-	public double getRetirePrcnt() {
-		return retirePrcnt;
+
+	public Double getSs_tax() {
+		return ss_tax;
 	}
-	public void setRetirePrcnt(double retirePrcnt) {
-		this.retirePrcnt = retirePrcnt;
+
+	public void setSs_tax(Double ss_tax) {
+		this.ss_tax = ss_tax;
 	}
-	
-	@Column(name="GARNISHMENT")
-	public double getGarnishment() {
+
+	public Double getFica() {
+		return fica;
+	}
+
+	public void setFica(Double fica) {
+		this.fica = fica;
+	}
+
+	public Double getMedical() {
+		return medical;
+	}
+
+	public void setMedical(Double medical) {
+		this.medical = medical;
+	}
+
+	public Double getRetirement() {
+		return retirement;
+	}
+
+	public void setRetirement(Double retirement) {
+		this.retirement = retirement;
+	}
+
+	public Double getUnion_dues() {
+		return union_dues;
+	}
+
+	public void setUnion_dues(Double union_dues) {
+		this.union_dues = union_dues;
+	}
+
+	public Double getGarnishment() {
 		return garnishment;
 	}
-	public void setGarnishment(double garnishment) {
+
+	public void setGarnishment(Double garnishment) {
 		this.garnishment = garnishment;
 	}
-	
-	@Column(name="OTHER")
-	public double getOther() {
-		return other;
+
+	public String getPay_method() {
+		return pay_method;
 	}
-	public void setOther(double other) {
-		this.other = other;
+
+	public void setPay_method(String pay_method) {
+		this.pay_method = pay_method;
 	}
-	
-	@Column(name="OTHER_EXPL")
-	public String getOtherExpl() {
-		return otherExpl;
+
+	public String getAccount_num() {
+		return account_num;
 	}
-	public void setOtherExpl(String otherExpl) {
-		this.otherExpl = otherExpl;
+
+	public void setAccount_num(String account_num) {
+		this.account_num = account_num;
 	}
-	
-	@Column(name="PAY_METHOD")
-	public String getPayMethod() {
-		return payMethod;
+
+	public String getRouting_num() {
+		return routing_num;
 	}
-	public void setPayMethod(String payMethod) {
-		this.payMethod = payMethod;
+
+	public void setRouting_num(String routing_num) {
+		this.routing_num = routing_num;
 	}
-	
-	@Column(name="ACCOUNT_NUM")
-	public String getAccountNum() {
-		return accountNum;
+
+	public String getFed_trans() {
+		return fed_trans;
 	}
-	public void setAccountNum(String accountNum) {
-		this.accountNum = accountNum;
+
+	public void setFed_trans(String fed_trans) {
+		this.fed_trans = fed_trans;
 	}
-	
-	@Column(name="ROUTING_NUM")
-	public String getRoutingNum() {
-		return routingNum;
+
+	public String getSt_trans() {
+		return st_trans;
 	}
-	public void setRoutingNum(String routingNum) {
-		this.routingNum = routingNum;
+
+	public void setSt_trans(String st_trans) {
+		this.st_trans = st_trans;
 	}
-	
+
+	public String getCity_trans() {
+		return city_trans;
+	}
+
+	public void setCity_trans(String city_trans) {
+		this.city_trans = city_trans;
+	}
+
 	public Employee getEmployee() {
 		return employee;
 	}
-	
+
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-		
-	
-		
+
 }

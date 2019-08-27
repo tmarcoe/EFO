@@ -7,44 +7,47 @@
 	string cashAccount = "Cash";
 	string loanAccount = "Loan Liability";
 
-	debit(loan.getLoan_amount(), cashAccount);
-	ledger(D, loan.getLoan_amount(), cashAccount, "For a Loan from " + loan.getInstitution_name());
-	credit(loan.getLoan_amount(), loanAccount);
-	ledger(C, loan.getLoan_amount(), loanAccount, "For a Loan from " + loan.getInstitution_name());
-	
-	payable.setReference(loan.getReference());
-	payable.setDate_begin(loan.getApproval());
-	payable.setSupplier(loan.getInstitution_name());
-	decimal total_due = (loan.getLoan_amount() - loan.getDown_payment()) * (1.0 + (loan.getInterest() / 100.00));
-	payable.setTotal_due(total_due);
-	payable.setInterest(loan.getInterest());
-	
-	payable.setDown_payment(loan.getDown_payment());
-	payable.setEach_payment(loan.getEach_payment());
-	payable.setNum_payments(loan.getNum_payments());
-	payable.setSchedule(loan.getSchedule());
-	payable.setTotal_balance(total_due);
-	payable.setStatus(loan.getStatus());
-	payable.setType("C");
-	insert(payable);
+	decimal loanAmount = transactions.getAmount();
 
-	payment.setReference(payable.getReference());
-	payment.setDate_due(nextDate(payable.getDate_begin(), payable.getDate_begin(), payable.getSchedule()));
-	payment.setPayment_due(payable.getEach_payment());
-	insert(payment);
-	
-	string eventName = "Pay " + payable.getEach_payment() + " to " + loan.getInstitution_name();
-	event.setDate(payment.getDate_due());
-	event.setName(eventName);
-	event.setCompleted(false);
-	string link = "/accounting/payamount?id=" + payment.getId();
+	string descr = transactions.getDescr() + " from " + transactions.getPayment_name();
 
-	event.setLink(link);
-	insert(event);
-	payment.setEvent(event.getId());
-	
-	payable.addPayment(payment);
-	payment.setPayables(payable);
-	merge(payable);
-	
+	debit(loanAmount, cashAccount);
+	ledger(D, loanAmount, cashAccount, descr);
+	credit(loanAmount, loanAccount);
+	ledger(C, loanAmount, loanAccount, descr);
+
+	// Build loans record
+	loans.setPayee(transactions.getPayment_name());
+	loans.setAmount(loanAmount);
+	loans.setDescr(transactions.getDescr());
+	loans.setLoanTerms(loanTerms);
+
+	loanTerms.setDown(transactions.getDown());
+	loanTerms.setInterest(transactions.getInterest());
+	loanTerms.setNum_payments(transactions.getNum_payments());
+	loanTerms.setRemaining(transactions.getNum_payments());
+	loanTerms.setEach_payment(transactions.getEach_payment());
+	loanTerms.setLoan_balance(loanAmount);
+	loanTerms.setStart(transactions.getStart());
+	loanTerms.setSchedule(transactions.getSchedule());
+	loanTerms.setLoans(loans);
+	loanTerms.add(loanPayments);
+
+	loanPayments.setDue(loanTerms.getStart());
+	loanPayments.setAmount_due(loanTerms.getEach_payment());
+	loanPayments.setPayment_made(0.00);
+	loanPayments.setPenalties(0.00);
+	loanPayments.setLoanTerms(loanTerms);
+
+	insert(loans);
+
+	events.setDate(transactions.getStart());
+	events.setName("Pay " + transactions.getEach_payment() + " to " + transactions.getPayment_name() + " for " + transactions.getDescr());
+	events.setLink("/basic/payment?id=" + loanPayments.getId() + "&payment_name=" + transactions.getPayment_name() + "&profilename=Loan Payment&amount=" + transactions.getEach_payment());
+	events.setCompleted(false);
+
+	insert(events);
+
+	update("UPDATE LoanPayments SET reference = {d}, event = {d} WHERE id = {d}", loanTerms.getReference(), events.getId(), loanPayments.getId());
+
  end

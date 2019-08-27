@@ -2,12 +2,16 @@ package com.efo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -21,7 +25,7 @@ public class Employee implements Serializable {
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
 	@Id
 	@GeneratedValue(generator = "generator")
-	private Integer user_id;
+	private Long user_id;
 	
 	private String salutation;
 	private String firstname;
@@ -53,18 +57,22 @@ public class Employee implements Serializable {
 	private Date start_date;
 	private Date end_date;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
 	private EmpFinancial emp_financial;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private User user;
 	
-	public Integer getUser_id() {
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinTable(name = "assigned_accounts", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "account_number"))
+	private Set<TimeReportingAccounts> timeReportingAccounts;
+	
+	public Long getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(Integer user_id) {
+	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
 

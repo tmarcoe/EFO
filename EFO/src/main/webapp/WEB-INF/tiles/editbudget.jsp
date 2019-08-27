@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form method="post" action="/accounting/updatebudget" modelAttribute="budget">
+<sf:form method="post" action="/budget/updatebudget" modelAttribute="budget">
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td colspan="3"><b>Budget Title:</b><br><sf:input path="title" class="fancy" size="65"/></td>
@@ -23,8 +23,8 @@
 			<td><sf:errors path="total" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Beginning Period:</b><br><sf:input path="begin" type="date" class="fancy" /></td>
-			<td><b>Ending Period:</b><br><sf:input path="end" type="date" class="fancy" /></td>
+			<td><b>Beginning Period:</b><br><sf:input id="begin" path="begin" class="fancy" /></td>
+			<td><b>Ending Period:</b><br><sf:input id="end" path="end" class="fancy" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="begin" class="error"/></td>
@@ -43,13 +43,14 @@
 	<sf:hidden path="rejected"/>
 	<sf:hidden path="reason"/>
 	<sf:hidden path="approved"/>
+	<sf:hidden path="user_id"/>
 </sf:form>
 <script type="text/javascript" >
 function sumChildren() {
 	var ref = $("#reference").val();
 	
 		$.getJSON(
-				"/rest/sumchildren?reference=" + ref + "&parent=ROOT", function(data) {
+				"/rest/sumchildren?reference=" + ref + "&parent=", function(data) {
 					if (data.sum > 0.0 ) {
 						$("#total").val(data.sum);
 					}else{
@@ -60,5 +61,19 @@ function sumChildren() {
 									   + jqXHR.responseText);
 				});
 }
+$(function() {
+	var dates = $("#begin").datepicker({
+		dateFormat : "yy-mm-dd",
+		changeMonth : true,
+		changeYear : true,
+		clickInput : true
+	});
+	$("#end").datepicker({
+		dateFormat : "yy-mm-dd",
+		changeMonth : true,
+		changeYear : true,
+		clickInput : true
+	});
+});
 
 </script>

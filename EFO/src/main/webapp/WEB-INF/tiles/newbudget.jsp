@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 <link type="text/css" rel="stylesheet" href="/css/autocomplete.css" />
 
-<sf:form method="post" action="/accounting/addbudget" modelAttribute="budget">
+<sf:form method="post" action="/budget/addbudget" modelAttribute="budget">
 	<table class="fancy-table tableshadow">
 		<tr>
 			<td colspan="3"><b>Budget Title:</b><br><sf:input path="title" class="fancy" size="65" /></td>
@@ -16,8 +16,8 @@
 		</tr>
 		<tr>
 			<td><b>Department:</b><br><sf:input path="department" class="fancy" readonly="true"/></td>
-			<td><b>Beginning Period:</b><br><sf:input path="begin" type="date" class="fancy" /></td>
-			<td><b>Ending Period:</b><br><sf:input path="end" type="date" class="fancy" /></td>
+			<td><b>Beginning Period:</b><br><sf:input id="begin" path="begin" class="fancy" /></td>
+			<td><b>Ending Period:</b><br><sf:input id="end" path="end" class="fancy" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="department" class="error"/></td>
@@ -36,4 +36,21 @@
 	<sf:hidden path="rejected"/>
 	<sf:hidden path="reason"/>
 	<sf:hidden path="approved"/>
+	<sf:hidden path="user_id"/>
 </sf:form>
+<script type="text/javascript"> 
+$(function() {
+	var dates = $("#begin").datepicker({
+		dateFormat : "yy-mm-dd",
+		changeMonth : true,
+		changeYear : true,
+		clickInput : true
+	});
+	$("#end").datepicker({
+		dateFormat : "yy-mm-dd",
+		changeMonth : true,
+		changeYear : true,
+		clickInput : true
+	});
+});
+</script>

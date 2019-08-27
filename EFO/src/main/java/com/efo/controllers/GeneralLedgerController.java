@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 
 
 import com.efo.entity.GeneralLedger;
+import com.efo.forms.PrintGeneralLedgerForm;
 import com.efo.service.GeneralLedgerService;
 
 
@@ -29,7 +30,10 @@ import com.efo.service.GeneralLedgerService;
 public class GeneralLedgerController {
 	
 	@Autowired
-	GeneralLedgerService ledgerService;
+	private GeneralLedgerService ledgerService;
+	
+	@Autowired
+	private PrintGeneralLedgerForm printGeneralLedgerForm;
 	
 	private final String pageLink = "/accounting/glpaging";
 	
@@ -48,13 +52,19 @@ public class GeneralLedgerController {
 	public String ledgerList(@PathVariable("from") Date from,@PathVariable("to") Date to, Model model) throws SAXException, IOException, ParserConfigurationException{
 		
 		glList = ledgerService.getPagedList(from, to);
-		glList.setPageSize(30);
+		glList.setPageSize(35);
 		glList.setPage(0);
 
 		model.addAttribute("objectList", glList);
 		model.addAttribute("pagelink", pageLink);
 
 		return "ledgerlist";
+	}
+	@RequestMapping("printgeneralledger/from/{from}/to/{to}")
+	public String printGeneralLedger(@PathVariable("from") Date from,@PathVariable("to") Date to) throws IOException {
+		printGeneralLedgerForm.print(from, to);
+		
+		return "redirect:/#tabs-6";
 	}
 	
 	@RequestMapping(value = "glpaging", method = RequestMethod.GET)

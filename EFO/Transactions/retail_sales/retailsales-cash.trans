@@ -1,0 +1,45 @@
+/************************************
+ * Retail Sales cash
+ ***********************************/
+ begin
+
+ 	mapFile: "accounts.xml";
+ 	
+ 	// Accounts to be debited or credited
+ 	string cashAccount = "Cash";
+ 	string salesAccount = "Sales";
+ 	string taxAccount = "Tax Account";
+ 	string source = "Direct Sales";
+
+ 	decimal amount = transactions.getAmount() / (1.0 + taxRate);
+	decimal taxAmt = transactions.getAmount() - amount;
+	decimal total = (amount + taxAmt);
+
+	// Set accounting housekeeping first
+  	debit(total , cashAccount);
+ 	ledger(D, total, cashAccount, transactions.getDescr());
+	credit(amount, salesAccount);
+ 	ledger(C,amount , salesAccount, transactions.getDescr());
+ 	credit(taxAmt, taxAccount);
+	ledger(C, taxAmt , taxAccount, transactions.getDescr());
+
+	// Construct the revenue record
+	revenues.setReceived(today());
+	revenues.setPosted(today());
+	revenues.setName(transactions.getName());
+	revenues.setSource(source);
+	revenues.setAmount(amount);
+	revenues.setTax(taxAmt);
+	revenues.setAmt_received(amount);
+	revenues.setDescr(transactions.getDescr());
+	
+	insert(revenues);
+	
+	events.setDate(transactions.getStart());
+	events.setName("Received funds from " + transactions.getPayment_name() + " for the amount of " + total);
+	events.setLink("#");
+	events.setCompleted(true);
+
+	insert(events);
+			
+ end

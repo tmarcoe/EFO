@@ -20,22 +20,22 @@ public class Customer implements Serializable{
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
 	@Id
 	@GeneratedValue(generator = "generator")
-	private Integer user_id;
+	private Long user_id;
 	private String salutation;
 	private String firstname;
 	private String lastname;
 	private String maleFemale;
 	private Date since;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private User user;
 
-	public Integer getUser_id() {
+	public Long getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(Integer user_id) {
+	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
 

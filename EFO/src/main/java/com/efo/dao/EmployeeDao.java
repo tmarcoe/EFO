@@ -23,7 +23,7 @@ public class EmployeeDao implements IEmployee {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -32,14 +32,14 @@ public class EmployeeDao implements IEmployee {
 		Transaction tx = session.beginTransaction();
 		session.save(employee);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
-	public Employee retrieve(int user_id) {
+	public Employee retrieve(Long user_id) {
 		Session session = session();
 		Employee employee = (Employee) session.createCriteria(Employee.class).add(Restrictions.idEq(user_id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		return employee;
 	}
 
@@ -49,17 +49,17 @@ public class EmployeeDao implements IEmployee {
 		Transaction tx = session.beginTransaction();
 		session.update(employee);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
-	public void delete(int user_id) {
+	public void delete(Long user_id) {
 		Employee employee = retrieve(user_id);
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.delete(employee);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -68,7 +68,7 @@ public class EmployeeDao implements IEmployee {
 	
 		Session session = session();
 		List<User> chooseList = session.createQuery(sql).list();
-		session.disconnect();
+		session.close();
 	
 	return chooseList;
 
@@ -80,7 +80,7 @@ public class EmployeeDao implements IEmployee {
 		name = "%" + name + "%";
 		Session session = session();
 		List<Employee> employee = session.createQuery(sql).setString("name", name).list();
-		session.disconnect();
+		session.close();
 		
 		return employee;
 	}

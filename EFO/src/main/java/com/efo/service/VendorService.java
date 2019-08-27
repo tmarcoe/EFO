@@ -23,7 +23,7 @@ public class VendorService implements IVendor {
 	}
 
 	@Override
-	public Vendor retrieve(int user_id) {
+	public Vendor retrieve(Long user_id) {
 		return vendorDao.retrieve(user_id);
 	}
 
@@ -33,7 +33,7 @@ public class VendorService implements IVendor {
 	}
 
 	@Override
-	public void delete(int user_id) {
+	public void delete(Long user_id) {
 		vendorDao.delete(user_id);
 	}
 	

@@ -23,7 +23,7 @@ public class EmpFinancialService implements IEmpFinancial {
 	}
 
 	@Override
-	public EmpFinancial retrieve(int user_id) {
+	public EmpFinancial retrieve(Long user_id) {
 		return employeeDao.retrieve(user_id);
 	}
 

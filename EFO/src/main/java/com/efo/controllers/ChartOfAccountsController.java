@@ -1,6 +1,8 @@
 package com.efo.controllers;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,6 +24,7 @@ import org.xml.sax.SAXException;
 
 
 import com.efo.entity.ChartOfAccounts;
+import com.efo.forms.PrintAccountsForm;
 import com.efo.service.ChartOfAccountsService;
 
 
@@ -31,9 +34,12 @@ public class ChartOfAccountsController {
 	private final String pageLink = "/accounting/cofapaging";
 	
 	@Autowired
-	ChartOfAccountsService chartOfAccountsService;
+	private ChartOfAccountsService chartOfAccountsService;
 	
-	PagedListHolder<ChartOfAccounts> cofaList;
+	@Autowired
+	private PrintAccountsForm printAccountsForm;
+	
+	private PagedListHolder<ChartOfAccounts> cofaList;
 	
 	private SimpleDateFormat dateFormat;
 
@@ -51,7 +57,7 @@ public class ChartOfAccountsController {
 		if (cofaList.getSource().size() == 0) {
 			return "redirect:/accounting/newaccount";
 		}
-		cofaList.setPageSize(20);
+		cofaList.setPageSize(30);
 		cofaList.setPage(0);
 		model.addAttribute("objectList", cofaList);
 		model.addAttribute("pagelink", pageLink);
@@ -98,6 +104,14 @@ public class ChartOfAccountsController {
 		chartOfAccountsService.delete(account);
 		
 		return "redirect:/accounting/accountslist";
+	}
+	
+	@RequestMapping("printaccounts")
+	public String printAccounts() throws FileNotFoundException, MalformedURLException {
+		
+		printAccountsForm.print();
+		
+		return "redirect:/#tabs-6";
 	}
 
 	@RequestMapping(value = "cofapaging", method = RequestMethod.GET)

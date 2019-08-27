@@ -16,7 +16,7 @@
 			<td><button type="button" onclick="enterRole()">New
 					Role</button></td>
 			<td><button type="button"
-					onclick="window.location.href='/#tabs-2'">Back</button></td>
+					onclick="window.location.href='/#tabs-7'">Back</button></td>
 		</tr>
 	</tfoot>
 </table>

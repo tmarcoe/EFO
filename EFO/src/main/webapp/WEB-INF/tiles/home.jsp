@@ -15,131 +15,190 @@
 	<div id="tabs">
 		<ul>
 			<li><a href="#tabs-1">Login and Security</a></li>
-			<li><a href="#tabs-2">Personel</a></li>
-			<li><a href="#tabs-3">Reports</a></li>
-			<li><a href="#tabs-4">Accounting</a></li>
-			<li><a href="#tabs-5">Operations</a></li>
-			<li><a href="#tabs-6">Event Calendar</a></li>
+			<sec:hasRole role="PERSONNEL">
+				<li><a href="#tabs-2">Personnel</a></li>
+			</sec:hasRole>
+			<sec:hasRole role="BASIC">
+				<li><a href="#tabs-3">Basic Application</a></li>
+			</sec:hasRole>
+			<sec:hasRole role="ACCOUNTING">
+				<li><a href="#tabs-4">Accounting</a></li>
+			</sec:hasRole>
+			<sec:hasRole role="EVENTS">
+				<li><a href="#tabs-5">Event Calendar</a></li>
+			</sec:hasRole>
+			<sec:hasRole role="REPORTS">
+				<li><a href="#tabs-6">Reports</a></li>
+			</sec:hasRole>
+			<sec:hasRole role="ADMIN">
+				<li><a href="#tabs-7">Admin</a></li>
+			</sec:hasRole>
+			<sec:hasRole role="BUDGET">
+				<li><a href="#tabs-8">Budget</a></li>
+			</sec:hasRole>
+			<sec:hasRole role="TIMESHEET">
+				<li><a href="#tabs-9">Time Sheet</a></li>
+			</sec:hasRole>
 
 		</ul>
 		<div id="tabs-1">
 			<table class="menuTable menuTableSpace">
 				<tr>
-					<td><a href="#" onclick="openPopup()"><img class="tile" alt="Change Password"
-							src="<c:url value='/images/password.png'/>"></a></td>
 					<sec:isAuthenticated>
+						<td><a href="#" onclick="openPopup()"><img class="tile" alt="Change Password"
+								src="<c:url value='/images/password.png'/>"></a></td>
 						<td><a href="/logout"><img class="tile" alt="Login" src="<c:url value='/images/logout.png'/>"></a></td>
 					</sec:isAuthenticated>
 					<sec:isNotAuthenticated>
 						<td><a href="/login"><img class="tile" alt="Login" src="<c:url value='/images/login.png'/>"></a></td>
 					</sec:isNotAuthenticated>
-					<td><a href="/admin/listroles"><img class="tile" alt="Roles"
-							src="<c:url value='/images/security-roles.png'/>"></a></td>
 				</tr>
 			</table>
 		</div>
-		<div id="tabs-2">
-			<table class="menuTable menuTableSpace">
-				<tr>
-					<td><a href="/admin/customerlist"><img class="tile" alt="Customer"
-							src="<c:url value='/images/customer.png'/>"></a></td>
-					<td><a href="/admin/vendorlist"><img class="tile" alt="Vendor" src="<c:url value='/images/vendor.png'/>"></a></td>
-					<td><a href="/admin/employeelist"><img class="tile" alt="Employees"
-							src="<c:url value='/images/employees.png'/>"></a></td>
-				</tr>
-			</table>
-		</div>
-		<div id="tabs-3">
-			<table class="menuTable menuTableSpace">
-				<tr>
-
-					<td><a href="#" onclick="inputDate('/accounting/cogsreport')"><img class="tile" alt="Cogs"
-							src="<c:url value='/images/cogs.png'/>"></a></td>
-					<td><a href="#" onclick="inputDate('/accounting/revenuereport')"><img class="tile" alt="Income Vs Expense"
-							src="<c:url value='/images/income-expense.png'/>"></a></td>
-					<td><a href="#" onclick="inputDate('/accounting/plreport')"><img class="tile" alt="Profit and Loss"
-							src="<c:url value='/images/profit-loss.png'/>"></a></td>
-					<td><a href="#" onclick="inputDate('/accounting/unitssold')"><img class="tile" alt="Profit and Loss"
-							src="<c:url value='/images/units-sold.png'/>"></a></td>
-					<td><a href="#"><img class="tile" alt="System Audit" src="<c:url value='/images/audit.png'/>"></a></td>
-				</tr>
-			</table>
-		</div>
-		<div id="tabs-4">
-			<table class="menuTable menuTableSpace">
-				<tr>
-					<td><a href="/accounting/ar"><img class="tile" alt="Accounts Receivable"
-							src="<c:url value='/images/receivable.png'/>"></a></td>
-					<td><a href="/accounting/ap"><img class="tile" alt="Accounts Payable"
-							src="<c:url value='/images/payable.png'/>"></a></td>
-					<td><a href="/accounting/listoverhead"><img class="tile" alt="Regular Expenses"
-							src="<c:url value='/images/regular-expenses.png'/>"></a></td>
-				</tr>
-				<tr>
-					<td><a href="#" onclick="inputDate('/accounting/ledgerlist')"><img class="tile" alt="General Ledger"
-							src="<c:url value='/images/general.png'/>"></a></td>
-					<td><a href="#" onclick="inputDate('/accounting/inventoryledgerlist')"><img class="tile" alt="Inventory Ledger"
-							src="<c:url value='/images/inventorygeneral.png'/>"></a></td>
-					<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts"
-							src="<c:url value='/images/accounts.png'/>"></a></td>
-				</tr>
-				<tr>
-					<td><a href="/accounting/listassets"><img class="tile" alt="Capital Assets"
-							src="<c:url value='/images/capitalassets.png'/>"></a></td>
-					<td><a href="/accounting/equitylist"><img class="tile" alt="Equity"
-							src="<c:url value='/images/stock.png'/>"></a></td>
-					<td><a href="/accounting/listloans"><img class="tile" alt="Obtain a Loan"
-							src="<c:url value='/images/loan.png'/>"></a></td>
-				</tr>
-			</table>
-		</div>
-		<div id="tabs-5">
-			<table class="menuTable menuTableSpace">
-				<tr>
-					<td><a href="/accounting/listpettycash"><img class="tile" alt="Petty Cash"
-							src="<c:url value='/images/petty-cash.png'/>"></a></td>
-					<td><a href="/accounting/listbudget"><img class="tile" alt="Budget"
-							src="<c:url value='/images/budget.png'/>"></a></td>
-					<td><a href="/accounting/listapprove"><img class="tile" alt="Budget Approval"
-							src="<c:url value='/images/approval.png'/>"></a></td>
-					<td><a href="/admin/listproduct"><img class="tile" alt="Products"
-							src="<c:url value='/images/products.png'/>"></a></td>
-					<td><a href="/admin/browseproducts"><img class="tile" alt="Sales" src="<c:url value='/images/sales.png'/>"></a></td>
-				</tr>
-				<tr>
-			</table>
-		</div>
-		<div id="tabs-6">
-			<table class="calendarTitle">
-				<tr>
-					<td><button class="fancy-button" type="button" onclick="reverse()" style="font-size: 14px;"><b>&lt;&lt;</b></button></td>
-					<td><div id="month"></div></td>
-					<td><button class="fancy-button" type="button" onclick="forward()" style="font-size: 14px;"><b>&gt;&gt;</b></button></td>
-				</tr>
-			</table>
-			<table class="calendarTable">
-				<thead>
+		<sec:hasRole role="PERSONNEL">
+			<div id="tabs-2">
+				<table class="menuTable menuTableSpace">
 					<tr>
-						<th>Sun</th>
-						<th>Mon</th>
-						<th>Tue</th>
-						<th>Wed</th>
-						<th>Thu</th>
-						<th>Fri</th>
-						<th>Sat</th>
+						<td><a href="/personnel/customerlist"><img class="tile" alt="Customer"
+								src="<c:url value='/images/customer.png'/>"></a></td>
+						<td><a href="/personnel/vendorlist"><img class="tile" alt="Vendor"
+								src="<c:url value='/images/vendor.png'/>"></a></td>
+						<td><a href="/personnel/employeelist"><img class="tile" alt="Employees"
+								src="<c:url value='/images/employees.png'/>"></a></td>
+						<td><a href="/personnel/investorlist"><img class="tile" alt="Investor"
+								src="<c:url value='/images/investor.png'/>"></a></td>
 					</tr>
-				</thead>
-				<c:forEach var="i" begin="1" end="42">
-					<td><input id="d${i}" type="hidden" />
-						<input id="m${i}" type="hidden" />
-						<input id="y${i}" type="hidden" />
-					<div id="div${i}" class="calendarContent" onclick="getEvents('#y${i}', '#m${i}', '#d${i}')"></div></td>
-					<c:if test="${i % 7 == 0}">
-						<tr></tr>
-					</c:if>
-				</c:forEach>
-			</table>
-		</div>
+				</table>
+			</div>
+		</sec:hasRole>
+		<sec:hasRole role="BASIC">
+			<div id="tabs-3">
+				<table class="menuTable menuTableSpace">
+					<tr>
+						<td><a href="/basic/profileslist"><img class="tile" alt="Profiles"
+								src="<c:url value='/images/profile.png'/>"></a></td>
+						<td><a href="/basic/newoverheadtransaction"><img class="tile" alt="New Overhead"
+								src="<c:url value='/images/overhead.png'/>"></a></td>
+						<td><a href="/basic/newretailexpensetransaction"><img class="tile" alt="New Retail Expense"
+								src="<c:url value='/images/retailexpense.png'/>"></a></td>
+						<td><a href="/basic/newcapitalexpensetransaction"><img class="tile" alt="New Capital Expense"
+								src="<c:url value='/images/capitalexpense.png'/>"></a></td>
+					</tr>
+					<tr>
+						<td><a href="#" onclick="inputDate('/basic/transactionslist')"><img class="tile" alt="Transactions"
+								src="<c:url value='/images/transactions.png'/>"></a></td>
+						<td><a href="/basic/newreceiveretailtransaction"><img class="tile" alt="New Retail"
+								src="<c:url value='/images/retail.png'/>"></a></td>
+						<td><a href="/basic/newloantransaction"><img class="tile" alt="New Loan"
+								src="<c:url value='/images/loan.png'/>"></a></td>
+						<td><a href="/basic/newinvestortransaction"><img class="tile" alt="New Investor"
+								src="<c:url value='/images/stock.png'/>"></a></td>
+					</tr>
+				</table>
+			</div>
+		</sec:hasRole>
+		<sec:hasRole role="ACCOUNTING">
+			<div id="tabs-4">
+				<table class="menuTable menuTableSpace">
+					<tr>
+						<td><a href="#" onclick="inputDate('/accounting/ledgerlist')"><img class="tile" alt="General Ledger"
+								src="<c:url value='/images/general.png'/>"></a></td>
+						<td><a href="/accounting/accountslist"><img class="tile" alt="Chart Of Accounts"
+								src="<c:url value='/images/accounts.png'/>"></a></td>
+					</tr>
+				</table>
+			</div>
+		</sec:hasRole>
+		<sec:hasRole role="EVENTS">
+			<div id="tabs-5">
+				<table class="calendarTitle">
+					<tr>
+						<td><button class="fancy-button" type="button" onclick="reverse()" style="font-size: 14px;">
+								<b>&lt;&lt;</b>
+							</button></td>
+						<td><div id="month"></div></td>
+						<td><button class="fancy-button" type="button" onclick="forward()" style="font-size: 14px;">
+								<b>&gt;&gt;</b>
+							</button></td>
+					</tr>
+				</table>
+				<table class="calendarTable">
+					<thead>
+						<tr>
+							<th>Sun</th>
+							<th>Mon</th>
+							<th>Tue</th>
+							<th>Wed</th>
+							<th>Thu</th>
+							<th>Fri</th>
+							<th>Sat</th>
+						</tr>
+					</thead>
+					<c:forEach var="i" begin="1" end="42">
+						<td><input id="d${i}" type="hidden" /> <input id="m${i}" type="hidden" /> <input id="y${i}" type="hidden" />
+							<div id="div${i}" class="calendarContent" onclick="getEvents('#y${i}', '#m${i}', '#d${i}')"></div></td>
+						<c:if test="${i % 7 == 0}">
+							<tr></tr>
+						</c:if>
+					</c:forEach>
+				</table>
+			</div>
+		</sec:hasRole>
+		<sec:hasRole role="REPORTS">
+			<div id="tabs-6">
+				<table class="menuTable menuTableSpace">
+					<tr>
+						<td><a href="/reports/malefemale"><img class="tile" alt="Demographics"
+								src="<c:url value='/images/gender.png'/>"></a></td>
+						<td><a href="#" onclick="inputDate('/accounting/printgeneralledger')"><img class="tile"
+								alt="Print General Ledger" src="<c:url value='/images/print-ledger.png'/>"></a></td>
+						<td><a href="/accounting/printaccounts"><img class="tile" alt="Print Chart Of Accounts"
+								src="<c:url value='/images/print-accounts.png'/>"></a></td>
+						<td><a href="#" onclick="inputDate('/reports/revenuereport')"><img class="tile" alt="Revenue Report"
+								src="<c:url value='/images/revenues.png'/>"></a></td>
+
+					</tr>
+				</table>
+			</div>
+		</sec:hasRole>
+		<sec:hasRole role="ADMIN">
+			<div id="tabs-7">
+				<table class="menuTable menuTableSpace">
+					<tr>
+						<td><a href="#" onclick="showWarning()"><img class="tile" alt="Print Chart Of Accounts"
+								src="<c:url value='/images/shutdown.png'/>"></a></td>
+						<td><a href="/admin/listroles"><img class="tile" alt="Roles"
+								src="<c:url value='/images/security-roles.png'/>"></a></td>
+					</tr>
+				</table>
+			</div>
+		</sec:hasRole>
+		<sec:hasRole role="BUDGET">
+			<div id="tabs-8">
+				<table class="menuTable menuTableSpace">
+					<tr>
+						<td><a href="/budget/listbudget"><img class="tile" alt="Budget List"
+								src="<c:url value='/images/budget.png'/>"></a></td>
+						<sec:hasRole role="ADMIN">
+							<td><a href="/budget/listapprove"><img class="tile" alt="Budget Approval List"
+									src="<c:url value='/images/approval.png'/>"></a></td>
+						</sec:hasRole>
+
+					</tr>
+				</table>
+			</div>
+		</sec:hasRole>
+		<sec:hasRole role="TIMESHEET">
+			<div id="tabs-9">
+				<table class="menuTable menuTableSpace">
+					<tr>
+						<td><a href="/timesheet/timesheet"><img class="tile" alt="Time Sheet"
+								src="<c:url value='/images/timesheet.png'/>"></a></td>
+
+					</tr>
+				</table>
+			</div>
+		</sec:hasRole>
 	</div>
 	<div id="sPass" class="modal">
 		<div class="modal-content small-modal fancy">
@@ -173,12 +232,8 @@
 			<h2>Enter the Period</h2>
 			<table style="margin-left: auto; margin-right: auto;">
 				<tr>
-					<th>Start Date</th>
-					<th>End Date</th>
-				</tr>
-				<tr>
-					<td><input class="fancy" id="stDate" type="date" /></td>
-					<td><input class="fancy" id="endDate" type="date" /></td>
+					<td><input class="fancy" id="stDate" type="text" placeholder="Start of Period" /></td>
+					<td><input class="fancy" id="endDate" type="text" placeholder="End of Period" /></td>
 				</tr>
 				<tr>
 					<td><button class="fancy-button" type="button" onclick="setDate()">
@@ -194,11 +249,25 @@
 	<div id="showEvents" class="modal">
 		<div id="eventList" class="modal-content small-modal fancy" onclick="closeShowEvents()" style="text-align: left;"></div>
 	</div>
+	<div id="warning" class="modal">
+		<div class="modal-content small-modal fancy">
+			<h3>This will shutdown the entire application!</h3>
+			<h3>Are you sure you wish to continue?</h3>
+			<table style="margin-left: auto; margin-right: auto;">
+				<tr>
+					<td><button class="fancy-button" type="button" onclick="window.location.href='/admin/shutdown'">
+							<b>Shutdown</b>
+						</button></td>
+					<td><button class="fancy-button" type="button" onclick="$('#warning').hide()">
+							<b>Cancel</b>
+						</button></td>
+				</tr>
+			</table>
+		</div>
+	</div>
 	<input id="destination" type="hidden" />
 	<input id="calMonth" type="hidden" value="${calMonth}" />
 	<input id="calYear" type="hidden" value="${calYear}" />
-
-
 </sf:form>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -229,8 +298,11 @@
 		var mnth = $(monthInput).val();
 		var day = $(dayInput).val();
 
-		$.getJSON( "/rest/getevents?year=" + yr + "&month=" + mnth + "&day=" + day, function(data) {
-					if (data.length > 0) {
+		$
+				.getJSON(
+						"/rest/getevents?year=" + yr + "&month=" + mnth
+								+ "&day=" + day, function(data) {
+							if (data.length > 0) {
 								eventPopup(data);
 							}
 						}).fail(
@@ -245,16 +317,16 @@
 
 		for (i = 0; i < data.length; i++) {
 			if (data[i].completed == false) {
-				
-				content = content + "<li><a href='" + data[i].link + "'>" + data[i].name + "</a></li>";
-			}else{
+
+				content = content + "<li><a href='" + data[i].link + "'>"
+						+ data[i].name + "</a></li>";
+			} else {
 				content = content + "<li><del>" + data[i].name + "</del></li>";
 			}
 		}
 		content = content + "<br><b>Click here to close</b></ul>";
 		$("#eventList").html(content);
 	}
-
 
 	function closeShowEvents() {
 		$("#showEvents").hide();
@@ -378,6 +450,23 @@
 		$("#calYear").val(y);
 		getCalendar();
 	}
+	function showWarning() {
+		$("#warning").show();
+	}
+	$(function() {
+		var dates = $("#stDate").datepicker({
+			dateFormat : "yy-mm-dd",
+			changeMonth : true,
+			changeYear : true,
+			clickInput : true
+		});
+		$("#endDate").datepicker({
+			dateFormat : "yy-mm-dd",
+			changeMonth : true,
+			changeYear : true,
+			clickInput : true
+		});
+	});
 </script>
 <c:if test="${user.isTemp_pw() == true}">
 	<script>

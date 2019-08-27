@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
 
-<sf:form id="details" method="post" action="/admin/updatecustomer" modelAttribute="user">
+<sf:form id="details" method="post" action="/personnel/updatecustomer" modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
 	<table class="fancy-table tableshadow">
 		<tr>
@@ -64,7 +64,7 @@
 			<td><sf:errors path="enabled" class="error" />
 		</tr>
 		<tr>
-			<td><b>Customer Since:<br></b><sf:input class="fancy" type="date" path="customer.since"/></td>
+			<td><b>Customer Since:<br></b><sf:input id="since" class="fancy" type="text" path="customer.since"/></td>
 			<td><b>Role(s):<br></b><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
@@ -111,4 +111,12 @@ function formSubmit() {
 	rs.value = userRoles;
 	document.getElementById("details").submit();
 }
+$(function(){
+	$("#since").datepicker({
+    	dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true,
+        clickInput: true		
+	});
+});
 </script>

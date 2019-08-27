@@ -19,7 +19,7 @@ public class Vendor implements Serializable {
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
 	@Id
 	@GeneratedValue(generator = "generator")
-	private int user_id;
+	private Long user_id;
 	private String company_name;
 	private String salutation;
 	private String firstname;
@@ -28,14 +28,14 @@ public class Vendor implements Serializable {
 	private String category;
 	private String keywords;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private User user;
 	
-	public int getUser_id() {
+	public Long getUser_id() {
 		return user_id;
 	}
-	public void setUser_id(int user_id) {
+	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
 	public String getCompany_name() {

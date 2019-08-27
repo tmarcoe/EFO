@@ -25,7 +25,7 @@ public class EmpFinancialDao implements IEmpFinancial {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -34,14 +34,14 @@ public class EmpFinancialDao implements IEmpFinancial {
 		Transaction tx = session.beginTransaction();
 		session.save(employee);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
-	public EmpFinancial retrieve(int user_id) {
+	public EmpFinancial retrieve(Long user_id) {
 		Session session = session();
 		EmpFinancial emp = (EmpFinancial) session.createCriteria(EmpFinancial.class).add(Restrictions.idEq(user_id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return emp;
 	}
@@ -52,7 +52,7 @@ public class EmpFinancialDao implements IEmpFinancial {
 		Transaction tx = session.beginTransaction();
 		session.update(employee);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -61,14 +61,14 @@ public class EmpFinancialDao implements IEmpFinancial {
 		Transaction tx = session.beginTransaction();
 		session.delete(employee);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<User> employeeList() {
 		Session session = session();
 		List<User> empList = session.createCriteria(EmpFinancial.class).add(Restrictions.isNull("endDate")).list();
-		session.disconnect();
+		session.close();
 		
 		return empList;
 	}

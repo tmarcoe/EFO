@@ -1,0 +1,66 @@
+/************************************
+ * Retail Sales Credit
+ ***********************************/
+ begin
+
+ 	mapFile: "accounts.xml";
+ 	
+ 	// Accounts to be debited or credited
+ 	string accountsReceivable = "Accounts Receivable";
+ 	string salesAccount = "Sales";
+ 	string taxAccount = "Tax Account";
+ 	string source = "Direct Sales";
+
+ 	decimal amount = transactions.getAmount() / (1.0 + taxRate);
+	decimal taxAmt = transactions.getAmount() - amount;
+
+	// Set accounting housekeeping first
+  	debit(amount + taxAmt , accountsReceivable);
+ 	ledger(D, amount + taxAmt, accountsReceivable, transactions.getDescr());
+	credit(amount, salesAccount);
+ 	ledger(C,amount , salesAccount, transactions.getDescr());
+ 	credit(taxAmt, taxAccount);
+	ledger(C, taxAmt , taxAccount, transactions.getDescr());
+
+	// Construct the revenue record
+	revenues.setName(transactions.getName());
+	revenues.setSource(source);
+	revenues.setAmount(amount);
+	revenues.setTax(taxAmt);
+	revenues.setAmt_received(amount);
+	revenues.setDescr(transactions.getDescr());
+	revenues.setRevenueTerms(revenueTerms);
+
+	// Construct the RevenueTerms record
+	revenueTerms.setDown(transactions.getDown());
+	revenueTerms.setInterest(transactions.getInterest());
+	revenueTerms.setNum_payments(transactions.getNum_payments());
+	revenueTerms.setRemaining(transactions.getNum_payments());
+	revenueTerms.setEach_payment(transactions.getEach_payment());
+	revenueTerms.setLoan_balance(amount + taxAmt);
+	revenueTerms.setStart(transactions.getStart());
+	revenueTerms.setSchedule(transactions.getSchedule());
+	revenueTerms.setRevenues(revenues);
+	revenueTerms.add(revenuePayments);
+
+	// Construct the RevenuePayments record
+	revenuePayments.setDue(transactions.getStart());
+	revenuePayments.setAmount_due(transactions.getEach_payment());
+	revenuePayments.setPayment_made(0.00);
+	revenuePayments.setPenalties(0.00);
+	revenuePayments.setRevenueTerms(revenueTerms);
+	
+	// Because the 2 tables have a 1 to 1 relationship, this will insert both
+	insert(revenues);
+	
+	events.setDate(transactions.getStart());
+	events.setName("Receive funds from " + transactions.getPayment_name() + " for " + transactions.getDescr());
+	events.setLink("/basic/payment?id=" + revenuePayments.getId() + "&payment_name=" + transactions.getPayment_name() + "&profilename=Receive Payment&amount=" + transactions.getEach_payment());
+	events.setCompleted(false);
+
+	insert(events);
+
+	update("UPDATE RevenuePayments SET reference = {d}, event = {d} WHERE id = {d}", revenueTerms.getReference(), events.getId(), revenuePayments.getId());
+
+			
+ end

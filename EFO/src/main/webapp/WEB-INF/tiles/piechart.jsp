@@ -4,23 +4,21 @@
 
 <div class="pieChart">
 	<canvas class="reportCharts divshadow" id="myChart"></canvas>
+
+	<table class="buttonTable">
+		<tr>
+			<td><button class="fancy-button" type="button" onclick="window.location.href='/#tabs-6'"><b>OK</b></button></td>
+			<td><button class="fancy-button" type="button" onclick="renderCanvas()"><b>View/Save Image</b></button></td>
+		</tr>
+	</table>
 </div>
-<table class="buttonTable">
-	<tr>
-		<td><button class="fancy-button" type="button" onclick="window.history.back()">OK</button></td>
-		<td><button class="fancy-button" type="button" onclick="renderCanvas()">View/Save Image</button></td>
-	</tr>
-</table>
-
+<input id="rpt" type="hidden" value="${report}" />
 <script>
-	var ctx = document.getElementById("myChart");
-	var frm = ${from};
-	var to = ${to};
-	var rpt = ${report};
-
 	$(document).ready(
 			function() {
-				$.getJSON("/rest/" + rpt + "/from/" + frm + "/to/" + to, function(data) {
+				var rpt = $('#rpt').val();
+				$.getJSON("/rest/" + rpt, function(data) {
+					var ctx = $('#myChart');
 					var myChart = new Chart(ctx, data);
 				}).fail(
 						function(jqXHR, textStatus, errorThrown) {
@@ -32,7 +30,7 @@
 
 	function renderCanvas() {
 		var canvas = document.getElementById("myChart");
-		var img = canvas.toDataURL("image/png");
+		var img = canvas.toDataURL("image/jpg");
 
 		document.write('<img src="'+img+'"/>');
 	}

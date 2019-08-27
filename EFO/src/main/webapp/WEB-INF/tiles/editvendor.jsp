@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form id="details" method="post" action="/admin/updatevendor" modelAttribute="user">
+<sf:form id="details" method="post" action="/personnel/updatevendor" modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
 	<table class="fancy-table tableshadow">
 		<tr>

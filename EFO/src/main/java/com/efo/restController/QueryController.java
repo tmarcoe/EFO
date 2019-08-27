@@ -12,22 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.efo.entity.Customer;
 import com.efo.entity.Employee;
-import com.efo.entity.FluidInventory;
-import com.efo.entity.Product;
+import com.efo.entity.Investor;
+import com.efo.entity.Profiles;
 import com.efo.entity.Vendor;
 import com.efo.service.CustomerService;
-import com.efo.service.EachInventoryService;
 import com.efo.service.EmployeeService;
-import com.efo.service.ProductService;
+import com.efo.service.InvestorService;
+import com.efo.service.ProfilesService;
+import com.efo.service.TimeSheetItemsService;
+import com.efo.service.TransactionsService;
 import com.efo.service.VendorService;
 
 @RestController
 @RequestMapping("/rest/")
 public class QueryController {
 
-	@Autowired
-	private ProductService productService;
-	
 	@Autowired
 	private CustomerService customerService;
 	
@@ -38,15 +37,17 @@ public class QueryController {
 	private EmployeeService employeeService;
 	
 	@Autowired
-	private EachInventoryService inventoryService;
-
-	@RequestMapping("lookupname")
-	public String lookupName(@RequestParam(value = "name") String name) throws JSONException {
-		List<Product> product = productService.nameSearch(name);
-
-		return productToJson(product);
-	}
-
+	private InvestorService investorService;
+	
+	@Autowired
+	private TransactionsService transactionsService;
+	
+	@Autowired
+	private ProfilesService profilesService;
+	
+	@Autowired
+	private TimeSheetItemsService timeSheetItemsService;
+	
 	@RequestMapping("lookupcustomer")
 	public String lookupCustomer(@RequestParam(value = "name") String name) throws JSONException {
 		List<Customer> customer = customerService.queryCustomer(name);
@@ -55,10 +56,18 @@ public class QueryController {
 	}
 	
 	@RequestMapping("lookupvendor")
-	public String lookupVendor(@RequestParam(value = "name") String name, @RequestParam(value= "type") String type) throws JSONException  {
+	public String lookupVendor(@RequestParam(value = "name") String name,@RequestParam(value = "type") String type ) throws JSONException  {
 		List<Vendor> vendorList = vendorService.queryVendow(name, type);
 		
 		return vendorToJson(vendorList);
+	}
+	
+	@RequestMapping("lookupinvestor")
+	public String lookupInvestor(@RequestParam(value = "name") String name) throws JSONException {
+		
+		List<Investor> investorList = investorService.queryInvestor(name);
+		
+		return investorToJson(investorList);
 	}
 	
 	@RequestMapping("lookupemployee")
@@ -69,21 +78,30 @@ public class QueryController {
 		return employeeToJson(employeeList);
 	}
 	
-	@RequestMapping("checkstock")
-	public String checkStock(@RequestParam(value = "sku") String sku ) throws JSONException {
-		FluidInventory inventory = null;
-		Product product = productService.retrieve(sku);
-		if ("Each".compareTo(product.getUnit()) == 0 || "Pack".compareTo(product.getUnit()) == 0) {
-			inventory = new FluidInventory();
-			inventory.setSku(sku);
-			inventory.setAmt_committed(inventoryService.getAmountCommitted(sku));
-			inventory.setAmt_ordered(inventoryService.getAmountOrdered(sku));
-			inventory.setAmt_in_stock(inventoryService.getAmountReceived(sku));
-		}else{
-			inventory = product.getFluidInventory();
-		}
+	@RequestMapping("overheadexists")
+	public String overheadExists(@RequestParam(value = "name") String name, @RequestParam(value = "profilename") String profileName ) throws JSONException {
+		boolean exists = transactionsService.overheadExists(name, profileName);
 		
-		return inventoryToJson(inventory);
+		return overheadExistToJson(exists);
+	}
+	
+	@RequestMapping("showterms")
+	public String showTerms(@RequestParam(value = "profilename") String profileName) throws JSONException {
+		
+		Profiles profile = profilesService.retrieve(profileName);
+		
+		
+		return showTermsToJson(profile.isShow_credit_terms());
+	}
+	
+	@RequestMapping("accountnumexists")
+	private String accountNumExists(@RequestParam(value = "accountNum") String accountNum, 
+									@RequestParam(value = "reference") Long reference) throws JSONException {
+		JSONObject json = new JSONObject();
+		
+		json.put("exists", timeSheetItemsService.accountNumExists(accountNum, reference));
+		
+		return json.toString();
 	}
 	
 	private String vendorToJson(List<Vendor> v) throws JSONException {
@@ -106,40 +124,28 @@ public class QueryController {
 		}
 		return jsonArray.toString();
 	}
-	private String inventoryToJson(FluidInventory i) throws JSONException {
-		JSONObject json = new JSONObject();
-		json.put("sku", i.getSku());
-		json.put("amt_in_stock", i.getAmt_in_stock());
-		json.put("amt_committed", i.getAmt_committed());
-		json.put("amt_ordered", i.getAmt_ordered());
-
-		return json.toString();
-	}
 	
-	
-	private String productToJson(List<Product> p) throws JSONException {
+	private String investorToJson(List<Investor> i) throws JSONException {
 		JSONArray jsonArray = new JSONArray();
-		for (Product item : p) {
+		for(Investor item: i) {
 			JSONObject suggestion = new JSONObject();
-			JSONObject product = new JSONObject();
-			product.put("sku", item.getSku());
-			product.put("upc", item.getUpc());
-			product.put("product_name", item.getProduct_name());
-			product.put("price", item.getPrice());
-			product.put("unit", item.getUnit());
-			product.put("category", item.getCategory());
-			product.put("subcategory", item.getSubcategory());
-			product.put("keywords", item.getKeywords());
-			product.put("on_sale", item.isOn_sale());
-			product.put("discontinue", item.isDiscontinue());
-
-			suggestion.put("value", item.getProduct_name());
-			suggestion.put("data", product);
+			JSONObject investor = new JSONObject();
+			investor.put("user_id", item.getUser_id());
+			investor.put("firstname", item.getFirstname());
+			investor.put("lastname", item.getLastname());
+			investor.put("male_female", item.getMale_female());
+			investor.put("shares", item.getShares());
+			investor.put("preferred", item.isPreferred());
+			investor.putOpt("since", item.getSince());
+			
+			suggestion.put("value", item.getFirstname() + " " + item.getLastname());
+			suggestion.put("data", investor);
 			jsonArray.put(suggestion);
 		}
 		
 		return jsonArray.toString();
 	}
+	
 
 	private String customerToJson(List<Customer> c) throws JSONException {
 		JSONArray jsonArray = new JSONArray();
@@ -158,10 +164,28 @@ public class QueryController {
 		for (Employee item : e) {
 			JSONObject suggestion = new JSONObject();
 			suggestion.put("value", item.getFirstname() + " " + item.getLastname());
-			suggestion.put("data", item.getEmp_financial().getHourlyRate());
+			suggestion.put("rate", item.getEmp_financial().getPay_rate());
+			suggestion.put("type", item.getEmp_type());
+			
 			jsonArray.put(suggestion);
 		}
 		
 		return jsonArray.toString();
 	}
+	
+	
+	private String overheadExistToJson(boolean exists) throws JSONException {
+		JSONObject jsonExists = new JSONObject();
+		jsonExists.put("exists", exists);
+		
+		return jsonExists.toString();
+	}
+	
+	private String showTermsToJson(boolean showTerms) throws JSONException {
+		JSONObject jsonShowTerms = new JSONObject();
+		jsonShowTerms.put("showCreditTerms", showTerms);
+		
+		return jsonShowTerms.toString();
+	}
+	
 }

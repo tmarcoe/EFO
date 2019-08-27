@@ -26,7 +26,7 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -35,7 +35,7 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 		Transaction tx = session.beginTransaction();
 		session.save(accounts);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 		Transaction tx = session.beginTransaction();
 		session.update(accounts);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -53,6 +53,8 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 		Criteria crit = session.createCriteria(ChartOfAccounts.class);
 		crit.add(Restrictions.idEq(account));
 		ChartOfAccounts ca = (ChartOfAccounts) crit.uniqueResult();
+		
+		session.close();
 		
 		return ca;
 	}
@@ -64,7 +66,7 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 		Criteria crit = session.createCriteria(ChartOfAccounts.class);
 		List<ChartOfAccounts> accList = crit.list();
 		
-		session.disconnect();
+		session.close();
 		
 		return accList;
 	}
@@ -75,7 +77,7 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 		Transaction tx = session.beginTransaction();
 		session.delete(account);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -87,7 +89,7 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 		ChartOfAccounts acc = (ChartOfAccounts) crit.uniqueResult();
 		session.delete(acc);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	public boolean exists(String account) {
@@ -95,7 +97,7 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 		String hql = "SELECT COUNT(*) FROM ChartOfAccounts WHERE accountNum = :account";
 		long count = (long) session.createQuery(hql).setString("account", account).uniqueResult();
 		
-		session.disconnect();
+		session.close();
 		
 		return (count > 0);
 	}
@@ -105,7 +107,7 @@ public class ChartOfAccountsDao implements IChartOfAccounts {
 		String hql = "SELECT COUNT(*) FROM ChartOfAccounts";
 		long count = (long) session.createQuery(hql).uniqueResult();
 		
-		session.disconnect();
+		session.close();
 		
 		return (count > 0);
 	}

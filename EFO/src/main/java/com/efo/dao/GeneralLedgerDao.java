@@ -23,7 +23,7 @@ public class GeneralLedgerDao implements IGeneralLedger {
 	SessionFactory sessionFactory;
 	
 	Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -32,14 +32,14 @@ public class GeneralLedgerDao implements IGeneralLedger {
 		Transaction tx = session.beginTransaction();
 		session.save(generalLedger);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public GeneralLedger retrieve(int entry_num) {
 		Session session = session();
 		GeneralLedger gl = (GeneralLedger) session.createCriteria(GeneralLedger.class).add(Restrictions.idEq(entry_num)).uniqueResult();
-		session.disconnect();
+		session.close();
 		return gl;
 	}
 
@@ -49,7 +49,7 @@ public class GeneralLedgerDao implements IGeneralLedger {
 		Transaction tx = session.beginTransaction();
 		session.update(generalLedger);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -58,14 +58,15 @@ public class GeneralLedgerDao implements IGeneralLedger {
 		Transaction tx = session.beginTransaction();
 		session.delete(generalLedger);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<GeneralLedger> getList(Date Begin, Date End) {
+	public List<GeneralLedger> getList(Date begin, Date end) {
+		String hql = "FROM GeneralLedger WHERE DATE(entryDate) BETWEEN DATE(:begin) AND DATE(:end)";
 		Session session = session();
-		List<GeneralLedger> glList = session.createCriteria(GeneralLedger.class).add(Restrictions.between("entryDate", Begin, End)).list();
-		session.disconnect();
+		List<GeneralLedger> glList = session.createQuery(hql).setDate("begin", begin).setDate("end", end).list();
+		session.close();
 		
 		return glList;
 	}

@@ -7,8 +7,8 @@
 </div>
 <table class="buttonTable">
 	<tr>
-		<td><button class="fancy-button" type="button" onclick="window.history.back()">OK</button></td>
-		<td><button class="fancy-button" type="button" onclick="renderCanvas()">View/Save Image</button></td>
+		<td><button class="fancy-button" type="button" onclick="window.location.href='/#tabs-6'"><b>OK</b></button></td>
+		<td><button class="fancy-button" type="button" onclick="renderCanvas()"><b>View/Save Image</b></button></td>
 	</tr>
 </table>
 
@@ -31,7 +31,7 @@
 
 	function renderCanvas() {
 		var canvas = document.getElementById("myChart");
-		var img = canvas.toDataURL("image/png");
+		var img = canvas.toDataURL("image/jpg");
 
 		document.write('<img src="'+img+'"/>');
 	}

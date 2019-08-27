@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -19,47 +20,47 @@ import com.efo.interfaces.ILoans;
 public class LoansDao implements ILoans {
 
 	@Autowired
-	private SessionFactory sessionFactory;
+	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
-	
+
 	@Override
 	public void create(Loans loans) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.save(loans);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Loans retrieve(Long reference) {
 		Session session = session();
-		Loans loans = (Loans) session.createCriteria(Loans.class).add(Restrictions.idEq(reference)).uniqueResult();
-		session.disconnect();
+		Loans loan = (Loans) session.createCriteria(Loans.class).add(Restrictions.idEq(reference)).uniqueResult();
+		session.close();
 		
-		return loans;
+		return loan;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Loans> retrieveRawList() {
 		Session session = session();
-		List<Loans> loans = session.createCriteria(Loans.class).list();
-		session.disconnect();
+		List<Loans> loanList = session.createCriteria(Loans.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		session.close();
 		
-		return loans;
+		return loanList;
 	}
 
 	@Override
-	public void update(Loans loans) {
+	public void merge(Loans loans) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
-		session.update(loans);
+		session.merge(loans);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class LoansDao implements ILoans {
 		Transaction tx = session.beginTransaction();
 		session.delete(loans);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

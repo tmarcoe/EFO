@@ -22,7 +22,7 @@ public class RoleDao implements IRole {
 	SessionFactory sessionFactory;
 	
 	Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ public class RoleDao implements IRole {
 		Transaction tx = session.beginTransaction();
 		session.save(role);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -40,14 +40,14 @@ public class RoleDao implements IRole {
 		Transaction tx = session.beginTransaction();
 		session.update(role);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Role retrieve(int id) {
 		Session session = session();
 		Role r = (Role) session.createCriteria(Role.class).add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return r;
 	}
@@ -55,7 +55,12 @@ public class RoleDao implements IRole {
 	@Override
 	public Role retrieve(String role) {
 		Session session = session();
-		return (Role) session.createCriteria(Role.class).add(Restrictions.eq("role", role)).uniqueResult();
+		
+		Role r = (Role) session.createCriteria(Role.class).add(Restrictions.eq("role", role)).uniqueResult();
+		
+		session.close();
+		
+		return r;
 	}
 
 	@Override
@@ -64,14 +69,14 @@ public class RoleDao implements IRole {
 		Transaction tx = session.beginTransaction();
 		session.delete(role);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Role> retrieveList() {
 		Session session = session();
 		List<Role> roleList = session.createCriteria(Role.class).list();
-		session.disconnect();
+		session.close();
 		
 		return roleList;
 	}

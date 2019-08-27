@@ -25,7 +25,7 @@ public class UserDao implements IUser {
 	
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 
 	@Override
@@ -34,14 +34,14 @@ public class UserDao implements IUser {
 		Transaction tx = session.beginTransaction();
 		session.save(user);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
-	public User retrieve(int user_id) {
+	public User retrieve(Long user_id) {
 		Session session = session();
 		User user = (User) session.createCriteria(User.class).add(Restrictions.idEq(user_id)).uniqueResult();
-		session.disconnect();
+		session.close();
 	
 		return user;
 	}
@@ -50,7 +50,7 @@ public class UserDao implements IUser {
 	public User retrieve(String username) {
 		Session session = session();
 		User user = (User) session.createCriteria(User.class).add(Restrictions.eq("username", username)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return user;
 	}
@@ -61,7 +61,7 @@ public class UserDao implements IUser {
 		Transaction tx = session.beginTransaction();
 		session.update(userProfile);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -70,24 +70,24 @@ public class UserDao implements IUser {
 		Transaction tx = session.beginTransaction();
 		session.delete(userProfile);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
-	public void delete(int user_id) {
+	public void delete(Long user_id) {
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		User user = (User) session.createCriteria(User.class).add(Restrictions.idEq(user_id)).uniqueResult();
 		session.delete(user);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<User> retrieveList() {
 		Session session = session();
 		List<User> userList = session.createCriteria(User.class).list();
-		session.disconnect();
+		session.close();
 		
 		return userList;
 	}
@@ -96,7 +96,7 @@ public class UserDao implements IUser {
 		Session session = session();
 		String hql = "SELECT COUNT(*) FROM User WHERE username = :username";
 		long count = (long) session.createQuery(hql).setString("username", username).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return (count > 0);
 	}
@@ -110,9 +110,9 @@ public class UserDao implements IUser {
 		
 		session.createQuery(hqlUpdate)
 				.setString("password", user.getPassword())
-				.setInteger("user_id", user.getUser_id()).executeUpdate();
+				.setLong("user_id", user.getUser_id()).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 
 	}
 
@@ -121,7 +121,7 @@ public class UserDao implements IUser {
 		Transaction tx = session.beginTransaction();
 		session.merge(userProfile);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -133,7 +133,7 @@ public class UserDao implements IUser {
 		
 		Session session = session();
 		List<User> chooseList = session.createQuery(sql).list();
-		session.disconnect();
+		session.close();
 		
 		return chooseList;
 	}

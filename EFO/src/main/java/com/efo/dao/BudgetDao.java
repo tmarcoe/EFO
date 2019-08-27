@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -22,7 +23,7 @@ public class BudgetDao implements IBudget {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -31,14 +32,14 @@ public class BudgetDao implements IBudget {
 		Transaction tx = session.beginTransaction();
 		session.save(budget);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public Budget retrieve(Long reference) {
 		Session session = session();
 		Budget budget = (Budget) session.createCriteria(Budget.class).add(Restrictions.idEq(reference)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return budget;
 	}
@@ -50,8 +51,9 @@ public class BudgetDao implements IBudget {
 		List<Budget> bList = session.createCriteria(Budget.class)
 								    .add(Restrictions.eq("department", department))
 								    .add(Restrictions.isNull("submitted"))
+								    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 								    .list();
-		session.disconnect();
+		session.close();
 		
 		return bList;
 	}
@@ -61,9 +63,11 @@ public class BudgetDao implements IBudget {
 		Session session = session();
 		List<Budget> bList = session.createCriteria(Budget.class)
 								    .add(Restrictions.isNull("approved"))
+								    .add(Restrictions.isNull("rejected"))
 								    .add(Restrictions.isNotNull("submitted"))
+								    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 								    .list();
-		session.disconnect();
+		session.close();
 		
 		return bList;
 	}
@@ -74,7 +78,7 @@ public class BudgetDao implements IBudget {
 		Transaction tx = session.beginTransaction();
 		session.update(budget);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	public void approveBudget(Long reference) {
@@ -83,16 +87,25 @@ public class BudgetDao implements IBudget {
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setLong("reference", reference).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
+	}
+	
+	public void rejectBudget(Long reference, String reason) {
+		String hql = "UPDATE Budget SET rejected = current_date(), reason = :reason, submitted = NULL WHERE reference = :reference";
+		Session session = session();
+		Transaction tx = session.beginTransaction();
+		session.createQuery(hql).setLong("reference", reference).setString("reason", reason).executeUpdate();
+		tx.commit();
+		session.close();		
 	}
 	
 	public void submitBudget(Long reference) {
-		String hql = "UPDATE Budget SET submitted = current_date() WHERE reference = :reference";
+		String hql = "UPDATE Budget SET submitted = current_date(), rejected = NuLL WHERE reference = :reference";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setLong("reference", reference).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -101,7 +114,7 @@ public class BudgetDao implements IBudget {
 		Transaction tx = session.beginTransaction();
 		session.merge(budget);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -110,7 +123,7 @@ public class BudgetDao implements IBudget {
 		Transaction tx = session.beginTransaction();
 		session.delete(budget);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 }

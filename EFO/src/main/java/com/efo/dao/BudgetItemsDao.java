@@ -1,7 +1,6 @@
 package com.efo.dao;
 
 import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -23,7 +22,7 @@ public class BudgetItemsDao implements IBudgetItems {
 	SessionFactory sessionFactory;
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	@Override
@@ -32,14 +31,14 @@ public class BudgetItemsDao implements IBudgetItems {
 		Transaction tx = session.beginTransaction();
 		session.save(budgetItems);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
 	public BudgetItems retrieve(Long id) {
 		Session session = session();
 		BudgetItems budgetItems = (BudgetItems) session.createCriteria(BudgetItems.class).add(Restrictions.idEq(id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return budgetItems;
 	}
@@ -50,7 +49,7 @@ public class BudgetItemsDao implements IBudgetItems {
 									    .add(Restrictions.eq("category", category))
 									    .add(Restrictions.eq("reference", reference))
 									    .setMaxResults(1).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return budgetItems;
 	}
@@ -61,8 +60,8 @@ public class BudgetItemsDao implements IBudgetItems {
 									  .add(Restrictions.eq("category", category))
 									  .add(Restrictions.eq("reference", reference))
 									  .setProjection(Projections.rowCount())
-        .uniqueResult();
-		session.disconnect();
+									  .uniqueResult();
+		session.close();
 		
 		return rowCount > 0;
 	}
@@ -74,7 +73,7 @@ public class BudgetItemsDao implements IBudgetItems {
 		List<BudgetItems> bgList = session.createCriteria(BudgetItems.class)
 									 .add(Restrictions.eq("parent", parent))
 									 .add(Restrictions.eq("reference", reference)).list();
-		session.disconnect();
+		session.close();
 		
 		return bgList;
 	}
@@ -83,9 +82,32 @@ public class BudgetItemsDao implements IBudgetItems {
 		String hql = "SELECT COUNT(*) FROM BudgetItems WHERE reference = :reference AND parent = :parent";
 		Session session = session();
 		Long count = (Long) session.createQuery(hql).setLong("reference", reference).setString("parent", parent).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return count > 0;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> budgetTree(Long reference) {
+		Session session = session();
+		String cnt = "SELECT COUNT(*) FROM BudgetItems WHERE reference = :reference AND parent = :parent";
+		String hql = "WITH RECURSIVE budget_path (category, level, favored_bid, parent, justification, amount, path) AS "
+				   + "(Select category, level, favored_bid, parent, justification, amount, category as path "
+				   + "FROM budget_items WHERE parent = '' AND reference = :reference "
+				   + "UNION ALL "
+				   + "SELECT b.category, b.level, b.favored_bid, b.parent, b.justification, b.amount, concat(bp.path, '>', b.category) "
+				   + "FROM budget_path as bp JOIN budget_items as b "
+				   + "on bp.category = b.parent AND reference = :reference"
+				   + ") SELECT * FROM budget_path ORDER BY path";
+		
+		List<Object[]> tree = session.createSQLQuery(hql).setLong("reference", reference).list();
+		for (Object[] item : tree) {
+			item[6] = session.createQuery(cnt).setLong("reference", reference).setString("parent", (String) item[0]).uniqueResult();
+		}
+		
+		session.close();
+		
+		return tree;
 	}
 
 	@Override
@@ -94,7 +116,7 @@ public class BudgetItemsDao implements IBudgetItems {
 		Transaction tx = session.beginTransaction();
 		session.update(budgetItems);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
@@ -103,7 +125,7 @@ public class BudgetItemsDao implements IBudgetItems {
 		Transaction tx = session.beginTransaction();
 		session.delete(budgetItems);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	public void deleteById(Long id) {
@@ -112,15 +134,18 @@ public class BudgetItemsDao implements IBudgetItems {
 		Transaction tx = session.beginTransaction();
 		session.createQuery(hql).setLong("id", id).executeUpdate();
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 		
 	public Double sumChildren(Long reference, String parent) {
 		String hql = "SELECT SUM(amount) FROM BudgetItems WHERE reference = :reference AND parent = :parent";
 		Session session = session();
 		Double sum = (Double) session.createQuery(hql).setLong("reference", reference).setString("parent", parent).uniqueResult();
+		session.close();
 		
 		return sum;
 	}
+	
+
 	
 }

@@ -24,6 +24,10 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * @author Timothy Marcoe
+ *
+ */
 @Entity
 @Table(name = "user", 
 uniqueConstraints = @UniqueConstraint(name = "email_user_uc"
@@ -33,7 +37,7 @@ public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer user_id;
+	Long user_id;
 	
 	@Email
 	@NotBlank
@@ -42,21 +46,24 @@ public class User implements Serializable{
 	private String password;
 	private boolean temp_pw;
 	
-	@ManyToMany(cascade = CascadeType.MERGE)
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 	private boolean enabled;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private Employee employee;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private Customer customer;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private Vendor vendor;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+	private Investor investor;
+	
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private CommonFields common;
 	
 	@Transient
@@ -70,10 +77,10 @@ public class User implements Serializable{
 	}
 	
 	@Column(name="USER_ID", unique = true, nullable = false)
-	public Integer getUser_id() {
+	public Long getUser_id() {
 		return user_id;
 	}
-	public void setUser_id(Integer user_id) {
+	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
 	
@@ -148,6 +155,12 @@ public class User implements Serializable{
 	}
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
+	}
+	public Investor getInvestor() {
+		return investor;
+	}
+	public void setInvestor(Investor investor) {
+		this.investor = investor;
 	}
 	public CommonFields getCommon() {
 		return common;

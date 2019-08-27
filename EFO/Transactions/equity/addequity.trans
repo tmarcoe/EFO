@@ -8,10 +8,24 @@ begin
 	 string cashAccount = "Cash";
 	 string equityAccount = "Common Stock";
 
-	 debit(equity.getAmount(), cashAccount);
-	 ledger(D, equity.getAmount(), cashAccount, getDescription());
-	 credit(equity.getAmount(), equityAccount);
-	 ledger(C, equity.getAmount(), equityAccount, getDescription());
+	debit(transactions.getAmount(), cashAccount);
+	ledger(D, transactions.getAmount(), cashAccount, transactions.getDescr());
+	credit(transactions.getAmount(), equityAccount);
+	ledger(C, transactions.getAmount(), equityAccount, transactions.getDescr());
 
-	 insert(equity);
+	equity.setInvestor_name(transactions.getPayment_name());
+	equity.setUser_id(transactions.getUser_id());
+	equity.setTimestamp(transactions.getStart());
+	equity.setAmount(transactions.getAmount());
+	equity.setShares(0.00);
+
+	insert(equity);
+
+	events.setDate(transactions.getStart());
+	events.setName(transactions.getPayment_name() + " has invested " + transactions.getAmount());
+	events.setLink("#");
+	events.setCompleted(true);
+
+	insert(events);
+
 end

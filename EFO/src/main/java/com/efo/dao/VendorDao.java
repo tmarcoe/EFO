@@ -25,7 +25,7 @@ public class VendorDao implements IVendor {
 	
 	
 	private Session session() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 
 	@Override
@@ -34,14 +34,14 @@ public class VendorDao implements IVendor {
 		Transaction tx = session.beginTransaction();
 		session.save(vendor);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
-	public Vendor retrieve(int user_id) {
+	public Vendor retrieve(Long user_id) {
 		Session session = session();
 		Vendor vendor = (Vendor) session.createCriteria(Vendor.class).add(Restrictions.idEq(user_id)).uniqueResult();
-		session.disconnect();
+		session.close();
 		
 		return vendor;
 	}
@@ -52,17 +52,17 @@ public class VendorDao implements IVendor {
 		Transaction tx = session.beginTransaction();
 		session.update(vendor);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 
 	@Override
-	public void delete(int user_id) {
+	public void delete(Long user_id) {
 		Vendor vendor = retrieve(user_id);
 		Session session = session();
 		Transaction tx = session.beginTransaction();
 		session.delete(vendor);
 		tx.commit();
-		session.disconnect();
+		session.close();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -71,7 +71,7 @@ public class VendorDao implements IVendor {
 	
 		Session session = session();
 		List<User> chooseList = session.createQuery(sql).list();
-		session.disconnect();
+		session.close();
 	
 	return chooseList;
 
@@ -83,7 +83,7 @@ public class VendorDao implements IVendor {
 	
 		Session session = session();
 		List<User> chooseList = session.createQuery(sql).setString("type", type).list();
-		session.disconnect();
+		session.close();
 	
 	return chooseList;
 
@@ -94,7 +94,7 @@ public class VendorDao implements IVendor {
 		Session session = session();
 		
 		List<Vendor> vendors = session.createCriteria(Vendor.class).list();
-		session.disconnect();
+		session.close();
 		
 		return vendors;
 	}
@@ -106,9 +106,10 @@ public class VendorDao implements IVendor {
 										 .add(Restrictions.like("company_name", name, MatchMode.ANYWHERE))
 										 .add(Restrictions.eq("type", type)).list();
 		
-		session.disconnect();
+		session.close();
 		
 		return vendorList;
 	}
+	
 
 }

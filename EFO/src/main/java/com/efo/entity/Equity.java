@@ -15,53 +15,47 @@ public class Equity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	private String investor_name;
+	private Long user_id;
+	private Date timestamp;
+	private Double amount;
+	private Double shares;
 	
-	private String name;
-	private double amount;
-	private Date time_stamp;
-	private String comments;
-	
-	public Equity() {
-	}
-	
-	
-	public Equity(Date time_stamp) {
-		this.time_stamp = time_stamp;
-	}
-
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public String getName() {
-		return name;
+	public String getInvestor_name() {
+		return investor_name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setInvestor_name(String investor_name) {
+		this.investor_name = investor_name;
 	}
-	
-	public double getAmount() {
+	public Long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
+	}
+	public Date getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(double amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-	
-	public Date getTime_stamp() {
-		return time_stamp;
+	public Double getShares() {
+		return shares;
 	}
-	public void setTime_stamp(Date time_stamp) {
-		this.time_stamp = time_stamp;
-	}
-	
-	public String getComments() {
-		return comments;
-	}
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setShares(Double shares) {
+		this.shares = shares;
 	}
 	
 }

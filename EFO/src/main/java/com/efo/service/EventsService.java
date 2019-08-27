@@ -2,6 +2,7 @@ package com.efo.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,8 +55,8 @@ public class EventsService implements IEvents {
 		eventsDao.deleteById(id);
 
 	}
-	public Long getEventCount(Date date) {
-		return eventsDao.getEventCount(date);
+	public Map<String, Long> getEventCount(Date begin, Date end) {
+		return eventsDao.getEventCount(begin, end);
 	}
 	
 	public List<Events> getEvents(Date date) {

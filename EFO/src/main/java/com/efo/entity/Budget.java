@@ -25,6 +25,7 @@ public class Budget implements Serializable {
 	private Date end;
 	private String department;
 	private String author;
+	private Long user_id;
 	private Date creation;
 	private Date submitted;
 	private Date rejected;
@@ -32,7 +33,7 @@ public class Budget implements Serializable {
 	private Date approved;
 	private double total;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "budget", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "budget", cascade = CascadeType.ALL)
 	private Set<BudgetItems> budgetItems = new HashSet<BudgetItems>(0);
 	
 	public Long getReference() {
@@ -71,7 +72,12 @@ public class Budget implements Serializable {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
+	public Long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
+	}
 	public Date getCreation() {
 		return creation;
 	}

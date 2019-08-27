@@ -1,12 +1,8 @@
 package com.efo.controllers;
 
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -20,32 +16,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.component.SendEmail;
-import com.efo.emailForms.BudgetReport;
 import com.efo.entity.Budget;
 import com.efo.entity.User;
-import com.efo.service.BudgetItemsService;
 import com.efo.service.BudgetService;
 import com.efo.service.UserService;
 
 @Controller
-@RequestMapping("/accounting/")
+@RequestMapping("/budget/")
 public class BudgetController {
 	
 	@Autowired
 	private BudgetService budgetService;
 	
 	@Autowired
-	private BudgetItemsService budgetItemsService;
-	
-	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private SendEmail sendEmail;
-	
-	@Autowired
-	private BudgetReport budgetReport;
 	
 	@Value("${efo.director.name}")
 	private String directorName;
@@ -53,7 +37,7 @@ public class BudgetController {
 	@Value("${efo.director.email}")
 	private String directorEmail;
 	
-	private final String pageLink = "/accounting/budgetpaging/";
+	private final String pageLink = "/budget/budgetpaging/";
 	private PagedListHolder<Budget> budgetList;
 	private SimpleDateFormat dateFormat;
 
@@ -83,6 +67,7 @@ public class BudgetController {
 		Budget budget = new Budget();
 		budget.setCreation(new Date());
 		budget.setDepartment(user.getEmployee().getDivision());
+		budget.setUser_id(user.getUser_id());
 		budget.setAuthor(user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());		
 		model.addAttribute("budget", budget);
 		
@@ -94,7 +79,7 @@ public class BudgetController {
 		
 		budgetService.create(budget);
 		
-		return "redirect:/accounting/listbudget";
+		return "redirect:/budget/listbudget";
 	}
 	
 	@RequestMapping("editbudget") 
@@ -110,25 +95,16 @@ public class BudgetController {
 		
 		budgetService.update(budget);
 	
-		return "redirect:/accounting/listbudget";
-	}
-	
-	@RequestMapping("submitbudget/{reference}") 
-	public String submitBudget(@PathVariable("reference") Long reference, Principal principal) throws UnsupportedEncodingException, MessagingException {
-		User user = userService.retrieve(principal.getName());
+		return "redirect:/budget/listbudget";
+	}	
+
+	@RequestMapping("submitbudget/{reference}")
+	public String submitBudget(@PathVariable("reference") Long reference ) {
+		
 		budgetService.submitBudget(reference);
 		
-		Budget budget = budgetService.retrieve(reference);
-		budget.setBudgetItems(budgetItemsService.retrieveSet(reference, "ROOT"));
-		
-		String content = budgetReport.creatBudgetReport(budget);
-		
-		sendEmail.sendHtmlMail(user.getUsername(), directorEmail, directorName, "Budget Submission", content);
-		
-		return "redirect:/accounting/listbudget";
+		return "redirect:/budget/listbudget";
 	}
-	
-
 
 	@RequestMapping(value = "budgepaging/{parent}", method = RequestMethod.GET)
 	public String handleBudgeItemtRequest(@ModelAttribute("page") String page, Model model) throws Exception {

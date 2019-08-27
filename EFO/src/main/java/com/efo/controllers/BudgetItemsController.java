@@ -6,8 +6,8 @@ import java.util.Date;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,20 +16,28 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.efo.entity.BudgetItems;
 import com.efo.service.BudgetItemsService;
 
 @Controller
-@RequestMapping("/accounting/")
+@RequestMapping("/budget/")
 public class BudgetItemsController {
 	@Autowired
 	private BudgetItemsService budgetItemsService;
 	
-	private final String pageLink = "/accounting/budgetitempaging/%d/%s";
-	private PagedListHolder<BudgetItems> budgetItemList;
 	private SimpleDateFormat dateFormat;
+	
+	@Value("${efo.federal.fica}")
+	private String fica;
+	
+	@Value("${efo.federal.medicare}")
+	private String medicare;
+	
+	@Value("${efo.federal.unemployment}")
+	private String fedUnemployment;
+	
+	@Value("${efo.state.unemployment}")
+	private String stUnemployment;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -39,38 +47,39 @@ public class BudgetItemsController {
 	}
 
 	
-	@RequestMapping("listbudgetitems/{reference}/{parent}")
-	public String listBudgetItems(@PathVariable("reference") Long reference, @PathVariable("parent") String parent, Model model) {
+	@RequestMapping("listbudgetitems/{reference}/{level}")
+	public String listBudgetItems(@ModelAttribute("parent") String parent, @PathVariable("reference") Long reference, @PathVariable("level") Long level, Model model) {
 		
-		budgetItemList = budgetItemsService.retrieveList(reference, parent);
 		
-		budgetItemList.setPageSize(20);
-		
+		model.addAttribute("level", level);
 		model.addAttribute("parent", parent);
 		model.addAttribute("reference", reference);
-		model.addAttribute("objectList", budgetItemList);
-		model.addAttribute("pagelink", String.format(pageLink, reference, parent));
+		model.addAttribute("budgetList", budgetItemsService.retrieveRawList(reference, parent));
 
 		return "listbudgetitems";
 	}
 	
-	@RequestMapping("uponelevel/{reference}/{parent}")
-	public String upOneLevel(@PathVariable("reference") Long reference, @PathVariable("parent") String parent, Model model) {
-		if ("ROOT".compareTo(parent) != 0) {
+	@RequestMapping("uponelevel/{reference}/{level}")
+	public String upOneLevel(@ModelAttribute("parent") String parent, @PathVariable("reference") Long reference, @PathVariable("level") Long level, Model model) {
+		if ("".compareTo(parent) != 0) {
 			BudgetItems budget = budgetItemsService.retrieveByCategory(reference, parent);
 			parent = budget.getParent();
 		}
 		
-		return "redirect:/accounting/listbudgetitems/" + reference + "/" + parent;
+		return "redirect:/budget/listbudgetitems/" + reference + "/" + level + "?parent=" + parent;
 	}
 	
-	@RequestMapping("newbudgetitem/{reference}/{parent}")
-	public String newBudgetItem(@PathVariable("reference") Long reference, @PathVariable("parent") String parent, Model model) {
+	@RequestMapping("newbudgetitem/{reference}/{level}")
+	public String newBudgetItem(@ModelAttribute("parent") String parent, @PathVariable("reference") Long reference, @PathVariable("level") Long level, Model model) {
+		Double employerContribution = Double.valueOf(fica) + Double.valueOf(medicare) + Double.valueOf(fedUnemployment) + Double.valueOf(stUnemployment) + 1;
 		
 		BudgetItems budgetItem = new BudgetItems();
 		budgetItem.setParent(parent);
+		budgetItem.setLevel(level);
+
 		budgetItem.setReference(reference);
 
+		model.addAttribute("employerContribution", employerContribution);
 		model.addAttribute("budgetItem", budgetItem);
 		
 		return "newbudgetitem";
@@ -78,24 +87,27 @@ public class BudgetItemsController {
 	
 	@RequestMapping("addbudgetitem")
 	public String addBudget(@Valid @ModelAttribute("budgetItem") BudgetItems budgetItem, BindingResult result) {
-		if (result.hasErrors()) {
+		if (result.hasErrors() || budgetItemsService.categoryExists(budgetItem.getReference(), budgetItem.getCategory())) {
+			
+			if (budgetItemsService.categoryExists(budgetItem.getReference(), budgetItem.getCategory())) {
+				result.reject("category", "Exists.budget.category");
+			}
+
 			return "newbudgetitem";
 		}
 		
-		if (budgetItemsService.categoryExists(budgetItem.getReference(), budgetItem.getCategory())) {
-			
-			result.reject("category", "Exists.budget.category");
-			
-			return "newbudgetitem";
-		}
 		budgetItemsService.create(budgetItem);
 		
-		return "redirect:/accounting/listbudgetitems/" + budgetItem.getReference() + "/"+ budgetItem.getParent();
+		Long level = budgetItem.getLevel();
+		
+		return "redirect:/budget/listbudgetitems/" + budgetItem.getReference() + "/" + level + "?parent=" + budgetItem.getParent();
 	}
 
 	@RequestMapping("editbudgetitem")
 	public String editBudgetItem(@ModelAttribute("id") Long id, Model model) {
+		Double employerContribution = Double.valueOf(fica) + Double.valueOf(medicare) + Double.valueOf(fedUnemployment) + Double.valueOf(stUnemployment) + 1;
 		
+		model.addAttribute("employerContribution", employerContribution);
 		model.addAttribute("budget", budgetItemsService.retrieve(id));
 		
 		return "editbudgetitem";
@@ -106,12 +118,12 @@ public class BudgetItemsController {
 		
 		budgetItemsService.update(budgetItem);
 		
-		return "redirect:/accounting/listbudgetitems/" + budgetItem.getReference() + "/" + budgetItem.getParent();
+		return "redirect:/budget/listbudgetitems/" + budgetItem.getReference() + "/" + budgetItem.getLevel() + "?parent=" + budgetItem.getParent();
 	}
 	
-	@RequestMapping("deletebudgetitem/{reference}/{parent}/{id}")
-	public String deleteBudgetItem(@PathVariable("reference") Long reference, 
-								   @PathVariable("parent") String parent, 
+	@RequestMapping("deletebudgetitem/{reference}/{id}")
+	public String deleteBudgetItem(@ModelAttribute("parent") String parent,
+								   @PathVariable("reference") Long reference, 
 								   @PathVariable("id") Long id) {
 		
 		BudgetItems budgetItem = budgetItemsService.retrieve(id);
@@ -119,47 +131,7 @@ public class BudgetItemsController {
 			budgetItemsService.delete(id);
 		}
 		
-		return "redirect:/accounting/listbudgetitems/" + reference + "/" + budgetItem.getParent();
+		return "redirect:/budget/listbudgetitems/" + reference + "/" + budgetItem.getLevel() + "?parent=" + budgetItem.getParent();
 	}
 	
-	@RequestMapping(value = "budgetitempaging/{reference}/{parent}", method = RequestMethod.GET)
-	public String handleBudgeItemtRequest(@PathVariable("reference") Long reference, @PathVariable("parent") String parent, @ModelAttribute("page") String page, Model model) throws Exception {
-		int pgNum;
-
-		pgNum = isInteger(page);
-
-		if ("next".equals(page)) {
-			budgetItemList.nextPage();
-		} else if ("prev".equals(page)) {
-			budgetItemList.previousPage();
-		} else if (pgNum != -1) {
-			budgetItemList.setPage(pgNum);
-		}
-		
-		model.addAttribute("parent", parent);
-		model.addAttribute("reference", reference);
-		model.addAttribute("objectList", budgetItemList);
-		model.addAttribute("pagelink", String.format(pageLink, reference, parent));
-
-		return "listbudgetitems";
-	}
-
-	/**************************************************************************************************************************************
-	 * Used for both detecting a number, and converting to a number. If this
-	 * routine returns a -1, the input parameter was not a number.
-	 * 
-	 **************************************************************************************************************************************/
-
-	private int isInteger(String s) {
-		int retInt;
-		try {
-			retInt = Integer.parseInt(s);
-		} catch (NumberFormatException e) {
-			return -1;
-		} catch (NullPointerException e) {
-			return -1;
-		}
-		// only got here if we didn't return false
-		return retInt;
-	}
 }

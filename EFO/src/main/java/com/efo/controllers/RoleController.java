@@ -18,7 +18,7 @@ public class RoleController {
 	@Autowired
 	RoleService roleService;
 	
-	private final String pageLink = "/admin/rolepaging";
+	private final String pageLink = "/personnel/rolepaging";
 	PagedListHolder<Role> listRoles;
 	
 	@RequestMapping("listroles")
@@ -57,7 +57,7 @@ public class RoleController {
 		model.addAttribute("objectList", listRoles);
 		model.addAttribute("pagelink", pageLink);
 
-		return "listcustomers";
+		return "listroles";
 	}
 
 	/**************************************************************************************************************************************

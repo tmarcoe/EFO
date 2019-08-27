@@ -32,7 +32,7 @@ import com.efo.service.RoleService;
 import com.efo.service.UserService;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/personnel/")
 public class EmployeeController {
 	
 	@Value("${spring.mail.username}")
@@ -54,7 +54,7 @@ public class EmployeeController {
 	@Autowired
 	RoleUtilities roleUtils;
 
-	private final String pageLink = "/admin/employeepaging";
+	private final String pageLink = "/personnel/employeepaging";
 	
 	private final String format = "Dear %s,%n Your new, temporary password is %s.%n"
 								+ "Please change it as soon as possible to avoid any sercurity breaches.";
@@ -139,11 +139,11 @@ public class EmployeeController {
 		}
 		userService.create(user);
 		
-		return "redirect:/admin/employeelist";
+		return "redirect:/personnel/employeelist";
 	}
 	
 	@RequestMapping("editemployee")
-	public String editEmployee(@ModelAttribute("user_id") int user_id, Model model) {
+	public String editEmployee(@ModelAttribute("user_id") Long user_id, Model model) {
 		User user = userService.retrieve(user_id);
 		
 		user.setRoleString(roleUtils.roleToString(user.getRoles()));
@@ -170,7 +170,7 @@ public class EmployeeController {
 		
 		userService.merge(user);
 		
-		return "redirect:/admin/employeelist";
+		return "redirect:/personnel/employeelist";
 	}
 	
 	@RequestMapping(value = "employeepaging", method = RequestMethod.GET)

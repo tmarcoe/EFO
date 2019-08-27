@@ -84,4 +84,8 @@ public class BudgetItemsService implements IBudgetItems {
 	public Double sumChildren(Long reference, String parent) {
 		return budgetItemsDao.sumChildren(reference, parent);
 	}
+	
+	public List<Object[]> budgetTree(Long reference) {
+		return budgetItemsDao.budgetTree(reference);
+	}
 }

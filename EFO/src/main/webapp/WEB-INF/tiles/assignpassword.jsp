@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
 
-<sf:form id="details" method="post" action="/admin/savepassword"
+<sf:form id="details" method="post" action="/personnel/savepassword"
 	modelAttribute="user">
 	<sf:hidden path="user_id" />
 	<table class="fancy-table tableshadow">

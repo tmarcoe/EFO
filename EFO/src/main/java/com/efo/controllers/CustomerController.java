@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,7 +32,7 @@ import com.efo.service.UserService;
 
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/personnel/")
 public class CustomerController {
 	
 	@Value("${spring.mail.username}")
@@ -43,24 +42,21 @@ public class CustomerController {
 			+ "Please change it as soon as possible to avoid any sercurity breaches.";
 
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
 	
 	@Autowired
 	private SendEmail sendEmail;
 	
 	@Autowired 
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	RoleUtilities roleUtils;
+	private RoleUtilities roleUtils;
 	
 	@Autowired
-	RoleService roleService;
+	private RoleService roleService;
 	
-	@Autowired
-	BCryptPasswordEncoder encoder;
-
-	private final String pageLink = "/admin/customerpaging";
+	private final String pageLink = "/personnel/customerpaging";
 
 	private PagedListHolder<User> customerList;
 
@@ -86,7 +82,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("editcustomer")
-	public String editCustomer(@ModelAttribute("user_id") int user_id, Model model) {
+	public String editCustomer(@ModelAttribute("user_id") Long user_id, Model model) {
 		User user = userService.retrieve(user_id);
 		user.setRoleString(roleUtils.roleToString(user.getRoles()));
 
@@ -110,7 +106,7 @@ public class CustomerController {
 		
 		userService.merge(user);
 		
-		return "redirect:/admin/customerlist";
+		return "redirect:/personnel/customerlist";
 	}
 	
 	@RequestMapping("newcustomer")
@@ -159,7 +155,7 @@ public class CustomerController {
 		}
 		userService.create(user);
 		
-		return "redirect:/admin/customerlist";
+		return "redirect:/personnel/customerlist";
 	}
 	
 	@RequestMapping("choosecustomer")

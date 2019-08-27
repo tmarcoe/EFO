@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<alias>
+    <map name="Cash" value="1000"/>
+    <map name="Accounts Receivable" value="1001"/>
+    <map name="Accounts Payable" value="1002"/>
+    <map name="Inventory" value="1003"/>
+    <map name="Owners Equity" value="1004"/>
+	<map name="Capital" value="1005" />
+	<map name="Interest Expense" value="1006" />
+	<map name="Bad Debt" value="1007" />
+	<map name="Common Stock" value="1008" />
+    <map name="Sales" value="1009"/>
+    <map name="Tax Account" value="1010"/>
+    <map name="Loan Liability" value="1011"/>
+	<map name="Overhead Expense" value="1012" />
+	<map name="Customer Deposits" value="1013" />
+    <map name="Labor Expense" value="2001"/>
+    <map name="Petty Cash" value="3000"/>
+    <map name="Petty Cash (Office Supplies)" value="3001"/>
+    <map name="Petty Cash (Delivery Expense)" value="3002"/>
+    <map name="Petty Cash (Postage Expense)" value="3003"/>
+    <map name="Petty Cash (General Office Expense)" value="3004"/>	
+    <map name="Petty Cash (Short and Over)" value="3005"/>
+    <map name="Budget Appropriations" value="4000" />
+</alias>

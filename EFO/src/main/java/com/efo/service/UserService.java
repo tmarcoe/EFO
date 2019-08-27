@@ -30,7 +30,7 @@ public class UserService implements IUser{
 	}
 
 	@Override
-	public User retrieve(int user_id) {
+	public User retrieve(Long user_id) {
 		return userDao.retrieve(user_id);
 	}
 
@@ -50,7 +50,7 @@ public class UserService implements IUser{
 	}
 
 	@Override
-	public void delete(int user_id) {
+	public void delete(Long user_id) {
 		userDao.delete(user_id);
 	}
 

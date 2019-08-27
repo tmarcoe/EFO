@@ -62,6 +62,10 @@ public class BudgetService implements IBudget {
 		budgetDao.approveBudget(reference);
 	}
 	
+	public void rejectBudget(Long reference, String reason) {
+		budgetDao.rejectBudget(reference, reason);
+	}
+	
 	public void submitBudget(Long reference) {
 		budgetDao.submitBudget(reference);
 	}

@@ -27,7 +27,7 @@ public class EmployeeService implements IEmployee {
 	}
 
 	@Override
-	public Employee retrieve(int user_id) {
+	public Employee retrieve(Long user_id) {
 		return employeeDao.retrieve(user_id);
 	}
 
@@ -37,7 +37,7 @@ public class EmployeeService implements IEmployee {
 	}
 
 	@Override
-	public void delete(int user_id) {
+	public void delete(Long user_id) {
 		employeeDao.delete(user_id);
 	}
 	

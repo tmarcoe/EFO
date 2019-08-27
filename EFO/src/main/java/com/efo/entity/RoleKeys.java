@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class RoleKeys implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	protected Integer user_id;
+	protected Long user_id;
 	protected Integer role_id;
 	
 	public RoleKeys() {}
 	
-	public RoleKeys(Integer user_id, Integer role_id) {
+	public RoleKeys(Long user_id, Integer role_id) {
 		this.user_id = user_id;
 		this.role_id = role_id;
 	}

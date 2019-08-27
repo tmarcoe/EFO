@@ -31,7 +31,7 @@ import com.efo.service.UserService;
 import com.efo.service.VendorService;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/personnel/")
 public class VendorController {
 	
 	@Value("${spring.mail.username}")
@@ -56,7 +56,7 @@ public class VendorController {
 	RoleService roleService;
 	
 
-	private final String pageLink = "/admin/vendorpaging";
+	private final String pageLink = "/personnel/vendorpaging";
 
 	private PagedListHolder<User> vendorList;
 
@@ -82,7 +82,7 @@ public class VendorController {
 	}
 	
 	@RequestMapping("editvendor")
-	public String editVendor(@ModelAttribute("user_id") int user_id, Model model) {
+	public String editVendor(@ModelAttribute("user_id") Long user_id, Model model) {
 		User user = userService.retrieve(user_id);
 		user.setRoleString(roleUtils.roleToString(user.getRoles()));
 
@@ -105,7 +105,7 @@ public class VendorController {
 		user.getVendor().setUser(user);
 		userService.merge(user);
 		
-		return "redirect:/admin/vendorlist";
+		return "redirect:/personnel/vendorlist";
 	}
 	
 	@RequestMapping("newvendor")
@@ -152,7 +152,7 @@ public class VendorController {
 		}
 		userService.create(user);
 		
-		return "redirect:/admin/vendorlist";
+		return "redirect:/personnel/vendorlist";
 	}
 	
 	@RequestMapping(value = "vendorpaging", method = RequestMethod.GET)

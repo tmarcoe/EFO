@@ -32,11 +32,11 @@
 				<td>${user.vendor.firstname}</td>
 				<td>${user.vendor.lastname}</td>
 				<td>${user.username}</td>
-				<td><button type="button" onclick="window.location.href='/admin/editvendor?user_id=${user.user_id}'">Edit</button></td>
+				<td><button type="button" onclick="window.location.href='/personnel/editvendor?user_id=${user.user_id}'">Edit</button></td>
 				<td><button type="button" onclick="deleteUser('${user.user_id}')">Delete</button></td>
 				<c:choose>
 					<c:when test="${user.enabled == true}">
-						<td><button type="button" onclick="window.location.href='/admin/assignpassword?user_id=${user.user_id}'">Temporary Password</button></td>
+						<td><button type="button" onclick="window.location.href='/personnel/assignpassword?user_id=${user.user_id}'">Temporary Password</button></td>
 					</c:when>
 					<c:otherwise>
 						<td>&nbsp;</td>
@@ -49,7 +49,7 @@
 				<td colspan="9">Vendor types: C = Capital Equipment, R = Retail, O = Overhead expense, L = Lending institution</td>
 			</tr>
 			<tr>
-				<td colspan="8"><button type="button" onclick="window.location.href = '/admin/newvendor'" >New Vendor</button></td>
+				<td colspan="8"><button type="button" onclick="window.location.href = '/personnel/newvendor'" >New Vendor</button></td>
 				<td colspan="1"><button type="button" onclick="window.location.href = '/#tabs-2'">Back</button></td>
 			</tr>
 		</tfoot>
@@ -58,7 +58,7 @@
 <script type="text/javascript">
 	function deleteUser(user_id) {
 		if (confirm("Do you really want to delete this user?") == true) {
-			window.location.href="/admin/deleteuser?user_id=" + user_id;
+			window.location.href="/personnel/deleteuser?user_id=" + user_id;
 		}
 	}
 </script>

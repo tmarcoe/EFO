@@ -19,7 +19,7 @@ public class CommonFields implements Serializable {
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
 	@Id
 	@GeneratedValue(generator = "generator")
-	private Integer user_id;
+	private Long user_id;
 	private String address1;
 	private String address2;
 	private String city;
@@ -27,14 +27,14 @@ public class CommonFields implements Serializable {
 	private String postalCode;
 	private String country;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private User user;
 	
-	public Integer getUser_id() {
+	public Long getUser_id() {
 		return user_id;
 	}
-	public void setUser_id(Integer user_id) {
+	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
 	public String getAddress1() {
