@@ -47,10 +47,13 @@ public class TimeReportingAccountsDao implements ITimeReportingAccounts {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<TimeReportingAccounts> retrieveRawList() {
+	public List<TimeReportingAccounts> retrieveRawList(String department) {
+		String hql ="FROM TimeReportingAccounts WHERE department = :department OR department = ''";
 		Session session = session();
-		List<TimeReportingAccounts> accountsList = session.createCriteria(TimeReportingAccounts.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		
+		List<TimeReportingAccounts> accountsList = session.createQuery(hql)
+														  .setString("department", department)
+														  .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		session.close();
 		
 		return accountsList;

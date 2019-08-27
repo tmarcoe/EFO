@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/script/date.js"></script>
 
 <sf:form method="post" modelAttribute="timeSheet">
-	<fmt:formatDate type="date" pattern="MM/dd/yyyy" value='${timeSheet.begin_period}' var="dt" />
+	<fmt:formatDate type="date" value='${endPeriod}' var="endDt" />
 	<fmt:formatDate type="date" value='${timeSheet.begin_period}' var="strDate" />
 	<c:if test="${not empty timeSheet.submitted}">
 		<h3>Period Closed</h3>
@@ -24,7 +24,7 @@
 		<col width="70" />
 		<col width="70" />
 		<col width="70" />
-		<caption>Starting Period: From: ${strDate} To:${endDate}</caption>
+		<caption>From: ${strDate}&emsp;&emsp;To: ${endDt}</caption>
 		<tr>
 			<th>Account Number</th>
 			<th>Su</th>

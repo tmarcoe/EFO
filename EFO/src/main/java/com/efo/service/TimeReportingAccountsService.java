@@ -26,8 +26,8 @@ public class TimeReportingAccountsService implements ITimeReportingAccounts {
 	}
 
 	@Override
-	public List<TimeReportingAccounts> retrieveRawList() {
-		return timeReportingAccountsDao.retrieveRawList();
+	public List<TimeReportingAccounts> retrieveRawList(String department) {
+		return timeReportingAccountsDao.retrieveRawList(department);
 	}
 
 	@Override

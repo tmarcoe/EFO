@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
-import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -48,18 +48,23 @@ public class TimeSheetController {
 
 	@RequestMapping("timesheet")
 	public String timeSheet(Principal principal, Model model) {
-		
+		LocalDate date = LocalDate.now();
+		int dow = date.dayOfWeek().get();
+		LocalDate prevSun = dow == DateTimeConstants.SUNDAY ? date : date.withDayOfWeek(DateTimeConstants.SUNDAY).minusWeeks(1);
 		User user =  userService.retrieve(principal.getName());
 		
 		TimeSheet timeSheet = timeSheetService.retrieveByUserId(user.getUser_id());
+		
 		if (timeSheet == null) {
-			DateTime currentDate = new DateTime();
 			timeSheet = new TimeSheet();
 			timeSheet.setUser_id(user.getUser_id());
-			timeSheet.setBegin_period(currentDate.withDayOfWeek(DateTimeConstants.SUNDAY).toDate());
+			timeSheet.setBegin_period(prevSun.toDate());
 			timeSheetService.create(timeSheet);
 		}
 		
+		LocalDate endPeriod = new LocalDate(timeSheet.getBegin_period()).plusDays(6);
+		
+		model.addAttribute("endPeriod", endPeriod.toDate());
 		model.addAttribute("timeSheet", timeSheet);
 		
 		return "timesheet";
