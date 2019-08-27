@@ -21,6 +21,7 @@ com\efo\config\SecurityConfiguration.class
 com\efo\entity\ChartOfAccounts.class
 com\efo\service\GeneralLedgerService.class
 com\efo\restController\CalendarController.class
+com\efo\dao\TimeSheetDao.class
 com\efo\controllers\EmployeeController.class
 com\efo\taglibs\IsNotAuthorized.class
 com\efo\entity\Role.class
@@ -28,12 +29,14 @@ com\efo\taglibs\GetPrincipal.class
 com\efo\interfaces\IRevenuePayments.class
 com\efo\emailForms\RejectEmailForm.class
 com\efo\component\ScheduleUtilities$1.class
+com\efo\entity\TimeReportingAccounts.class
 com\efo\interfaces\IInvestor.class
 com\efo\entity\Loans.class
 com\efo\controllers\RoleController.class
 com\efo\pdf\PdfUtilities$MyLine.class
 com\efo\dao\RevenuePaymentsDao.class
 com\efo\interfaces\ILoanTerms.class
+com\efo\dao\TimeSheetItemsDao.class
 com\efo\interfaces\IInvoiceNum.class
 com\efo\entity\Customer.class
 com\efo\component\EventCalendar.class
@@ -58,6 +61,7 @@ com\efo\entity\Employee.class
 com\efo\pdf\PdfTable.class
 com\efo\entity\InvoiceNum.class
 com\efo\service\VendorService.class
+com\efo\interfaces\ITimeSheetItems.class
 com\efo\controllers\InvestorController.class
 com\efo\interfaces\IBudgetItems.class
 com\efo\component\SalesItemProcessor.class
@@ -70,6 +74,7 @@ com\efo\service\LoansService.class
 com\efo\dao\ExpensePaymentsDao.class
 com\efo\service\ExpensesService.class
 com\efo\pdf\PdfUtilities.class
+com\efo\controllers\TimeSheetController.class
 com\efo\interfaces\IUser.class
 com\efo\service\UserService.class
 com\efo\service\LoanTermsService.class
@@ -83,6 +88,7 @@ com\efo\controllers\GeneralLedgerController.class
 com\efo\entity\Revenues.class
 com\efo\service\EmpFinancialService.class
 com\efo\interfaces\IRevenueTerms.class
+com\efo\service\TimeSheetItemsService.class
 com\efo\controllers\BudgetItemsController.class
 com\efo\restController\BudgetRestController.class
 com\efo\entity\EmpFinancial.class
@@ -94,10 +100,12 @@ com\efo\service\RevenuePaymentsService.class
 com\efo\restController\ReportsRestController.class
 com\efo\dao\RevenueTermsDao.class
 com\efo\dao\EventsDao.class
+com\efo\entity\TimeSheet.class
 com\efo\service\InvoiceNumService.class
 com\efo\dao\BudgetItemsDao.class
 com\efo\dao\InvestorDao.class
 com\efo\controllers\TransactionsController.class
+com\efo\interfaces\ITimeSheet.class
 com\efo\interfaces\IVendor.class
 com\efo\dao\TransactionsDao.class
 com\efo\entity\Budget.class
@@ -106,12 +114,14 @@ com\efo\service\LoanPaymentsService.class
 com\efo\dao\LoansDao.class
 com\efo\entity\BudgetItems.class
 com\efo\util\TestPdf.class
+com\efo\service\TimeReportingAccountsService.class
 com\efo\dao\ChartOfAccountsDao.class
 com\efo\service\ExpensePaymentsService.class
 com\efo\component\DatePrefixedSequenceIdGenerator.class
 com\efo\dao\LoanTermsDao.class
 com\efo\service\RevenuesService.class
 com\efo\interfaces\ILoans.class
+com\efo\dao\TimeReportingAccountsDao.class
 com\efo\dao\ExpensesDao.class
 com\efo\component\RoleUtilities.class
 com\efo\component\ProfileUtils.class
@@ -121,7 +131,9 @@ com\efo\controllers\UserController.class
 com\efo\interfaces\IChartOfAccounts.class
 com\efo\taglibs\IsAuthorized.class
 com\efo\entity\ExpensePayments.class
+com\efo\interfaces\ITimeReportingAccounts.class
 com\efo\service\CustomerService.class
+com\efo\entity\AssignedAccounts.class
 com\efo\dao\RevenuesDao.class
 com\efo\component\ScheduleUtilities.class
 com\efo\dao\EmpFinancialDao.class
@@ -148,6 +160,8 @@ com\efo\interfaces\IExpensePayments.class
 com\efo\entity\RoleKeys.class
 com\efo\dao\RoleDao.class
 com\efo\service\FetalTransactionService.class
+com\efo\entity\TimeSheetItems.class
+com\efo\service\TimeSheetService.class
 com\efo\controllers\ChartOfAccountsController.class
 com\efo\interfaces\IEmployee.class
 com\efo\service\ExpenseTermsService.class
