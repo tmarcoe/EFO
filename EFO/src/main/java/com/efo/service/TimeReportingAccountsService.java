@@ -3,6 +3,7 @@ package com.efo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
 import com.efo.dao.TimeReportingAccountsDao;
@@ -28,6 +29,10 @@ public class TimeReportingAccountsService implements ITimeReportingAccounts {
 	@Override
 	public List<TimeReportingAccounts> retrieveRawList(String department) {
 		return timeReportingAccountsDao.retrieveRawList(department);
+	}
+	
+	public PagedListHolder<TimeReportingAccounts> retrieveList(String department) {
+		return new PagedListHolder<TimeReportingAccounts>(timeReportingAccountsDao.retrieveRawList(department));
 	}
 
 	@Override

@@ -340,4 +340,24 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/timesheet.jsp"></put-attribute>
 	</definition>
 	
+	<!-- Time Sheet Reporting Accounts Controller -->
+	<definition name="listtsaccounts" extends="accounting.base">
+		<put-attribute name="title" value="Approved Time Reporting Accounts"></put-attribute>
+		<put-attribute name="heading_title" value="Approved Time Reporting Accounts"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listtsaccounts.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="newtsaccount" extends="accounting.base">
+		<put-attribute name="title" value="New Time Reporting Account"></put-attribute>
+		<put-attribute name="heading_title" value="New Time Reporting Account"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/newtsaccount.jsp"></put-attribute>
+	</definition>
+
+	<definition name="edittsaccount" extends="accounting.base">
+		<put-attribute name="title" value="Edit Time Reporting Accounts"></put-attribute>
+		<put-attribute name="heading_title" value="Edit Time Reporting Account"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/edittsaccount.jsp"></put-attribute>
+	</definition>
+
 </tiles-definitions>

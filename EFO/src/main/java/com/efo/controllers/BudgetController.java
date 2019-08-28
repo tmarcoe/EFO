@@ -37,7 +37,7 @@ public class BudgetController {
 	@Value("${efo.director.email}")
 	private String directorEmail;
 	
-	private final String pageLink = "/budget/budgetpaging/";
+	private final String pageLink = "/budget/budgetpaging";
 	private PagedListHolder<Budget> budgetList;
 	private SimpleDateFormat dateFormat;
 
@@ -106,8 +106,8 @@ public class BudgetController {
 		return "redirect:/budget/listbudget";
 	}
 
-	@RequestMapping(value = "budgepaging/{parent}", method = RequestMethod.GET)
-	public String handleBudgeItemtRequest(@ModelAttribute("page") String page, Model model) throws Exception {
+	@RequestMapping(value = "budgetpaging", method = RequestMethod.GET)
+	public String handleBudgetRequest(@ModelAttribute("page") String page, Model model) throws Exception {
 		int pgNum;
 
 		pgNum = isInteger(page);
