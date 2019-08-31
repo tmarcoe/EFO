@@ -21,7 +21,7 @@
 			<tr>
 				<td>${item.account_number}</td>
 				<td>${item.department}</td>
-				<td>${item.descriptiion}</td>
+				<td>${item.description}</td>
 				<td><fmt:formatDate value="${item.begins}"/></td>
 				<td><fmt:formatDate value="${item.expires}"/></td>
 				<td>${item.active}</td>

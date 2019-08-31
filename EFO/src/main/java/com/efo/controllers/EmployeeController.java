@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +22,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.efo.component.AccountUtilities;
 import com.efo.component.RoleUtilities;
 import com.efo.component.SendEmail;
 import com.efo.entity.CommonFields;
 import com.efo.entity.EmpFinancial;
 import com.efo.entity.Employee;
 import com.efo.entity.Role;
+import com.efo.entity.TimeReportingAccounts;
 import com.efo.entity.User;
 import com.efo.service.EmployeeService;
 import com.efo.service.RoleService;
+import com.efo.service.TimeReportingAccountsService;
 import com.efo.service.UserService;
 
 @Controller
@@ -38,7 +43,6 @@ public class EmployeeController {
 	@Value("${spring.mail.username}")
 	private String userName;
 
-	
 	@Autowired
 	EmployeeService employeeService;
 	
@@ -46,13 +50,19 @@ public class EmployeeController {
 	private SendEmail sendEmail;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	RoleService roleService;
+	private RoleService roleService;
 	
 	@Autowired
-	RoleUtilities roleUtils;
+	private RoleUtilities roleUtils;
+	
+	@Autowired
+	private TimeReportingAccountsService timeReportingAccountsService;
+	
+	@Autowired
+	private AccountUtilities accountUtils;
 
 	private final String pageLink = "/personnel/employeepaging";
 	
@@ -147,6 +157,7 @@ public class EmployeeController {
 		User user = userService.retrieve(user_id);
 		
 		user.setRoleString(roleUtils.roleToString(user.getRoles()));
+		user.getEmployee().setAccountString(accountUtils.accountsToString(user.getEmployee().getTimeReportingAccounts()));
 		
 		model.addAttribute("roles", roleService.retrieveRawList());
 		model.addAttribute("user", user);
@@ -163,10 +174,40 @@ public class EmployeeController {
 		}
 
 		user.setRoles(roleUtils.stringToRole(user.getRoleString()));
-		
+		user.getEmployee().setTimeReportingAccounts(accountUtils.stringToAccounts(user.getEmployee().getAccountString()));
 		user.getEmployee().setUser(user);
 		user.getEmployee().getEmp_financial().setEmployee(user.getEmployee());
 		user.getCommon().setUser(user);
+		
+		userService.merge(user);
+		
+		return "redirect:/personnel/employeelist";
+	}
+	
+	@RequestMapping("assigntsacccounts")
+	public String assignTimeSheetAccounts(@ModelAttribute("user_id") Long user_id, Model model) {
+		
+		Employee employee = employeeService.retrieve(user_id);
+		employee.setAccountString(accountUtils.accountsToString(employee.getTimeReportingAccounts()));
+		
+		List<TimeReportingAccounts> accounts = timeReportingAccountsService.retrieveRawList(employee.getDivision());
+		
+		model.addAttribute("accounts", accounts);
+		model.addAttribute("employee", employee);
+		
+		
+		return "assigntsacccounts";
+	}
+		
+	
+	@RequestMapping("updateassignedaccounts")
+	public String updateAssignedAccounts(@ModelAttribute("employee") Employee employee ) {
+		
+		User user = userService.retrieve(employee.getUser_id());
+		
+		employee.setTimeReportingAccounts(accountUtils.stringToAccounts(employee.getAccountString()));
+		employee.setUser(user);
+		user.setEmployee(employee);
 		
 		userService.merge(user);
 		

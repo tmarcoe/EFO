@@ -58,7 +58,7 @@ public class TimeReportingAccountsDao implements ITimeReportingAccounts {
 		
 		return accountsList;
 	}
-
+	
 	@Override
 	public void merge(TimeReportingAccounts timeReportingAccounts) {
 		Session session = session();

@@ -182,6 +182,7 @@
 	<sf:hidden path="employee.user_id"/>
 	<sf:hidden path="employee.emp_financial.user_id" />
 	<sf:hidden path="common.user_id" />
+	<sf:hidden path="employee.accountString"/>
 	<sf:hidden path="employee.emp_financial.fed_unemployment"/>
 	<sf:hidden path="employee.emp_financial.st_unemployment"/>
 	<sf:hidden path="employee.emp_financial.ss_tax"/>

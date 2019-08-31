@@ -18,7 +18,7 @@
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Email</th>
-				<th colspan="3">&nbsp;</th>
+				<th colspan="4">&nbsp;</th>
 			</tr>
 		</thead>
 		<c:forEach var="user" items="${objectList.pageList}" >
@@ -29,6 +29,7 @@
 				<td>${user.username}</td>
 				<td><button type="button" onclick="window.location.href='/personnel/editemployee?user_id=${user.user_id}'">Edit</button></td>
 				<td><button type="button" onclick="deleteUser('${user.user_id}')">Delete</button></td>
+				<td><button type="button" onclick="window.location.href='/personnel/assigntsacccounts?user_id=${user.user_id}'">Time Sheet Accounts</button>
 				<c:choose>
 					<c:when test="${user.enabled == true}">
 						<td><button type="button" onclick="window.location.href='/personnel/assignpassword?user_id=${user.user_id}'">Temporary Password</button></td>
@@ -41,7 +42,7 @@
 		</c:forEach>
 		<tfoot class="tablefooter" >
 			<tr>
-				<td colspan="6"><button type="button" onclick="window.location.href = '/personnel/newemployee'" >New Employee</button></td>
+				<td colspan="7"><button type="button" onclick="window.location.href = '/personnel/newemployee'" >New Employee</button></td>
 				<td colspan="1"><button type="button" onclick="window.location.href = '/#tabs-2'">Back</button></td>
 			</tr>
 		</tfoot>

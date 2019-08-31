@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -67,6 +68,9 @@ public class Employee implements Serializable {
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "assigned_accounts", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "account_number"))
 	private Set<TimeReportingAccounts> timeReportingAccounts;
+	
+	@Transient
+	private String accountString;
 	
 	public Long getUser_id() {
 		return user_id;
@@ -234,6 +238,22 @@ public class Employee implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Set<TimeReportingAccounts> getTimeReportingAccounts() {
+		return timeReportingAccounts;
+	}
+
+	public void setTimeReportingAccounts(Set<TimeReportingAccounts> timeReportingAccounts) {
+		this.timeReportingAccounts = timeReportingAccounts;
+	}
+
+	public String getAccountString() {
+		return accountString;
+	}
+
+	public void setAccountString(String accountString) {
+		this.accountString = accountString;
 	}
 	
 }

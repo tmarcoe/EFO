@@ -19,12 +19,12 @@
 			<td><sf:errors path="expires" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Brief Description:</b><br><sf:input path="descriptiion" class="fancy" /></td>
+			<td><b>Brief Description:</b><br><sf:input path="description" class="fancy" /></td>
 			<td><b>Chart Of Accounts #: </b><br><sf:input path="cofa_account" class="fancy" /></td>
 			<td><b>Department:<br>(blank for all departments)</b><br><sf:input path="department" class="fancy" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="descriptiion" class="error"/></td>
+			<td><sf:errors path="description" class="error"/></td>
 			<td><sf:errors path="cofa_account" class="error"/></td>
 			<td><sf:errors path="department" class="error"/></td>
 		</tr>

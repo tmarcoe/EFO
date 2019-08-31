@@ -14,7 +14,7 @@ public class TimeReportingAccounts implements Serializable {
 	private String account_number;
 	private String cofa_account;
 	private String department;
-	private String descriptiion;
+	private String description;
 	private Date begins;
 	private Date expires;
 	private Double max_amount;
@@ -45,12 +45,12 @@ public class TimeReportingAccounts implements Serializable {
 		this.department = department;
 	}
 
-	public String getDescriptiion() {
-		return descriptiion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescriptiion(String descriptiion) {
-		this.descriptiion = descriptiion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Date getBegins() {

@@ -13,7 +13,7 @@ import com.efo.service.RoleService;
 public class RoleUtilities {
 	
 	@Autowired
-	RoleService roleService;
+	private RoleService roleService;
 	
 	public String roleToString(Set<Role> roles) {
 		String result = "";
