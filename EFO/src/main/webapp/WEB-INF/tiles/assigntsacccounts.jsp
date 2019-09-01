@@ -11,12 +11,13 @@
 <script type="text/javascript" src="/script/jquery.multi-select.js"></script>
 
 <sf:form id="assignAccounts" action="/personnel/updateassignedaccounts" modelAttribute="employee" >
+	<div class="centerHeading" ><h2>Account Numbers For ${employee.firstname} ${employee.lastname}</h2></div>
 	<table class="fancy-table tableshadow">
 		<tr>
 			<th>Account Numbers</th>
 		</tr>
 		<tr>
-			<td><select multiple class="fancy-roles" id="an" name="an[]">
+			<td colspan="2"><select multiple class="fancy-roles" id="an" name="an[]">
 					<c:forEach items="${accounts}" var="item">
 						<option value="${item.account_number}">${item.description}</option>
 					</c:forEach>
@@ -24,6 +25,7 @@
 		</tr>
 		<tr>
 			<td><sf:button class="fancy-button" type="button" onclick="formSubmit()" ><b>Save</b></sf:button></td>
+			<td><sf:button class="fancy-button" type="button" onclick="window.history.back()" ><b>Cancel</b></sf:button></td>
 		</tr>
 	</table>
 	<sf:hidden path="user_id"/>
@@ -51,10 +53,13 @@
 <script type="text/javascript">
 $(document).ready(
 		function() {
-			$('#an').multiSelect();
+			$('#an').multiSelect({
+				selectableHeader: "<div class='custom-header'>Click here to select</div>",
+				selectionHeader: "<div class='custom-header'>Click here to deselect</div>"
+			});
 			var ndx = $("#aa").val();
 			var selectedOptions = ndx.split(";");
-			$('#an').multiSelect('select', selectOptions);
+			$('#an').multiSelect('select', selectedOptions);
 		});
 		
 function formSubmit() {

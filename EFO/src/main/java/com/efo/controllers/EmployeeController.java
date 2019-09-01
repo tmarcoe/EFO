@@ -205,11 +205,16 @@ public class EmployeeController {
 		
 		User user = userService.retrieve(employee.getUser_id());
 		
-		employee.setTimeReportingAccounts(accountUtils.stringToAccounts(employee.getAccountString()));
-		employee.setUser(user);
-		user.setEmployee(employee);
+		if (employee.getAccountString().length() == 0) {
+			timeReportingAccountsService.deleteByUserIds(user.getUser_id());
+		}else{
 		
-		userService.merge(user);
+			employee.setTimeReportingAccounts(accountUtils.stringToAccounts(employee.getAccountString()));
+			employee.setUser(user);
+			user.setEmployee(employee);
+		
+			userService.merge(user);
+		}
 		
 		return "redirect:/personnel/employeelist";
 	}

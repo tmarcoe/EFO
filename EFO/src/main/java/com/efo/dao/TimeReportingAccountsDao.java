@@ -59,6 +59,16 @@ public class TimeReportingAccountsDao implements ITimeReportingAccounts {
 		return accountsList;
 	}
 	
+	public void deleteByUserIds(Long user_id) {
+		Session session = session();
+		String hql = "DELETE FROM assigned_accounts WHERE user_id = :user_id";
+		Transaction tx = session.beginTransaction();
+		
+		session.createSQLQuery(hql).setLong("user_id", user_id).executeUpdate();
+		tx.commit();
+		session.close();
+	}
+	
 	@Override
 	public void merge(TimeReportingAccounts timeReportingAccounts) {
 		Session session = session();
