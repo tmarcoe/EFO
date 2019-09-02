@@ -53,6 +53,10 @@ public class UserService implements IUser{
 	public void delete(Long user_id) {
 		userDao.delete(user_id);
 	}
+	
+	public void deleteByUserIds(Long user_id) {
+		userDao.deleteByUserIds(user_id);
+	}
 
 	public PagedListHolder<User> retrieveList() {
 		return new PagedListHolder<User>(userDao.retrieveList());

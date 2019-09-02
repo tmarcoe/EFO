@@ -90,7 +90,7 @@
 						</button>
 				</c:if>
 				
-				<td colspan="5"><button class="fancy-button" type="button" onclick="window.history.back()">
+				<td colspan="5"><button class="fancy-button" type="button" onclick="window.location.href='/#tabs-9'">
 						<b>Back</b>
 					</button></td>
 			</tr>
@@ -144,14 +144,18 @@
 				<th>Sat</th>
 			</tr>
 			<tr>
-				<td><input id="nan" class="fancy" /></td>
-				<td><input id="nsu" class="fancy" type="number" step=".25" maxlength="5" size="${sz}"/></td>
-				<td><input id="nm" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="ntu" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="nw" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="nth" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="nf" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="nsa" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
+				<td><select class="fancy" id="nan" >
+						<c:forEach items="${accounts}" var="item">
+							<option value="${item.account_number}">${item.description}</option>
+						</c:forEach>
+					</select></td>
+				<td><input id="nsu" class="fancy" type="number" step=".25" width="${sz}"/></td>
+				<td><input id="nm" class="fancy" type="number" step=".25" width="${sz}" /></td>
+				<td><input id="ntu" class="fancy" type="number" step=".25" width="${sz}" /></td>
+				<td><input id="nw" class="fancy" type="number" step=".25" width="${sz}" /></td>
+				<td><input id="nth" class="fancy" type="number" step=".25" width="${sz}" /></td>
+				<td><input id="nf" class="fancy" type="number" step=".25" width="${sz}" /></td>
+				<td><input id="nsa" class="fancy" type="number" step=".25" width="${sz}" /></td>
 			</tr>
 			<tr>
 				<td colspan="4"><button class="fancy-button" type="button" onclick="checkExists()"><b>Add Account</b></button></td>
@@ -272,7 +276,5 @@
 			});
 	}
 	
-	function addDays(date, days) {
-	}
 	
 </script>

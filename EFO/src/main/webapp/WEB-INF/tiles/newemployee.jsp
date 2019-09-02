@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -60,9 +59,9 @@
 		</tr>
 		<tr>
 			<td><b>Home Ph</b><br><sf:input class="fancy" path="employee.home_phone"/></td>
-			<td><b>Address 1: </b><br><sf:input class="fancy" path="common.address1"/></td>
-			<td><b>Address 2: </b><br><sf:input class="fancy" path="common.address2"/></td>
-			<td><b>City: </b><br><sf:input class="fancy" path="common.city"/></td>
+			<td><b>Address 1</b><br><sf:input class="fancy" path="common.address1"/></td>
+			<td><b>Address 2</b><br><sf:input class="fancy" path="common.address2"/></td>
+			<td><b>City</b><br><sf:input class="fancy" path="common.city"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="employee.home_phone" class="error"/></td>
@@ -122,7 +121,7 @@
 				</sf:select></td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Role(s):</b><select multiple class="fancy-roles" path="roles" id="roles" >
+			<td colspan="2"><b>Role(s):</b><select multiple class="fancy-roles" id="roles" >
 					<c:forEach items="${roles}" var="item">
 						<option value="${item.id}" >${item.role}</option>
 					</c:forEach>

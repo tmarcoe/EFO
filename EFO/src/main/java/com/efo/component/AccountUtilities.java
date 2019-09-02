@@ -34,6 +34,7 @@ public class AccountUtilities {
 		
 		String[] accounts = accountString.split(";");
 		for (int i=0; i < accounts.length ; i++) {
+			if ("".compareToIgnoreCase(accounts[i]) == 0) continue;
 			result.add(tsService.retrieve(accounts[i]));
 		}
 		

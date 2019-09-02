@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
+<link type="text/css" media="screen" rel="stylesheet" href="/css/multi-select.css" />
+
+<script type="text/javascript" src="/script/jquery.multi-select.js"></script>
 
 <sf:form id="details" action="/personnel/updemployee" modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
@@ -28,52 +32,37 @@
 			<td><sf:errors path="employee.maleFemale" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Position: </b><br>
-			<sf:input class="fancy" path="employee.position" /></td>
-			<td><b>Starting Date: </b><br>
-			<sf:input id="stDate" class="fancy" type="text" path="employee.start_date" /></td>
-			<td><b>Ending Date: </b><br>
-			<sf:input id="endDate" class="fancy" type="text" path="employee.end_date" /></td>
+			<td><b>Position: </b><br><sf:input class="fancy" path="employee.position" /></td>
+			<td><b>Starting Date: </b><br><sf:input id="stDate" class="fancy" type="text" path="employee.start_date" /></td>
+			<td><b>Ending Date: </b><br><sf:input id="endDate" class="fancy" type="text" path="employee.end_date" /></td>
+			<td><b>Company</b><br><sf:input class="fancy" path="employee.company" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="employee.position" class="error" /></td>
 			<td><sf:errors path="employee.start_date" class="error" /></td>
 			<td><sf:errors path="employee.end_date" class="error" /></td>
-		</tr>
-		<tr>
-			<td><b>Company</b><br>
-			<sf:input class="fancy" path="employee.company" /></td>
-			<td><b>Division</b><br>
-			<sf:input class="fancy" path="employee.division" /></td>
-			<td><b>Supervisor</b><br>
-			<sf:input class="fancy" path="employee.supervisor" /></td>
-		</tr>
-		<tr>
 			<td><sf:errors path="employee.company" class="error" />
+		</tr>
+		<tr>
+			<td><b>Division</b><br><sf:input class="fancy" path="employee.division" /></td>
+			<td><b>Supervisor</b><br><sf:input class="fancy" path="employee.supervisor" /></td>
+			<td><b>Direct Line</b><br><sf:input class="fancy" path="employee.extension" /></td>
+			<td><b>Office Location</b><br><sf:input class="fancy" path="employee.office_loc" /></td>
+		</tr>
+		<tr>
 			<td><sf:errors path="employee.division" class="error" />
 			<td><sf:errors path="employee.supervisor" class="error" />
-		</tr>
-		<tr>
-			<td><b>Direct Line</b><br>
-			<sf:input class="fancy" path="employee.extension" /></td>
-			<td><b>Office Location</b><br>
-			<sf:input class="fancy" path="employee.office_loc" /></td>
-			<td><b>Home Ph</b><br>
-			<sf:input class="fancy" path="employee.home_phone" /></td>
-		</tr>
-		<tr>
 			<td><sf:errors path="employee.extension" class="error" /></td>
 			<td><sf:errors path="employee.office_loc" class="error" /></td>
-			<td><sf:errors path="employee.home_phone" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Address 1</b><br>
-			<sf:input class="fancy" path="common.address1" /></td>
-			<td><b>Address 2</b><br>
-			<sf:input class="fancy" path="common.address2" /></td>
-			<td><b>City</b><br>
-			<sf:input class="fancy" path="common.city" /></td>
+			<td><b>Home Ph</b><br><sf:input class="fancy" path="employee.home_phone" /></td>
+			<td><b>Address 1</b><br><sf:input class="fancy" path="common.address1" /></td>
+			<td><b>Address 2</b><br><sf:input class="fancy" path="common.address2" /></td>
+			<td><b>City</b><br><sf:input class="fancy" path="common.city" /></td>
+		</tr>
 		<tr>
+			<td><sf:errors path="employee.home_phone" class="error" /></td>
 			<td><sf:errors path="common.address1" class="error" /></td>
 			<td><sf:errors path="common.address2" class="error" /></td>
 			<td><sf:errors path="common.city" class="error" /></td>
@@ -105,6 +94,16 @@
 			<td><sf:errors path="employee.emer_ph" class="error" /></td>
 		</tr>
 		<tr>
+			<td><b>Email: </b>
+			<sf:input class="fancy" path="username" readonly="true" /></td>
+			<td><b>Enable logins? </b>
+			<sf:checkbox class="fancy" path="enabled" /></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="username" class="error" />
+			<td><sf:errors path="enabled" class="error" />
+		</tr>
+		<tr>
 			<td><b>Do Not Rehire:</b><br>
 			<sf:checkbox class="fancy" path="employee.dnr" /></td>
 			<td><b>Employment Type:</b><br> <sf:select class="fancy" path="employee.emp_type">
@@ -115,10 +114,11 @@
 					<sf:option value="C">Contract</sf:option>
 					<sf:option value="T">Temporary</sf:option>
 				</sf:select></td>
-			<td><b>Role(s):</b><br>
-			<sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
-					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
-				</sf:select></td>
+			<td colspan="2"><b>Role(s):</b><select multiple class="fancy-roles" id="roles">
+					<c:forEach items="${roles}" var="item">
+						<option value="${item.id}" >${item.role}</option>
+					</c:forEach>
+				</select></td>
 
 		</tr>
 		<tr>
@@ -134,16 +134,6 @@
 			<td><button class="fancy-button" type="button" onclick="window.history.back()">
 					<b>Cancel</b>
 				</button></td>
-		</tr>
-		<tr>
-			<td><b>Email: </b>
-			<sf:input class="fancy" path="username" readonly="true" /></td>
-			<td><b>Enable logins? </b>
-			<sf:checkbox class="fancy" path="enabled" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="username" class="error" />
-			<td><sf:errors path="enabled" class="error" />
 		</tr>
 	</table>
 	<div class="modal" id="empFinancial">
@@ -224,16 +214,15 @@
 </sf:form>
 
 <script type="text/javascript">
-	$(document).ready(
-			function() {
-				var ndx = $("#selectedRoles").val();
-				var selectedOptions = ndx.split(";");
-				for ( var i in selectedOptions) {
-					var optionVal = selectedOptions[i];
-					$("#roles").find("option[value=" + optionVal + "]").prop(
-							"selected", "selected");
-				}
-			});
+	$(document).ready(function() {
+		$('#roles').multiSelect({
+			selectableHeader: "<div class='custom-header'>Click here to select</div>",
+			selectionHeader: "<div class='custom-header'>Click here to deselect</div>"
+		});
+		var ndx = $("#selectedRoles").val();
+		var selectedOptions = ndx.split(";");
+		$('#roles').multiSelect('select', selectedOptions);
+});
 
 	function openPopup() {
 		var modal = document.getElementById('empFinancial');

@@ -2,8 +2,10 @@ package com.efo.controllers;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.efo.entity.TimeReportingAccounts;
 import com.efo.entity.TimeSheet;
 import com.efo.entity.TimeSheetItems;
 import com.efo.entity.User;
@@ -63,9 +66,11 @@ public class TimeSheetController {
 		}
 		
 		LocalDate endPeriod = new LocalDate(timeSheet.getBegin_period()).plusDays(6);
+		List<TimeReportingAccounts> accounts = new ArrayList<>(user.getEmployee().getTimeReportingAccounts());
 		
 		model.addAttribute("endPeriod", endPeriod.toDate());
 		model.addAttribute("timeSheet", timeSheet);
+		model.addAttribute("accounts", accounts);
 		
 		return "timesheet";
 	}

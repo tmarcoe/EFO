@@ -35,6 +35,7 @@ public class RoleUtilities {
 		
 		String[] roles = roleString.split(";");
 		for (int i=0; i < roles.length; i++) {
+			if ( "".compareTo(roles[i]) == 0) continue;
 			result.add(roleService.retrieve(Integer.valueOf(roles[i])));
 		}
 		

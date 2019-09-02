@@ -1,11 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
+<link type="text/css" media="screen" rel="stylesheet" href="/css/multi-select.css" />
+
+<script type="text/javascript" src="/script/jquery.multi-select.js"></script>
 
 <sf:form id="customer" method="post" action="/personnel/addcustomer"
 	modelAttribute="user">
@@ -97,9 +101,11 @@
 		</tr>
 		<tr>
 			<td><b>Start Date:</b><br><sf:input id="since" class="fancy" path="customer.since" type="text" /></td>
-			<td><b>Role(s):</b><br><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
-					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
-				</sf:select></td>
+			<td colspan="2"><b>Role(s):</b><br><select multiple class="fancy-roles" id="roles">
+					<c:forEach items="${roles}" var="item">
+						<option value="${item.id}" >${item.role}</option>
+					</c:forEach>
+				</select></td>
 		</tr>
 		<tr>			
 			<td><sf:errors path="customer.since" class="error" /></td>
@@ -113,13 +119,15 @@
 <script type="text/javascript">
 	$(document).ready(
 			function() {
+				$('#roles').multiSelect({
+					selectableHeader: "<div class='custom-header'>Click here to select</div>",
+					selectionHeader: "<div class='custom-header'>Click here to deselect</div>"
+				});
 				var ndx = $("#selectedRoles").val();
 				var selectedOptions = ndx.split(";");
-				for ( var i in selectedOptions) {
-					var optionVal = selectedOptions[i];
-					$("#roles").find("option[value=" + optionVal + "]").prop(
-							"selected", "selected");
-				}
+				
+				$('#roles').multiSelect('select', selectedOptions);
+				
 				if ($("#enabled").prop('checked') == false) {
 					$("#password").prop("readonly",true);
 					$("#confirmpass").prop("readonly",true);

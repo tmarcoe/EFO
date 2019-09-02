@@ -83,6 +83,16 @@ public class UserDao implements IUser {
 		session.close();
 	}
 
+	public void deleteByUserIds(Long user_id) {
+		Session session = session();
+		String hql = "DELETE FROM user_role WHERE user_id = :user_id";
+		Transaction tx = session.beginTransaction();
+		
+		session.createSQLQuery(hql).setLong("user_id", user_id).executeUpdate();
+		tx.commit();
+		session.close();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<User> retrieveList() {
 		Session session = session();

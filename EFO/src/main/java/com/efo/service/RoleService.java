@@ -40,6 +40,7 @@ public class RoleService implements IRole{
 	public void delete(Role role) {
 		roleDao.delete(role);
 	}
+	
 	public List<Role> retrieveRawList() {
 		return roleDao.retrieveList();
 	}

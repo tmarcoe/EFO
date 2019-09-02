@@ -1,11 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
 <link type="text/css" rel="stylesheet" href="/css/tables.css" />
+<link type="text/css" media="screen" rel="stylesheet" href="/css/multi-select.css" />
 
+<script type="text/javascript" src="/script/jquery.multi-select.js"></script>
 
 <sf:form id="details" method="post" action="/personnel/updatecustomer" modelAttribute="user">
 	<sf:hidden id="selectedRoles" path="roleString" />
@@ -85,13 +88,15 @@
 <script type="text/javascript">
 $(document).ready(
 		function() {
+			$('#roles').multiSelect({
+				selectableHeader: "<div class='custom-header'>Click here to select</div>",
+				selectionHeader: "<div class='custom-header'>Click here to deselect</div>"
+			});
 			var ndx = $("#selectedRoles").val();
 			var selectedOptions = ndx.split(";");
-			for ( var i in selectedOptions) {
-				var optionVal = selectedOptions[i];
-				$("#roles").find("option[value=" + optionVal + "]").prop(
-						"selected", "selected");
-			}
+			
+			$('#roles').multiSelect('select', selectedOptions);
+			
 		});
 
 function formSubmit() {

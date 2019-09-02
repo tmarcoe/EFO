@@ -204,17 +204,12 @@ public class EmployeeController {
 	public String updateAssignedAccounts(@ModelAttribute("employee") Employee employee ) {
 		
 		User user = userService.retrieve(employee.getUser_id());
-		
-		if (employee.getAccountString().length() == 0) {
-			timeReportingAccountsService.deleteByUserIds(user.getUser_id());
-		}else{
-		
+				
 			employee.setTimeReportingAccounts(accountUtils.stringToAccounts(employee.getAccountString()));
 			employee.setUser(user);
 			user.setEmployee(employee);
 		
 			userService.merge(user);
-		}
 		
 		return "redirect:/personnel/employeelist";
 	}
