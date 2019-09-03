@@ -1,8 +1,10 @@
 package com.efo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
 import com.efo.dao.TimeSheetDao;
@@ -32,6 +34,14 @@ public class TimeSheetService implements ITimeSheet {
 	@Override
 	public List<TimeSheet> retrieveRawList() {
 		return timeSheetDao.retrieveRawList();
+	}
+	
+	public PagedListHolder<TimeSheet> listSubmitted() {
+		return new PagedListHolder<TimeSheet>(timeSheetDao.listSubmitted());
+	}
+	
+	public boolean checkIfPeriodExists(Date begin, Long user_id, Long reference) {
+		return timeSheetDao.checkIfPeriodExists(begin, user_id, reference);
 	}
 
 	@Override

@@ -192,6 +192,8 @@
 					<tr>
 						<td><a href="/timesheet/timesheet"><img class="tile" alt="Time Sheet"
 								src="<c:url value='/images/timesheet.png'/>"></a></td>
+						<td><a href="/timesheet/listsubmittedts"><img class="tile" alt="Time Sheet"
+								src="<c:url value='/images/timesheetapprove.png'/>"></a></td>
 						<td><a href="/timesheet/listtsaccounts"><img class="tile" alt="Time Sheet Accounts"
 								src="<c:url value='/images/tsaccounts.png'/>"></a></td>
 

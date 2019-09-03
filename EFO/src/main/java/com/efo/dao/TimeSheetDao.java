@@ -1,5 +1,6 @@
 package com.efo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -53,6 +54,28 @@ public class TimeSheetDao implements ITimeSheet {
 		session.close();
 		
 		return ts;
+	}
+	
+	public boolean checkIfPeriodExists(Date begin, Long user_id, Long reference) {
+		String hql = "SELECT COUNT(*) FROM TimeSheet WHERE begin_period = :begin AND user_id = :user_id AND reference != :reference";
+		Session session = session();
+		
+		Long count = (Long) session.createQuery(hql).setDate("begin", begin).setLong("user_id", user_id).setLong("reference", reference).uniqueResult();
+		session.close();
+		
+		return (count > 0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TimeSheet> listSubmitted() {
+		String hql = "FROM TimeSheet WHERE submitted IS NOT null AND approved IS null AND rejected IS null";
+		Session session = session();
+		
+		List<TimeSheet> tsList = session.createQuery(hql).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		
+		session.close();
+		
+		return tsList;
 	}
 
 	@SuppressWarnings("unchecked")

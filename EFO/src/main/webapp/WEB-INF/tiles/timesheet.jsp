@@ -12,7 +12,7 @@
 	<fmt:formatDate type="date" value='${endPeriod}' var="endDt" />
 	<fmt:formatDate type="date" value='${timeSheet.begin_period}' var="strDate" />
 	<c:if test="${not empty timeSheet.submitted}">
-		<h3>Period Closed</h3>
+		<div class="centerHeading"><h3>Time Sheet For ${timeSheet.name}</h3></div>
 	</c:if>
 	<table
 		class="tableview tableborder padding tableshadow rjsecond rjthird rjfourth rjfifth rjsixth rjseventh rjeighth rjnineth">
@@ -84,18 +84,22 @@
 			</tr>
 			<tr>
 				<c:if test="${empty timeSheet.submitted}">
-					<td colspan="5"><button class="fancy-button" type="button" onclick="addWindow(${timeSheet.reference})" ><b>New Account Number</b></button>
-					<td><button class="fancy-button" type="button" onclick="window.location.href='#'">
+					<td colspan="5"><button class="fancy-button" type="button" onclick="addWindow(${timeSheet.reference})" ><b>New Account Number</b></button></td>
+					<td><button class="fancy-button" type="button" onclick="window.location.href='/timesheet/submitts?reference=${timeSheet.reference}'">
 							<b>Submit</b>
-						</button>
+						</button></td>
 				</c:if>
-				
+				<c:if test="${not empty timeSheet.submitted }">
+					<td colspan="4"><button class="fancy-button" onclick="window.location.href='/timesheet/acceptts?reference=${timeSheet.reference}'" type="button"><b>Accept</b></button></td>
+					<td><button class="fancy-button" onclick="window.location.href='/timesheet/rejectts?reference=${timeSheet.reference}'" type="button"><b>reject</b></button></td>
+				</c:if>
 				<td colspan="5"><button class="fancy-button" type="button" onclick="window.location.href='/#tabs-9'">
 						<b>Back</b>
 					</button></td>
 			</tr>
 		</tfoot>
 	</table>
+	<sf:hidden path=""/>
 </sf:form>
 <div id="editTs" class="modal">
 	<div class="modal-content large-modal fancy">
@@ -276,5 +280,8 @@
 			});
 	}
 	
+	function checkDate() {
+		
+	}}
 	
 </script>

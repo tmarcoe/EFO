@@ -1,5 +1,7 @@
 package com.efo.restController;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -20,6 +22,7 @@ import com.efo.service.EmployeeService;
 import com.efo.service.InvestorService;
 import com.efo.service.ProfilesService;
 import com.efo.service.TimeSheetItemsService;
+import com.efo.service.TimeSheetService;
 import com.efo.service.TransactionsService;
 import com.efo.service.VendorService;
 
@@ -44,6 +47,9 @@ public class QueryController {
 	
 	@Autowired
 	private ProfilesService profilesService;
+	
+	@Autowired
+	private TimeSheetService timeSheetService;
 	
 	@Autowired
 	private TimeSheetItemsService timeSheetItemsService;
@@ -95,11 +101,25 @@ public class QueryController {
 	}
 	
 	@RequestMapping("accountnumexists")
-	private String accountNumExists(@RequestParam(value = "accountNum") String accountNum, 
+	public String accountNumExists(@RequestParam(value = "accountNum") String accountNum, 
 									@RequestParam(value = "reference") Long reference) throws JSONException {
 		JSONObject json = new JSONObject();
 		
 		json.put("exists", timeSheetItemsService.accountNumExists(accountNum, reference));
+		
+		return json.toString();
+	}
+	
+	@RequestMapping("sameperiod")
+	public String samePeriod(@RequestParam(value = "begin") String begin, 
+							 @RequestParam(value = "user_id") Long user_id, 
+							 @RequestParam(value = "reference") Long reference) throws ParseException, JSONException {
+		JSONObject json = new JSONObject();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dateFormat.setLenient(false);
+		
+		json.putOpt("exists",  timeSheetService.checkIfPeriodExists(dateFormat.parse(begin), user_id, reference));
+		
 		
 		return json.toString();
 	}

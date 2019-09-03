@@ -21,6 +21,7 @@ public class TimeSheet implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long reference;
 	private Long user_id;
+	private String name;
 	private Date begin_period;
 	private Date submitted;
 	private Date approved;
@@ -44,6 +45,14 @@ public class TimeSheet implements Serializable {
 
 	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getBegin_period() {

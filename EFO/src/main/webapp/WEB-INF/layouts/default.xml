@@ -134,6 +134,12 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
 	</definition>
 
+	<definition name="assigntsacccounts" extends="accounting.base">
+		<put-attribute name="title" value="Assign Time Reporting Accounts"></put-attribute>
+		<put-attribute name="heading_title" value="Assign Time Reporting Account"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/assigntsacccounts.jsp"></put-attribute>
+	</definition>
+
 	<!-- Vendor Controller -->
 	<definition name="choosevendor" extends="accounting.base">
 		<put-attribute name="title" value="Choose Vendor"></put-attribute>
@@ -340,6 +346,19 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/timesheet.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="listsubmittedts" extends="accounting.base">
+		<put-attribute name="title" value="Budgets Ready For Approval"></put-attribute>
+		<put-attribute name="heading_title" value="Budgets Ready For Approval"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/listsubmittedts.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/static/pageinator.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="viewtimesheet" extends="accounting.base">
+		<put-attribute name="title" value="Time Sheet"></put-attribute>
+		<put-attribute name="heading_title" value="Time Sheet"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/timesheet.jsp"></put-attribute>
+	</definition>
+	
 	<!-- Time Sheet Reporting Accounts Controller -->
 	<definition name="listtsaccounts" extends="accounting.base">
 		<put-attribute name="title" value="Approved Time Reporting Accounts"></put-attribute>
@@ -358,12 +377,6 @@
 		<put-attribute name="title" value="Edit Time Reporting Accounts"></put-attribute>
 		<put-attribute name="heading_title" value="Edit Time Reporting Account"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/edittsaccount.jsp"></put-attribute>
-	</definition>
-
-	<definition name="assigntsacccounts" extends="accounting.base">
-		<put-attribute name="title" value="Assign Time Reporting Accounts"></put-attribute>
-		<put-attribute name="heading_title" value="Assign Time Reporting Account"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/tiles/assigntsacccounts.jsp"></put-attribute>
 	</definition>
 
 </tiles-definitions>
