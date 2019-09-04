@@ -202,6 +202,14 @@ public class TimeSheetController {
 		
 		return "redirect:/timesheet/listsubmittedts";
 	}
+	
+	@RequestMapping("purgets")
+	public String purgeTimeSheet(@ModelAttribute("reference") Long reference) {
+		
+		timeSheetService.delete(reference);
+		
+		return "redirect:/";
+	}
 		
 	
 	@RequestMapping(value = "tsapprovepaging", method = RequestMethod.GET)

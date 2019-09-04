@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
@@ -166,18 +167,39 @@
 				<td colspan="4"><button class="fancy-button" type="button" onclick="$('#newTs').hide()"><b>Cancel</b></button> 
 			</tr>		
 		</table>
-		<input id="ref" type="hidden">
+		<input id="ref" type="hidden" value="${timeSheet.reference}" />
+		<input id="user" type="hidden" value="${timesheet.user_id}" />
+		<input id="begin" type="hidden" value="${timeSheet.begin_period}" />
 	</div>
 </div>
 <div id="exists" class="modal">
 	<div class="modal-content small-modal fancy">
 		<h2>That account is already on your time sheet.</h2>
 		<h2>Press 'Edit' to add or change the hours.</h2>
-		<button class="fancy-button" type="button" onclick="closeAll()">OK</button>
+		<button class="fancy-button" type="button" onclick="closeAll()"><b>OK</b></button>
 	</div>
 </div>
-
+<div id="periodExists" class="modal" >
+	<div class="modal-content small-modal fancy" >
+		<h2>You have a submitted time sheet from this period</h2>
+		<button class="fancy-button" type="button" onclick="window.location.href='/timesheet/purgets?=${timeSheet.reference}'" ><b>OK</b></button>
+	</div>
+</div>
 <script type="text/javascript">
+	$(document).ready(function() {
+		var beg = $("#begin").val();
+		var usr = $("#user").val();
+		var ref = $("#ref").val();
+		$.getJSON("/rest/sameperiod?begin=" + beg + "&user_id=" + usr + "&reference=" + ref, function(data) {
+			if (data.exists == true ) {
+				$("#periodExists").show();
+			}
+		}).fail(
+				function(jqXHR, textStatus, errorThrown) {
+					alert("error " + textStatus + "\n"
+							+ "incoming Text " + jqXHR.responseText);
+				});
+	});
 
 	function updateWindow(id, account_num, su, m, tu, w, th, f, sa) {
 		$("#id").val(id);
@@ -280,8 +302,6 @@
 			});
 	}
 	
-	function checkDate() {
-		
-	}}
+
 	
 </script>

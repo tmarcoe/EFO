@@ -100,8 +100,11 @@ public class TimeSheetDao implements ITimeSheet {
 
 	@Override
 	public void delete(Long reference) {
+		String hql = "DELETE FROM TimeSheet WHERE reference = :reference";
 		Session session = session();
 		Transaction tx = session.beginTransaction();
+		
+		session.createQuery(hql).setLong("reference", reference).executeUpdate();
 		
 		tx.commit();
 		session.close();
