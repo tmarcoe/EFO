@@ -12,6 +12,7 @@
 <sf:form method="post" modelAttribute="timeSheet">
 	<fmt:formatDate type="date" value='${endPeriod}' var="endDt" />
 	<fmt:formatDate type="date" value='${timeSheet.begin_period}' var="strDate" />
+	<fmt:formatDate pattern="yyyy-MM-dd" value="${timeSheet.begin_period}" var="strDate" />
 	<c:if test="${not empty timeSheet.submitted}">
 		<div class="centerHeading"><h3>Time Sheet For ${timeSheet.name}</h3></div>
 	</c:if>
@@ -168,8 +169,8 @@
 			</tr>		
 		</table>
 		<input id="ref" type="hidden" value="${timeSheet.reference}" />
-		<input id="user" type="hidden" value="${timesheet.user_id}" />
-		<input id="begin" type="hidden" value="${timeSheet.begin_period}" />
+		<input id="user" type="hidden" value="${timeSheet.user_id}" />
+		<input id="begin" type="hidden" value="${strDate}" />
 	</div>
 </div>
 <div id="exists" class="modal">
@@ -181,8 +182,8 @@
 </div>
 <div id="periodExists" class="modal" >
 	<div class="modal-content small-modal fancy" >
-		<h2>You have a submitted time sheet from this period</h2>
-		<button class="fancy-button" type="button" onclick="window.location.href='/timesheet/purgets?=${timeSheet.reference}'" ><b>OK</b></button>
+		<h2>You have already submitted a time sheet for this period</h2>
+		<button class="fancy-button" type="button" onclick="window.location.href='/timesheet/purgets?reference=${timeSheet.reference}'" ><b>OK</b></button>
 	</div>
 </div>
 <script type="text/javascript">
