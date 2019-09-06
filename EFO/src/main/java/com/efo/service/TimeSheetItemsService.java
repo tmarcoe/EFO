@@ -43,4 +43,8 @@ public class TimeSheetItemsService implements ITimeSheetItems {
 	public boolean accountNumExists(String accountNum, Long reference) {
 		return timeSheetItemsDao.accountNumExists(accountNum, reference);
 	}
+	
+	public Double totalTimeSheet(Long reference) {
+		return timeSheetItemsDao.totalTimeSheet(reference);
+	}
 }

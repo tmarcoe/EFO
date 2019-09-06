@@ -160,6 +160,14 @@
 					<td><b>Garnishment</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.garnishment" /></td>
 				</tr>
 				<tr>
+					<td colspan="4"><b>====== Payroll Transaction Names ======</b></td>
+				</tr>
+				<tr>
+					<td><b>Federal</b><br><sf:input class="fancy" path="employee.emp_financial.fed_trans"/></td>
+					<td><b>State</b><br><sf:input class="fancy" path="employee.emp_financial.st_trans"/></td>
+					<td><b>City</b><br><sf:input class="fancy" path="employee.emp_financial.city_trans"/></td>
+				</tr>
+				<tr>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>

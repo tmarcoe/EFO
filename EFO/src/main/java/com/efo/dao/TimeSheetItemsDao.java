@@ -43,6 +43,17 @@ public class TimeSheetItemsDao implements ITimeSheetItems {
 		
 		return ts;
 	}
+	
+	public Double totalTimeSheet(Long reference) {
+		String hql = "SELECT SUM(sun + mon + tue + wed + thu + fri + sat) FROM TimeSheetItems WHERE reference = :reference";
+		Session session = session();
+		
+		Double total = (Double) session.createQuery(hql).setLong("reference", reference).uniqueResult();
+		
+		session.close();
+		
+		return total;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

@@ -1,19 +1,46 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: efo
 -- ------------------------------------------------------
--- Server version	5.7.22-log
+-- Server version	8.0.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Dumping data for table `assigned_accounts`
+--
+
+LOCK TABLES `assigned_accounts` WRITE;
+/*!40000 ALTER TABLE `assigned_accounts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `assigned_accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `budget`
+--
+
+LOCK TABLES `budget` WRITE;
+/*!40000 ALTER TABLE `budget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `budget` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `budget_items`
+--
+
+LOCK TABLES `budget_items` WRITE;
+/*!40000 ALTER TABLE `budget_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `budget_items` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `chart_of_accounts`
@@ -36,6 +63,15 @@ INSERT INTO `common_fields` (`user_id`, `address1`, `address2`, `city`, `country
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `customer`
+--
+
+LOCK TABLES `customer` WRITE;
+/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `emp_financial`
 --
 
@@ -51,8 +87,116 @@ UNLOCK TABLES;
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` (`user_id`, `cell_phone`, `company`, `division`, `dnr`, `emer_contact`, `emer_ph`, `emp_type`, `end_date`, `extension`, `firstname`, `home_phone`, `lastname`, `male_female`, `office_loc`, `position`, `salutation`, `start_date`, `supervisor`) VALUES (1,'','','','\0','','','F','2100-12-31 00:00:00','','New','','Employee','M','','','Mr.','2018-06-09 00:00:00','');
+INSERT INTO `employee` (`user_id`, `cell_phone`, `company`, `division`, `dnr`, `emer_contact`, `emer_ph`, `emp_type`, `end_date`, `extension`, `firstname`, `home_phone`, `lastname`, `male_female`, `office_loc`, `position`, `salutation`, `start_date`, `supervisor`) VALUES (1,'','','',_binary '\0','','','F','2100-12-31 00:00:00','','New','','Employee','M','','','Mr.','2018-06-09 00:00:00','');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `equity`
+--
+
+LOCK TABLES `equity` WRITE;
+/*!40000 ALTER TABLE `equity` DISABLE KEYS */;
+/*!40000 ALTER TABLE `equity` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `events`
+--
+
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `expense_payments`
+--
+
+LOCK TABLES `expense_payments` WRITE;
+/*!40000 ALTER TABLE `expense_payments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `expense_payments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `expense_terms`
+--
+
+LOCK TABLES `expense_terms` WRITE;
+/*!40000 ALTER TABLE `expense_terms` DISABLE KEYS */;
+/*!40000 ALTER TABLE `expense_terms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `expenses`
+--
+
+LOCK TABLES `expenses` WRITE;
+/*!40000 ALTER TABLE `expenses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `expenses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `general_ledger`
+--
+
+LOCK TABLES `general_ledger` WRITE;
+/*!40000 ALTER TABLE `general_ledger` DISABLE KEYS */;
+/*!40000 ALTER TABLE `general_ledger` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `investor`
+--
+
+LOCK TABLES `investor` WRITE;
+/*!40000 ALTER TABLE `investor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `investor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `invoice_num`
+--
+
+LOCK TABLES `invoice_num` WRITE;
+/*!40000 ALTER TABLE `invoice_num` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invoice_num` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `loan_payments`
+--
+
+LOCK TABLES `loan_payments` WRITE;
+/*!40000 ALTER TABLE `loan_payments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `loan_payments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `loan_terms`
+--
+
+LOCK TABLES `loan_terms` WRITE;
+/*!40000 ALTER TABLE `loan_terms` DISABLE KEYS */;
+/*!40000 ALTER TABLE `loan_terms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `loans`
+--
+
+LOCK TABLES `loans` WRITE;
+/*!40000 ALTER TABLE `loans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `loans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `pay_stub`
+--
+
+LOCK TABLES `pay_stub` WRITE;
+/*!40000 ALTER TABLE `pay_stub` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pay_stub` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -64,14 +208,78 @@ LOCK TABLES `profiles` WRITE;
 INSERT INTO `profiles` (`name`, `active`, `created`, `depreciation`, `descr`, `exclude`, `script`, `show_credit_terms`, `type`, `variables`) VALUES ('Add Equity',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','equity/addequity.trans',_binary '\0','I','events,dao,Events;equity,dao,Equity'),('Capital Expense (cash)',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','capital_assets/capitalexpense-cash.trans',_binary '\0','CE','expenses,dao,Expenses;events,dao,Events'),('Capital Expense (credit)',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','capital_assets/capitalexpense-credit.trans',_binary '','CE','expenses,dao,Expenses;expenseTerms,dao,ExpenseTerms;expensePayments,dao,ExpensePayments;events,dao,Events'),('Loan Payment',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','accounts_payable/payloan.trans',_binary '\0','P','newPayment,dao,LoanPayments;newEvent,dao,Events'),('New Budget',_binary '','2019-08-09 00:00:00',_binary '\0',NULL,_binary '\0','budget/newbudget.trans',_binary '\0','CE','events,dao,Events'),('New Loan',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','accounts_payable/newloan.trans',_binary '','L','loans,dao,Loans;loanTerms,dao,LoanTerms;loanPayments,dao,LoanPayments;events,dao,Events'),('New Overhead (One Time)',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','overhead_expense/newotoverhead.trans',_binary '\0','O','events,dao,Events;expenses,dao,Expenses'),('New Overhead (Scheduled)',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','overhead_expense/newoverhead.trans',_binary '\0','O','events,dao,Events;newEvent,dao,Events;expenses,dao,Expenses;expenseTerms,dao,ExpenseTerms;expensePayments,dao,ExpensePayments'),('Order Retail (Cash)',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','order_inventory/orderretail-cash.trans',_binary '\0','RE','expenses,dao,Expenses;events,dao,Events'),('Order Retail (Credit)',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','order_inventory/orderretail-credit.trans',_binary '','RE','expenses,dao,Expenses;expenseTerms,dao,ExpenseTerms;expensePayments,dao,ExpensePayments;events,dao,Events'),('Pay Credit Note',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','accounts_payable/paycreditnote.trans',_binary '\0','P','newPayment,dao,ExpensePayments;newEvent,dao,Events'),('Pay Overhead',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','overhead_expense/payoverhead.trans',_binary '\0','P','newEvent,dao,Events;newPayment,dao,ExpensePayments'),('Receive Payment',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','accounts_receiveable/receivepayment.trans',_binary '\0','P','newPayment,dao,RevenuePayments;newEvent,dao,Events'),('Retail Sales (Cash)',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','retail_sales/retailsales-cash.trans',_binary '\0','RR','taxRate,decimal,%tax%;revenues,dao,Revenues;events,dao,Events'),('Retail Sales (Credit)',_binary '','2019-04-29 00:00:00',_binary '\0',NULL,_binary '\0','retail_sales/retailsales-credit.trans',_binary '','RR','taxRate,decimal,%tax%;revenues,dao,Revenues;revenueTerms,dao,RevenueTerms;revenuePayments,dao,RevenuePayments;events,dao,Events');
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping data for table `revenue_payments`
+--
+
+LOCK TABLES `revenue_payments` WRITE;
+/*!40000 ALTER TABLE `revenue_payments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `revenue_payments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `revenue_terms`
+--
+
+LOCK TABLES `revenue_terms` WRITE;
+/*!40000 ALTER TABLE `revenue_terms` DISABLE KEYS */;
+/*!40000 ALTER TABLE `revenue_terms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `revenues`
+--
+
+LOCK TABLES `revenues` WRITE;
+/*!40000 ALTER TABLE `revenues` DISABLE KEYS */;
+/*!40000 ALTER TABLE `revenues` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Dumping data for table `role`
 --
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` (`role_id`, `role`) VALUES (1,'USER'),(2,'PERSONNEL'),(3,'BASIC'),(4,'ACCOUNTING'),(5,'EVENTS'),(6,'REPORTS'),(7,'ADMIN'),(8, 'BUDGET');
+INSERT INTO `role` (`role_id`, `role`) VALUES (1,'USER'),(2,'PERSONNEL'),(3,'BASIC'),(4,'ACCOUNTING'),(5,'EVENTS'),(6,'REPORTS'),(7,'ADMIN'),(8,'BUDGET'),(9,'TIMESHEET');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `time_reporting_accounts`
+--
+
+LOCK TABLES `time_reporting_accounts` WRITE;
+/*!40000 ALTER TABLE `time_reporting_accounts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `time_reporting_accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `time_sheet`
+--
+
+LOCK TABLES `time_sheet` WRITE;
+/*!40000 ALTER TABLE `time_sheet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `time_sheet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `time_sheet_items`
+--
+
+LOCK TABLES `time_sheet_items` WRITE;
+/*!40000 ALTER TABLE `time_sheet_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `time_sheet_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `transactions`
+--
+
+LOCK TABLES `transactions` WRITE;
+/*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -80,7 +288,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`user_id`, `enabled`, `password`, `temp_pw`, `username`) VALUES (1,'','$2a$10$QFxwISh5JvXg8ztNMkkZ7u1VdWhEIDd/0tYa6fNRNst1KKrf0PzDC','\0','New@new.com');
+INSERT INTO `user` (`user_id`, `enabled`, `password`, `temp_pw`, `username`) VALUES (1,_binary '','$2a$10$QFxwISh5JvXg8ztNMkkZ7u1VdWhEIDd/0tYa6fNRNst1KKrf0PzDC',_binary '\0','New@new.com');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,10 +298,18 @@ UNLOCK TABLES;
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` (`user_id`, `role_id`) VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8);
+INSERT INTO `user_role` (`user_id`, `role_id`) VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Dumping data for table `vendor`
+--
+
+LOCK TABLES `vendor` WRITE;
+/*!40000 ALTER TABLE `vendor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vendor` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -104,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-25 15:16:15
+-- Dump completed on 2019-09-05 15:04:02

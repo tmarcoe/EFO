@@ -12,7 +12,7 @@
 <sf:form method="post" modelAttribute="timeSheet">
 	<fmt:formatDate type="date" value='${endPeriod}' var="endDt" />
 	<fmt:formatDate type="date" value='${timeSheet.begin_period}' var="strDate" />
-	<fmt:formatDate pattern="yyyy-MM-dd" value="${timeSheet.begin_period}" var="strDate" />
+	<fmt:formatDate pattern="yyyy-MM-dd" value="${timeSheet.begin_period}" var="strDt" />
 	<c:if test="${not empty timeSheet.submitted}">
 		<div class="centerHeading"><h3>Time Sheet For ${timeSheet.name}</h3></div>
 	</c:if>
@@ -170,7 +170,7 @@
 		</table>
 		<input id="ref" type="hidden" value="${timeSheet.reference}" />
 		<input id="user" type="hidden" value="${timeSheet.user_id}" />
-		<input id="begin" type="hidden" value="${strDate}" />
+		<input id="begin" type="hidden" value="${strDt}" />
 	</div>
 </div>
 <div id="exists" class="modal">

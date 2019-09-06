@@ -1,0 +1,36 @@
+/**************************************************
+ * Hourly Payroll taxes
+ **************************************************/
+
+ begin
+	dao employee = lookup("FROM Employee WHERE user_id = %d", user_id);
+	dao timeSheet = lookup("FROM TimeSheet WHERE reference = %d", reference);
+	dao empFinancial = employee.getEmp_financial();
+	decimal normalHours = 0.0;
+	decimal overtimeHours = 0.0;
+
+	if (totalHours > 40.0 ) {
+		normalHours = 40.0;
+		overtimeHours = (totalHours - 40.0);
+	}else{
+		normalHours = totalHours;
+	}
+
+	decimal amount_earned = (normalHours * empFinancial.getPay_rate()) + (overtimeHours * (empFinancial.getPay_rate() * 1.5));
+	
+	payStub.setUser_id(user_id);
+	payStub.setBegin_period(timeSheet.getBegin_period());
+	payStub.setHours_worked(normalHours);
+	payStub.setOvertime_worked(overtimeHours);
+	payStub.setAmount_earned(amount_earned);
+	payStub.setMedicare(0.0);
+	payStub.setFica(0.0);
+	payStub.setFed_unemployment(0.0);
+	payStub.setSt_unemployment(0.0);
+	payStub.setMedical(0.0);
+	payStub.setRetirement(0.0);
+	payStub.setUnion_dues(0.0);
+	payStub.setGarnishment(0.0);
+
+	insert(payStub);
+ end

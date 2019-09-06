@@ -24,7 +24,7 @@ public class ProfileUtils {
 		
 		for (int i=0; i < vars.length; i++) {
 			String[] parms = vars[i].split(",");
-			switch(parms[1].toLowerCase()) {
+			switch(parms[1].toLowerCase().trim()) {
 				case "decimal":
 					result[i] = (Double) Double.valueOf(parms[2]);
 					break;

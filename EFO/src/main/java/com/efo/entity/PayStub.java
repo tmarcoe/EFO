@@ -16,7 +16,7 @@ public class PayStub implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private Long User_id;
+	private Long user_id;
 	private Date begin_period;
 	private Double hours_worked;
 	private Double overtime_worked;
@@ -39,11 +39,11 @@ public class PayStub implements Serializable {
 	}
 	
 	public Long getUser_id() {
-		return User_id;
+		return user_id;
 	}
 	
 	public void setUser_id(Long user_id) {
-		User_id = user_id;
+		this.user_id = user_id;
 	}
 	
 	public Date getBegin_period() {
