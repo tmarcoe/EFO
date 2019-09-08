@@ -64,20 +64,6 @@
 			<td><sf:errors path="common.country" class="error" /></td>
 		</tr>
 		<tr>
-			<td colspan="4"><b>Vendor Type: </b><sf:select class="fancy" path="vendor.type">
-					<sf:option value="C">Capital</sf:option>
-					<sf:option value="R">Revenue</sf:option>
-					<sf:option value="O">Overhead</sf:option>
-					<sf:option value="L">Lending Institution</sf:option>
-				</sf:select>
-				<b>Type of Product: </b>
-				<sf:input class="fancy" path="vendor.category" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="vendor.type" class="error" /></td>
-			<td><sf:errors path="vendor.category" class="error" /></td>
-		</tr>
-		<tr>
 			<td><sf:input class="fancy" path="username" autocomplete="false" placeholder="Email" /> 
 				<sf:errors path="username" class="error" /></td>
 			<td><sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" placeholder="Password"/> 
@@ -94,6 +80,20 @@
 				</div>&nbsp;</td>
 			<td><div id="matchpass"></div>&nbsp;</td>
 			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="4"><b>Vendor Type: </b><sf:select class="fancy" path="vendor.type">
+					<sf:option value="C">Capital</sf:option>
+					<sf:option value="R">Revenue</sf:option>
+					<sf:option value="O">Overhead</sf:option>
+					<sf:option value="L">Lending Institution</sf:option>
+				</sf:select>
+				<b>Type of Product: </b>
+				<sf:input class="fancy" path="vendor.category" /></td>
+		</tr>
+		<tr>
+			<td><sf:errors path="vendor.type" class="error" /></td>
+			<td><sf:errors path="vendor.category" class="error" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><b>Role(s):</b><br> <sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">

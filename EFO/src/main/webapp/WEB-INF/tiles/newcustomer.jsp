@@ -44,14 +44,9 @@
 			<td><sf:errors path="customer.maleFemale" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Address 1</b></td>
-			<td><b>Address 2</b></td>
-			<td><b>City</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="common.address1" />
-			<td><sf:input class="fancy" path="common.address2" />
-			<td><sf:input class="fancy" path="common.city" /></td>
+			<td><sf:input class="fancy" path="common.address1" placeholder="Address 1" />
+			<td><sf:input class="fancy" path="common.address2" placeholder="Address 2" />
+			<td><sf:input class="fancy" path="common.city" placeholder="City" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.address1" class="error" /></td>
@@ -59,14 +54,9 @@
 			<td><sf:errors path="common.city" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Region</b></td>
-			<td><b>Postal Code</b></td>
-			<td><b>Country Code</b></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="common.region" /></td>
-			<td><sf:input class="fancy" path="common.postalCode" /></td>
-			<td><sf:input class="fancy" path="common.country" /></td>
+			<td><sf:input class="fancy" path="common.region" placeholder="Region" /></td>
+			<td><sf:input class="fancy" path="common.postalCode" placeholder="Postal Code" /></td>
+			<td><sf:input class="fancy" path="common.country" placeholder="Country Code" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.region" class="error" /></td>
@@ -74,14 +64,9 @@
 			<td><sf:errors path="common.country" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Email</b><br>
-				<sf:input class="fancy" path="username" autocomplete="false" /></td>
-			<td><b>Temporary Password</b><br>
-				<sf:password id="password" class="fancy" path="password" autocomplete="false"
-					showPassword="true" /></td>
-			<td><b>Comfirm Password</b><br>
-				<input class="fancy" id="confirmpass" class="control" name="confirmpass"
-				type="password" /></td>
+			<td><sf:input class="fancy" path="username" autocomplete="false" placeholder="Email" /></td>
+			<td><sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" placeholder="Password" /></td>
+			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass" type="password" placeholder="confirm Password" /></td>
 			<td><b>Enabled logins? </b><sf:checkbox id="enabled" class="fancy" path="enabled" onclick="disableInput()"/></td>
 		</tr>
 		<tr>
@@ -100,7 +85,7 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><b>Start Date:</b><br><sf:input id="since" class="fancy" path="customer.since" type="text" /></td>
+			<td><sf:input id="since" class="fancy" path="customer.since" type="text" placeholder="Start Date" /></td>
 			<td colspan="2"><b>Role(s):</b><br><select multiple class="fancy-roles" id="roles">
 					<c:forEach items="${roles}" var="item">
 						<option value="${item.id}" >${item.role}</option>

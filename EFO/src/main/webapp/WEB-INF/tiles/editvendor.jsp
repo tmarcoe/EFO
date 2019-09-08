@@ -56,6 +56,10 @@
 			<td><sf:errors path="common.country" class="error" /></td>
 		</tr>
 		<tr>
+			<td><sf:input class="fancy" path="username"  readonly="true" placeholder="Email" /></td>
+			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled"/></td>
+		</tr>
+		<tr>
 			<td colspan="4"><b>Vendor Type: </b>
 				<sf:select class="fancy" path="vendor.type">
 					<sf:option value="C">Capital</sf:option>
@@ -69,10 +73,6 @@
 		<tr>
 			<td><sf:errors path="vendor.type" class="error" /></td>
 			<td><sf:errors path="vendor.category" class="error" /></td>
-		</tr>
-		<tr>
-			<td><sf:input class="fancy" path="username"  readonly="true" placeholder="Email" /></td>
-			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled"/></td>
 		</tr>
 		<tr>
 			<td colspan="2"><b>Role(s):</b><br><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">

@@ -21,47 +21,32 @@
 			</tr>
 		</thead>
 		<tr>
-			<td><b>First Name</b><br>
-				<sf:input class="fancy" path="investor.firstname" />
-			</td>
-			<td><b>Last Name</b><br>
-				<sf:input class="fancy" path="investor.lastname" />
-			</td>
-			<td><b>Male/Female</b><br>
-				<sf:select class="fancy" path="investor.male_female">
+			<td><sf:input class="fancy" path="investor.firstname" placeholder="First Name" /></td>
+			<td><sf:input class="fancy" path="investor.lastname" placeholder="Last Name" /></td>
+			<td><b>Male/Female</b><br> <sf:select class="fancy" path="investor.male_female">
 					<sf:option value="">--- Select ---</sf:option>
 					<sf:option value="M">Male</sf:option>
 					<sf:option value="F">Female</sf:option>
-				</sf:select>
-			</td>
+				</sf:select></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="investor.firstname" class="error" /></td>
 			<td><sf:errors path="investor.lastname" class="error" /></td>
-			<td><sf:errors path="investor.male_female" class="error" /></td>	
+			<td><sf:errors path="investor.male_female" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Number of Shares</b><br>
-				<sf:input class="fancy" type="number" step=".01" path="investor.shares"/>
-			</td>
-			<td><b>Started On</b><br>
-				<sf:input id="since" class="fancy" type="text" path="investor.since" />
-			</td>
-			<td><b>Preferred Stock? </b>
-				<sf:checkbox path="investor.preferred"/>
-			</td>
+			<td><sf:input class="fancy" type="number" step=".01" path="investor.shares"  placeholder="Number of Shares" /></td>
+			<td><sf:input id="since" class="fancy" type="text" path="investor.since"  placeholder="Started On" /></td>
+			<td><b>Preferred Stock? </b> <sf:checkbox path="investor.preferred" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="investor.shares" class="error" /></td>
 			<td><sf:errors path="investor.since" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Address 1</b><br>
-				<sf:input class="fancy" path="common.address1" />
-			<td><b>Address 2</b><br>
-				<sf:input class="fancy" path="common.address2" />
-			<td><b>City</b><br>
-				<sf:input class="fancy" path="common.city" /></td>
+			<td><sf:input class="fancy" path="common.address1"  placeholder="Address 1" />
+			<td><sf:input class="fancy" path="common.address2" placeholder="Address 2" />
+			<td><sf:input class="fancy" path="common.city"  placeholder="City" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.address1" class="error" /></td>
@@ -69,12 +54,9 @@
 			<td><sf:errors path="common.city" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Region</b><br>
-				<sf:input class="fancy" path="common.region" /></td>
-			<td><b>Postal Code</b><br>
-				<sf:input class="fancy" path="common.postalCode" /></td>
-			<td><b>Country Code</b><br>
-				<sf:input class="fancy" path="common.country" /></td>
+			<td><sf:input class="fancy" path="common.region"  placeholder="Region" /></td>
+			<td><sf:input class="fancy" path="common.postalCode"  placeholder="Postal Code" /></td>
+			<td><sf:input class="fancy" path="common.country"  placeholder="Country Code" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.region" class="error" /></td>
@@ -82,18 +64,16 @@
 			<td><sf:errors path="common.country" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Email</b><br
-				><sf:input class="fancy" path="username" autocomplete="false" /> <sf:errors path="username" class="error" /></td>
-			<td><b>Temporary Password</b><br>
-				<sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" /> 
-				<sf:errors path="password" class="error" /></td>
-				
-			<td><b>Repeat Password</b><br>
-				<input class="fancy" id="confirmpass" class="control" name="confirmpass" type="password" /></td>
+			<td><sf:input class="fancy" path="username" autocomplete="false" placeholder="Email" /> 
+			<sf:errors path="username" class="error" /></td>
+			<td><sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true"  placeholder="Temporary Password" /> 
+			<sf:errors path="password" class="error" /></td>
+
+			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass" type="password"  placeholder="Confirm Password" /></td>
 			<td><b>Enable Logins? </b> <sf:checkbox id="enabled" path="enabled" onclick="disableInput()" /></td>
 		</tr>
 		<tr>
-			<td><sf:errors path="username" class="error"/></td>
+			<td><sf:errors path="username" class="error" /></td>
 			<td><div id="pbar">
 					<label id="pLabel"></label>
 					<div id="pStrength"></div>
@@ -102,7 +82,8 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Role(s):</b><br> <sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
+			<td colspan="2"><b>Role(s):</b><br> <sf:select class="fancy-roles" path="roles" id="roles"
+					multiselect="true">
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
 		</tr>
@@ -117,22 +98,25 @@
 	</table>
 </sf:form>
 <script type="text/javascript">
-	$(document).ready(
-			function() {
-				$('#roles').multiSelect({
-					selectableHeader: "<div class='custom-header'>Click here to select</div>",
-					selectionHeader: "<div class='custom-header'>Click here to deselect</div>"
-				});
-				var ndx = $("#selectedRoles").val();
-				var selectedOptions = ndx.split(";");
-				
-				$('#roles').multiSelect('select', selectedOptions);
-				
-				if ($("#enabled").prop('checked') == false) {
-					$("#password").prop("readonly", true);
-					$("#confirmpass").prop("readonly", true);
-				}
-			});
+	$(document)
+			.ready(
+					function() {
+						$('#roles')
+								.multiSelect(
+										{
+											selectableHeader : "<div class='custom-header'>Click here to select</div>",
+											selectionHeader : "<div class='custom-header'>Click here to deselect</div>"
+										});
+						var ndx = $("#selectedRoles").val();
+						var selectedOptions = ndx.split(";");
+
+						$('#roles').multiSelect('select', selectedOptions);
+
+						if ($("#enabled").prop('checked') == false) {
+							$("#password").prop("readonly", true);
+							$("#confirmpass").prop("readonly", true);
+						}
+					});
 
 	function formSubmit() {
 
@@ -164,13 +148,13 @@
 			$("#confirmpass").prop("readonly", false);
 		}
 	}
-	
-	  $( function() {
-		    $( "#since" ).datepicker({
-		    	dateFormat: "yy-mm-dd",
-		        changeMonth: true,
-		        changeYear: true,
-		        clickInput: true
-		    	});
-		  } );
+
+	$(function() {
+		$("#since").datepicker({
+			dateFormat : "yy-mm-dd",
+			changeMonth : true,
+			changeYear : true,
+			clickInput : true
+		});
+	});
 </script>

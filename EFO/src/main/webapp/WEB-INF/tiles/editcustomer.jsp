@@ -39,19 +39,18 @@
 			<td><sf:errors path="customer.maleFemale" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Address 1</b><br><sf:input class="fancy" path="common.address1"/>
-			<td><b>Address 2</b><br><sf:input class="fancy" path="common.address2"/>
-			<td><b>City</b><br><sf:input class="fancy" path="common.city"/>
-		</td>
+			<td><sf:input class="fancy" path="common.address1" placeholder="Address 1" /></td>
+			<td><sf:input class="fancy" path="common.address2" placeholder="Address 2" /></td>
+			<td><sf:input class="fancy" path="common.city" placeholder="City" /></td>
 		<tr>
 			<td><sf:errors path="common.address1" class="error"/></td>
 			<td><sf:errors path="common.address2" class="error"/></td>
 			<td><sf:errors path="common.city" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Region</b><br><sf:input class="fancy" path="common.region"/>
-			<td><b>Postal Code</b><br><sf:input class="fancy" path="common.postalCode"/>
-			<td><b>Postal Code</b><br><sf:input class="fancy" path="common.country"/>
+			<td><sf:input class="fancy" path="common.region" placeholder="Region" />
+			<td><br><sf:input class="fancy" path="common.postalCode" placeholder="Postal Code" />
+			<td><br><sf:input class="fancy" path="common.country" placeholder="Country Code" />
 		</tr>
 		<tr>
 			<td><sf:errors path="common.region" class="error"/></td>
@@ -59,7 +58,7 @@
 			<td><sf:errors path="common.country" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Email: </b><br><sf:input class="fancy" path="username" readonly="true" /></td>
+			<td><sf:input class="fancy" path="username" readonly="true"/></td>
 			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled"/></td>
 		</tr>
 		<tr>
@@ -67,8 +66,8 @@
 			<td><sf:errors path="enabled" class="error" />
 		</tr>
 		<tr>
-			<td><b>Customer Since:<br></b><sf:input id="since" class="fancy" type="text" path="customer.since"/></td>
-			<td><b>Role(s):<br></b><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
+			<td><sf:input id="since" class="fancy" type="text" path="customer.since"  placeholder=">Customer Since" /></td>
+			<td colspan="2"><b>Role(s):<br></b><sf:select class="fancy-roles" path="roles" id="roles" multiselect="true">
 					<sf:options items="${roles}" itemValue="id" itemLabel="role" />
 				</sf:select></td>
 		</tr>
