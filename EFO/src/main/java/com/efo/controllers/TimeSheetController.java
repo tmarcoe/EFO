@@ -54,9 +54,15 @@ public class TimeSheetController {
 
 	@Autowired
 	private FetalTransactionService fetalTransactionService;
-	
+
 	@Value("${efo.payperiods}")
 	private String payPeriods;
+
+	@Value("${efo.federal.fica}")
+	private String fica;
+
+	@Value("${efo.federal.medicare}")
+	private String medicare;
 
 	private final String pageLink = "/timesheet/tsapprovepaging";
 	private PagedListHolder<TimeSheet> tsList;
@@ -201,8 +207,8 @@ public class TimeSheetController {
 		if (user.getEmployee().getEmp_financial().getFed_trans().trim().length() > 0) {
 			Profiles profile = profilesService.retrieve(user.getEmployee().getEmp_financial().getFed_trans());
 			String variables = profile.getVariables();
-			variables = ProfileUtils.prepareVariableString("%user_id%,%total_hours%,%reference%,%periods%",
-					String.format("%d,%f,%d,%d", timeSheet.getUser_id(), total, reference, Long.valueOf(payPeriods)), variables );
+			variables = ProfileUtils.prepareVariableString("%user_id%,%total_hours%,%reference%,%periods%,%fica%,%medicare%", String.format("%d,%f,%d,%d,%f,%f",
+					timeSheet.getUser_id(), total, reference, Long.valueOf(payPeriods), Double.valueOf(fica), Double.valueOf(medicare)), variables);
 			Object[] varObjects = ProfileUtils.getObject(variables);
 			fetalTransactionService.execTransaction(profile, transaction, varObjects);
 		}

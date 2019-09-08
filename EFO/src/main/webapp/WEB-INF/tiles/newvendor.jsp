@@ -17,6 +17,7 @@
 				<td><sf:hidden path="user_id" /></td>
 				<td><sf:hidden path="common.user_id" /></td>
 				<td><sf:hidden path="vendor.user_id" /></td>
+				<td><sf:hidden path="vendor.keywords"/></td>
 			</tr>
 		</thead>
 		<tr>
@@ -33,8 +34,9 @@
 					<sf:option value="Ms.">Ms.</sf:option>
 					<sf:option value="Miss.">Miss.</sf:option>
 					<sf:option value="Dr.">Dr.</sf:option>
-				</sf:select> <sf:input class="fancy" path="vendor.firstname" placeholder="First Name" /> <sf:input class="fancy"
-					path="vendor.lastname" placeholder="Last Name" /></td>
+				</sf:select> 
+				<sf:input class="fancy" path="vendor.firstname" placeholder="First Name" /> 
+				<sf:input class="fancy" path="vendor.lastname" placeholder="Last Name" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="vendor.salutation" class="error" /></td>
@@ -42,12 +44,9 @@
 			<td><sf:errors path="vendor.lastname" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Address 1</b><br>
-				<sf:input class="fancy" path="common.address1" />
-			<td><b>Address 2</b><br>
-				<sf:input class="fancy" path="common.address2" />
-			<td><b>City</b><br>
-				<sf:input class="fancy" path="common.city" /></td>
+			<td><sf:input class="fancy" path="common.address1" placeholder="Address 1"/></td>
+			<td><sf:input class="fancy" path="common.address2" placeholder="Address 2"/></td>
+			<td><sf:input class="fancy" path="common.city" placeholder="City"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.address1" class="error" /></td>
@@ -55,12 +54,9 @@
 			<td><sf:errors path="common.city" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Region</b><br>
-				<sf:input class="fancy" path="common.region" /></td>
-			<td><b>Postal Code</b><br>
-				<sf:input class="fancy" path="common.postalCode" /></td>
-			<td><b>Country Code</b><br>
-				<sf:input class="fancy" path="common.country" /></td>
+			<td><sf:input class="fancy" path="common.region" placeholder="Region"/></td>
+			<td><sf:input class="fancy" path="common.postalCode" placeholder="Postal Code"/></td>
+			<td><sf:input class="fancy" path="common.country" placeholder="Country Code" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.region" class="error" /></td>
@@ -68,13 +64,13 @@
 			<td><sf:errors path="common.country" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Vendor Type</b><br><sf:select class="fancy" path="vendor.type">
+			<td colspan="4"><b>Vendor Type: </b><sf:select class="fancy" path="vendor.type">
 					<sf:option value="C">Capital</sf:option>
 					<sf:option value="R">Revenue</sf:option>
 					<sf:option value="O">Overhead</sf:option>
 					<sf:option value="L">Lending Institution</sf:option>
-				</sf:select></td>
-			<td><b>Type of Product</b><br>
+				</sf:select>
+				<b>Type of Product: </b>
 				<sf:input class="fancy" path="vendor.category" /></td>
 		</tr>
 		<tr>
@@ -82,21 +78,12 @@
 			<td><sf:errors path="vendor.category" class="error" /></td>
 		</tr>
 		<tr>
-			<td colspan="3"><b>Keywords: (Separated by commas)</b><br>
-				<sf:textarea class="fancy-textarea" path="vendor.keywords" rows="4" cols="58" /></td>
-		</tr>
-		<tr>
-			<td><sf:errors path="vendor.keywords" /></td>
-		</tr>
-		<tr>
-			<td><b>Email</b><br
-				><sf:input class="fancy" path="username" autocomplete="false" /> <sf:errors path="username" class="error" /></td>
-			<td><b>Temporary Password</b><br>
-				<sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" /> 
+			<td><sf:input class="fancy" path="username" autocomplete="false" placeholder="Email" /> 
+				<sf:errors path="username" class="error" /></td>
+			<td><sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" placeholder="Password"/> 
 				<sf:errors path="password" class="error" /></td>
 				
-			<td><b>Repeat Password</b><br>
-				<input class="fancy" id="confirmpass" class="control" name="confirmpass" type="password" /></td>
+			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass" type="password" placeholder="Repeat Password" /></td>
 			<td><b>Enable Logins? </b> <sf:checkbox id="enabled" path="enabled" onclick="disableInput()" /></td>
 		</tr>
 		<tr>

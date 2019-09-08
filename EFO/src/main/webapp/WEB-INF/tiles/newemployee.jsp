@@ -34,10 +34,10 @@
 			<td><sf:errors path="employee.maleFemale" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Position: </b><br><sf:input class="fancy" path="employee.position" /></td>
-			<td><b>Starting Date: </b><br><sf:input id="stDate" class="fancy" type="text" path="employee.start_date"/></td>
-			<td><b>Ending Date: </b><br><sf:input id="endDate" class="fancy" type="text" path="employee.end_date"/></td>
-			<td><b>Company: </b><br><sf:input class="fancy" path="employee.company" /></td>
+			<td><sf:input class="fancy" path="employee.position" placeholder="Position" /></td>
+			<td><sf:input id="stDate" class="fancy" type="text" path="employee.start_date" placeholder="Starting Date"/></td>
+			<td><sf:input id="endDate" class="fancy" type="text" path="employee.end_date" placeholder="Ending Date"/></td>
+			<td><sf:input class="fancy" path="employee.company" placeholder="company"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="employee.position" class="error"/></td>
@@ -46,10 +46,10 @@
 			<td><sf:errors path="employee.company" class="error"/>
 		</tr>
 		<tr>
-			<td><b>Division: </b><br><sf:input class="fancy" path="employee.division" /></td>
-			<td><b>Supervisor: </b><br><sf:input class="fancy" path="employee.supervisor" /></td>
-			<td><b>Direct Line: </b><br><sf:input class="fancy" path="employee.extension" /></td>
-			<td><b>Office Location: </b><br><sf:input class="fancy" path="employee.office_loc" /></td>
+			<td><sf:input class="fancy" path="employee.division" placeholder="Division" /></td>
+			<td><sf:input class="fancy" path="employee.supervisor" placeholder="Supervisor" /></td>
+			<td><sf:input class="fancy" path="employee.extension" placeholder="Direct Line" /></td>
+			<td><sf:input class="fancy" path="employee.office_loc" placeholder="Office Location" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="employee.division" class="error"/>
@@ -58,10 +58,10 @@
 			<td><sf:errors path="employee.office_loc" class="error"/>
 		</tr>
 		<tr>
-			<td><b>Home Ph</b><br><sf:input class="fancy" path="employee.home_phone"/></td>
-			<td><b>Address 1</b><br><sf:input class="fancy" path="common.address1"/></td>
-			<td><b>Address 2</b><br><sf:input class="fancy" path="common.address2"/></td>
-			<td><b>City</b><br><sf:input class="fancy" path="common.city"/></td>
+			<td><sf:input class="fancy" path="employee.home_phone" placeholder="Home Phone" /></td>
+			<td><sf:input class="fancy" path="common.address1" placeholder="Address 1" /></td>
+			<td><sf:input class="fancy" path="common.address2" placeholder="Address 2" /></td>
+			<td><sf:input class="fancy" path="common.city" placeholder="City" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="employee.home_phone" class="error"/></td>
@@ -70,36 +70,28 @@
 			<td><sf:errors path="common.city" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Region: </b><br><sf:input class="fancy" path="common.region"/>
-			<td><b>Postal Code: </b><br><sf:input class="fancy" path="common.postalCode"/>
-			<td><b>Country Code: </b><br><sf:input class="fancy" path="common.country"/>
+			<td><sf:input class="fancy" path="common.region" placeholder="Region" /></td>
+			<td><sf:input class="fancy" path="common.postalCode" placeholder="Postal Code" /></td>
+			<td><sf:input class="fancy" path="common.country" placeholder="Country Code" /></td>
+			<td><sf:input class="fancy" path="employee.cell_phone" placeholder="Cell Phone" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.region" class="error"/></td>
 			<td><sf:errors path="common.postalCode" class="error"/></td>
 			<td><sf:errors path="common.country" class="error"/></td>
-		</tr>
-		<tr>
-			<td><b>Cell Phone</b><br><sf:input class="fancy" path="employee.cell_phone"/></td>
-			<td><b>Emergency Cont</b><br><sf:input class="fancy" path="employee.emer_contact"/></td>
-			<td><b>Contact Ph</b><br><sf:input class="fancy" path="employee.emer_ph"/></td>
-		</tr>
-		<tr>
 			<td><sf:errors path="employee.cell_phone" class="error"/></td>
-			<td><sf:errors path="employee.emer_contact" class="error"/></td>
-			<td><sf:errors path="employee.emer_ph" class="error"/></td>
 		</tr>
 		<tr>
-			<td><b>Email</b><br>
-				<sf:input class="fancy" path="username" autocomplete="false" /></td>
-			<td><b>Temporary Password</b><br>
-				<sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" /></td>
-			<td><b>Confirm Password</b><br>
-				<input class="fancy" id="confirmpass" class="control" name="confirmpass"
-				type="password" /></td>
+			<td><sf:input class="fancy" path="employee.emer_contact" placeholder="Emergency Contact" /></td>
+			<td><sf:input class="fancy" path="employee.emer_ph" placeholder="Contact Phone" /></td>
+			<td><sf:input class="fancy" path="username" autocomplete="false" placeholder="Email" /></td>
+			<td><sf:password id="password" class="fancy" path="password" autocomplete="false" showPassword="true" placeholder="Temporary Password"/></td>
+			<td><input class="fancy" id="confirmpass" class="control" name="confirmpass" type="password" placeholder="Repeat Password" /></td>
 			<td><b>Enable logins? </b><sf:checkbox id="enabled" path="enabled" onclick="disableInput()"/></td>
 		</tr>
 		<tr>
+			<td><sf:errors path="employee.emer_contact" class="error"/></td>
+			<td><sf:errors path="employee.emer_ph" class="error"/></td>
 			<td>&nbsp;<sf:errors path="username" class="error" /></td>
 			<td><div id="pbar">
 					<label id="pLabel"></label>

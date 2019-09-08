@@ -154,6 +154,10 @@ tfoot.tablefooter td
 	height: 5px;
 }
 
+.small-font {
+	font-size: 12px;
+}
+
 .tableSpacing th {
 	padding-right: 1em;
 	padding-left: 1em;

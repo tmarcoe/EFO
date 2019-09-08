@@ -36,12 +36,9 @@
 			<td><sf:errors path="vendor.lastname" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Address 1</b><br>
-				<sf:input class="fancy" path="common.address1" size="27"/>
-			<td><b>Address 2</b><br>
-				<sf:input class="fancy" path="common.address2" />
-			<td><b>City</b><br>
-				<sf:input class="fancy" path="common.city" /></td>
+			<td><sf:input class="fancy" path="common.address1" size="27" placeholder="Address 1"/>
+			<td><sf:input class="fancy" path="common.address2"  placeholder="Address 2"/>
+			<td><sf:input class="fancy" path="common.city" placeholder="City"/></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.address1" class="error" /></td>
@@ -49,12 +46,9 @@
 			<td><sf:errors path="common.city" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Region</b><br>
-				<sf:input class="fancy" path="common.region"  size="27"/></td>
-			<td><b>Postal Code</b><br>
-				<sf:input class="fancy" path="common.postalCode" /></td>
-			<td><b>Country Code</b><br>
-				<sf:input class="fancy" path="common.country" /></td>
+			<td><sf:input class="fancy" path="common.region"  size="27" placeholder="Region" /></td>
+			<td><sf:input class="fancy" path="common.postalCode" placeholder="Postal Code" /></td>
+			<td><sf:input class="fancy" path="common.country" placeholder="Country Code" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="common.region" class="error" /></td>
@@ -62,29 +56,22 @@
 			<td><sf:errors path="common.country" class="error" /></td>
 		</tr>
 		<tr>
-			<td><b>Capital, Revenue? <br>or Overhead</b><br>
+			<td colspan="4"><b>Vendor Type: </b>
 				<sf:select class="fancy" path="vendor.type">
 					<sf:option value="C">Capital</sf:option>
 					<sf:option value="R">Revenue</sf:option>
 					<sf:option value="O">Overhead</sf:option>
 					<sf:option value="L">Lending Institution</sf:option>
-				</sf:select></td>
-			<td><b>Type of Product</b><br>
+				</sf:select>
+				<b>Type of Product: </b>
 				<sf:input class="fancy" path="vendor.category" /></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="vendor.type" class="error" /></td>
 			<td><sf:errors path="vendor.category" class="error" /></td>
 		</tr>
-		<tr>	
-			<td colspan="3"><b>Keywords: (Separated by commas)</b><br>
-				<sf:textarea class="fancy-textarea" path="vendor.keywords" rows="4" cols="80"/></td>
-		</tr>
 		<tr>
-			<td><sf:errors path="vendor.keywords" class="error" /></td>
-		</tr>
-		<tr>
-			<td><b>Email: </b><sf:input class="fancy" path="username"  readonly="true" /></td>
+			<td><sf:input class="fancy" path="username"  readonly="true" placeholder="Email" /></td>
 			<td><b>Enabled logins? </b><sf:checkbox class="fancy" path="enabled"/></td>
 		</tr>
 		<tr>
@@ -102,6 +89,7 @@
 	<sf:hidden path="vendor.user_id"/>
 	<sf:hidden path="password" />
 	<sf:hidden path="temp_pw" />
+	<sf:hidden path="vendor.keywords"/>
 	
 </sf:form>
 

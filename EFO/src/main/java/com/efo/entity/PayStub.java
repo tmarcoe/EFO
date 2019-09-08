@@ -18,9 +18,12 @@ public class PayStub implements Serializable {
 	
 	private Long user_id;
 	private Date begin_period;
+	private Date processed;
 	private Double hours_worked;
 	private Double overtime_worked;
 	private Double amount_earned;
+	private Double fed_wh;
+	private Double st_wh;
 	private Double medicare;
 	private Double fica;
 	private Double fed_unemployment;	// Federal unemployement
@@ -54,6 +57,14 @@ public class PayStub implements Serializable {
 		this.begin_period = begin_period;
 	}
 	
+	public Date getProcessed() {
+		return processed;
+	}
+
+	public void setProcessed(Date processed) {
+		this.processed = processed;
+	}
+
 	public Double getHours_worked() {
 		return hours_worked;
 	}
@@ -78,6 +89,22 @@ public class PayStub implements Serializable {
 		this.amount_earned = amount_earned;
 	}
 	
+	public Double getFed_wh() {
+		return fed_wh;
+	}
+
+	public void setFed_wh(Double fed_wh) {
+		this.fed_wh = fed_wh;
+	}
+
+	public Double getSt_wh() {
+		return st_wh;
+	}
+
+	public void setSt_wh(Double st_wh) {
+		this.st_wh = st_wh;
+	}
+
 	public Double getMedicare() {
 		return medicare;
 	}
