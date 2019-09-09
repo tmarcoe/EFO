@@ -66,7 +66,7 @@ public class ProfileUtils {
 		if (keys.length != values.length) return "ERROR:keys do not match the values";
 		
 		for(int i=0; i < keys.length; i++) {
-			if (result.toLowerCase().contains(keys[i])) {
+			if (result.contains(keys[i])) {
 				result = result.replace(keys[i], values[i]);
 			}
 		}

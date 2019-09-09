@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE xml>
 <alias>
     <map name="Cash" value="1000"/>
@@ -16,11 +16,16 @@
 	<map name="Overhead Expense" value="1012" />
 	<map name="Customer Deposits" value="1013" />
     <map name="Labor Expense" value="2001"/>
+	<map name="Federal Withholding" value="2002"/>
+	<map name="State Withholding" value="2003"/>
+	<map name="Fica Withholding" value="2004"/>
+	<map name="Medicare Withholding" value="2005"/>
+	<map name="Federal Unemployment" value="2006"/>
+	<map name="State Unemployment" value="2007"/>
     <map name="Petty Cash" value="3000"/>
     <map name="Petty Cash (Office Supplies)" value="3001"/>
     <map name="Petty Cash (Delivery Expense)" value="3002"/>
     <map name="Petty Cash (Postage Expense)" value="3003"/>
     <map name="Petty Cash (General Office Expense)" value="3004"/>	
     <map name="Petty Cash (Short and Over)" value="3005"/>
-    <map name="Budget Appropriations" value="4000" />
 </alias>

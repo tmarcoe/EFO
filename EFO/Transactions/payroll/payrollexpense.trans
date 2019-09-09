@@ -1,0 +1,37 @@
+/***************************************************
+ * This does NOT do payroll. It only captures payroll
+ * Expense and puts it in the chart of accounts.
+ ***************************************************/
+
+ begin
+	mapFile: "accounts.xml";
+ 
+ 	string laborExpense = "Labor Expense";
+ 	string fedWhAccount = "Federal Withholding";
+ 	string stWhAccount = "State Withholding";
+ 	string ficaWhAccount = "Fica Withholding";
+ 	string medWhAccount = "Medicare Withholding";
+ 	string fuiAccount = "Federal Unemployment";
+ 	string suiAccount = "State Unemployment";
+ 	
+	decimal totalExpense = fedWh + medicare + fica + fedUn + stWh + stUn;
+
+	string des = transactions.getDescr();
+
+	debit(totalExpense, laborExpense);
+	ledger(D, totalExpense, laborExpense, des);
+	credit(fedWh, fedWhAccount);
+	ledger(C, fedWh, fedWhAccount, des);
+	credit(stWh, stWhAccount);
+	ledger(C, stWh, stWhAccount, des);
+	credit(fica, ficaWhAccount);
+	ledger(C, fica, ficaWhAccount, des);
+	credit(medicare, medWhAccount);
+	ledger(C, medicare, medWhAccount, des);
+	credit(fedUn, fuiAccount);
+	ledger(C, fedUn, fuiAccount, des);
+	credit(stUn, suiAccount);
+	ledger(C, stUn, suiAccount, des);
+
+	
+ end

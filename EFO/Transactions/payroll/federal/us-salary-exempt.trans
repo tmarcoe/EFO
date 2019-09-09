@@ -7,11 +7,72 @@
 	dao timeSheet = lookup("FROM TimeSheet WHERE reference = %d", reference);
 	dao empFinancial = employee.getEmp_financial();
 	decimal amount_earned = 0.0;
+	number deductions = empFinancial.getExemptions();
+	decimal federal = 0.0;
+	decimal diff = 0.0;
 
 	if (payPeriods > 0) {
 		amount_earned = empFinancial.getPay_rate() / toDecimal(payPeriods);
 	}else{
 		amount_earned = 0.0;
+	}
+
+	decimal amount = amount_earned - (toDecimal(deductions) * 80.80);
+	
+	if (empFinancial.getStatus() == "S" || empFinancial.getStatus() == "MH") {
+		
+		if (amount > 0.0 && amount <= 73.0) {
+			federal = 0.0;
+		}
+		if (amount > 73.0 && amount <= 260.0 ) {
+			federal = (amount - 73.0) * 0.1;
+		}
+		if (amount > 260.0 && amount <= 832.0 ) {
+			federal = (amount - 104.17) * 0.12;
+		}
+		if (amount > 832.0 && amount <= 1692.0 ) {
+			federal = (amount - 435.00) * 0.22;
+		}
+		if (amount > 1692.0 && amount <= 3164.0 ) {
+			federal = (amount - 539.75) * 0.24;
+		}
+		if (amount > 3164.0 && amount <= 3998.0 ) {
+			federal = (amount - 1195.81) * 0.32;
+		}
+		if (amount > 3998.0 && amount <= 9887.0 ) {
+			federal = (amount - 1436.00) * 0.35;
+		}
+		if (amount > 9887.0 ) {
+			federal = (amount - 1892.81) * 0.37;
+		}
+	}
+
+	if (empFinancial.getStatus() == "M" ) {
+		
+		if (amount > 0.0 && amount <= 227.0) {
+			federal = 0.0;
+		}
+		if (amount > 227.0 && amount <= 600.0 ) {
+			federal = (amount - 227.00) * 0.1;
+		}
+		if (amount > 600.0 && amount <= 1745.0 ) {
+			federal = (amount - 289.17) * 0.12;
+		}
+		if (amount > 1745.0 && amount <= 3465.0 ) {
+			federal = (amount - 950.91) * 0.22;
+		}
+		if (amount > 3465.0 && amount <= 6409.0 ) {
+			federal = (amount - 1160.42) * 0.24;
+		}
+		if (amount > 6409.0 && amount <= 8077.0 ) {
+			federal = (amount - 2472.56) * 0.32;
+		}
+		if (amount > 8077.0 && amount <= 12003.0 ) {
+			federal = (amount - 2952.94) * 0.35;
+		}
+		if (amount > 12003.0 ) {
+			federal = (amount - 3442.14) * 0.37;
+		}
 	}
 	
 	payStub.setUser_id(user_id);
@@ -19,8 +80,9 @@
 	payStub.setHours_worked(40.0);
 	payStub.setOvertime_worked(0.0);
 	payStub.setAmount_earned(amount_earned);
-	payStub.setMedicare(0.0);
-	payStub.setFica(0.0);
+	payStub.setFed_wh(federal);
+	payStub.setMedicare(amount_earned * medicare);
+	payStub.setFica(amount_earned * fica);
 	payStub.setFed_unemployment(0.0);
 	payStub.setSt_unemployment(0.0);
 	payStub.setMedical(0.0);

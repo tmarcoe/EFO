@@ -12,16 +12,22 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 public class Profiles implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(length = 128)
+	@Column(unique=true)
 	private String name;
+	
+	@NotBlank
 	@Column(length = 64)
 	private String script;
 	private boolean exclude;
+	
+	@NotBlank
 	private String type;
 	private boolean depreciation;
 	private boolean show_credit_terms;

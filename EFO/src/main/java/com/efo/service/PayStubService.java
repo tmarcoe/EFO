@@ -36,6 +36,10 @@ public class PayStubService implements IPayStub {
 		return payStubDao.retrievePeriod(begin);
 	}
 
+	public Object[] totalExpenses(Date begin) {
+		return payStubDao.totalExpenses(begin);
+	}
+	
 	@Override
 	public void update(PayStub payStub) {
 		payStubDao.update(payStub);

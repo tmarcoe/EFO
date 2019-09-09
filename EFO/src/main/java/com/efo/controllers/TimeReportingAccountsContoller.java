@@ -94,7 +94,12 @@ public class TimeReportingAccountsContoller {
 	
 	@RequestMapping("addtsaccount")
 	public String addTimeSheetAccount(@Valid @ModelAttribute("timeReportingAccounts") TimeReportingAccounts tsAccounts, BindingResult result) {
-		if (result.hasErrors()) {
+		if (result.hasErrors() || timeReportingAccountsService.accountExists(tsAccounts.getAccount_number())) {
+			
+			if (timeReportingAccountsService.accountExists(tsAccounts.getAccount_number())) {
+				result.rejectValue("account_number","DuplicateKey.timeReportingAccounts.account_num");
+			}
+			
 			return "newtsaccount";
 		}
 		
@@ -106,6 +111,7 @@ public class TimeReportingAccountsContoller {
 	@RequestMapping("updatetsaccount")
 	public String updateTimeSheetAccount(@Valid @ModelAttribute("timeReportingAccounts") TimeReportingAccounts tsAccounts, BindingResult result) {
 		if (result.hasErrors()) {
+			
 			return "newtsaccount";
 		}
 

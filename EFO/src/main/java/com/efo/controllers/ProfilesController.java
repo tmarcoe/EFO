@@ -66,6 +66,11 @@ public class ProfilesController {
 	@RequestMapping("addprofile")
 	public String addProfile(@Valid @ModelAttribute("profile") Profiles profile, BindingResult result) {
 		
+		if (result.hasErrors()) {
+			
+			return "newprofile";
+		}
+		
 		profilesService.create(profile);
 		
 		return "redirect:/basic/profileslist";

@@ -31,6 +31,7 @@ import com.efo.entity.TimeSheetItems;
 import com.efo.entity.Transactions;
 import com.efo.entity.User;
 import com.efo.service.FetalTransactionService;
+import com.efo.service.PayStubService;
 import com.efo.service.ProfilesService;
 import com.efo.service.TimeSheetItemsService;
 import com.efo.service.TimeSheetService;
@@ -51,6 +52,9 @@ public class TimeSheetController {
 
 	@Autowired
 	private ProfilesService profilesService;
+
+	@Autowired
+	private PayStubService payStubService;
 
 	@Autowired
 	private FetalTransactionService fetalTransactionService;
@@ -230,6 +234,34 @@ public class TimeSheetController {
 		}
 
 		return "redirect:/timesheet/listsubmittedts";
+	}
+
+	@RequestMapping("payrollexpense")
+	public String payrollExpense(@ModelAttribute("begin") Date begin) throws Exception {
+		LocalDate l = new LocalDate(begin);
+		int dow = l.dayOfWeek().get();
+		LocalDate prevSun = dow == DateTimeConstants.SUNDAY ? l : l.withDayOfWeek(DateTimeConstants.SUNDAY).minusWeeks(1);
+		final String profileName = "Payroll Expense";
+		final String keys = "%begin%,%totalEarned%,%fedWh%,%medicare%,%fica%,%fedUn%,%stWh%,%stUn%";
+
+		Object[] arg = payStubService.totalExpenses(prevSun.toDate());
+
+		String values = String.format("%s,%f,%f,%f,%f,%f,%f,%f", dateFormat.format(prevSun.toDate()), (Double) arg[0], (Double) arg[1], (Double) arg[2], (Double) arg[3],
+				(Double) arg[4], (Double) arg[5], (Double) arg[6]);
+
+		Transactions transaction = new Transactions();
+		transaction.setTimestamp(new Date());
+		transaction.setStart(prevSun.toDate());
+		transaction.setAmount((Double) arg[0]);
+		transaction.setDescr(String.format("Payroll calculated for begining period: %s", dateFormat.format(prevSun.toDate())));
+
+		Profiles profile = profilesService.retrieve(profileName);
+		String variables = profile.getVariables();
+		variables = ProfileUtils.prepareVariableString(keys, values, variables);
+		Object[] varObjects = ProfileUtils.getObject(variables);
+		fetalTransactionService.execTransaction(profile, transaction, varObjects);
+		
+		return "redirect:/";
 	}
 
 	@RequestMapping("rejectts")

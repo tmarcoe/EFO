@@ -192,10 +192,14 @@
 					<tr>
 						<td><a href="/timesheet/timesheet"><img class="tile" alt="Time Sheet"
 								src="<c:url value='/images/timesheet.png'/>"></a></td>
-						<td><a href="/timesheet/listsubmittedts"><img class="tile" alt="Time Sheet"
-								src="<c:url value='/images/timesheetapprove.png'/>"></a></td>
-						<td><a href="/timesheet/listtsaccounts"><img class="tile" alt="Time Sheet Accounts"
-								src="<c:url value='/images/tsaccounts.png'/>"></a></td>
+						<sec:hasRole role="ADMIN">
+							<td><a href="/timesheet/listsubmittedts"><img class="tile" alt="Time Sheet Approval"
+									src="<c:url value='/images/timesheetapprove.png'/>"></a></td>
+							<td><a href="/timesheet/listtsaccounts"><img class="tile" alt="Time Sheet Accounts"
+									src="<c:url value='/images/tsaccounts.png'/>"></a></td>
+							<td><a href="#" onclick="$('#getBegin').show()"><img class="tile" alt="Payroll Expense"
+									src="<c:url value='/images/payroll-expense.png'/>"></a></td>
+						</sec:hasRole>
 
 					</tr>
 				</table>
@@ -242,6 +246,23 @@
 							<b>View Period</b>
 						</button></td>
 					<td><button class="fancy-button" type="button" onclick="cancelLedger()">
+							<b>Cancel</b>
+						</button></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="getBegin" class="modal" >
+		<div class="modal-content small-modal fancy" >
+			<table style="margin-left: auto; margin-right: auto;">
+				<tr>
+					<td><input class="fancy" id="begPeriod" type="text" placeholder="Begin Period" /></td>
+				</tr>
+				<tr>
+					<td><button class="fancy-button" type="button" onclick="payrollExpense()">
+							<b>Payroll Expense</b>
+						</button></td>
+					<td><button class="fancy-button" type="button" onclick="$('#getBegin').hide()">
 							<b>Cancel</b>
 						</button></td>
 				</tr>
@@ -422,7 +443,7 @@
 		});
 	});
 	function dummyFunction() {
-
+		
 	}
 
 	function forward() {
@@ -455,6 +476,10 @@
 	function showWarning() {
 		$("#warning").show();
 	}
+	function payrollExpense() {
+		var beg = $("#begPeriod").val();
+		window.location.href = "/timesheet/payrollexpense?begin=" + beg;	
+	}
 	$(function() {
 		var dates = $("#stDate").datepicker({
 			dateFormat : "yy-mm-dd",
@@ -463,6 +488,12 @@
 			clickInput : true
 		});
 		$("#endDate").datepicker({
+			dateFormat : "yy-mm-dd",
+			changeMonth : true,
+			changeYear : true,
+			clickInput : true
+		});
+		$("#begPeriod").datepicker({
 			dateFormat : "yy-mm-dd",
 			changeMonth : true,
 			changeYear : true,

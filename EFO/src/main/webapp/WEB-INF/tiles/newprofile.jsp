@@ -26,6 +26,11 @@
 				</sf:select></td>
 		</tr>
 		<tr>
+			<td><sf:errors path="name" class="error" /></td>
+			<td><sf:errors path="script" class="error" /></td>
+			<td><sf:errors path="type" class="error" /></td>
+		</tr>
+		<tr>
 			<td><b>Created On: </b><br>
 				<sf:input id="crDate" class="fancy" type="text" path="created" /></td>
 			<td><b>Active: </b>

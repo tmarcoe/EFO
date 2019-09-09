@@ -47,4 +47,8 @@ public class TimeReportingAccountsService implements ITimeReportingAccounts {
 	public void deleteByUserIds(Long user_id) {
 		timeReportingAccountsDao.deleteByUserIds(user_id);
 	}
+	
+	public boolean accountExists(String account_number) {
+		return timeReportingAccountsDao.accountExists(account_number);
+	}
 }

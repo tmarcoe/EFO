@@ -69,6 +69,35 @@ public class PayStubDao implements IPayStub {
 		
 		return stubList;
 	}
+	
+	public Object[] totalExpenses(Date begin) {
+		String hql = "SELECT SUM(amount_earned), SUM(fed_wh), SUM(medicare), SUM(fica), SUM(fed_unemployment),"
+				   + " SUM(st_wh), SUM(st_unemployment) FROM PayStub WHERE DATE(begin_period) = DATE(:begin) AND processed IS null";
+		Session session = session();
+		Object[] total = (Object[]) session.createQuery(hql).setDate("begin", begin).uniqueResult();
+		if (total == null) {
+			total = new Object[7];
+			total[0] = 0.0;
+			total[1] = 0.0;
+			total[2] = 0.0;
+			total[3] = 0.0;
+			total[4] = 0.0;
+			total[5] = 0.0;
+			total[6] = 0.0;
+		}
+		
+		if (total[0] == null) total[0] = 0.0;
+		if (total[1] == null) total[1] = 0.0;
+		if (total[2] == null) total[2] = 0.0;
+		if (total[3] == null) total[3] = 0.0;
+		if (total[4] == null) total[4] = 0.0;
+		if (total[5] == null) total[5] = 0.0;
+		if (total[6] == null) total[6] = 0.0;
+		
+		session.close();
+		
+		return total;
+	}
 
 	@Override
 	public void update(PayStub payStub) {

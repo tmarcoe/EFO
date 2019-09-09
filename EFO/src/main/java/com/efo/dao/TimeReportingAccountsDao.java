@@ -86,5 +86,17 @@ public class TimeReportingAccountsDao implements ITimeReportingAccounts {
 		tx.commit();
 		session.close();
 	}
+	
+	public boolean accountExists(String account_number) {
+		Long count = 0L;
+		String hql = "SELECT COUNT(*) FROM TimeReportingAccounts WHERE account_number = :account_number";
+		Session session = session();
+		
+		count = (Long) session.createQuery(hql).setString("account_number", account_number).uniqueResult();
+		
+		session.close();
+		
+		return (count > 0L);
+	}
 
 }
