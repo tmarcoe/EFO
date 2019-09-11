@@ -83,12 +83,12 @@
 	payStub.setFed_wh(federal);
 	payStub.setMedicare(amount_earned * medicare);
 	payStub.setFica(amount_earned * fica);
-	payStub.setFed_unemployment(0.0);
+	payStub.setFed_unemployment(amount_earned * 0.06);
 	payStub.setSt_unemployment(0.0);
-	payStub.setMedical(0.0);
-	payStub.setRetirement(0.0);
-	payStub.setUnion_dues(0.0);
-	payStub.setGarnishment(0.0);
+	payStub.setMedical(empFinancial.getMedical());
+	payStub.setRetirement(empFinancial.getRetirement());
+	payStub.setUnion_dues(empFinancial.getUnion_dues());
+	payStub.setGarnishment(empFinancial.getGarnishment());
 
 	insert(payStub);
  end

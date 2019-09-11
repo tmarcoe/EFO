@@ -33,5 +33,22 @@
 	credit(stUn, suiAccount);
 	ledger(C, stUn, suiAccount, des);
 
-	
+	expenses.setPaid(today());
+	expenses.setPayee("Federal Government");
+	expenses.setAmount(totalExpense);
+	expenses.setDescr("Paid Federal Government paroll withholding for period ending " + (transactions.getStart() + 6));
+
+	insert(expenses);
+
+	string name = expenses.getDescr() + ", in the amount of " + roundTo(totalExpense, 2);
+
+	events.setDate(transactions.getStart());
+	events.setName(name);
+	events.setLink("#");
+	events.setCompleted(true);
+
+	insert(events);
+
+	update("UPDATE PayStub SET processed = {F} WHERE begin_period = {F}", today(), beginPeriod);
+
  end
