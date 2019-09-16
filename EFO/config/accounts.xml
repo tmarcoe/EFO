@@ -22,6 +22,7 @@
 	<map name="Medicare Withholding" value="2005"/>
 	<map name="Federal Unemployment" value="2006"/>
 	<map name="State Unemployment" value="2007"/>
+	<map name="Payroll Tax Expense" value="2008" />
     <map name="Petty Cash" value="3000"/>
     <map name="Petty Cash (Office Supplies)" value="3001"/>
     <map name="Petty Cash (Delivery Expense)" value="3002"/>

@@ -174,6 +174,9 @@ public class CustomerController {
 		int pgNum;
 
 		pgNum = isInteger(page);
+		if ( customerList == null) {
+			return "redirect:/personnel/customerlist";
+		}
 
 		if ("next".equals(page)) {
 			customerList.nextPage();

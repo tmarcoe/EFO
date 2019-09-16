@@ -73,6 +73,10 @@ public class GeneralLedgerController {
 
 		pgNum = isInteger(page);
 
+		if (glList == null) {
+			return "redirect:/#tabs-6";
+		}
+		
 		if ("next".equals(page)) {
 			glList.nextPage();
 		} else if ("prev".equals(page)) {

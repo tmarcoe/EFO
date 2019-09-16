@@ -290,6 +290,10 @@ public class TimeSheetController {
 
 		pgNum = isInteger(page);
 
+		if (tsList == null) {
+			return "redirect:/";
+		}
+		
 		if ("next".equals(page)) {
 			tsList.nextPage();
 		} else if ("prev".equals(page)) {

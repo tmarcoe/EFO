@@ -162,6 +162,10 @@ public class ApprovalController {
 		int pgNum;
 
 		pgNum = isInteger(page);
+		
+		if ( approveList == null) {
+			return "redirect:/budget/listapprove";
+		}
 
 		if ("next".equals(page)) {
 			approveList.nextPage();

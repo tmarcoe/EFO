@@ -144,6 +144,9 @@ public class InvestorController {
 		int pgNum;
 
 		pgNum = isInteger(page);
+		if (invList == null) {
+			return "redirect:/personnel/investorlist";
+		}
 
 		if ("next".equals(page)) {
 			invList.nextPage();

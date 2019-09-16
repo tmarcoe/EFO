@@ -119,6 +119,10 @@ public class ChartOfAccountsController {
 		int pgNum;
 
 		pgNum = isInteger(page);
+		
+		if ( cofaList == null) {
+			return "redirect:/accounting/accountslist";
+		}
 
 		if ("next".equals(page)) {
 			cofaList.nextPage();

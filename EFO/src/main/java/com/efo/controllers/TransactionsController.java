@@ -332,6 +332,10 @@ public class TransactionsController {
 
 		pgNum = isInteger(page);
 
+		if (transList == null) {
+			return "redirect:/basic/#tabs-3";
+		}
+
 		if ("next".equals(page)) {
 			transList.nextPage();
 		} else if ("prev".equals(page)) {

@@ -111,6 +111,10 @@ public class BudgetController {
 		int pgNum;
 
 		pgNum = isInteger(page);
+		
+		if ( budgetList == null) {
+			return "redirect:/budget/listbudget";
+		}
 
 		if ("next".equals(page)) {
 			budgetList.nextPage();

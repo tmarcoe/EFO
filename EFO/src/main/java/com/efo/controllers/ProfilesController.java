@@ -99,6 +99,10 @@ public class ProfilesController {
 		int pgNum;
 
 		pgNum = isInteger(page);
+		
+		if (profilesList == null) {
+			return "redirect:/basic/profileslist";
+		}
 
 		if ("next".equals(page)) {
 			profilesList.nextPage();

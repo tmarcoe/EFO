@@ -161,6 +161,10 @@ public class VendorController {
 
 		pgNum = isInteger(page);
 
+		if (vendorList == null) {
+			return "redirect:/personnel/vendorlist";
+		}
+
 		if ("next".equals(page)) {
 			vendorList.nextPage();
 		} else if ("prev".equals(page)) {

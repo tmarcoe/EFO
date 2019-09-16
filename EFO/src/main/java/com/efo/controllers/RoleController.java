@@ -46,6 +46,10 @@ public class RoleController {
 		int pgNum;
 
 		pgNum = isInteger(page);
+		
+		if (listRoles == null) {
+			return "redirect:/admin/listroles";
+		}
 
 		if ("next".equals(page)) {
 			listRoles.nextPage();

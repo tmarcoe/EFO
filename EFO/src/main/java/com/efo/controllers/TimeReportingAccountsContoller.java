@@ -135,6 +135,9 @@ public class TimeReportingAccountsContoller {
 		int pgNum;
 
 		pgNum = isInteger(page);
+		if (traList == null) {
+			return "redirect:/timesheet/listtsaccounts";
+		}
 
 		if ("next".equals(page)) {
 			traList.nextPage();

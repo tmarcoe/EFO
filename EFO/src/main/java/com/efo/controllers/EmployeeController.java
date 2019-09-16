@@ -219,6 +219,9 @@ public class EmployeeController {
 		int pgNum;
 
 		pgNum = isInteger(page);
+		if (employeeList == null) {
+			return "redirect:/personnel/employeelist";
+		}
 
 		if ("next".equals(page)) {
 			employeeList.nextPage();
