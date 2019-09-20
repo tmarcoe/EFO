@@ -123,6 +123,7 @@
 		if ($("#password").val() == "" ) {
 			$("#password").val("password");
 		}
+		$('#roles').multiSelect('deselect', '9');
 		var opt = document.getElementById("roles");
 		var userRoles = "";
 		for (var i = 0; i < opt.options.length; i++) {

@@ -46,7 +46,12 @@
 			<td><sf:errors path="employee.company" class="error"/>
 		</tr>
 		<tr>
-			<td><sf:input class="fancy" path="employee.division" placeholder="Division" /></td>
+			<td><sf:select class="fancy" path="employee.division">
+					<sf:option value="" >---Select---</sf:option>
+					<c:forEach items="${departments}" var="item">
+						<sf:option value="${item}">${item}</sf:option>
+					</c:forEach>
+				</sf:select></td>
 			<td><sf:input class="fancy" path="employee.supervisor" placeholder="Supervisor" /></td>
 			<td><sf:input class="fancy" path="employee.extension" placeholder="Direct Line" /></td>
 			<td><sf:input class="fancy" path="employee.office_loc" placeholder="Office Location" /></td>

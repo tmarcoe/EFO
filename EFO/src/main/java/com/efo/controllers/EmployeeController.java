@@ -1,6 +1,8 @@
 package com.efo.controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -42,6 +44,9 @@ public class EmployeeController {
 	
 	@Value("${spring.mail.username}")
 	private String userName;
+	
+	@Value("${efo.departments}")
+	private String departments;
 
 	@Autowired
 	EmployeeService employeeService;
@@ -115,6 +120,7 @@ public class EmployeeController {
 		user.setEmployee(employee);
 		
 		model.addAttribute("roles", roleService.retrieveRawList());
+		model.addAttribute("departments", new ArrayList<String>(Arrays.asList(departments.split(","))));
 		model.addAttribute("user", user);
 		
 		return "newemployee";
@@ -160,6 +166,7 @@ public class EmployeeController {
 		user.getEmployee().setAccountString(accountUtils.accountsToString(user.getEmployee().getTimeReportingAccounts()));
 		
 		model.addAttribute("roles", roleService.retrieveRawList());
+		model.addAttribute("departments", new ArrayList<String>(Arrays.asList(departments.split(","))));
 		model.addAttribute("user", user);
 		
 		return "editemployee";

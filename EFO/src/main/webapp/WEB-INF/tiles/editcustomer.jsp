@@ -95,10 +95,10 @@ $(document).ready(
 			var selectedOptions = ndx.split(";");
 			
 			$('#roles').multiSelect('select', selectedOptions);
-			
 		});
 
 function formSubmit() {
+	$('#roles').multiSelect('deselect', '9');
 
 	var opt = document.getElementById("roles");
 	var userRoles = "";
