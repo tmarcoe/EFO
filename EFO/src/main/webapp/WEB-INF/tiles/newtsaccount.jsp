@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link type="text/css" rel="stylesheet" href="/css/modal-popup.css" />
 <link type="text/css" rel="stylesheet" href="/css/fancy-input.css" />
@@ -21,7 +22,12 @@
 		<tr>
 			<td><b>Brief Description:</b><br><sf:input path="description" class="fancy" /></td>
 			<td><b>Chart Of Accounts #: </b><br><sf:input path="cofa_account" class="fancy" /></td>
-			<td><b>Department:<br>(blank for all departments)</b><br><sf:input path="department" class="fancy" /></td>
+			<td><b>Department:<br></b><sf:select path="department" class="fancy" >
+				<sf:option value="">***All Departments***</sf:option>
+				<c:forEach items="${departments}" var="item" >
+					<sf:option value="${item}">${item}</sf:option>
+				</c:forEach>
+			</sf:select></td>
 		</tr>
 		<tr>
 			<td><sf:errors path="description" class="error"/></td>

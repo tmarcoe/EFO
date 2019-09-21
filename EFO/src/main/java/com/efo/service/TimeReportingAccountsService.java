@@ -33,6 +33,10 @@ public class TimeReportingAccountsService implements ITimeReportingAccounts {
 	public PagedListHolder<TimeReportingAccounts> retrieveList(String department) {
 		return new PagedListHolder<TimeReportingAccounts>(timeReportingAccountsDao.retrieveRawList(department));
 	}
+	
+	public PagedListHolder<TimeReportingAccounts> listAllAccounts() {
+		return new PagedListHolder<TimeReportingAccounts>(timeReportingAccountsDao.listAllAccounts());
+	}
 
 	@Override
 	public void merge(TimeReportingAccounts timeReportingAccounts) {

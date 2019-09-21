@@ -2,11 +2,14 @@ package com.efo.controllers;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.support.PagedListHolder;
@@ -19,11 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efo.entity.Employee;
 import com.efo.entity.TimeReportingAccounts;
-import com.efo.entity.User;
 import com.efo.service.TimeReportingAccountsService;
-import com.efo.service.UserService;
 
 
 @Controller
@@ -33,12 +33,12 @@ public class TimeReportingAccountsContoller {
 	@Autowired
 	private TimeReportingAccountsService timeReportingAccountsService;
 	
-	@Autowired
-	private UserService userService;
-	
 	private PagedListHolder<TimeReportingAccounts> traList;
 	
 	private final String pageLink = "/budget/traccountpaging";
+	
+	@Value("${efo.departments}")
+	private String departments;
 	
 	private SimpleDateFormat dateFormat;
 
@@ -52,15 +52,8 @@ public class TimeReportingAccountsContoller {
 
 	@RequestMapping("listtsaccounts")
 	public String listTimeSheetAccounts(Principal principal, Model model) {
-		User user = userService.retrieve(principal.getName());
-		Employee employee = user.getEmployee();
-		String department = "";
 		
-		if (employee != null) {
-			department = employee.getDivision();
-		}
-		
-		traList = timeReportingAccountsService.retrieveList(department);
+		traList = timeReportingAccountsService.listAllAccounts();
 		
 		model.addAttribute("objectList", traList);
 		model.addAttribute("pagelink", pageLink);
@@ -70,24 +63,17 @@ public class TimeReportingAccountsContoller {
 	
 	@RequestMapping("newtsaccount")
 	public String newTimeSheetAccount(Model model, Principal principal) {
-		String department = "";
-		
-		User user = userService.retrieve(principal.getName());
-		
-		Employee employee = user.getEmployee();
-		
-		if (employee != null) {
-			department = employee.getDivision();
-		}
-		
+						
 		TimeReportingAccounts timeReportingAccounts = new TimeReportingAccounts();
 		
 		timeReportingAccounts.setBegins(new Date());
-		timeReportingAccounts.setDepartment(department);
+		timeReportingAccounts.setDepartment("");
+		timeReportingAccounts.setActive(true);
 		timeReportingAccounts.setMax_amount(0.0);
 		timeReportingAccounts.setMax_hours(0.0);
 		
 		model.addAttribute("timeReportingAccounts", timeReportingAccounts);
+		model.addAttribute("departments", new ArrayList<String>(Arrays.asList(departments.split(","))));
 		
 		return "newtsaccount";
 	}
@@ -126,6 +112,7 @@ public class TimeReportingAccountsContoller {
 		TimeReportingAccounts tsAccounts = timeReportingAccountsService.retrieve(account_num);
 		
 		model.addAttribute("timeReportingAccounts", tsAccounts);
+		model.addAttribute("departments", new ArrayList<String>(Arrays.asList(departments.split(","))));
 		
 		return "edittsaccount";
 	}

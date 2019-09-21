@@ -59,6 +59,17 @@ public class TimeReportingAccountsDao implements ITimeReportingAccounts {
 		return accountsList;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<TimeReportingAccounts> listAllAccounts() {
+		Session session = session();
+		
+		List<TimeReportingAccounts> accountsList = session.createCriteria(TimeReportingAccounts.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		
+		session.close();
+		
+		return accountsList;
+	}
+	
 	public void deleteByUserIds(Long user_id) {
 		Session session = session();
 		String hql = "DELETE FROM assigned_accounts WHERE user_id = :user_id";
