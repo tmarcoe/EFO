@@ -47,7 +47,7 @@
 		</tr>
 		<tr>
 			<td><sf:select class="fancy" path="employee.division">
-					<sf:option value="" >---Select---</sf:option>
+					<sf:option value="" >---Select Department---</sf:option>
 					<c:forEach items="${departments}" var="item">
 						<sf:option value="${item}">${item}</sf:option>
 					</c:forEach>
@@ -132,8 +132,8 @@
 		</tr>
 	</table>
 		<div class="modal" id="empFinancial">
-		<div class="modal-content medium-large-modal fancy">
-			<table>
+		<div class="modal-content medium-modal fancy">
+			<table style="margin-left: auto; margin-right: auto;">
 				<tr>
 					<td><b>SSN</b><br><sf:input class="fancy" type="text" path="employee.emp_financial.ssn" /></td>
 					<td><b>Marital Status</b><br><sf:select  class="fancy" path="employee.emp_financial.status">
@@ -142,16 +142,13 @@
 						<sf:option value="MH">Married Higher Rate</sf:option>
 					</sf:select></td>
 					<td><b>Exemptions</b><br><sf:input class="fancy" type="number" step="1" path="employee.emp_financial.exemptions" /></td>
+				</tr>
+				<tr>
 					<td><b>Employer Number (EIN)</b><br><sf:input class="fancy" type="text" path="employee.emp_financial.ein"/></td>
-				</tr>
-				<tr>
 					<td><b>Hourly Rate/Salary</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.pay_rate" /></td>
-					<td><b>Federal Tax</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.fed" /></td>
-					<td><b>State Tax (if any)</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.state" /></td>
-					<td><b>City Tax (if any)</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.city" /></td>
+					<td><b>Medical</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.medical" /></td>
 				</tr>
 				<tr>
-					<td><b>Medical</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.medical" /></td>
 					<td><b>Retirement</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.retirement" /></td>
 					<td><b>Union Dues</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.union_dues" /></td>
 					<td><b>Garnishment</b><br><sf:input class="fancy" type="number" step=".01" path="employee.emp_financial.garnishment" /></td>
@@ -168,9 +165,7 @@
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td><hr></td>
-					<td class="centerHeading" colspan="2">For Automatic deposit only</td>
-					<td><hr></td>
+					<td class="centerHeading" colspan="3"><b>====== For Automatic deposit only ======</b></td>
 				</tr>
 				<tr>
 					<td><b>Payment Method</b><br><sf:select class="fancy" type="text" path="employee.emp_financial.pay_method">
@@ -191,10 +186,6 @@
 	<sf:hidden path="employee.emp_financial.user_id" />
 	<sf:hidden path="common.user_id" />
 	<sf:hidden path="employee.accountString"/>
-	<sf:hidden path="employee.emp_financial.fed_unemployment"/>
-	<sf:hidden path="employee.emp_financial.st_unemployment"/>
-	<sf:hidden path="employee.emp_financial.ss_tax"/>
-	<sf:hidden path="employee.emp_financial.fica"/>
 </sf:form>
 
 <script type="text/javascript">

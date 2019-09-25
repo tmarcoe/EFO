@@ -113,7 +113,17 @@ public class EmployeeController {
 		
 		user.setCommon(new CommonFields());
 		Employee employee = new Employee();
-		employee.setEmp_financial(new EmpFinancial());
+		EmpFinancial financial = new EmpFinancial();
+		financial.setAccount_num("");
+		financial.setFed_trans("");
+		financial.setSt_trans("");
+		financial.setCity_trans("");
+		financial.setExemptions(1L);
+		financial.setMedical(0.0);
+		financial.setUnion_dues(0.0);
+		financial.setGarnishment(0.0);
+		financial.setRetirement(0.0);
+		employee.setEmp_financial(financial);
 
 		employee.setStart_date(new Date());
 		employee.setEnd_date(cal.getTime());

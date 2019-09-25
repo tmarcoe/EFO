@@ -29,13 +29,6 @@ public class EmpFinancial implements Serializable {
 	private String status;
 	
 	private Double pay_rate;			// Salary - pay rate per year ; Hourly - pay rate per hour
-	private Double fed;					// Federal tax
-	private Double state;				// State tax
-	private Double city;				// City tax
-	private Double fed_unemployment;	// Federal unemployement
-	private Double st_unemployment;	// State unemployement
-	private Double ss_tax;
-	private Double fica;
 	private Double medical;				// Company medical plan
 	private Double retirement;			// Company retirement plan
 	private Double union_dues;
@@ -100,62 +93,6 @@ public class EmpFinancial implements Serializable {
 
 	public void setPay_rate(Double pay_rate) {
 		this.pay_rate = pay_rate;
-	}
-
-	public Double getFed() {
-		return fed;
-	}
-
-	public void setFed(Double fed) {
-		this.fed = fed;
-	}
-
-	public Double getState() {
-		return state;
-	}
-
-	public void setState(Double state) {
-		this.state = state;
-	}
-
-	public Double getCity() {
-		return city;
-	}
-
-	public void setCity(Double city) {
-		this.city = city;
-	}
-
-	public Double getFed_unemployment() {
-		return fed_unemployment;
-	}
-
-	public void setFed_unemployment(Double fed_unemployment) {
-		this.fed_unemployment = fed_unemployment;
-	}
-
-	public Double getSt_unemployment() {
-		return st_unemployment;
-	}
-
-	public void setSt_unemployment(Double st_unemployment) {
-		this.st_unemployment = st_unemployment;
-	}
-
-	public Double getSs_tax() {
-		return ss_tax;
-	}
-
-	public void setSs_tax(Double ss_tax) {
-		this.ss_tax = ss_tax;
-	}
-
-	public Double getFica() {
-		return fica;
-	}
-
-	public void setFica(Double fica) {
-		this.fica = fica;
 	}
 
 	public Double getMedical() {
