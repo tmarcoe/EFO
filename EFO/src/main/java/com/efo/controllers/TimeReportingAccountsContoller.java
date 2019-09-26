@@ -35,7 +35,7 @@ public class TimeReportingAccountsContoller {
 	
 	private PagedListHolder<TimeReportingAccounts> traList;
 	
-	private final String pageLink = "/budget/traccountpaging";
+	private final String pageLink = "/timesheet/traccountpaging";
 	
 	@Value("${efo.departments}")
 	private String departments;
@@ -137,7 +137,7 @@ public class TimeReportingAccountsContoller {
 		model.addAttribute("objectList", traList);
 		model.addAttribute("pagelink", pageLink);
 
-		return "listbudget";
+		return "listtsaccounts";
 	}
 
 	/**************************************************************************************************************************************
