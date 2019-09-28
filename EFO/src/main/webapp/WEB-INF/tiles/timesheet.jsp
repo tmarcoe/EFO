@@ -119,13 +119,13 @@
 			</tr>
 			<tr>
 				<td><input id="an" class="fancy" readonly="readonly" /></td>
-				<td><input id="su" class="fancy" type="number" step=".25" maxlength="5" size="${sz}"/></td>
-				<td><input id="m" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="tu" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="w" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="th" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="f" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
-				<td><input id="sa" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" /></td>
+				<td><input id="su" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" min="0" /></td>
+				<td><input id="m" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" min="0" /></td>
+				<td><input id="tu" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" min="0" /></td>
+				<td><input id="w" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" min="0" /></td>
+				<td><input id="th" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" min="0" /></td>
+				<td><input id="f" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" min="0" /></td>
+				<td><input id="sa" class="fancy" type="number" step=".25" maxlength="5" size="${sz}" min="0" /></td>
 			</tr>
 			<tr>
 				<td colspan="4"><button class="fancy-button" type="button" onclick="update()"><b>Update</b></button></td>
@@ -155,13 +155,13 @@
 							<option value="${item.account_number}">${item.description}</option>
 						</c:forEach>
 					</select></td>
-				<td><input id="nsu" class="fancy" type="number" step=".25" width="${sz}"/></td>
-				<td><input id="nm" class="fancy" type="number" step=".25" width="${sz}" /></td>
-				<td><input id="ntu" class="fancy" type="number" step=".25" width="${sz}" /></td>
-				<td><input id="nw" class="fancy" type="number" step=".25" width="${sz}" /></td>
-				<td><input id="nth" class="fancy" type="number" step=".25" width="${sz}" /></td>
-				<td><input id="nf" class="fancy" type="number" step=".25" width="${sz}" /></td>
-				<td><input id="nsa" class="fancy" type="number" step=".25" width="${sz}" /></td>
+				<td><input id="nsu" class="fancy" type="number" step=".25" width="${sz}" min="0" /></td>
+				<td><input id="nm" class="fancy" type="number" step=".25" width="${sz}"  min="0" /></td>
+				<td><input id="ntu" class="fancy" type="number" step=".25" width="${sz}"  min="0" /></td>
+				<td><input id="nw" class="fancy" type="number" step=".25" width="${sz}"  min="0" /></td>
+				<td><input id="nth" class="fancy" type="number" step=".25" width="${sz}"  min="0" /></td>
+				<td><input id="nf" class="fancy" type="number" step=".25" width="${sz}"  min="0" /></td>
+				<td><input id="nsa" class="fancy" type="number" step=".25" width="${sz}"  min="0" /></td>
 			</tr>
 			<tr>
 				<td colspan="4"><button class="fancy-button" type="button" onclick="checkExists()"><b>Add Account</b></button></td>
