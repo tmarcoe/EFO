@@ -142,7 +142,7 @@
 							<sf:option value="MH">Married Higher Rate</sf:option>
 						</sf:select></td>
 					<td><b>Exemptions</b><br> 
-						<sf:input class="fancy" type="number" step="1" path="employee.emp_financial.exemptions" /></td>
+						<sf:input class="fancy" type="number" step="1" min="0" path="employee.emp_financial.exemptions" /></td>
 				</tr>
 				<tr>
 					<td><b>Employer Number (EIN)</b><br> 
